@@ -25,7 +25,7 @@ export default class InputView extends ListItem {
       <div>
       <TextField
         key={this.state.id}
-        hintText={this.state.id}
+        floatingLabelText={this.state.id}
         defaultValue={this.state.current}
         onChange={text => this.setState({ current: text })}
         type="number"

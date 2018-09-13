@@ -1,17 +1,21 @@
-import React from "react";
-import DropDownMenu from 'material-ui/DropDownMenu';
+import React, {Component} from "react";
+import SelectField from 'material-ui/SelectField';
+import Subheader from 'material-ui/Subheader';
 import MenuItem from 'material-ui/MenuItem';
 
 
-export default class DropdownView extends React.Component {
+export default class DropdownView extends Component {
   constructor(props) {
     super(props);
     this.state = props.item;
   }
   render(){
     return (
-      <DropDownMenu 
+      <div>
+      <SelectField 
+      id={this.state.id}
       key={this.state.id}
+      floatingLabelText={this.state.id}
       value={this.state.current}
               onChange={(itemValue) => this.setState({new: itemValue})}>
               {
@@ -19,7 +23,8 @@ export default class DropdownView extends React.Component {
                   return <MenuItem key={item} primaryText={item} value={item}></MenuItem>;
                 })
               }
-      </DropDownMenu>
+      </SelectField>
+      </div>
     );
   }
 };

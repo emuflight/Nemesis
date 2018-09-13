@@ -6,13 +6,20 @@ import {List} from "material-ui/List";
 export default class ConfigListView extends React.Component {
   constructor(props) {
     super(props);
-    this.items = props.items;
+    this.state = {
+      items: props.items
+    }
+  }
+
+  shouldComponentUpdate(nextProps, nextState){
+    this.state.items = nextProps.items;
+    return true;
   }
   
   render() {
     return (
       <List>
-      {this.items && this.items.map(item => {
+      {this.state && this.state.items.map(item => {
         switch(item.mode) {
           case "ARRAY":
             break;

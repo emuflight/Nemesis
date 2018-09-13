@@ -30,8 +30,10 @@ export default class Connected extends Component {
   handleDrawerToggle = ()=> {
     this.setState({drawerOpen: !this.state.drawerOpen});
   }
+
   handleMenuItemClick = (event)=> {
     let newRoute = this.routes.find((route)=> route.key === event.currentTarget.id);
+    console.log(newRoute);
     this.setState({
       drawerOpen: false,
       currentRoute: newRoute
