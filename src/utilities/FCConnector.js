@@ -1,42 +1,25 @@
 // import { UsbSerial } from "react-native-usbserial";
 
 export default new class FCConnector {
+  startDetect(onFcConnect) {
+    let connection = new WebSocket("ws://127.0.0.1:9002");
 
-  detect() {
-    //detect architecture
-    //check serial
-    //check wifi
-    //check bluetooth
-    return new Promise((resolve, reject) => {
-      resolve(new class BuFInterface {
-        // constructor() {
-        //   // this._instance = usbSerialDeviceInstance; // fake info.
-        // }
-        sendAsync(command = "!\n") {
-          // return this._instance.writeAsync(command);
-        }
-        close() {}
-      }());
-      // let usbs = new UsbSerial();
-      // usbs.getDeviceListAsync().then(deviceList => {
-      //     usbs.openDeviceAsync(deviceList[0]).then(usbSerialDeviceInstance => {
-      //           if (usbSerialDeviceInstance) {
-      //             resolve(new class BuFInterface {
-      //               constructor() {
-      //                 this._instance = usbSerialDeviceInstance; // fake info.
-      //               }
-      //               sendAsync(command = "!\n") {
-      //                 return this._instance.writeAsync(command);
-      //               }
-      //               close() {}
-      //             }())
-      //           }
-      //       }).catch(()=>{
-      //         reject('failed to open');
-      //       });
-      //   }).catch(()=>{
-      //     reject('failed to get list');
-      //   });
+    connection.onopen = () => {
+      console.log("opened");
+    };
+
+    connection.onerror = error => {
+      console.warn(error);
+    };
+
+    connection.onmessage = message => {
+      onFcConnect(JSON.parse(message.data));
+    };
+  }
+
+  tryGetConfig() {
+    return fetch("http://localhost:9001/device").then(response => {
+      return response.json();
     });
   }
 }();
