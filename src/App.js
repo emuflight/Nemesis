@@ -6,7 +6,6 @@ import getMuiTheme from "material-ui/styles/getMuiTheme";
 import Connected from "./Views/Connected";
 import Disconnected from "./Views/Disconnected";
 import FCConnector from "./utilities/FCConnector";
-import fcConfig from "./test/test_config.json";
 import uiConfig from "./test/ui_config.json";
 const electron = window.require("electron"); // little trick to import electron in react
 const ipcRenderer = electron.ipcRenderer;
