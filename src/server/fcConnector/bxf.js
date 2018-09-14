@@ -1,7 +1,7 @@
 const SerialPort = require("serialport");
 var Readline = SerialPort.parsers.Readline;
 
-const getfCConfig = (comName, cb, ecb) => {
+const getConfig = (comName, cb, ecb) => {
   var parser = new Readline({
     delimiter: "#"
   });
@@ -30,4 +30,6 @@ const getfCConfig = (comName, cb, ecb) => {
   });
 };
 
-module.exports = getfCConfig;
+module.exports = {
+  getConfig: getConfig
+};

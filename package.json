@@ -24,6 +24,7 @@
     "electron-updater": "^2.10.1",
     "express": "^4.16.3",
     "material-ui": "^0.20.2",
+    "node-hid": "^0.7.3",
     "node-sass-chokidar": "0.0.3",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
@@ -39,7 +40,7 @@
     ]
   },
   "scripts": {
-    "install": "rm -rf node_modules/serialport/build/* && node_modules/.bin/electron-rebuild -w serialport -f",
+    "install": "rm -rf node_modules/serialport/build/* && node_modules/.bin/electron-rebuild -w serialport -f && rm -rf node_modules/node-hid/build/* && node_modules/.bin/electron-rebuild -w node-hid -f",
     "preship": "yarn build && yarn build-css",
     "ship": "build --em.main=build/electron.js --win --ia32 -p always -c electron-builder.yml",
     "build-css": "node-sass-chokidar src/ -o src/",

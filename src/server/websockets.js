@@ -1,9 +1,9 @@
 const usbDetect = require("usb-detection");
 const WebSocketServer = require("websocket").server;
-const SerialPort = require("serialport");
+const devices = require("./devices");
 const http = require("http");
 
-const getfCConfig = require("./fcConfig");
+const fcConnector = require("./fcConnector");
 
 const server = http.createServer((request, response) => {
   // process HTTP request. Since we're writing just WebSockets
@@ -23,17 +23,17 @@ wsServer.on("request", request => {
   // Detect add/insert
   usbDetect.on(`add`, device => {
     setTimeout(() => {
-      SerialPort.list((err, ports) => {
+      devices.list((err, ports) => {
         let connectedDevice = ports.filter(port => {
           return port.serialNumber === device.serialNumber;
         })[0];
         connectedDevice.connected = true;
-        getfCConfig(connectedDevice.comName, config => {
+        fcConnector.getConfig(connectedDevice, config => {
           connectedDevice.config = config;
           connection.sendUTF(JSON.stringify(connectedDevice));
         });
       });
-    }, 1000);
+    }, 2000);
   });
 
   // Detect remove
