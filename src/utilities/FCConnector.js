@@ -1,5 +1,3 @@
-// import { UsbSerial } from "react-native-usbserial";
-
 export default new class FCConnector {
   startDetect(onFcConnect) {
     let connection = new WebSocket("ws://127.0.0.1:9002");
