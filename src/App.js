@@ -22,10 +22,12 @@ class App extends Component {
     ipcRenderer.on("updateReady", (event, text) => {
       this.setState({ updateReady: true });
     });
-    FCConnector.startDetect(deviceInfo => {
+    FCConnector.startDetect(connectedDevice => {
       this.setState({
-        deviceInfo: deviceInfo,
-        connected: deviceInfo.connected
+        id: connectedDevice.comName,
+        deviceInfo: connectedDevice,
+        connected: connectedDevice.connected,
+        currentConfig: connectedDevice.config
       });
     });
   }

@@ -24,16 +24,16 @@ wsServer.on("request", request => {
   usbDetect.on(`add`, device => {
     setTimeout(() => {
       devices.list((err, ports) => {
-        let connectedDevice = ports.filter(port => {
-          return port.serialNumber === device.serialNumber;
-        })[0];
-        connectedDevice.connected = true;
-        fcConnector.getConfig(connectedDevice, config => {
-          connectedDevice.config = config;
-          connection.sendUTF(JSON.stringify(connectedDevice));
-        });
+        let connectedDevice = ports[0];
+        if (connectedDevice) {
+          connectedDevice.connected = true;
+          fcConnector.getConfig(connectedDevice, config => {
+            connectedDevice.config = config;
+            connection.sendUTF(JSON.stringify(connectedDevice));
+          });
+        }
       });
-    }, 2000);
+    }, 1500);
   });
 
   // Detect remove
