@@ -15,7 +15,6 @@ app.use(function(req, res, next) {
 
 app.get("/device", (req, res) => {
   devices.list((err, ports) => {
-    console.log(ports);
     let connectedDevice = ports[0];
     if (connectedDevice) {
       fcConnector.getConfig(connectedDevice, config => {
@@ -27,4 +26,18 @@ app.get("/device", (req, res) => {
     }
   });
 });
+app.get("/set/:param/:value", (req, res) => {
+  devices.list((err, ports) => {
+    let connectedDevice = ports[0];
+    if (connectedDevice) {
+      fcConnector.setValue(connectedDevice, config => {
+        connectedDevice.config = config;
+        res.json(connectedDevice);
+      });
+    } else {
+      res.sendStatus(500);
+    }
+  });
+});
+
 app.listen(9001, () => console.log("usb interface listening on port 9001!"));
