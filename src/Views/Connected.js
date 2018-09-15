@@ -16,12 +16,19 @@ export default class Connected extends Component {
       return {
         key: route,
         title: route,
+
         items: Object.keys(props.fcConfig)
           .filter(key => {
             return props.uiConfig.groups[route].indexOf(key) !== -1;
           })
           .map(k => {
-            return Object.assign({ id: k }, props.fcConfig[k]);
+            return Object.assign(
+              {
+                id: k,
+                element: props.uiConfig.elements[k]
+              },
+              props.fcConfig[k]
+            );
           })
       };
     });
