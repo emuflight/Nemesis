@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import AppBar from "material-ui/AppBar";
 import Drawer from "material-ui/Drawer";
 import MenuItem from "material-ui/MenuItem";
+import FlatButton from "material-ui/FlatButton";
 import ConfigListView from "./ConfigListView";
+import FCConnector from "../utilities/FCConnector";
 
 export default class Connected extends Component {
   constructor(props) {
@@ -24,6 +26,7 @@ export default class Connected extends Component {
       };
     });
     this.state = {
+      isDirty: false,
       drawerOpen: false,
       currentRoute: this.routes[0],
       routeItems: this.routes[0].items
@@ -32,6 +35,12 @@ export default class Connected extends Component {
 
   handleDrawerToggle = () => {
     this.setState({ drawerOpen: !this.state.drawerOpen });
+  };
+
+  handleSaveClick = () => {
+    FCConnector.saveConfig().then(() => {
+      this.setState({ isDirty: false });
+    });
   };
 
   handleMenuItemClick = event => {
@@ -45,12 +54,18 @@ export default class Connected extends Component {
     });
   };
 
+  notifyDirty(isDirty) {
+    this.setState({ isDirty });
+  }
+
   render() {
     return (
       <div>
         <AppBar
           title={this.state.currentRoute.title}
           onLeftIconButtonClick={this.handleDrawerToggle}
+          iconElementRight={<FlatButton label="Save" />}
+          onRightIconButtonClick={this.handleSaveClick}
         />
         <Drawer open={this.state.drawerOpen}>
           {this.routes.map(route => {
@@ -65,7 +80,10 @@ export default class Connected extends Component {
             );
           })}
         </Drawer>
-        <ConfigListView items={this.state.routeItems} />
+        <ConfigListView
+          notifyDirty={this.notifyDirty}
+          items={this.state.routeItems}
+        />
       </div>
     );
   }

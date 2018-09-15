@@ -24,12 +24,39 @@ const getConfig = (comName, cb, ecb) => {
         setTimeout(() => {
           //trim off " config\n";
           cb(JSON.parse(ret.slice(7)));
+          port.close();
         }, 1000);
       });
     }, 1000);
   });
 };
 
+const setValue = (comName, name, newVal, cb) => {
+  let port = new SerialPort(comName, {
+    baudRate: 115200
+  });
+  port.write(`set ${name}=${newVal}\n`, err => {
+    port.close();
+    setTimeout(() => {
+      cb();
+    }, 1000);
+  });
+};
+
+const saveConfig = (comName, cb) => {
+  let port = new SerialPort(comName, {
+    baudRate: 115200
+  });
+  port.write(`save\n`, err => {
+    port.close();
+    setTimeout(() => {
+      cb();
+    }, 1000);
+  });
+};
+
 module.exports = {
-  getConfig: getConfig
+  getConfig: getConfig,
+  setValue: setValue,
+  saveConfig: saveConfig
 };

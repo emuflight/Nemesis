@@ -7,6 +7,7 @@ export default class ConfigListView extends Component {
   constructor(props) {
     super(props);
     this.items = props.items;
+    this.notifyDirty = props.notifyDirty;
   }
 
   shouldComponentUpdate(nextState) {
@@ -21,11 +22,28 @@ export default class ConfigListView extends Component {
           this.items.map(item => {
             switch (item.mode) {
               case "ARRAY":
-                return <ConfigListView items={item.values} />;
+                return (
+                  <ConfigListView
+                    notifyDirty={this.notifyDirty}
+                    items={item.values}
+                  />
+                );
               case "LOOKUP":
-                return <DropdownView key={item.id} item={item} />;
+                return (
+                  <DropdownView
+                    notifyDirty={this.notifyDirty}
+                    key={item.id}
+                    item={item}
+                  />
+                );
               default:
-                return <InputView key={item.id} item={item} />;
+                return (
+                  <InputView
+                    notifyDirty={this.notifyDirty}
+                    key={item.id}
+                    item={item}
+                  />
+                );
             }
           })}
       </List>

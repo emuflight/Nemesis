@@ -20,10 +20,17 @@ export default new class FCConnector {
       return response.json();
     });
   }
-  setConfig(item) {
-    return fetch(
-      `http://localhost:9001/set/${item.key}/${item.current}` + item
-    ).then(response => {
+
+  setValue(name, newValue) {
+    return fetch(`http://localhost:9001/set/${name}/${newValue}`).then(
+      response => {
+        return response.json();
+      }
+    );
+  }
+
+  saveConfig() {
+    return fetch(`http://localhost:9001/save`).then(response => {
       return response.json();
     });
   }
