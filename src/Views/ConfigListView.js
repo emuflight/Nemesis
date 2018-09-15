@@ -23,7 +23,6 @@ export default class ConfigListView extends Component {
         {this.items &&
           this.items.map(item => {
             let type = (item.element && item.element.type) || item.mode;
-            console.log(type);
             switch (type) {
               case "PidDenomView":
                 return (

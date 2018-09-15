@@ -15,7 +15,6 @@ export default class PidDenomView extends DropdownView {
     });
     this.setState({
       values: values.slice(offset).map((item, index) => {
-        console.log(this.originalValues[index].value);
         return {
           value: this.originalValues[index].value,
           label: item.label

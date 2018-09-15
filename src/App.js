@@ -44,24 +44,26 @@ class App extends Component {
             return this.uiConfig.groups[route].indexOf(key) !== -1;
           })
           .map(k => {
-            let itemsObj = Object.assign(
+            let itemObj = Object.assign(
               {
                 id: k,
                 element: this.uiConfig.elements[k]
               },
               config[k]
             );
-            if (itemsObj.element && itemsObj.element.values) {
-              itemsObj.values = itemsObj.element.values;
-            } else if (itemsObj.values) {
-              itemsObj.values = itemsObj.values.map(item => {
+            if (itemObj.element) {
+              itemObj.step = itemObj.element.step || itemObj.step;
+              itemObj.values = itemObj.element.values || itemObj.values;
+              itemObj.axis = itemObj.element.axis;
+            } else if (itemObj.values) {
+              itemObj.values = itemObj.values.map(item => {
                 return {
                   value: item,
                   label: item
                 };
               });
             }
-            return itemsObj;
+            return itemObj;
           })
       };
     });

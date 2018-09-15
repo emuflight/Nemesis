@@ -327,10 +327,59 @@
     ]
   },
   "elements": {
+    "p_roll": {
+      "type": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "y"
+    },
+    "i_roll": {
+      "type": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "y"
+    },
+    "d_roll": {
+      "type": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "y"
+    },
     "p_pitch": {
       "type": "slider",
       "step": 1,
-      "parse": "int"
+      "parse": "int",
+      "axis": "y"
+    },
+    "i_pitch": {
+      "type": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "y"
+    },
+    "d_pitch": {
+      "type": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "y"
+    },
+    "p_yaw": {
+      "type": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "y"
+    },
+    "i_yaw": {
+      "type": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "y"
+    },
+    "d_yaw": {
+      "type": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "y"
     },
     "gyro_sync_denom": {
       "type": "LOOKUP",

@@ -14,9 +14,9 @@ export default class DropdownView extends Component {
   }
   render() {
     return (
-      <div>
+      <div id={this.state.id}>
         <SelectField
-          id={this.state.id}
+          className={this.state.id}
           key={this.state.id}
           floatingLabelText={this.state.id}
           value={this.state.current}
