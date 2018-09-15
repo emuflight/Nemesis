@@ -9,6 +9,9 @@ export default class DropdownView extends Component {
     this.state = props.item;
     this.notifyDirty = props.notifyDirty;
   }
+  componentDidMount() {
+    document.getElementById(this.state.id).$state = this.state;
+  }
   render() {
     return (
       <div>
@@ -23,17 +26,22 @@ export default class DropdownView extends Component {
           onChange={(event, key, payload) => {
             let isDirty =
               this.state.current !== payload && !!this.state.current;
-            this.notifyDirty(isDirty);
+            this.notifyDirty(isDirty, this.state, payload);
             this.setState({ current: payload, isDirty: isDirty });
             FCConnector.setValue(this.state.id, payload).then(() => {
               this.setState({ isDirty: false });
             });
           }}
         >
-          {this.state.values &&
-            this.state.values.map(item => {
-              return <MenuItem key={item} primaryText={item} value={item} />;
-            })}
+          {this.state.values.map(item => {
+            return (
+              <MenuItem
+                key={item.value}
+                primaryText={item.label}
+                value={item.value}
+              />
+            );
+          })}
         </SelectField>
       </div>
     );

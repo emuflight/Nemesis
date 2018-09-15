@@ -32,7 +32,7 @@ export default class InputView extends ListItem {
           onChange={(event, newValue) => {
             let isDirty =
               this.state.current !== newValue && !!this.state.current;
-            this.notifyDirty(isDirty);
+            this.notifyDirty(isDirty, this.state, newValue);
             this.setState({ current: newValue, isDirty: isDirty });
             FCConnector.setValue(this.state.id, newValue).then(() => {
               this.setState({ isDirty: false });

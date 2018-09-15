@@ -29,7 +29,7 @@ export default class SliderView extends Component {
           onChange={(event, key, payload) => {
             let isDirty =
               this.state.current !== payload && !!this.state.current;
-            this.notifyDirty(isDirty);
+            this.notifyDirty(isDirty, this.state, payload);
             this.setState({ current: payload, isDirty: isDirty });
             FCConnector.setValue(this.state.id, payload).then(() => {
               this.setState({ isDirty: false });

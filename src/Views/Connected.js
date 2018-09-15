@@ -11,32 +11,11 @@ export default class Connected extends Component {
     super(props);
     this.fcConfig = props.fcConfig;
     this.uiConfig = props.uiConfig;
-
-    this.routes = props.uiConfig.routes.map(route => {
-      return {
-        key: route,
-        title: route,
-
-        items: Object.keys(props.fcConfig)
-          .filter(key => {
-            return props.uiConfig.groups[route].indexOf(key) !== -1;
-          })
-          .map(k => {
-            return Object.assign(
-              {
-                id: k,
-                element: props.uiConfig.elements[k]
-              },
-              props.fcConfig[k]
-            );
-          })
-      };
-    });
     this.state = {
       isDirty: false,
       drawerOpen: false,
-      currentRoute: this.routes[0],
-      routeItems: this.routes[0].items
+      currentRoute: props.uiConfig.routes[0],
+      routeItems: props.uiConfig.routes[0].items
     };
   }
 
@@ -51,7 +30,7 @@ export default class Connected extends Component {
   };
 
   handleMenuItemClick = event => {
-    let newRoute = this.routes.find(
+    let newRoute = this.uiConfig.routes.find(
       route => route.key === event.currentTarget.id
     );
     this.setState({
@@ -61,7 +40,11 @@ export default class Connected extends Component {
     });
   };
 
-  notifyDirty(isDirty) {
+  notifyDirty(isDirty, item, newValue) {
+    let notification = document.getElementById(item.id);
+    notification.dispatchEvent(
+      new CustomEvent("change", { detail: { item, newValue } })
+    );
     this.setState({ isDirty });
   }
 
@@ -71,11 +54,13 @@ export default class Connected extends Component {
         <AppBar
           title={this.state.currentRoute.title}
           onLeftIconButtonClick={this.handleDrawerToggle}
-          iconElementRight={<FlatButton label="Save" />}
+          iconElementRight={
+            <FlatButton disabled={!this.state.isDirty} label="Save" />
+          }
           onRightIconButtonClick={this.handleSaveClick}
         />
         <Drawer open={this.state.drawerOpen}>
-          {this.routes.map(route => {
+          {this.uiConfig.routes.map(route => {
             return (
               <MenuItem
                 id={route.key}

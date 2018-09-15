@@ -22,5 +22,12 @@ module.exports = {
     } else {
       return bxfConnector.saveConfig(deviceInfo.comName, cb, ecb);
     }
+  },
+  close(deviceInfo) {
+    if (deviceInfo.hid) {
+      return rf1Connector.close();
+    } else {
+      return bxfConnector.close();
+    }
   }
 };

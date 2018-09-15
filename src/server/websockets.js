@@ -9,6 +9,9 @@ const server = http.createServer((request, response) => {
   // process HTTP request. Since we're writing just WebSockets
   // server we don't have to implement anything.
 });
+
+let connectedDevice;
+
 server.listen(9002, () => {});
 
 // create the server
@@ -24,7 +27,7 @@ wsServer.on("request", request => {
   usbDetect.on(`add`, device => {
     setTimeout(() => {
       devices.list((err, ports) => {
-        let connectedDevice = ports[0];
+        connectedDevice = ports[0];
         if (connectedDevice) {
           connectedDevice.connected = true;
           fcConnector.getConfig(connectedDevice, config => {
@@ -40,6 +43,7 @@ wsServer.on("request", request => {
   usbDetect.on(`remove`, device => {
     device.connected = false;
     connection.sendUTF(JSON.stringify(device));
+    fcConnector.close(connectedDevice);
   });
   // This is the most important callback for us, we'll handle
   // all messages from users here.

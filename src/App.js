@@ -22,6 +22,7 @@ class App extends Component {
       this.setState({ updateReady: true });
     });
     FCConnector.startDetect(connectedDevice => {
+      connectedDevice.config && this.setupRoutes(connectedDevice.config);
       this.setState({
         id: connectedDevice.comName,
         deviceInfo: connectedDevice,
@@ -29,11 +30,46 @@ class App extends Component {
         currentConfig: connectedDevice.config
       });
     });
+
+    this.uiConfig = uiConfig;
+  }
+  setupRoutes(config) {
+    this.uiConfig.routes = this.uiConfig.routes.map(route => {
+      return {
+        key: route,
+        title: route,
+
+        items: Object.keys(config)
+          .filter(key => {
+            return this.uiConfig.groups[route].indexOf(key) !== -1;
+          })
+          .map(k => {
+            let itemsObj = Object.assign(
+              {
+                id: k,
+                element: this.uiConfig.elements[k]
+              },
+              config[k]
+            );
+            if (itemsObj.element && itemsObj.element.values) {
+              itemsObj.values = itemsObj.element.values;
+            } else if (itemsObj.values) {
+              itemsObj.values = itemsObj.values.map(item => {
+                return {
+                  value: item,
+                  label: item
+                };
+              });
+            }
+            return itemsObj;
+          })
+      };
+    });
   }
 
   componentDidMount() {
     FCConnector.tryGetConfig().then(connectedDevice => {
-      console.log(connectedDevice);
+      this.setupRoutes(connectedDevice.config);
       this.setState({
         id: connectedDevice.comName,
         deviceInfo: connectedDevice,
@@ -50,7 +86,7 @@ class App extends Component {
         <MuiThemeProvider muiTheme={getMuiTheme(theme)}>
           <Connected
             connectinId={this.state.id}
-            uiConfig={uiConfig}
+            uiConfig={this.uiConfig}
             fcConfig={this.state.currentConfig}
           />
         </MuiThemeProvider>
