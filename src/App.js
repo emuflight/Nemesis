@@ -32,9 +32,10 @@ class App extends Component {
     });
 
     this.uiConfig = uiConfig;
+    this.baseRoutes = this.uiConfig.routes;
   }
   setupRoutes(config) {
-    this.uiConfig.routes = this.uiConfig.routes.map(route => {
+    this.uiConfig.routes = this.baseRoutes.map(route => {
       return {
         key: route,
         title: route,

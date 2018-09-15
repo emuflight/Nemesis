@@ -2,6 +2,8 @@ const SerialPort = require("serialport");
 const HID = require("node-hid");
 const STM32USBInfo = require("./STM32USB.json");
 
+let connectedDevice;
+
 module.exports = {
   list: cb => {
     SerialPort.list((err, ports) => {
@@ -24,5 +26,11 @@ module.exports = {
         )
       );
     });
+  },
+  getConnectedDevice() {
+    return connectedDevice;
+  },
+  setConnectedDevice(newConnectedDevice) {
+    connectedDevice = newConnectedDevice;
   }
 };

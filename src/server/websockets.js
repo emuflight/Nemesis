@@ -33,6 +33,7 @@ wsServer.on("request", request => {
           fcConnector.getConfig(connectedDevice, config => {
             connectedDevice.config = config;
             connection.sendUTF(JSON.stringify(connectedDevice));
+            devices.setConnectedDevice(connectedDevice);
           });
         }
       });
@@ -43,7 +44,7 @@ wsServer.on("request", request => {
   usbDetect.on(`remove`, device => {
     device.connected = false;
     connection.sendUTF(JSON.stringify(device));
-    fcConnector.close(connectedDevice);
+    fcConnector.close(devices.getConnectedDevice());
   });
   // This is the most important callback for us, we'll handle
   // all messages from users here.

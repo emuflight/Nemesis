@@ -24,9 +24,6 @@
       "p_yaw",
       "i_yaw",
       "d_yaw",
-      "p_level",
-      "i_level",
-      "d_level",
       "pid_process_denom",
       "gyro_sync_denom"
     ],
@@ -323,7 +320,10 @@
       "camera_control_internal_resistance",
       "pinio_config",
       "pinio_box",
-      "usb_hid_cdc"
+      "usb_hid_cdc",
+      "p_level",
+      "i_level",
+      "d_level"
     ]
   },
   "elements": {
