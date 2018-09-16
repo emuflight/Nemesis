@@ -5,6 +5,7 @@ import MenuItem from "material-ui/MenuItem";
 import FlatButton from "material-ui/FlatButton";
 import ConfigListView from "./ConfigListView";
 import FCConnector from "../utilities/FCConnector";
+import VersionInfoView from "./VersionInfoView";
 
 export default class Connected extends Component {
   constructor(props) {
@@ -54,9 +55,7 @@ export default class Connected extends Component {
         <AppBar
           title={this.state.currentRoute.title}
           onLeftIconButtonClick={this.handleDrawerToggle}
-          iconElementRight={
-            <FlatButton disabled={!this.state.isDirty} label="Save" />
-          }
+          iconElementRight={<FlatButton label="Save" />}
           onRightIconButtonClick={this.handleSaveClick}
         />
         <Drawer open={this.state.drawerOpen}>
@@ -72,6 +71,10 @@ export default class Connected extends Component {
             );
           })}
         </Drawer>
+        <VersionInfoView
+          version={this.fcConfig.version}
+          imuf={this.fcConfig.imuf}
+        />
         <ConfigListView
           notifyDirty={this.notifyDirty}
           items={this.state.routeItems}
