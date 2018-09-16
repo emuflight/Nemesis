@@ -410,6 +410,35 @@
         }
       ]
     },
+    "blackbox_p_ratio": {
+      "type": "LOOKUP",
+      "values": [
+        {
+          "value": "1",
+          "label": "32khz"
+        },
+        {
+          "value": "2",
+          "label": "16khz"
+        },
+        {
+          "value": "4",
+          "label": "8khz"
+        },
+        {
+          "value": "8",
+          "label": "4khz"
+        },
+        {
+          "value": "16",
+          "label": "2khz"
+        },
+        {
+          "value": "32",
+          "label": "1khz"
+        }
+      ]
+    },
     "pid_process_denom": {
       "type": "PidDenomView",
       "values": [
