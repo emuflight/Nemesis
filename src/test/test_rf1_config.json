@@ -1,0 +1,1736 @@
+{
+  "mixer_type": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 11.000"
+  },
+  "famx": {
+    "current": "1.000",
+    "default": " 1.000",
+    "min": " 0.900",
+    "max": " 1.100"
+  },
+  "mixer_style": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 1.000"
+  },
+  "esc_protocol": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 11.000"
+  },
+  "bit_reverse_esc_1": {
+    "current": "-1",
+    "default": "-1.000",
+    "min": " 0.000",
+    "max": " 1.000"
+  },
+  "bit_reverse_esc_2": {
+    "current": "-1",
+    "default": "-1.000",
+    "min": " 0.000",
+    "max": " 1.000"
+  },
+  "bit_reverse_esc_3": {
+    "current": "-1",
+    "default": "-1.000",
+    "min": " 0.000",
+    "max": " 1.000"
+  },
+  "bit_reverse_esc_4": {
+    "current": "-1",
+    "default": "-1.000",
+    "min": " 0.000",
+    "max": " 1.000"
+  },
+  "bit_reverse_esc_5": {
+    "current": "-1",
+    "default": "-1.000",
+    "min": " 0.000",
+    "max": " 1.000"
+  },
+  "bit_reverse_esc_6": {
+    "current": "-1",
+    "default": "-1.000",
+    "min": " 0.000",
+    "max": " 1.000"
+  },
+  "bit_reverse_esc_7": {
+    "current": "-1",
+    "default": "-1.000",
+    "min": " 0.000",
+    "max": " 1.000"
+  },
+  "bit_reverse_esc_8": {
+    "current": "-1",
+    "default": "-1.000",
+    "min": " 0.000",
+    "max": " 1.000"
+  },
+  "esc_frequency": {
+    "current": "32000",
+    "default": " 32000.000",
+    "min": " 0.000",
+    "max": " 32000.000"
+  },
+  "idle_percent": {
+    "current": "6.000",
+    "default": " 6.000",
+    "min": " 0.000",
+    "max": " 15.000"
+  },
+  "idle_percent_inv": {
+    "current": "8.000",
+    "default": " 8.000",
+    "min": " 0.000",
+    "max": " 15.000"
+  },
+  "spin_rec_str": {
+    "current": "750.000",
+    "default": " 750.000",
+    "min": " 0.000",
+    "max": " 1500.000"
+  },
+  "quopa_style": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 2.000"
+  },
+  "mout1": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 7.000"
+  },
+  "mout2": {
+    "current": "1",
+    "default": " 1.000",
+    "min": " 0.000",
+    "max": " 7.000"
+  },
+  "mout3": {
+    "current": "2",
+    "default": " 2.000",
+    "min": " 0.000",
+    "max": " 7.000"
+  },
+  "mout4": {
+    "current": "3",
+    "default": " 3.000",
+    "min": " 0.000",
+    "max": " 7.000"
+  },
+  "mout5": {
+    "current": "4",
+    "default": " 4.000",
+    "min": " 0.000",
+    "max": " 7.000"
+  },
+  "mout6": {
+    "current": "5",
+    "default": " 5.000",
+    "min": " 0.000",
+    "max": " 7.000"
+  },
+  "mout7": {
+    "current": "6",
+    "default": " 6.000",
+    "min": " 0.000",
+    "max": " 7.000"
+  },
+  "mout8": {
+    "current": "7",
+    "default": " 7.000",
+    "min": " 0.000",
+    "max": " 7.000"
+  },
+  "led_count": {
+    "current": "16",
+    "default": " 16.000",
+    "min": " 2.000",
+    "max": " 64.000"
+  },
+  "led_red": {
+    "current": "10",
+    "default": " 10.000",
+    "min": " 0.000",
+    "max": " 255.000"
+  },
+  "led_green": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 255.000"
+  },
+  "led_blue": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 255.000"
+  },
+  "led_mode": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 255.000"
+  },
+  "led_with_usb": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 1.000"
+  },
+  "telem_smartaudio": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 26.000"
+  },
+  "telem_sport": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 26.000"
+  },
+  "telem_spek": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 26.000"
+  },
+  "telem_msp": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 26.000"
+  },
+  "telem_rfosd": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 26.000"
+  },
+  "telem_tramp": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 26.000"
+  },
+  "telem_crsf": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 26.000"
+  },
+  "telem_mavlink": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 26.000"
+  },
+  "adc_current_factor": {
+    "current": "34.200",
+    "default": " 34.200",
+    "min": " 0.000",
+    "max": " 60.000"
+  },
+  "vtx_pitmode_type": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 1.000"
+  },
+  "vbat_buzzer": {
+    "current": "1",
+    "default": " 1.000",
+    "min": " 0.000",
+    "max": " 1.000"
+  },
+  "vbat_cutoff": {
+    "current": "3.800",
+    "default": " 3.800",
+    "min": " 0.000",
+    "max": " 4.000"
+  },
+  "bat_size": {
+    "current": "1300",
+    "default": " 1300.000",
+    "min": " 0.000",
+    "max": " 50000.000"
+  },
+  "crsf_otx_cur_hack": {
+    "current": "1",
+    "default": " 1.000",
+    "min": " 0.000",
+    "max": " 1.000"
+  },
+  "gyro_rotation": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 16.000"
+  },
+  "board_calibrated": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 1.000"
+  },
+  "man_gy_roll_angle": {
+    "current": "0.000",
+    "default": " 0.000",
+    "min": "-360.000",
+    "max": " 360.000"
+  },
+  "man_gy_pitch_angle": {
+    "current": "0.000",
+    "default": " 0.000",
+    "min": "-360.000",
+    "max": " 360.000"
+  },
+  "man_gy_yaw_angle": {
+    "current": "0.000",
+    "default": " 0.000",
+    "min": "-360.000",
+    "max": " 360.000"
+  },
+  "imuf_filter_mode": {
+    "current": "48",
+    "default": " 48.000",
+    "min": " 0.000",
+    "max": " 255.000"
+  },
+  "rf_loop_ctrl": {
+    "current": "16",
+    "default": " 16.000",
+    "min": " 0.000",
+    "max": " 16.000"
+  },
+  "drunk": {
+    "current": "1",
+    "default": " 1.000",
+    "min": " 0.000",
+    "max": " 2.000"
+  },
+  "skunk": {
+    "current": "2",
+    "default": " 2.000",
+    "min": " 0.000",
+    "max": " 2.000"
+  },
+  "pname1": {
+    "current": "Profile1",
+    "default": "Profile1"
+  },
+  "stick_curve1": {
+    "current": "4",
+    "default": " 4.000",
+    "min": " 0.000",
+    "max": " 8.000"
+  },
+  "rc_smoothing1": {
+    "current": "1.000",
+    "default": " 1.000",
+    "min": " 0.000",
+    "max": " 4.000"
+  },
+  "pitch_rate1": {
+    "current": "400.000",
+    "default": " 400.000",
+    "min": " 0.000",
+    "max": " 1500.000"
+  },
+  "roll_rate1": {
+    "current": "400.000",
+    "default": " 400.000",
+    "min": " 0.000",
+    "max": " 1500.000"
+  },
+  "yaw_rate1": {
+    "current": "400.000",
+    "default": " 400.000",
+    "min": " 0.000",
+    "max": " 1500.000"
+  },
+  "pitch_acrop1": {
+    "current": "140.000",
+    "default": " 140.000",
+    "min": " 0.000",
+    "max": " 300.000"
+  },
+  "roll_acrop1": {
+    "current": "140.000",
+    "default": " 140.000",
+    "min": " 0.000",
+    "max": " 300.000"
+  },
+  "yaw_acrop1": {
+    "current": "140.000",
+    "default": " 140.000",
+    "min": " 0.000",
+    "max": " 300.000"
+  },
+  "pitch_expo1": {
+    "current": "50.000",
+    "default": " 50.000",
+    "min": " 0.000",
+    "max": " 100.000"
+  },
+  "roll_expo1": {
+    "current": "50.000",
+    "default": " 50.000",
+    "min": " 0.000",
+    "max": " 100.000"
+  },
+  "yaw_expo1": {
+    "current": "50.000",
+    "default": " 50.000",
+    "min": " 0.000",
+    "max": " 100.000"
+  },
+  "yaw_wc1": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 30.000"
+  },
+  "roll_wc1": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 30.000"
+  },
+  "pitch_wc1": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 30.000"
+  },
+  "yaw_kp1": {
+    "current": "30.000",
+    "default": " 30.000",
+    "min": " 0.000",
+    "max": " 200.000"
+  },
+  "roll_kp1": {
+    "current": "30.000",
+    "default": " 30.000",
+    "min": " 0.000",
+    "max": " 200.000"
+  },
+  "pitch_kp1": {
+    "current": "30.000",
+    "default": " 30.000",
+    "min": " 0.000",
+    "max": " 200.000"
+  },
+  "yaw_ki1": {
+    "current": "30.000",
+    "default": " 30.000",
+    "min": " 0.000",
+    "max": " 200.000"
+  },
+  "roll_ki1": {
+    "current": "30.000",
+    "default": " 30.000",
+    "min": " 0.000",
+    "max": " 200.000"
+  },
+  "pitch_ki1": {
+    "current": "30.000",
+    "default": " 30.000",
+    "min": " 0.000",
+    "max": " 200.000"
+  },
+  "yaw_kd1": {
+    "current": "30.000",
+    "default": " 30.000",
+    "min": " 0.000",
+    "max": " 200.000"
+  },
+  "roll_kd1": {
+    "current": "30.000",
+    "default": " 30.000",
+    "min": " 0.000",
+    "max": " 200.000"
+  },
+  "pitch_kd1": {
+    "current": "30.000",
+    "default": " 30.000",
+    "min": " 0.000",
+    "max": " 200.000"
+  },
+  "kd_limit1": {
+    "current": "0.350",
+    "default": " 0.350",
+    "min": " 0.100",
+    "max": " 1.000"
+  },
+  "ki_limit1": {
+    "current": "0.150",
+    "default": " 0.150",
+    "min": " 0.100",
+    "max": " 1.000"
+  },
+  "slp1": {
+    "current": "5.000",
+    "default": " 5.000",
+    "min": " 0.000",
+    "max": " 25.000"
+  },
+  "sli1": {
+    "current": "0.100",
+    "default": " 0.100",
+    "min": " 0.000",
+    "max": " 25.000"
+  },
+  "sla1": {
+    "current": "35.000",
+    "default": " 35.000",
+    "min": " 0.000",
+    "max": " 75.000"
+  },
+  "sld1": {
+    "current": "0.030",
+    "default": " 0.030",
+    "min": " 0.000",
+    "max": " 0.900"
+  },
+  "res_redux1": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 1.000"
+  },
+  "yaw_rap1": {
+    "current": "6",
+    "default": " 6.000",
+    "min": " 0.000",
+    "max": " 300.000"
+  },
+  "roll_rap1": {
+    "current": "6",
+    "default": " 6.000",
+    "min": " 0.000",
+    "max": " 300.000"
+  },
+  "pitch_rap1": {
+    "current": "6",
+    "default": " 6.000",
+    "min": " 0.000",
+    "max": " 300.000"
+  },
+  "yaw_lpf1": {
+    "current": "150.000",
+    "default": " 150.000",
+    "min": " 0.000",
+    "max": " 1000.000"
+  },
+  "roll_lpf1": {
+    "current": "150.000",
+    "default": " 150.000",
+    "min": " 0.000",
+    "max": " 1000.000"
+  },
+  "pitch_lpf1": {
+    "current": "150.000",
+    "default": " 150.000",
+    "min": " 0.000",
+    "max": " 1000.000"
+  },
+  "dyn_cut1": {
+    "current": "20.000",
+    "default": " 20.000",
+    "min": " 0.000",
+    "max": " 1000.000"
+  },
+  "yaw_ga1": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 31.000"
+  },
+  "roll_ga1": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 31.000"
+  },
+  "pitch_ga1": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 31.000"
+  },
+  "filter_type1": {
+    "current": "1",
+    "default": " 1.000",
+    "min": " 0.000",
+    "max": " 1.000"
+  },
+  "kd_filter_type1": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 1.000"
+  },
+  "yaw_quick1": {
+    "current": "2500.000",
+    "default": " 2500.000",
+    "min": " 0.000",
+    "max": " 10000.001"
+  },
+  "roll_quick1": {
+    "current": "3500.000",
+    "default": " 3500.000",
+    "min": " 0.000",
+    "max": " 10000.001"
+  },
+  "pitch_quick1": {
+    "current": "3500.000",
+    "default": " 3500.000",
+    "min": " 0.000",
+    "max": " 10000.001"
+  },
+  "yaw_kd_rap1": {
+    "current": "55.000",
+    "default": " 55.000",
+    "min": " 0.000",
+    "max": " 100.000"
+  },
+  "roll_kd_rap1": {
+    "current": "55.000",
+    "default": " 55.000",
+    "min": " 0.000",
+    "max": " 100.000"
+  },
+  "pitch_kd_rap1": {
+    "current": "55.000",
+    "default": " 55.000",
+    "min": " 0.000",
+    "max": " 100.000"
+  },
+  "x_vector_quick1": {
+    "current": "2.000",
+    "default": " 2.000",
+    "min": " 0.000",
+    "max": " 10.000"
+  },
+  "x_vector_rap1": {
+    "current": "25.000",
+    "default": " 25.000",
+    "min": " 0.000",
+    "max": " 10.000"
+  },
+  "y_vector_quick1": {
+    "current": "2.000",
+    "default": " 2.000",
+    "min": " 0.000",
+    "max": " 10.000"
+  },
+  "y_vector_rap1": {
+    "current": "25.000",
+    "default": " 25.000",
+    "min": " 0.000",
+    "max": " 10.000"
+  },
+  "z_vector_quick1": {
+    "current": "2.000",
+    "default": " 2.000",
+    "min": " 0.000",
+    "max": " 10.000"
+  },
+  "z_vector_rap1": {
+    "current": "25.000",
+    "default": " 25.000",
+    "min": " 0.000",
+    "max": " 10.000"
+  },
+  "tpa_kp_curve_type1": {
+    "current": "1",
+    "default": " 1.000",
+    "min": " 0.000",
+    "max": " 1.000"
+  },
+  "tpa_ki_curve_type1": {
+    "current": "1",
+    "default": " 1.000",
+    "min": " 0.000",
+    "max": " 1.000"
+  },
+  "tpa_kd_curve_type1": {
+    "current": "1",
+    "default": " 1.000",
+    "min": " 0.000",
+    "max": " 1.000"
+  },
+  "pname2": {
+    "current": "Profile2",
+    "default": "Profile2"
+  },
+  "stick_curve2": {
+    "current": "4",
+    "default": " 4.000",
+    "min": " 0.000",
+    "max": " 8.000"
+  },
+  "rc_smoothing2": {
+    "current": "1.000",
+    "default": " 1.000",
+    "min": " 0.000",
+    "max": " 4.000"
+  },
+  "pitch_rate2": {
+    "current": "400.000",
+    "default": " 400.000",
+    "min": " 0.000",
+    "max": " 1500.000"
+  },
+  "roll_rate2": {
+    "current": "400.000",
+    "default": " 400.000",
+    "min": " 0.000",
+    "max": " 1500.000"
+  },
+  "yaw_rate2": {
+    "current": "400.000",
+    "default": " 400.000",
+    "min": " 0.000",
+    "max": " 1500.000"
+  },
+  "pitch_acrop2": {
+    "current": "140.000",
+    "default": " 140.000",
+    "min": " 0.000",
+    "max": " 300.000"
+  },
+  "roll_acrop2": {
+    "current": "140.000",
+    "default": " 140.000",
+    "min": " 0.000",
+    "max": " 300.000"
+  },
+  "yaw_acrop2": {
+    "current": "140.000",
+    "default": " 140.000",
+    "min": " 0.000",
+    "max": " 300.000"
+  },
+  "pitch_expo2": {
+    "current": "50.000",
+    "default": " 50.000",
+    "min": " 0.000",
+    "max": " 100.000"
+  },
+  "roll_expo2": {
+    "current": "50.000",
+    "default": " 50.000",
+    "min": " 0.000",
+    "max": " 100.000"
+  },
+  "yaw_expo2": {
+    "current": "50.000",
+    "default": " 50.000",
+    "min": " 0.000",
+    "max": " 100.000"
+  },
+  "yaw_wc2": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 30.000"
+  },
+  "roll_wc2": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 30.000"
+  },
+  "pitch_wc2": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 30.000"
+  },
+  "yaw_kp2": {
+    "current": "30.000",
+    "default": " 30.000",
+    "min": " 0.000",
+    "max": " 200.000"
+  },
+  "roll_kp2": {
+    "current": "30.000",
+    "default": " 30.000",
+    "min": " 0.000",
+    "max": " 200.000"
+  },
+  "pitch_kp2": {
+    "current": "30.000",
+    "default": " 30.000",
+    "min": " 0.000",
+    "max": " 200.000"
+  },
+  "yaw_ki2": {
+    "current": "30.000",
+    "default": " 30.000",
+    "min": " 0.000",
+    "max": " 200.000"
+  },
+  "roll_ki2": {
+    "current": "30.000",
+    "default": " 30.000",
+    "min": " 0.000",
+    "max": " 200.000"
+  },
+  "pitch_ki2": {
+    "current": "30.000",
+    "default": " 30.000",
+    "min": " 0.000",
+    "max": " 200.000"
+  },
+  "yaw_kd2": {
+    "current": "30.000",
+    "default": " 30.000",
+    "min": " 0.000",
+    "max": " 200.000"
+  },
+  "roll_kd2": {
+    "current": "30.000",
+    "default": " 30.000",
+    "min": " 0.000",
+    "max": " 200.000"
+  },
+  "pitch_kd2": {
+    "current": "30.000",
+    "default": " 30.000",
+    "min": " 0.000",
+    "max": " 200.000"
+  },
+  "kd_limit2": {
+    "current": "0.350",
+    "default": " 0.350",
+    "min": " 0.100",
+    "max": " 1.000"
+  },
+  "ki_limit2": {
+    "current": "0.150",
+    "default": " 0.150",
+    "min": " 0.100",
+    "max": " 1.000"
+  },
+  "slp2": {
+    "current": "5.000",
+    "default": " 5.000",
+    "min": " 0.000",
+    "max": " 25.000"
+  },
+  "sli2": {
+    "current": "0.100",
+    "default": " 0.100",
+    "min": " 0.000",
+    "max": " 25.000"
+  },
+  "sla2": {
+    "current": "35.000",
+    "default": " 35.000",
+    "min": " 0.000",
+    "max": " 75.000"
+  },
+  "sld2": {
+    "current": "0.030",
+    "default": " 0.030",
+    "min": " 0.000",
+    "max": " 0.900"
+  },
+  "res_redux2": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 1.000"
+  },
+  "yaw_rap2": {
+    "current": "10",
+    "default": " 10.000",
+    "min": " 0.000",
+    "max": " 300.000"
+  },
+  "roll_rap2": {
+    "current": "10",
+    "default": " 10.000",
+    "min": " 0.000",
+    "max": " 300.000"
+  },
+  "pitch_rap2": {
+    "current": "10",
+    "default": " 10.000",
+    "min": " 0.000",
+    "max": " 300.000"
+  },
+  "yaw_lpf2": {
+    "current": "150.000",
+    "default": " 150.000",
+    "min": " 0.000",
+    "max": " 1000.000"
+  },
+  "roll_lpf2": {
+    "current": "150.000",
+    "default": " 150.000",
+    "min": " 0.000",
+    "max": " 1000.000"
+  },
+  "pitch_lpf2": {
+    "current": "150.000",
+    "default": " 150.000",
+    "min": " 0.000",
+    "max": " 1000.000"
+  },
+  "dyn_cut2": {
+    "current": "20.000",
+    "default": " 20.000",
+    "min": " 0.000",
+    "max": " 1000.000"
+  },
+  "yaw_ga2": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 31.000"
+  },
+  "roll_ga2": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 31.000"
+  },
+  "pitch_ga2": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 31.000"
+  },
+  "filter_type2": {
+    "current": "1",
+    "default": " 1.000",
+    "min": " 0.000",
+    "max": " 1.000"
+  },
+  "kd_filter_type2": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 1.000"
+  },
+  "yaw_quick2": {
+    "current": "2500.000",
+    "default": " 2500.000",
+    "min": " 0.000",
+    "max": " 10000.001"
+  },
+  "roll_quick2": {
+    "current": "3500.000",
+    "default": " 3500.000",
+    "min": " 0.000",
+    "max": " 10000.001"
+  },
+  "pitch_quick2": {
+    "current": "3500.000",
+    "default": " 3500.000",
+    "min": " 0.000",
+    "max": " 10000.001"
+  },
+  "yaw_kd_rap2": {
+    "current": "55.000",
+    "default": " 55.000",
+    "min": " 0.000",
+    "max": " 100.000"
+  },
+  "roll_kd_rap2": {
+    "current": "55.000",
+    "default": " 55.000",
+    "min": " 0.000",
+    "max": " 100.000"
+  },
+  "pitch_kd_rap2": {
+    "current": "55.000",
+    "default": " 55.000",
+    "min": " 0.000",
+    "max": " 100.000"
+  },
+  "x_vector_quick2": {
+    "current": "2.000",
+    "default": " 2.000",
+    "min": " 0.000",
+    "max": " 10.000"
+  },
+  "x_vector_rap2": {
+    "current": "25.000",
+    "default": " 25.000",
+    "min": " 0.000",
+    "max": " 10.000"
+  },
+  "y_vector_quick2": {
+    "current": "2.000",
+    "default": " 2.000",
+    "min": " 0.000",
+    "max": " 10.000"
+  },
+  "y_vector_rap2": {
+    "current": "25.000",
+    "default": " 25.000",
+    "min": " 0.000",
+    "max": " 10.000"
+  },
+  "z_vector_quick2": {
+    "current": "2.000",
+    "default": " 2.000",
+    "min": " 0.000",
+    "max": " 10.000"
+  },
+  "z_vector_rap2": {
+    "current": "25.000",
+    "default": " 25.000",
+    "min": " 0.000",
+    "max": " 10.000"
+  },
+  "tpa_kp_curve_type2": {
+    "current": "1",
+    "default": " 1.000",
+    "min": " 0.000",
+    "max": " 1.000"
+  },
+  "tpa_ki_curve_type2": {
+    "current": "1",
+    "default": " 1.000",
+    "min": " 0.000",
+    "max": " 1.000"
+  },
+  "tpa_kd_curve_type2": {
+    "current": "1",
+    "default": " 1.000",
+    "min": " 0.000",
+    "max": " 1.000"
+  },
+  "pname3": {
+    "current": "Profile3",
+    "default": "Profile3"
+  },
+  "stick_curve3": {
+    "current": "4",
+    "default": " 4.000",
+    "min": " 0.000",
+    "max": " 8.000"
+  },
+  "rc_smoothing3": {
+    "current": "1.000",
+    "default": " 1.000",
+    "min": " 0.000",
+    "max": " 4.000"
+  },
+  "pitch_rate3": {
+    "current": "400.000",
+    "default": " 400.000",
+    "min": " 0.000",
+    "max": " 1500.000"
+  },
+  "roll_rate3": {
+    "current": "400.000",
+    "default": " 400.000",
+    "min": " 0.000",
+    "max": " 1500.000"
+  },
+  "yaw_rate3": {
+    "current": "400.000",
+    "default": " 400.000",
+    "min": " 0.000",
+    "max": " 1500.000"
+  },
+  "pitch_acrop3": {
+    "current": "140.000",
+    "default": " 140.000",
+    "min": " 0.000",
+    "max": " 300.000"
+  },
+  "roll_acrop3": {
+    "current": "140.000",
+    "default": " 140.000",
+    "min": " 0.000",
+    "max": " 300.000"
+  },
+  "yaw_acrop3": {
+    "current": "140.000",
+    "default": " 140.000",
+    "min": " 0.000",
+    "max": " 300.000"
+  },
+  "pitch_expo3": {
+    "current": "50.000",
+    "default": " 50.000",
+    "min": " 0.000",
+    "max": " 100.000"
+  },
+  "roll_expo3": {
+    "current": "50.000",
+    "default": " 50.000",
+    "min": " 0.000",
+    "max": " 100.000"
+  },
+  "yaw_expo3": {
+    "current": "50.000",
+    "default": " 50.000",
+    "min": " 0.000",
+    "max": " 100.000"
+  },
+  "yaw_wc3": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 30.000"
+  },
+  "roll_wc3": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 30.000"
+  },
+  "pitch_wc3": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 30.000"
+  },
+  "yaw_kp3": {
+    "current": "30.000",
+    "default": " 30.000",
+    "min": " 0.000",
+    "max": " 200.000"
+  },
+  "roll_kp3": {
+    "current": "30.000",
+    "default": " 30.000",
+    "min": " 0.000",
+    "max": " 200.000"
+  },
+  "pitch_kp3": {
+    "current": "30.000",
+    "default": " 30.000",
+    "min": " 0.000",
+    "max": " 200.000"
+  },
+  "yaw_ki3": {
+    "current": "30.000",
+    "default": " 30.000",
+    "min": " 0.000",
+    "max": " 200.000"
+  },
+  "roll_ki3": {
+    "current": "30.000",
+    "default": " 30.000",
+    "min": " 0.000",
+    "max": " 200.000"
+  },
+  "pitch_ki3": {
+    "current": "30.000",
+    "default": " 30.000",
+    "min": " 0.000",
+    "max": " 200.000"
+  },
+  "yaw_kd3": {
+    "current": "30.000",
+    "default": " 30.000",
+    "min": " 0.000",
+    "max": " 200.000"
+  },
+  "roll_kd3": {
+    "current": "30.000",
+    "default": " 30.000",
+    "min": " 0.000",
+    "max": " 200.000"
+  },
+  "pitch_kd3": {
+    "current": "30.000",
+    "default": " 30.000",
+    "min": " 0.000",
+    "max": " 200.000"
+  },
+  "kd_limit3": {
+    "current": "0.350",
+    "default": " 0.350",
+    "min": " 0.100",
+    "max": " 1.000"
+  },
+  "ki_limit3": {
+    "current": "0.150",
+    "default": " 0.150",
+    "min": " 0.100",
+    "max": " 1.000"
+  },
+  "slp3": {
+    "current": "5.000",
+    "default": " 5.000",
+    "min": " 0.000",
+    "max": " 25.000"
+  },
+  "sli3": {
+    "current": "0.100",
+    "default": " 0.100",
+    "min": " 0.000",
+    "max": " 25.000"
+  },
+  "sla3": {
+    "current": "35.000",
+    "default": " 35.000",
+    "min": " 0.000",
+    "max": " 75.000"
+  },
+  "sld3": {
+    "current": "0.030",
+    "default": " 0.030",
+    "min": " 0.000",
+    "max": " 0.900"
+  },
+  "res_redux3": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 1.000"
+  },
+  "yaw_rap3": {
+    "current": "10",
+    "default": " 10.000",
+    "min": " 0.000",
+    "max": " 300.000"
+  },
+  "roll_rap3": {
+    "current": "10",
+    "default": " 10.000",
+    "min": " 0.000",
+    "max": " 300.000"
+  },
+  "pitch_rap3": {
+    "current": "10",
+    "default": " 10.000",
+    "min": " 0.000",
+    "max": " 300.000"
+  },
+  "yaw_lpf3": {
+    "current": "150.000",
+    "default": " 150.000",
+    "min": " 0.000",
+    "max": " 1000.000"
+  },
+  "roll_lpf3": {
+    "current": "150.000",
+    "default": " 150.000",
+    "min": " 0.000",
+    "max": " 1000.000"
+  },
+  "pitch_lpf3": {
+    "current": "150.000",
+    "default": " 150.000",
+    "min": " 0.000",
+    "max": " 1000.000"
+  },
+  "dyn_cut3": {
+    "current": "20.000",
+    "default": " 20.000",
+    "min": " 0.000",
+    "max": " 1000.000"
+  },
+  "yaw_ga3": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 31.000"
+  },
+  "roll_ga3": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 31.000"
+  },
+  "pitch_ga3": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 31.000"
+  },
+  "filter_type3": {
+    "current": "1",
+    "default": " 1.000",
+    "min": " 0.000",
+    "max": " 1.000"
+  },
+  "kd_filter_type3": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 1.000"
+  },
+  "yaw_quick3": {
+    "current": "2500.000",
+    "default": " 2500.000",
+    "min": " 0.000",
+    "max": " 10000.001"
+  },
+  "roll_quick3": {
+    "current": "3500.000",
+    "default": " 3500.000",
+    "min": " 0.000",
+    "max": " 10000.001"
+  },
+  "pitch_quick3": {
+    "current": "3500.000",
+    "default": " 3500.000",
+    "min": " 0.000",
+    "max": " 10000.001"
+  },
+  "yaw_kd_rap3": {
+    "current": "55.000",
+    "default": " 55.000",
+    "min": " 0.000",
+    "max": " 100.000"
+  },
+  "roll_kd_rap3": {
+    "current": "55.000",
+    "default": " 55.000",
+    "min": " 0.000",
+    "max": " 100.000"
+  },
+  "pitch_kd_rap3": {
+    "current": "55.000",
+    "default": " 55.000",
+    "min": " 0.000",
+    "max": " 100.000"
+  },
+  "x_vector_quick3": {
+    "current": "2.000",
+    "default": " 2.000",
+    "min": " 0.000",
+    "max": " 10.000"
+  },
+  "x_vector_rap3": {
+    "current": "25.000",
+    "default": " 25.000",
+    "min": " 0.000",
+    "max": " 10.000"
+  },
+  "y_vector_quick3": {
+    "current": "2.000",
+    "default": " 2.000",
+    "min": " 0.000",
+    "max": " 10.000"
+  },
+  "y_vector_rap3": {
+    "current": "25.000",
+    "default": " 25.000",
+    "min": " 0.000",
+    "max": " 10.000"
+  },
+  "z_vector_quick3": {
+    "current": "2.000",
+    "default": " 2.000",
+    "min": " 0.000",
+    "max": " 10.000"
+  },
+  "z_vector_rap3": {
+    "current": "25.000",
+    "default": " 25.000",
+    "min": " 0.000",
+    "max": " 10.000"
+  },
+  "tpa_kp_curve_type3": {
+    "current": "1",
+    "default": " 1.000",
+    "min": " 0.000",
+    "max": " 1.000"
+  },
+  "tpa_ki_curve_type3": {
+    "current": "1",
+    "default": " 1.000",
+    "min": " 0.000",
+    "max": " 1.000"
+  },
+  "tpa_kd_curve_type3": {
+    "current": "1",
+    "default": " 1.000",
+    "min": " 0.000",
+    "max": " 1.000"
+  },
+  "rx_protocol": {
+    "current": "2",
+    "default": " 2.000",
+    "min": " 0.000",
+    "max": " 22.000"
+  },
+  "rx_usart": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 5.000"
+  },
+  "arm_method": {
+    "current": "1",
+    "default": " 1.000",
+    "min": " 0.000",
+    "max": " 1.000"
+  },
+  "rx_inv_direction": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 2.000"
+  },
+  "pitch_deadband": {
+    "current": "0.015",
+    "default": " 0.015",
+    "min": " 0.000",
+    "max": " 0.100"
+  },
+  "roll_deadband": {
+    "current": "0.015",
+    "default": " 0.015",
+    "min": " 0.000",
+    "max": " 0.100"
+  },
+  "yaw_deadband": {
+    "current": "0.015",
+    "default": " 0.015",
+    "min": " 0.000",
+    "max": " 0.100"
+  },
+  "throttle_deadband": {
+    "current": "0.000",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 0.100"
+  },
+  "aux1_deadband": {
+    "current": "0.000",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 0.100"
+  },
+  "aux2_deadband": {
+    "current": "0.000",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 0.100"
+  },
+  "aux3_deadband": {
+    "current": "0.000",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 0.100"
+  },
+  "aux4_deadband": {
+    "current": "0.000",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 0.100"
+  },
+  "pitch_midrc": {
+    "current": "1024",
+    "default": " 1024.000",
+    "min": " 0.000",
+    "max": " 21480.000"
+  },
+  "roll_midrc": {
+    "current": "1024",
+    "default": " 1024.000",
+    "min": " 0.000",
+    "max": " 21480.000"
+  },
+  "yaw_midrc": {
+    "current": "1024",
+    "default": " 1024.000",
+    "min": " 0.000",
+    "max": " 21480.000"
+  },
+  "throttle_midrc": {
+    "current": "1024",
+    "default": " 1024.000",
+    "min": " 0.000",
+    "max": " 21480.000"
+  },
+  "aux1_midrc": {
+    "current": "1024",
+    "default": " 1024.000",
+    "min": " 0.000",
+    "max": " 21480.000"
+  },
+  "aux2_midrc": {
+    "current": "1024",
+    "default": " 1024.000",
+    "min": " 0.000",
+    "max": " 21480.000"
+  },
+  "aux3_midrc": {
+    "current": "1024",
+    "default": " 1024.000",
+    "min": " 0.000",
+    "max": " 21480.000"
+  },
+  "aux4_midrc": {
+    "current": "1024",
+    "default": " 1024.000",
+    "min": " 0.000",
+    "max": " 21480.000"
+  },
+  "pitch_minrc": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 21480.000"
+  },
+  "roll_minrc": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 21480.000"
+  },
+  "yaw_minrc": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 21480.000"
+  },
+  "throttle_minrc": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 21480.000"
+  },
+  "aux1_minrc": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 21480.000"
+  },
+  "aux2_minrc": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 21480.000"
+  },
+  "aux3_minrc": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 21480.000"
+  },
+  "aux4_minrc": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 21480.000"
+  },
+  "pitch_maxrc": {
+    "current": "2048",
+    "default": " 2048.000",
+    "min": " 0.000",
+    "max": " 21480.000"
+  },
+  "roll_maxrc": {
+    "current": "2048",
+    "default": " 2048.000",
+    "min": " 0.000",
+    "max": " 21480.000"
+  },
+  "yaw_maxrc": {
+    "current": "2048",
+    "default": " 2048.000",
+    "min": " 0.000",
+    "max": " 21480.000"
+  },
+  "throttle_maxrc": {
+    "current": "2048",
+    "default": " 2048.000",
+    "min": " 0.000",
+    "max": " 21480.000"
+  },
+  "aux1_maxrc": {
+    "current": "2048",
+    "default": " 2048.000",
+    "min": " 0.000",
+    "max": " 21480.000"
+  },
+  "aux2_maxrc": {
+    "current": "2048",
+    "default": " 2048.000",
+    "min": " 0.000",
+    "max": " 21480.000"
+  },
+  "aux3_maxrc": {
+    "current": "2048",
+    "default": " 2048.000",
+    "min": " 0.000",
+    "max": " 21480.000"
+  },
+  "aux4_maxrc": {
+    "current": "2048",
+    "default": " 2048.000",
+    "min": " 0.000",
+    "max": " 21480.000"
+  },
+  "pitch_map": {
+    "current": "2",
+    "default": " 2.000",
+    "min": " 0.000",
+    "max": " 100.000"
+  },
+  "roll_map": {
+    "current": "1",
+    "default": " 1.000",
+    "min": " 0.000",
+    "max": " 100.000"
+  },
+  "yaw_map": {
+    "current": "3",
+    "default": " 3.000",
+    "min": " 0.000",
+    "max": " 100.000"
+  },
+  "throttle_map": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 100.000"
+  },
+  "aux1_map": {
+    "current": "4",
+    "default": " 4.000",
+    "min": " 0.000",
+    "max": " 100.000"
+  },
+  "aux2_map": {
+    "current": "5",
+    "default": " 5.000",
+    "min": " 0.000",
+    "max": " 100.000"
+  },
+  "aux3_map": {
+    "current": "6",
+    "default": " 6.000",
+    "min": " 0.000",
+    "max": " 100.000"
+  },
+  "aux4_map": {
+    "current": "7",
+    "default": " 7.000",
+    "min": " 0.000",
+    "max": " 100.000"
+  },
+  "aux5_map": {
+    "current": "100",
+    "default": " 100.000",
+    "min": " 0.000",
+    "max": " 100.000"
+  },
+  "aux6_map": {
+    "current": "100",
+    "default": " 100.000",
+    "min": " 0.000",
+    "max": " 100.000"
+  },
+  "aux7_map": {
+    "current": "100",
+    "default": " 100.000",
+    "min": " 0.000",
+    "max": " 100.000"
+  },
+  "aux8_map": {
+    "current": "100",
+    "default": " 100.000",
+    "min": " 0.000",
+    "max": " 100.000"
+  },
+  "aux9_map": {
+    "current": "100",
+    "default": " 100.000",
+    "min": " 0.000",
+    "max": " 100.000"
+  },
+  "aux10_map": {
+    "current": "100",
+    "default": " 100.000",
+    "min": " 0.000",
+    "max": " 100.000"
+  },
+  "aux11_map": {
+    "current": "100",
+    "default": " 100.000",
+    "min": " 0.000",
+    "max": " 100.000"
+  },
+  "aux12_map": {
+    "current": "100",
+    "default": " 100.000",
+    "min": " 0.000",
+    "max": " 100.000"
+  },
+  "rc_calibrated": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 1.000"
+  },
+  "bind": {
+    "current": "0",
+    "default": " 0.000",
+    "min": " 0.000",
+    "max": " 32.000"
+  },
+  "short_throw": {
+    "current": "1",
+    "default": " 1.000",
+    "min": " 0.000",
+    "max": " 1.000"
+  },
+  "omega0": {
+    "current": "1.000",
+    "default": " 1.000",
+    "min": " 0.000",
+    "max": " 1000.000"
+  },
+  "omega1_yaw": {
+    "current": "30.000",
+    "default": " 30.000",
+    "min": " 0.000",
+    "max": " 1000.000"
+  },
+  "omega1_roll": {
+    "current": "40.000",
+    "default": " 40.000",
+    "min": " 0.000",
+    "max": " 1000.000"
+  },
+  "omega1_pitch": {
+    "current": "40.000",
+    "default": " 40.000",
+    "min": " 0.000",
+    "max": " 1000.000"
+  },
+  "omega2_yaw": {
+    "current": "0.088",
+    "default": " 0.088",
+    "min": " 0.000",
+    "max": " 1000.000"
+  },
+  "omega2_roll": {
+    "current": "0.088",
+    "default": " 0.088",
+    "min": " 0.000",
+    "max": " 1000.000"
+  },
+  "omega2_pitch": {
+    "current": "0.088",
+    "default": " 0.088",
+    "min": " 0.000",
+    "max": " 1000.000"
+  }
+}
