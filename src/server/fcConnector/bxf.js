@@ -42,14 +42,14 @@ const getConfig = (comName, cb, ecb) => {
   }
 };
 
-const setValue = (comName, name, newVal, cb, ecb) => {
+const sendCommand = (comName, command, cb, ecb) => {
   try {
     port =
       port ||
       new SerialPort(comName, {
         baudRate: 115200
       });
-    port.write(`set ${name}=${newVal}\n`, err => {
+    port.write(`${command}\n`, err => {
       setTimeout(() => {
         cb();
       }, 1000);
@@ -60,22 +60,8 @@ const setValue = (comName, name, newVal, cb, ecb) => {
   }
 };
 
-const saveConfig = (comName, cb, ecb) => {
-  try {
-    port =
-      port ||
-      new SerialPort(comName, {
-        baudRate: 115200
-      });
-    port.write(`save\n`, err => {
-      setTimeout(() => {
-        cb();
-      }, 1000);
-    });
-  } catch (ex) {
-    console.log(ex);
-    ecb && ecb(ex);
-  }
+const setValue = (comName, name, newVal, cb, ecb) => {
+  sendCommand(comName, `set ${name}=${newVal}`, cb, ecb);
 };
 
 const closeConnection = () => {
@@ -85,7 +71,7 @@ const closeConnection = () => {
 module.exports = {
   getConfig: getConfig,
   setValue: setValue,
-  saveConfig: saveConfig,
+  sendCommand: sendCommand,
   close: closeConnection
 };
 

@@ -9,6 +9,7 @@ export default class VersionInfoView extends Component {
     super(props);
     this.version = props.version.split("|");
     this.imuf = props.imuf;
+    this.goToDFU = props.goToDFU;
     this.state = {
       fw: this.version[0],
       target: this.version[1],
@@ -44,7 +45,10 @@ export default class VersionInfoView extends Component {
           <Menu>
             <MenuItem primaryText={"Firmware: " + this.state.fw} />
             <MenuItem primaryText={"Target: " + this.state.target} />
-            <MenuItem primaryText={"Version: " + this.state.version} />
+            <MenuItem
+              onClick={() => this.goToDFU()}
+              primaryText={"Version: " + this.state.version}
+            />
             <MenuItem primaryText={"IMU-F Version: " + this.state.imuf} />
           </Menu>
         </Popover>

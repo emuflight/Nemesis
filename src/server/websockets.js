@@ -1,4 +1,4 @@
-const usbDetect = require("usb-detection");
+const usb = require("usb");
 const WebSocketServer = require("websocket").server;
 const devices = require("./devices");
 const http = require("http");
@@ -22,35 +22,38 @@ wsServer = new WebSocketServer({
 // WebSocket server
 wsServer.on("request", request => {
   var connection = request.accept(null, request.origin);
-  usbDetect.startMonitoring();
   // Detect add/insert
-  usbDetect.on(`add`, device => {
+  usb.on(`attach`, device => {
+    console.log(device);
     setTimeout(() => {
       devices.list((err, ports) => {
         connectedDevice = ports[0];
         if (connectedDevice) {
           connectedDevice.connected = true;
-          fcConnector.getConfig(connectedDevice, config => {
-            connectedDevice.config = config;
+          if (connectedDevice.dfu) {
+            connection.sendUTF(JSON.stringify(connectedDevice));
+          } else {
             connection.sendUTF(JSON.stringify(connectedDevice));
             devices.setConnectedDevice(connectedDevice);
-          });
+          }
         }
       });
     }, 1500);
   });
 
   // Detect remove
-  usbDetect.on(`remove`, device => {
-    device.connected = false;
-    connection.sendUTF(JSON.stringify(device));
-    fcConnector.close(devices.getConnectedDevice());
+  usb.on(`detach`, device => {
+    connection.sendUTF(
+      JSON.stringify({
+        dfu: false,
+        connected: false
+      })
+    );
+    // fcConnector.close(devices.getConnectedDevice());
   });
   // This is the most important callback for us, we'll handle
   // all messages from users here.
   connection.on("message", message => {});
 
-  connection.on("close", connection => {
-    usbDetect.stopMonitoring();
-  });
+  connection.on("close", connection => {});
 });

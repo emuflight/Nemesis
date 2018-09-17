@@ -1,6 +1,7 @@
 const express = require("express");
 const devices = require("./devices");
 const fcConnector = require("./fcConnector");
+const firmware = require("./firmware");
 const app = express();
 require("./websockets");
 
@@ -20,30 +21,40 @@ app.get("/device", (req, res) => {
   devices.list((err, ports) => {
     let connectedDevice = ports[0];
     if (connectedDevice) {
-      fcConnector.getConfig(connectedDevice, config => {
-        connectedDevice.config = config;
-        devices.setConnectedDevice(connectedDevice);
-        res.json(connectedDevice);
-      });
+      if (connectedDevice.dfu) {
+        firmware.get(builds => {
+          connectedDevice.firmwares = builds;
+          res.json(connectedDevice);
+        });
+      } else {
+        fcConnector.getConfig(connectedDevice, config => {
+          connectedDevice.config = config;
+          devices.setConnectedDevice(connectedDevice);
+          res.json(connectedDevice);
+        });
+      }
     } else {
       res.sendStatus(500);
     }
   });
 });
 
-app.get("/save", (req, res) => {
+app.get("/send/:command", (req, res) => {
   devices.list((err, ports) => {
     let connectedDevice = ports[0];
     if (connectedDevice) {
-      fcConnector.saveConfig(connectedDevice, () => {
-        res.sendStatus(200);
+      fcConnector.sendCommand(connectedDevice, req.params.command, output => {
+        if (output) {
+          res.json(output);
+        } else {
+          res.sendStatus(200);
+        }
       });
     } else {
       res.sendStatus(500);
     }
   });
 });
-
 app.get("/set/:name/:value", (req, res) => {
   devices.list((err, ports) => {
     let connectedDevice = ports[0];
@@ -61,6 +72,10 @@ app.get("/set/:name/:value", (req, res) => {
       res.sendStatus(500);
     }
   });
+});
+app.get("/flash/:binUrl", (req, res) => {
+  firmware.flash(req.params.binUrl);
+  res.sendStatus(202);
 });
 
 app.listen(9001, () => console.log("usb interface listening on port 9001!"));

@@ -12,6 +12,7 @@ export default class Connected extends Component {
     super(props);
     this.fcConfig = props.fcConfig;
     this.uiConfig = props.uiConfig;
+    this.goToDFU = props.goToDFU;
     this.state = {
       isDirty: false,
       drawerOpen: false,
@@ -54,9 +55,9 @@ export default class Connected extends Component {
       <div>
         <AppBar
           title={this.state.currentRoute.title}
-          onLeftIconButtonClick={this.handleDrawerToggle}
+          onLeftIconButtonClick={() => this.handleDrawerToggle()}
           iconElementRight={<FlatButton label="Save" />}
-          onRightIconButtonClick={this.handleSaveClick}
+          onRightIconButtonClick={() => this.handleSaveClick()}
         />
         <Drawer open={this.state.drawerOpen}>
           {this.uiConfig.routes.map(route => {
@@ -72,6 +73,7 @@ export default class Connected extends Component {
           })}
         </Drawer>
         <VersionInfoView
+          goToDFU={this.goToDFU}
           version={this.fcConfig.version}
           imuf={this.fcConfig.imuf}
         />

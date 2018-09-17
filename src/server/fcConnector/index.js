@@ -16,11 +16,11 @@ module.exports = {
       return bxfConnector.setValue(deviceInfo.comName, key, value, cb, ecb);
     }
   },
-  saveConfig(deviceInfo, cb, ecb) {
+  sendCommand(deviceInfo, command, cb, ecb) {
     if (deviceInfo.hid) {
-      return rf1Connector.saveConfig(deviceInfo.path, cb, ecb);
+      return rf1Connector.sendCommand(deviceInfo.path, command, cb, ecb);
     } else {
-      return bxfConnector.saveConfig(deviceInfo.comName, cb, ecb);
+      return bxfConnector.sendCommand(deviceInfo.comName, command, cb, ecb);
     }
   },
   close(deviceInfo) {

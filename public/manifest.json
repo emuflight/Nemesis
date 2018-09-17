@@ -8,6 +8,22 @@
       "type": "image/png"
     }
   ],
+  "permissions": [
+    "https://maps.googleapis.com/*",
+    "https://*.github.com/",
+    "https://*.githubusercontent.com/",
+    "http://*.baseflight.net/",
+    "https://*.amazonaws.com/",
+    "serial",
+    "usb",
+    "storage",
+    "fileSystem",
+    "fileSystem.write",
+    "fileSystem.retainEntries",
+    "notifications",
+    "alwaysOnTopWindows",
+    "webview"
+  ],
   "start_url": "./index.html",
   "display": "standalone",
   "theme_color": "#000000",

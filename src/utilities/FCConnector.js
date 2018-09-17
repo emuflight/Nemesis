@@ -11,7 +11,8 @@ export default new class FCConnector {
     };
 
     connection.onmessage = message => {
-      onFcConnect(JSON.parse(message.data));
+      let data = JSON.parse(message.data);
+      onFcConnect(data);
     };
   }
 
@@ -30,7 +31,21 @@ export default new class FCConnector {
   }
 
   saveConfig() {
-    return fetch(`http://localhost:9001/save`).then(response => {
+    return fetch(`http://localhost:9001/send/save`).then(response => {
+      return response.json();
+    });
+  }
+
+  flashDFU(binUrl, notifyProgress) {
+    return fetch(
+      `http://localhost:9001/flash/${encodeURIComponent(binUrl)}`
+    ).then(response => {
+      return response.json();
+    });
+  }
+
+  goToDFU() {
+    return fetch(`http://localhost:9001/send/bl`).then(response => {
       return response.json();
     });
   }

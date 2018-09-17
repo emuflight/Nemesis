@@ -5,6 +5,7 @@ import getMuiTheme from "material-ui/styles/getMuiTheme";
 
 import Connected from "./Views/Connected";
 import Disconnected from "./Views/Disconnected";
+import DfuView from "./Views/DfuView";
 import FCConnector from "./utilities/FCConnector";
 import uiConfig from "./test/ui_config.json";
 const electron = window.require("electron"); // little trick to import electron in react
@@ -21,14 +22,12 @@ class App extends Component {
     ipcRenderer.on("updateReady", (event, text) => {
       this.setState({ updateReady: true });
     });
-    FCConnector.startDetect(connectedDevice => {
-      connectedDevice.config && this.setupRoutes(connectedDevice.config);
-      this.setState({
-        id: connectedDevice.comName,
-        deviceInfo: connectedDevice,
-        connected: connectedDevice.connected,
-        currentConfig: connectedDevice.config
-      });
+    FCConnector.startDetect(device => {
+      if (device.connected) {
+        this.getFcConfig();
+      } else {
+        this.setState(device);
+      }
     });
 
     this.uiConfig = uiConfig;
@@ -70,24 +69,46 @@ class App extends Component {
     });
   }
 
-  componentDidMount() {
+  goToDFU = () => {
+    FCConnector.goToDFU();
+  };
+
+  getFcConfig = () => {
     FCConnector.tryGetConfig().then(connectedDevice => {
-      this.setupRoutes(connectedDevice.config);
-      this.setState({
-        id: connectedDevice.comName,
-        deviceInfo: connectedDevice,
-        // currentConfig: fcConfig,
-        currentConfig: connectedDevice.config,
-        connected: true
-      });
+      if (connectedDevice.dfu) {
+        this.setState({
+          dfu: connectedDevice.dfu,
+          deviceInfo: connectedDevice
+        });
+      } else {
+        connectedDevice.config && this.setupRoutes(connectedDevice.config);
+        this.setState({
+          id: connectedDevice.comName,
+          deviceInfo: connectedDevice,
+          // currentConfig: fcConfig,
+          currentConfig: connectedDevice.config,
+          connected: true
+        });
+      }
     });
+  };
+
+  componentDidMount() {
+    this.getFcConfig();
   }
 
   render() {
-    if (this.state.connected) {
+    if (this.state.dfu) {
+      return (
+        <MuiThemeProvider muiTheme={getMuiTheme(theme)}>
+          <DfuView info={this.state.deviceInfo} />
+        </MuiThemeProvider>
+      );
+    } else if (this.state.connected) {
       return (
         <MuiThemeProvider muiTheme={getMuiTheme(theme)}>
           <Connected
+            goToDFU={this.goToDFU}
             connectinId={this.state.id}
             uiConfig={this.uiConfig}
             fcConfig={this.state.currentConfig}
