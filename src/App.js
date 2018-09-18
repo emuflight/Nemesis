@@ -52,7 +52,7 @@ class App extends Component {
   getFcConfig = () => {
     return FCConnector.tryGetConfig().then(connectedDevice => {
       switch (connectedDevice.config.version.fw) {
-        case "Raceflight":
+        case "RACEFLIGHT":
           this.uiConfig = rf1UiConfig;
           break;
         default:

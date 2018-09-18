@@ -9,11 +9,12 @@
     "TELEMETRY",
     "GYRO",
     "OSD",
-    "PORTS",
     "BLACKBOX",
     "ADVANCED"
   ],
   "groups": {
+    "OSD": [],
+    "BLACKBOX": [],
     "PID": [
       "yaw_wc1",
       "roll_wc1",
