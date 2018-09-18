@@ -18,6 +18,7 @@ export default class ConfigListView extends Component {
   }
 
   render() {
+    console.log(this.items);
     return (
       <List>
         {this.items &&

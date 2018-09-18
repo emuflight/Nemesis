@@ -45,9 +45,11 @@ export default class Connected extends Component {
 
   notifyDirty(isDirty, item, newValue) {
     let notification = document.getElementById(item.id);
-    notification.dispatchEvent(
-      new CustomEvent("change", { detail: { item, newValue } })
-    );
+    if (notification) {
+      notification.dispatchEvent(
+        new CustomEvent("change", { detail: { item, newValue } })
+      );
+    }
     this.setState({ isDirty });
   }
 

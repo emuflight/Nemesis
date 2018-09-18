@@ -10,7 +10,7 @@
     "OSD",
     "PORTS",
     "BLACKBOX",
-    "MISC"
+    "ADVANCED"
   ],
   "groups": {
     "PID": [
@@ -219,7 +219,7 @@
       "blackbox_record_acc",
       "blackbox_mode"
     ],
-    "MISC": [
+    "ADVANCED": [
       "thr_corr_value",
       "thr_corr_angle",
       "bat_capacity",

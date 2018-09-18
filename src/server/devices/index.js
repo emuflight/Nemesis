@@ -7,7 +7,7 @@ let connectedDevice;
 
 module.exports = {
   list: cb => {
-    let devices = usb
+    const devices = usb
       .getDeviceList()
       .filter(
         device =>
@@ -25,12 +25,18 @@ module.exports = {
           device.deviceDescriptor
         );
       });
+    let hid = HID.devices().filter(port => {
+      port.hid = true;
+      return port.vendorId === STM32USBInfo.vendorId;
+    });
+
     SerialPort.list((err, ports) => {
-      const list = devices.concat(
-        HID.devices().filter(port => port.vendorId === STM32USBInfo.vendorId),
-        ports.filter(port => port.vendorId === STM32USBInfo.octVendorId)
-      );
-      cb(null, list);
+      const list =
+        (devices.length && devices) ||
+        (hid.length && hid) ||
+        (ports.length &&
+          ports.filter(port => port.vendorId === STM32USBInfo.octVendorId));
+      cb(err, list);
     });
   },
   getConnectedDevice() {

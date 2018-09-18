@@ -13,29 +13,68 @@ const strToBytes = string => {
 
 const getConfig = (path, cb, ecb) => {
   var device = new HID.HID(path);
-
   let sendBytes = strToBytes("config\n");
-  let doneReading = false;
   let ret = "";
+  const sendCB = () => {
+    setTimeout(() => {
+      device.close();
+      ret = ret.replace(/\u0001|\u0000|\n/gim, "");
+      ret = ret.slice(0, ret.indexOf("}}") + 2);
+      ret = JSON.parse(ret);
+      ret.version = "RACEFLIGHT|HELIO_SPRING|HESP|392";
+      ret.imuf = "108";
+      cb(ret);
+    }, 1000);
+  };
+  device.on("data", function(data) {
+    ret += data.toString("utf8");
+    if (ret.indexOf("\0") === -1) {
+      device.write(sendBytes);
+    } else {
+      sendCB();
+    }
+  });
+  device.write(sendBytes);
+};
 
-  while (!doneReading) {
-    device.write(sendBytes);
-    device.read((error, data) => {
-      if (error) {
-        ecb(error);
-      }
-      let next = data.toString("utf8");
-      console.log(next);
-      ret += next;
-      doneReading = ret.indexOf("\0") !== -1;
-      if (doneReading) {
-        cb(ret);
-        return;
-      }
+const sendCommand = (path, command, cb, ecb) => {
+  try {
+    var device = new HID.HID(path);
+    let sendBytes = strToBytes(`${command}\n`);
+    device.on("data", data => {
+      device.close();
+      console.log("HID DATA:", data);
+      cb(data);
     });
+    device.on("error", error => {
+      device.close();
+      console.log("HID ERROR:", error);
+      ecb(error);
+    });
+    device.write(sendBytes);
+  } catch (ex) {
+    device.close();
+    console.log("HID EXCEPTON:", ex);
+    ecb && ecb(ex);
   }
 };
 
+const updateIMUF = (comName, binName, notify, cb, ecb) => {
+  cb();
+};
+
+const setValue = (comName, name, newVal, cb, ecb) => {
+  sendCommand(comName, `set ${name}=${newVal}`, cb, ecb);
+};
+
+const closeConnection = () => {
+  port && port.close();
+};
+
 module.exports = {
-  getConfig: getConfig
+  sendCommand: sendCommand,
+  close: closeConnection,
+  updateIMUF: updateIMUF,
+  getConfig: getConfig,
+  setValue: setValue
 };

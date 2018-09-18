@@ -42,7 +42,10 @@ class App extends Component {
 
         items: Object.keys(config)
           .filter(key => {
-            return this.uiConfig.groups[route].indexOf(key) !== -1;
+            return (
+              route === "ADVANCED" ||
+              this.uiConfig.groups[route].indexOf(key) !== -1
+            );
           })
           .map(k => {
             let itemObj = Object.assign(
@@ -80,6 +83,7 @@ class App extends Component {
 
   getFcConfig = () => {
     return FCConnector.tryGetConfig().then(connectedDevice => {
+      console.log(connectedDevice);
       if (connectedDevice.dfu) {
         this.setState({
           dfu: connectedDevice.dfu,

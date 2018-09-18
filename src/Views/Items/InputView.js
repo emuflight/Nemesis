@@ -20,6 +20,16 @@ export default class InputView extends ListItem {
     }
   };
 
+  updateValue() {
+    let isDirty =
+      this.state.current !== this.state.newValue && !!this.state.current;
+    this.notifyDirty(isDirty, this.state, this.state.newValue);
+    this.setState({ current: this.state.newValue, isDirty: isDirty });
+    FCConnector.setValue(this.state.id, this.state.newValue).then(() => {
+      this.setState({ isDirty: false });
+    });
+  }
+
   render() {
     return (
       <div>
@@ -29,14 +39,9 @@ export default class InputView extends ListItem {
           defaultValue={this.state.current}
           errorText={this.state.isDirty && "Saving..."}
           errorStyle={{ color: "rgb(0, 188, 212)" }}
+          onBlur={() => this.updateValue()}
           onChange={(event, newValue) => {
-            let isDirty =
-              this.state.current !== newValue && !!this.state.current;
-            this.notifyDirty(isDirty, this.state, newValue);
-            this.setState({ current: newValue, isDirty: isDirty });
-            FCConnector.setValue(this.state.id, newValue).then(() => {
-              this.setState({ isDirty: false });
-            });
+            this.setState({ newValue });
           }}
           type="number"
         />
