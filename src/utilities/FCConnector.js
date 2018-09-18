@@ -23,13 +23,15 @@ export default new class FCConnector {
         return response.json();
       })
       .then(device => {
-        let versionParts = device.config.version.split("|");
-        device.config.version = {
-          fw: versionParts[0],
-          target: versionParts[1],
-          version: versionParts[3],
-          imuf: device.config.imuf
-        };
+        if (device.config) {
+          let versionParts = device.config.version.split("|");
+          device.config.version = {
+            fw: versionParts[0],
+            target: versionParts[1],
+            version: versionParts[3],
+            imuf: device.config.imuf
+          };
+        }
         return device;
       });
   }

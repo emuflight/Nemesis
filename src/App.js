@@ -51,20 +51,20 @@ class App extends Component {
 
   getFcConfig = () => {
     return FCConnector.tryGetConfig().then(connectedDevice => {
-      switch (connectedDevice.config.version.fw) {
-        case "RACEFLIGHT":
-          this.uiConfig = rf1UiConfig;
-          break;
-        default:
-          this.uiConfig = BxfUiConfig;
-      }
-      this.baseRoutes = this.uiConfig.routes;
       if (connectedDevice.dfu) {
         this.setState({
           dfu: connectedDevice.dfu,
           deviceInfo: connectedDevice
         });
       } else {
+        switch (connectedDevice.config.version.fw) {
+          case "RACEFLIGHT":
+            this.uiConfig = rf1UiConfig;
+            break;
+          default:
+            this.uiConfig = BxfUiConfig;
+        }
+        this.baseRoutes = this.uiConfig.routes;
         connectedDevice.config && this.setupRoutes(connectedDevice.config);
         this.setState({
           id: connectedDevice.comName,
