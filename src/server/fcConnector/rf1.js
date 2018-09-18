@@ -12,18 +12,18 @@ const strToBytes = string => {
 };
 
 const getConfig = (path, cb, ecb) => {
-  cb(dummyConfig);
-  return;
-  //TODO: FIX THIS GARBAGE
   var device = new HID.HID(path);
 
-  let sendBytes = strToBytes("dump\n");
+  let sendBytes = strToBytes("config\n");
   let doneReading = false;
   let ret = "";
 
   while (!doneReading) {
     device.write(sendBytes);
     device.read((error, data) => {
+      if (error) {
+        ecb(error);
+      }
       let next = data.toString("utf8");
       console.log(next);
       ret += next;
