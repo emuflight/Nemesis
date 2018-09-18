@@ -29,5 +29,24 @@ module.exports = {
     } else {
       return bxfConnector.close();
     }
+  },
+  updateIMUF(deviceInfo, binUrl, notifyProgress, cb, ecb) {
+    if (deviceInfo.hid) {
+      return rf1Connector.updateIMUF(
+        deviceInfo,
+        binUrl,
+        notifyProgress,
+        cb,
+        ecb
+      );
+    } else {
+      return bxfConnector.updateIMUF(
+        deviceInfo,
+        binUrl,
+        notifyProgress,
+        cb,
+        ecb
+      );
+    }
   }
 };

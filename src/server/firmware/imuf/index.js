@@ -1,11 +1,10 @@
 const request = require("request");
-const devices = require("../devices");
 
 module.exports = new class {
   get(cb) {
     request(
       {
-        url: "https://api.github.com/repos/heliorc/imuf-release/contents",
+        url: "https://api.github.com/repos/heliorc/imuf-release-dev/contents",
         headers: {
           "User-Agent": "request"
         }
@@ -13,22 +12,20 @@ module.exports = new class {
       (error, response, body) => {
         cb(
           JSON.parse(body)
-            .filter(file => file.name.endsWith(".hex"))
+            .filter(file => file.name.endsWith(".bin"))
             .map(file => {
-              file.name = file.name.replace("_MSD_1.0.0_IMUF", " IMU-F");
               file.note =
-                "Release notes: https://github.com/ButterFlight/butterflight/releases/";
+                "See the release notes here: https://github.com/heliorc/imuf-release/blob/master/CHANGELOG.md";
               return file;
             })
         );
       }
     );
   }
-
-  flash(name) {
+  load(binUrl, callback) {
     request(
       {
-        url: name,
+        url: binUrl,
         headers: {
           "User-Agent": "request"
         }
@@ -36,7 +33,7 @@ module.exports = new class {
       (error, response, body) => {
         let resJson = JSON.parse(body);
         let fileBuffer = new Buffer(resJson.content, resJson.encoding);
-        devices.flashDFU(fileBuffer);
+        callback(fileBuffer);
       }
     );
   }

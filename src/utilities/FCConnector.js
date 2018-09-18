@@ -1,4 +1,5 @@
 export default new class FCConnector {
+  serviceUrl = "http://localhost:9001";
   startDetect(onFcConnect) {
     let connection = new WebSocket("ws://127.0.0.1:9002");
 
@@ -17,13 +18,13 @@ export default new class FCConnector {
   }
 
   tryGetConfig() {
-    return fetch("http://localhost:9001/device").then(response => {
+    return fetch(`${this.serviceUrl}/device`).then(response => {
       return response.json();
     });
   }
 
   setValue(name, newValue) {
-    return fetch(`http://localhost:9001/set/${name}/${newValue}`).then(
+    return fetch(`${this.serviceUrl}/set/${name}/${newValue}`).then(
       response => {
         return response.json();
       }
@@ -31,21 +32,29 @@ export default new class FCConnector {
   }
 
   saveConfig() {
-    return fetch(`http://localhost:9001/send/save`).then(response => {
+    return fetch(`${this.serviceUrl}/send/save`).then(response => {
       return response.json();
     });
   }
 
   flashDFU(binUrl, notifyProgress) {
-    return fetch(
-      `http://localhost:9001/flash/${encodeURIComponent(binUrl)}`
-    ).then(response => {
-      return response.json();
-    });
+    return fetch(`${this.serviceUrl}/flash/${encodeURIComponent(binUrl)}`).then(
+      response => {
+        return response.json();
+      }
+    );
+  }
+
+  flashIMUF(binUrl, notifyProgress) {
+    return fetch(`${this.serviceUrl}/imuf/${encodeURIComponent(binUrl)}`).then(
+      response => {
+        return response.json();
+      }
+    );
   }
 
   goToDFU() {
-    return fetch(`http://localhost:9001/send/bl`).then(response => {
+    return fetch(`${this.serviceUrl}/send/bl`).then(response => {
       return response.json();
     });
   }

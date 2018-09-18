@@ -13,6 +13,7 @@ export default class Connected extends Component {
     this.fcConfig = props.fcConfig;
     this.uiConfig = props.uiConfig;
     this.goToDFU = props.goToDFU;
+    this.goToImuf = props.goToImuf;
     this.state = {
       isDirty: false,
       drawerOpen: false,
@@ -74,6 +75,7 @@ export default class Connected extends Component {
         </Drawer>
         <VersionInfoView
           goToDFU={this.goToDFU}
+          goToImuf={this.goToImuf}
           version={this.fcConfig.version}
           imuf={this.fcConfig.imuf}
         />

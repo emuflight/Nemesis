@@ -5,6 +5,7 @@ import getMuiTheme from "material-ui/styles/getMuiTheme";
 
 import Connected from "./Views/Connected";
 import Disconnected from "./Views/Disconnected";
+import ImufView from "./Views/ImufView";
 import DfuView from "./Views/DfuView";
 import FCConnector from "./utilities/FCConnector";
 import uiConfig from "./test/ui_config.json";
@@ -73,8 +74,12 @@ class App extends Component {
     FCConnector.goToDFU();
   };
 
+  goToImuf = () => {
+    this.setState({ imuf: !this.state.imuf });
+  };
+
   getFcConfig = () => {
-    FCConnector.tryGetConfig().then(connectedDevice => {
+    return FCConnector.tryGetConfig().then(connectedDevice => {
       if (connectedDevice.dfu) {
         this.setState({
           dfu: connectedDevice.dfu,
@@ -90,6 +95,7 @@ class App extends Component {
           connected: true
         });
       }
+      return connectedDevice.config;
     });
   };
 
@@ -98,10 +104,16 @@ class App extends Component {
   }
 
   render() {
-    if (this.state.dfu) {
+    if (this.state.imuf) {
       return (
         <MuiThemeProvider muiTheme={getMuiTheme(theme)}>
-          <DfuView info={this.state.deviceInfo} />
+          <ImufView firmwares={this.state.deviceInfo.firmwares} />
+        </MuiThemeProvider>
+      );
+    } else if (this.state.dfu) {
+      return (
+        <MuiThemeProvider muiTheme={getMuiTheme(theme)}>
+          <DfuView firmwares={this.state.deviceInfo.firmwares} />
         </MuiThemeProvider>
       );
     } else if (this.state.connected) {
@@ -109,6 +121,7 @@ class App extends Component {
         <MuiThemeProvider muiTheme={getMuiTheme(theme)}>
           <Connected
             goToDFU={this.goToDFU}
+            goToImuf={this.goToImuf}
             connectinId={this.state.id}
             uiConfig={this.uiConfig}
             fcConfig={this.state.currentConfig}

@@ -48,6 +48,7 @@ module.exports = {
     DFUDevice.open();
     DFUDevice.interface(0).claim();
 
+    //TODO: flash dfu
     console.log(DFUDevice);
   }
 };

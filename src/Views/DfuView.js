@@ -7,10 +7,14 @@ import FCConnector from "../utilities/FCConnector";
 export default class DfuView extends Component {
   constructor(props) {
     super(props);
-    props.info.current = props.info.firmwares[0].url;
-    props.info.note = props.info.firmwares[0].note;
-    props.info.isFlashing = false;
-    this.state = props.info;
+    this.title = this.flText = "Select a firmware to flash";
+    this.btnLabel = "Update";
+    this.state = {
+      items: props.firmwares,
+      current: props.firmwares[0].url,
+      note: props.firmwares[0].note,
+      isFlashing: false
+    };
   }
 
   handleFlash() {
@@ -25,17 +29,17 @@ export default class DfuView extends Component {
   render() {
     return (
       <div>
-        <p>DFU flash</p>
+        <p>{this.title}</p>
         <SelectField
           autoWidth={true}
-          floatingLabelText={"Select a firmware to flash"}
+          floatingLabelText={this.flText}
           value={this.state.current}
           disabled={this.state.isFlashing}
           onChange={(event, key, payload) => {
             this.setState({ current: payload });
           }}
         >
-          {this.state.firmwares.map((fw, index) => {
+          {this.state.items.map((fw, index) => {
             return (
               <MenuItem key={index} primaryText={fw.name} value={fw.url} />
             );
@@ -46,7 +50,7 @@ export default class DfuView extends Component {
           primary={true}
           onClick={() => this.handleFlash()}
           disabled={this.state.isFlashing}
-          label="Flash"
+          label={this.btnLabel}
         />
         <p>{this.state.note}</p>
       </div>

@@ -8,15 +8,17 @@ export default class VersionInfoView extends Component {
   constructor(props) {
     super(props);
     this.version = props.version.split("|");
-    this.imuf = props.imuf;
     this.goToDFU = props.goToDFU;
+    this.goToImuf = props.goToImuf;
+    console.log(props.version);
     this.state = {
       fw: this.version[0],
       target: this.version[1],
       version: this.version[3],
-      imuf: this.imuf
+      imuf: props.imuf
     };
   }
+
   handleClick = event => {
     // This prevents ghost click.
     event.preventDefault();
@@ -49,7 +51,12 @@ export default class VersionInfoView extends Component {
               onClick={() => this.goToDFU()}
               primaryText={"Version: " + this.state.version}
             />
-            <MenuItem primaryText={"IMU-F Version: " + this.state.imuf} />
+            {this.state.imuf && (
+              <MenuItem
+                onClick={() => this.goToImuf()}
+                primaryText={"IMU-F Version: " + this.state.imuf}
+              />
+            )}
           </Menu>
         </Popover>
       </div>

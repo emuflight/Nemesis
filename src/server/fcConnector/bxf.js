@@ -1,5 +1,6 @@
 const SerialPort = require("serialport");
 const Readline = SerialPort.parsers.Readline;
+const imufFirmware = require("../firmware/imuf");
 let port;
 
 const getConfig = (comName, cb, ecb) => {
@@ -25,7 +26,7 @@ const getConfig = (comName, cb, ecb) => {
         sendNext = false;
       }
     });
-    port.write("#\n", err => {
+    port.write("!\n", err => {
       setTimeout(() => {
         port.write("config\n", err => {
           sendNext = true;
@@ -60,6 +61,35 @@ const sendCommand = (comName, command, cb, ecb) => {
   }
 };
 
+const updateIMUF = (comName, binName, notify, cb, ecb) => {
+  try {
+    imufFirmware.load(binName, fileBuffer => {
+      console.log(fileBuffer);
+
+      cb("done");
+      return;
+      sendCommand(comName, "imufbootloader\n", () => {
+        sendCommand(comName, "imufloadbin !\n", () => {
+          //repeat this line:
+          sendCommand(comName, "imufloadbin l\n", () => {
+            notify("progress");
+            // on the last one:
+            sendCommand(comName, "imufloadbin .\n", () => {
+              sendCommand(comName, "imufloadbin c\n", () => {
+                //notify when done
+                cb("done");
+              });
+            });
+          });
+        });
+      });
+    });
+  } catch (ex) {
+    console.log(ex);
+    ecb && ecb(ex);
+  }
+};
+
 const setValue = (comName, name, newVal, cb, ecb) => {
   sendCommand(comName, `set ${name}=${newVal}`, cb, ecb);
 };
@@ -69,10 +99,11 @@ const closeConnection = () => {
 };
 
 module.exports = {
-  getConfig: getConfig,
-  setValue: setValue,
   sendCommand: sendCommand,
-  close: closeConnection
+  close: closeConnection,
+  updateIMUF: updateIMUF,
+  getConfig: getConfig,
+  setValue: setValue
 };
 
 /**

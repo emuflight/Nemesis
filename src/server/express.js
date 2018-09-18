@@ -2,6 +2,7 @@ const express = require("express");
 const devices = require("./devices");
 const fcConnector = require("./fcConnector");
 const firmware = require("./firmware");
+const imuf = require("./firmware/imuf");
 const app = express();
 require("./websockets");
 
@@ -28,9 +29,18 @@ app.get("/device", (req, res) => {
         });
       } else {
         fcConnector.getConfig(connectedDevice, config => {
-          connectedDevice.config = config;
-          devices.setConnectedDevice(connectedDevice);
-          res.json(connectedDevice);
+          if (config.version.indexOf("HESP") !== -1) {
+            imuf.get(bins => {
+              connectedDevice.config = config;
+              connectedDevice.firmwares = bins;
+              devices.setConnectedDevice(connectedDevice);
+              res.json(connectedDevice);
+            });
+          } else {
+            connectedDevice.config = config;
+            devices.setConnectedDevice(connectedDevice);
+            res.json(connectedDevice);
+          }
         });
       }
     } else {
@@ -76,6 +86,21 @@ app.get("/set/:name/:value", (req, res) => {
 app.get("/flash/:binUrl", (req, res) => {
   firmware.flash(req.params.binUrl);
   res.sendStatus(202);
+});
+
+app.get("/imuf/:binUrl", (req, res) => {
+  devices.list((err, ports) => {
+    let connectedDevice = ports[0];
+    if (connectedDevice) {
+      fcConnector.updateIMUF(
+        connectedDevice,
+        req.params.binUrl,
+        progress => {},
+        complete => {}
+      );
+      res.sendStatus(202);
+    }
+  });
 });
 
 app.listen(9001, () => console.log("usb interface listening on port 9001!"));
