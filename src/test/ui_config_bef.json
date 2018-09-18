@@ -4,6 +4,7 @@
     "RATES",
     "FILTERS",
     "MOTORS",
+    "MODES",
     "RX",
     "FEATURES",
     "VTX",
@@ -13,6 +14,8 @@
     "ADVANCED"
   ],
   "groups": {
+    "MODES": ["modes"],
+
     "PID": [
       "buttered_pids",
       "p_pitch",

@@ -1,0 +1,90 @@
+[
+  {
+    "value": -1,
+    "label": "OFF"
+  },
+  {
+    "value": 0,
+    "label": "ARM"
+  },
+  {
+    "value": 1,
+    "label": "ANGLE"
+  },
+  {
+    "value": 2,
+    "label": "HORIZON"
+  },
+  {
+    "value": 5,
+    "label": "GPSHOME"
+  },
+  {
+    "value": 6,
+    "label": "GPSHOLD"
+  },
+  {
+    "value": 7,
+    "label": "HEADFREE"
+  },
+  {
+    "value": 9,
+    "label": "RANGEFINDER"
+  },
+  {
+    "value": 10,
+    "label": "FAILSAFE"
+  },
+  {
+    "value": 11,
+    "label": "ANTIGRAVITY"
+  },
+  {
+    "value": 15,
+    "label": "BEEPERON"
+  },
+  {
+    "value": 21,
+    "label": "OSD"
+  },
+  {
+    "value": 27,
+    "label": "BLACKBOX"
+  },
+  {
+    "value": 28,
+    "label": "AIRMODE"
+  },
+  {
+    "value": 29,
+    "label": "3D"
+  },
+  {
+    "value": 31,
+    "label": "BLACKBOXERASE"
+  },
+  {
+    "value": 32,
+    "label": "CAMERA1"
+  },
+  {
+    "value": 33,
+    "label": "CAMERA2"
+  },
+  {
+    "value": 34,
+    "label": "CAMERA3"
+  },
+  {
+    "value": 35,
+    "label": "FLIPOVERAFTERCRASH"
+  },
+  {
+    "value": 37,
+    "label": "PREARM"
+  },
+  {
+    "value": 39,
+    "label": "VTXPITMODE"
+  }
+]

@@ -1,5 +1,5 @@
 import React from "react";
-// import ModesView from "./ModesView/ModesView";
+import AuxChannelView from "./AuxChannelView/AuxChannelView";
 import ConfigListView from "./ConfigListView/ConfigListView";
 import FeaturesView from "./FeaturesView/FeaturesView";
 
@@ -37,7 +37,12 @@ const getRouteItems = (routeName, fcConfig, uiConfig) => {
 export default (routeState, fcConfig, uiConfig, notifyDirty) => {
   switch (routeState.currentRoute.key) {
     case "MODES":
-      return <div>XOMG MODESSSSSS</div>;
+      return (
+        <AuxChannelView
+          channels={fcConfig.modes.values}
+          notifyDirty={notifyDirty}
+        />
+      );
     case "FEATURES":
       return (
         <FeaturesView

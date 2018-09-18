@@ -24,6 +24,7 @@
     "electron-updater": "^2.10.1",
     "express": "^4.16.3",
     "material-ui": "^0.20.2",
+    "material-ui-slider": "^0.1.0",
     "node-fetch": "^2.2.0",
     "node-hid": "^0.7.3",
     "node-sass-chokidar": "0.0.3",
