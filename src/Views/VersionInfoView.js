@@ -7,16 +7,10 @@ import RaisedButton from "material-ui/RaisedButton";
 export default class VersionInfoView extends Component {
   constructor(props) {
     super(props);
-    this.version = props.version.split("|");
+
     this.goToDFU = props.goToDFU;
     this.goToImuf = props.goToImuf;
-    console.log(props.version);
-    this.state = {
-      fw: this.version[0],
-      target: this.version[1],
-      version: this.version[3],
-      imuf: props.imuf
-    };
+    this.state = props.version;
   }
 
   handleClick = event => {

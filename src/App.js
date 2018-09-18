@@ -8,7 +8,8 @@ import Disconnected from "./Views/Disconnected";
 import ImufView from "./Views/ImufView";
 import DfuView from "./Views/DfuView";
 import FCConnector from "./utilities/FCConnector";
-import uiConfig from "./test/ui_config.json";
+import rf1UiConfig from "./test/ui_config_rf1.json";
+import BxfUiConfig from "./test/ui_config_bef.json";
 const electron = window.require("electron"); // little trick to import electron in react
 const ipcRenderer = electron.ipcRenderer;
 
@@ -30,9 +31,6 @@ class App extends Component {
         this.setState(device);
       }
     });
-
-    this.uiConfig = uiConfig;
-    this.baseRoutes = this.uiConfig.routes;
   }
   setupRoutes(config) {
     this.uiConfig.routes = this.baseRoutes.map(route => {
@@ -53,7 +51,14 @@ class App extends Component {
 
   getFcConfig = () => {
     return FCConnector.tryGetConfig().then(connectedDevice => {
-      console.log(connectedDevice);
+      switch (connectedDevice.config.version.fw) {
+        case "Raceflight":
+          this.uiConfig = rf1UiConfig;
+          break;
+        default:
+          this.uiConfig = BxfUiConfig;
+      }
+      this.baseRoutes = this.uiConfig.routes;
       if (connectedDevice.dfu) {
         this.setState({
           dfu: connectedDevice.dfu,

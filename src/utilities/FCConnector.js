@@ -18,9 +18,20 @@ export default new class FCConnector {
   }
 
   tryGetConfig() {
-    return fetch(`${this.serviceUrl}/device`).then(response => {
-      return response.json();
-    });
+    return fetch(`${this.serviceUrl}/device`)
+      .then(response => {
+        return response.json();
+      })
+      .then(device => {
+        let versionParts = device.config.version.split("|");
+        device.config.version = {
+          fw: versionParts[0],
+          target: versionParts[1],
+          version: versionParts[3],
+          imuf: device.config.imuf
+        };
+        return device;
+      });
   }
 
   setValue(name, newValue) {
