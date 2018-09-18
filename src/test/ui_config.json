@@ -25,7 +25,8 @@
       "i_yaw",
       "d_yaw",
       "pid_process_denom",
-      "gyro_sync_denom"
+      "gyro_sync_denom",
+      "pid_profile"
     ],
     "RATES": [
       "thr_expo",
@@ -41,7 +42,8 @@
       "yaw_srate",
       "tpa_rate",
       "tpa_breakpoint",
-      "tpa_type"
+      "tpa_type",
+      "rate_profile"
     ],
     "FILTERS": [
       "gyro_lpf",
@@ -134,7 +136,7 @@
       "yaw_deadband",
       "yaw_control_reversed"
     ],
-    "FEATURES": [],
+    "FEATURES": ["features"],
     "VTX": [
       "vtx_band",
       "vtx_channel",
@@ -212,7 +214,7 @@
       "osd_stat_tim_1",
       "osd_stat_tim_2"
     ],
-    "PORTS": [],
+    "PORTS": ["ports"],
     "BLACKBOX": [
       "blackbox_p_ratio",
       "blackbox_device",
@@ -380,6 +382,23 @@
       "step": 1,
       "parse": "int",
       "axis": "y"
+    },
+    "pid_profile": {
+      "type": "LOOKUP",
+      "values": [
+        {
+          "value": "0",
+          "label": "Profile 1"
+        },
+        {
+          "value": "1",
+          "label": "Profile 2"
+        },
+        {
+          "value": "2",
+          "label": "Profile 3"
+        }
+      ]
     },
     "gyro_sync_denom": {
       "type": "LOOKUP",

@@ -31,10 +31,18 @@ export default new class FCConnector {
     );
   }
 
+  sendCommand(commandToSend) {
+    return fetch(
+      `${this.serviceUrl}/send/${encodeURIComponent(commandToSend)}`
+    );
+  }
+
   saveConfig() {
-    return fetch(`${this.serviceUrl}/send/save`).then(response => {
-      return response.json();
-    });
+    return this.sendCommand("save");
+  }
+
+  goToDFU() {
+    return this.sendCommand("bl");
   }
 
   flashDFU(binUrl, notifyProgress) {
@@ -51,11 +59,5 @@ export default new class FCConnector {
         return response.json();
       }
     );
-  }
-
-  goToDFU() {
-    return fetch(`${this.serviceUrl}/send/bl`).then(response => {
-      return response.json();
-    });
   }
 }();

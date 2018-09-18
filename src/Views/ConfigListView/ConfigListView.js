@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import DropdownView from "./Items/DropdownView";
-import PidDenomView from "./PidDenomView/PidDenomView";
-import SliderView from "./Items/SliderView";
-import InputView from "./Items/InputView";
+import DropdownView from "../Items/DropdownView";
+import PidDenomView from "../PidDenomView/PidDenomView";
+// import ModesView from "../ModesView/ModesView";
+import SliderView from "../Items/SliderView";
+import InputView from "../Items/InputView";
 import { List } from "material-ui/List";
 
 export default class ConfigListView extends Component {
@@ -18,7 +19,6 @@ export default class ConfigListView extends Component {
   }
 
   render() {
-    console.log(this.items);
     return (
       <List>
         {this.items &&

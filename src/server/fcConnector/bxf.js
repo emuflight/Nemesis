@@ -44,6 +44,7 @@ const getConfig = (comName, cb, ecb) => {
 };
 
 const sendCommand = (comName, command, cb, ecb) => {
+  console.log(command);
   try {
     port =
       port ||

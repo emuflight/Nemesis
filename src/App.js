@@ -38,37 +38,7 @@ class App extends Component {
     this.uiConfig.routes = this.baseRoutes.map(route => {
       return {
         key: route,
-        title: route,
-
-        items: Object.keys(config)
-          .filter(key => {
-            return (
-              route === "ADVANCED" ||
-              this.uiConfig.groups[route].indexOf(key) !== -1
-            );
-          })
-          .map(k => {
-            let itemObj = Object.assign(
-              {
-                id: k,
-                element: this.uiConfig.elements[k]
-              },
-              config[k]
-            );
-            if (itemObj.element) {
-              itemObj.step = itemObj.element.step || itemObj.step;
-              itemObj.values = itemObj.element.values || itemObj.values;
-              itemObj.axis = itemObj.element.axis;
-            } else if (itemObj.values) {
-              itemObj.values = itemObj.values.map(item => {
-                return {
-                  value: item,
-                  label: item
-                };
-              });
-            }
-            return itemObj;
-          })
+        title: route
       };
     });
   }

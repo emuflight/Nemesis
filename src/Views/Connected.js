@@ -3,7 +3,7 @@ import AppBar from "material-ui/AppBar";
 import Drawer from "material-ui/Drawer";
 import MenuItem from "material-ui/MenuItem";
 import FlatButton from "material-ui/FlatButton";
-import ConfigListView from "./ConfigListView";
+import dynamicRoute from "./DynamicRoute";
 import FCConnector from "../utilities/FCConnector";
 import VersionInfoView from "./VersionInfoView";
 
@@ -17,8 +17,7 @@ export default class Connected extends Component {
     this.state = {
       isDirty: false,
       drawerOpen: false,
-      currentRoute: props.uiConfig.routes[0],
-      routeItems: props.uiConfig.routes[0].items
+      currentRoute: props.uiConfig.routes[0]
     };
   }
 
@@ -38,8 +37,7 @@ export default class Connected extends Component {
     );
     this.setState({
       drawerOpen: false,
-      currentRoute: newRoute,
-      routeItems: newRoute.items
+      currentRoute: newRoute
     });
   };
 
@@ -81,10 +79,12 @@ export default class Connected extends Component {
           version={this.fcConfig.version}
           imuf={this.fcConfig.imuf}
         />
-        <ConfigListView
-          notifyDirty={this.notifyDirty}
-          items={this.state.routeItems}
-        />
+        {dynamicRoute(
+          this.state,
+          this.fcConfig,
+          this.uiConfig,
+          this.notifyDirty
+        )}
       </div>
     );
   }
