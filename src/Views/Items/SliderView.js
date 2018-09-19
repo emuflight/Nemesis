@@ -11,13 +11,17 @@ export default class SliderView extends Component {
     this.notifyDirty = props.notifyDirty;
   }
   updateValue() {
-    let isDirty =
-      this.state.current !== this.state.newValue && !!this.state.current;
-    this.notifyDirty(isDirty, this.state, this.state.newValue);
-    this.setState({ current: this.state.newValue, isDirty: isDirty });
-    FCConnector.setValue(this.state.id, this.state.newValue).then(() => {
-      this.setState({ isDirty: false });
-    });
+    if (super.updateValue) {
+      super.updateValue();
+    } else {
+      let isDirty =
+        this.state.current !== this.state.newValue && !!this.state.current;
+      this.notifyDirty(isDirty, this.state, this.state.newValue);
+      this.setState({ current: this.state.newValue, isDirty: isDirty });
+      FCConnector.setValue(this.state.id, this.state.newValue).then(() => {
+        this.setState({ isDirty: false });
+      });
+    }
   }
   render() {
     let parser = parseInt;
@@ -28,6 +32,7 @@ export default class SliderView extends Component {
       <div id={this.state.id} style={{ display: "inline-block" }}>
         <h5>{this.state.id}</h5>
         <Slider
+          style={{ height: "80px", width: "80px" }}
           className={this.state.id}
           value={parser(this.state.current)}
           disabled={!!this.state.isDirty}

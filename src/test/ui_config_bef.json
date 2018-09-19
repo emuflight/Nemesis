@@ -29,7 +29,8 @@
       "d_yaw",
       "pid_process_denom",
       "gyro_sync_denom",
-      "pid_profile"
+      "pid_profile",
+      "tpa_curves"
     ],
     "RATES": [
       "thr_expo",
@@ -489,6 +490,9 @@
           "label": "1khz"
         }
       ]
+    },
+    "tpa_curves": {
+      "type": "TpaCurveView"
     }
   },
   "rules": {}

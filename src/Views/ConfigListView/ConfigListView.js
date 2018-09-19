@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import DropdownView from "../Items/DropdownView";
 import PidDenomView from "../PidDenomView/PidDenomView";
-// import ModesView from "../ModesView/ModesView";
+import TpaCurveView from "../TpaCurveView/TpaCurveView";
 import SliderView from "../Items/SliderView";
 import InputView from "../Items/InputView";
 import { List } from "material-ui/List";
@@ -25,6 +25,14 @@ export default class ConfigListView extends Component {
           this.items.map(item => {
             let type = (item.element && item.element.type) || item.mode;
             switch (type) {
+              case "TpaCurveView":
+                return (
+                  <TpaCurveView
+                    notifyDirty={this.notifyDirty}
+                    key={item.id}
+                    item={item}
+                  />
+                );
               case "PidDenomView":
                 return (
                   <PidDenomView
