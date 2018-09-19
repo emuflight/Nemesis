@@ -52,7 +52,7 @@ export default class SliderView extends Component {
             name={this.state.id}
             style={{ width: 40 }}
             type="number"
-            value={this.state.newValue}
+            value={this.state.current}
             onBlur={() => this.updateValue()}
             onChange={(event, newValue) => {
               this.setState({ newValue });

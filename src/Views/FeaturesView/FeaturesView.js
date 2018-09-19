@@ -32,7 +32,6 @@ export default class FeaturesView extends Component {
         };
       })
     };
-    console.log(this.state);
     this.notifyDirty = props.notifyDirty;
   }
 

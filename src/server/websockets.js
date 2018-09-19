@@ -24,7 +24,6 @@ wsServer.on("request", request => {
   var connection = request.accept(null, request.origin);
   // Detect add/insert
   usb.on(`attach`, device => {
-    console.log(device);
     setTimeout(() => {
       devices.list((err, ports) => {
         connectedDevice = ports[0];

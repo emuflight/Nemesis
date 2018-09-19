@@ -64,7 +64,7 @@ class App extends Component {
           default:
             this.uiConfig = BxfUiConfig;
         }
-        this.baseRoutes = this.uiConfig.routes;
+        this.baseRoutes = this.baseRoutes || this.uiConfig.routes;
         connectedDevice.config && this.setupRoutes(connectedDevice.config);
         this.setState({
           id: connectedDevice.comName,

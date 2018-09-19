@@ -14,7 +14,6 @@ export default class AuxChannelItemView extends Component {
     this.auxModes = auxModeList;
   }
   updateValue() {
-    console.log(this.state);
     FCConnector.sendCommand(
       `aux ${this.state.id} ${this.state.mode} ${this.state.auxId} ${
         this.state.range[0]

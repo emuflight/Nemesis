@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import AppBar from "material-ui/AppBar";
 import Drawer from "material-ui/Drawer";
 import MenuItem from "material-ui/MenuItem";
-import FlatButton from "material-ui/FlatButton";
 import dynamicRoute from "./DynamicRoute";
 import FCConnector from "../utilities/FCConnector";
 import VersionInfoView from "./VersionInfoView";
+import { RaisedButton, TextField } from "material-ui";
 
 export default class Connected extends Component {
   constructor(props) {
@@ -15,6 +15,7 @@ export default class Connected extends Component {
     this.goToDFU = props.goToDFU;
     this.goToImuf = props.goToImuf;
     this.state = {
+      craftName: this.fcConfig.name,
       isDirty: false,
       drawerOpen: false,
       currentRoute: props.uiConfig.routes[0]
@@ -26,9 +27,8 @@ export default class Connected extends Component {
   };
 
   handleSaveClick = () => {
-    FCConnector.saveConfig().then(() => {
-      this.setState({ isDirty: false });
-    });
+    this.setState({ isDirty: false });
+    FCConnector.saveConfig();
   };
 
   handleMenuItemClick = event => {
@@ -51,14 +51,55 @@ export default class Connected extends Component {
     this.setState({ isDirty });
   }
 
+  updateCraftName() {
+    this.setState({ namingCraft: true });
+    FCConnector.sendCommand(`name ${this.state.craftName}`).then(() => {
+      this.setState({ namingCraft: false });
+    });
+  }
   render() {
     return (
-      <div>
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row-reverse",
+            padding: "10px"
+          }}
+        >
+          <RaisedButton
+            label="Save"
+            style={{ marginLeft: "10px" }}
+            primary={true}
+            disabled={!this.state.isDirty}
+            onClick={() => this.handleSaveClick()}
+          />
+          <VersionInfoView
+            goToDFU={this.goToDFU}
+            goToImuf={this.goToImuf}
+            version={this.fcConfig.version}
+            imuf={this.fcConfig.imuf}
+          />
+          <div style={{ display: "flex", flex: "1", marginBottom: "10px" }}>
+            <h4 style={{ position: "relative", margin: "0 10px", top: "15px" }}>
+              Connected to:
+            </h4>
+            <TextField
+              id="craft_name"
+              placeholder="A craft has no name..."
+              defaultValue={this.state.craftName}
+              errorText={this.state.namingCraft && "Saving..."}
+              errorStyle={{ color: "rgb(0, 188, 212)" }}
+              onBlur={() => this.updateCraftName()}
+              onChange={(event, newValue) =>
+                this.setState({ craftName: newValue })
+              }
+            />
+          </div>
+        </div>
         <AppBar
           title={this.state.currentRoute.title}
           onLeftIconButtonClick={() => this.handleDrawerToggle()}
-          iconElementRight={<FlatButton label="Save" />}
-          onRightIconButtonClick={() => this.handleSaveClick()}
         />
         <Drawer open={this.state.drawerOpen}>
           {this.uiConfig.routes.map(route => {
@@ -73,17 +114,13 @@ export default class Connected extends Component {
             );
           })}
         </Drawer>
-        <VersionInfoView
-          goToDFU={this.goToDFU}
-          goToImuf={this.goToImuf}
-          version={this.fcConfig.version}
-          imuf={this.fcConfig.imuf}
-        />
+
         {dynamicRoute(
           this.state,
           this.fcConfig,
           this.uiConfig,
-          this.notifyDirty
+          (isDirty, state, newValue) =>
+            this.notifyDirty(isDirty, state, newValue)
         )}
       </div>
     );
