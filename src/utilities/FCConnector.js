@@ -12,10 +12,13 @@ export default new class FCConnector {
     });
 
     this.webSockets.addEventListener("message", message => {
-      let data = JSON.parse(message.data);
+      let data = {};
+      try {
+        data = JSON.parse(message.data);
+      } catch (ex) {
+        console.warn("unable to parse connection message:", ex);
+      }
       if (!data.telemetry) {
-        console.log(data);
-      } else {
         onFcConnect(data);
       }
     });
@@ -24,7 +27,11 @@ export default new class FCConnector {
   tryGetConfig() {
     return fetch(`${this.serviceUrl}/device`)
       .then(response => {
-        return response.json();
+        try {
+          return response.json();
+        } catch (ex) {
+          return Promise.reject(ex);
+        }
       })
       .then(device => {
         if (device.config) {

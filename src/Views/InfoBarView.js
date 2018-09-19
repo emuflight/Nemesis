@@ -4,8 +4,8 @@ import FCConnector from "../utilities/FCConnector";
 import TelemetryView from "./TelemetryView";
 import { RaisedButton, TextField } from "material-ui";
 
-const calculatePercentComplete = fcConfig => {};
-export default class ImufView extends Component {
+// const calculatePercentComplete = fcConfig => {};
+export default class InfoBarView extends Component {
   constructor(props) {
     super(props);
     this.handleDrawerToggle = props.handleDrawerToggle;
@@ -48,7 +48,7 @@ export default class ImufView extends Component {
           label="Save"
           style={{ marginLeft: "10px" }}
           primary={true}
-          disabled={!this.state.isDirty}
+          disabled={!this.props.isDirty}
           onClick={() => this.handleSaveClick()}
         />
         <div style={{ display: "flex", flex: "1", marginBottom: "10px" }}>

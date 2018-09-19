@@ -10,8 +10,14 @@ export default class TelemetryView extends Component {
     super(props);
 
     FCConnector.webSockets.addEventListener("message", message => {
-      let telemetry = JSON.parse(message.data);
-      this.setState({ telemetry });
+      try {
+        let telemetry = JSON.parse(message.data);
+        if (telemetry.telemetry) {
+          this.setState({ telemetry });
+        }
+      } catch (ex) {
+        console.warn("unable to parse telemetry", ex);
+      }
     });
     FCConnector.webSockets.send("startTelemetry");
     this.state = {

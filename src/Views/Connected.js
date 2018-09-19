@@ -38,6 +38,7 @@ export default class Connected extends Component {
   };
 
   notifyDirty = (isDirty, item, newValue) => {
+    console.log(isDirty);
     let notification = document.getElementById(item.id);
     if (notification) {
       notification.dispatchEvent(

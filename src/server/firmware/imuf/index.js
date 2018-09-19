@@ -34,9 +34,13 @@ module.exports = new class {
         }
       },
       (error, response, body) => {
-        let resJson = JSON.parse(body);
-        let fileBuffer = new Buffer(resJson.content, resJson.encoding);
-        callback(fileBuffer);
+        try {
+          let resJson = JSON.parse(body);
+          let fileBuffer = new Buffer(resJson.content, resJson.encoding);
+          callback(fileBuffer);
+        } catch (ex) {
+          console.error("failed to load bin!");
+        }
       }
     );
   }

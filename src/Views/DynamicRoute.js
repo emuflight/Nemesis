@@ -2,6 +2,7 @@ import React from "react";
 import AuxChannelView from "./AuxChannelView/AuxChannelView";
 import ConfigListView from "./ConfigListView/ConfigListView";
 import FeaturesView from "./FeaturesView/FeaturesView";
+import PortsView from "./PortsView/PortsView";
 
 const getRouteItems = (routeName, fcConfig, uiConfig) => {
   return Object.keys(fcConfig)
@@ -40,6 +41,14 @@ export default (routeState, fcConfig, uiConfig, notifyDirty) => {
       return (
         <AuxChannelView
           channels={fcConfig.modes.values}
+          notifyDirty={notifyDirty}
+        />
+      );
+    case "PORTS":
+      return (
+        <PortsView
+          rxProvider={fcConfig.serialrx_provider}
+          ports={fcConfig.ports.values}
           notifyDirty={notifyDirty}
         />
       );

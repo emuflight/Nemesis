@@ -1,0 +1,81 @@
+{
+  "modes": [
+    {
+      "value": "0",
+      "label": "NONE"
+    },
+    {
+      "value": "1",
+      "label": "MSP"
+    },
+    {
+      "value": "2",
+      "label": "GPS"
+    },
+    {
+      "value": "4",
+      "label": "TELEMETRY_FRSKY_HUB"
+    },
+    {
+      "value": "8",
+      "label": "TELEMETRY_HOTT"
+    },
+    {
+      "value": "16",
+      "label": "TELEMETRY_LTM"
+    },
+    {
+      "value": "23",
+      "label": "TELEMETRY_SMARTPORT"
+    },
+    {
+      "value": "64",
+      "label": "RX_SERIAL"
+    },
+    {
+      "value": "128",
+      "label": "BLACKBOX"
+    },
+    {
+      "value": "512",
+      "label": "TELEMETRY_MAVLINK"
+    },
+    {
+      "value": "1024",
+      "label": "ESC_SENSOR"
+    },
+    {
+      "value": "2048",
+      "label": "VTX_SMARTAUDIO"
+    },
+    {
+      "value": "4096",
+      "label": "TELEMETRY_IBUS"
+    },
+    {
+      "value": "8192",
+      "label": "VTX_TRAMP"
+    },
+    {
+      "value": "16384",
+      "label": "RCDEVICE"
+    },
+    {
+      "value": "32768",
+      "label": "LIDAR_TF"
+    }
+  ],
+  "ports": {
+    "20": "USB_VCP",
+    "0": "UART1",
+    "1": "UART2",
+    "2": "UART3",
+    "3": "UART4",
+    "4": "UART5",
+    "5": "UART6",
+    "6": "UART7",
+    "7": "UART8",
+    "8": "SOFTSERIAL1",
+    "9": "SOFTSERIAL2"
+  }
+}

@@ -493,6 +493,89 @@
     },
     "tpa_curves": {
       "type": "TpaCurveView"
+    },
+    "vtx_band": {
+      "type": "LOOKUP",
+      "values": [
+        {
+          "value": "1",
+          "label": "BOSCAM - A"
+        },
+        {
+          "value": "2",
+          "label": "BOSCAM - B"
+        },
+        {
+          "value": "3",
+          "label": "DJI"
+        },
+        {
+          "value": "4",
+          "label": "FATSHARK"
+        },
+        {
+          "value": "5",
+          "label": "RACEBAND"
+        }
+      ]
+    },
+    "vtx_power": {
+      "type": "LOOKUP",
+      "values": [
+        {
+          "value": "1",
+          "label": "25mw"
+        },
+        {
+          "value": "2",
+          "label": "200mw"
+        },
+        {
+          "value": "3",
+          "label": "500mw"
+        },
+        {
+          "value": "4",
+          "label": "800mw"
+        }
+      ]
+    },
+    "vtx_channel": {
+      "type": "LOOKUP",
+      "values": [
+        {
+          "value": "1",
+          "label": "CHANNEL-1"
+        },
+        {
+          "value": "2",
+          "label": "CHANNEL-2"
+        },
+        {
+          "value": "3",
+          "label": "CHANNEL-3"
+        },
+        {
+          "value": "4",
+          "label": "CHANNEL-4"
+        },
+        {
+          "value": "5",
+          "label": "CHANNEL-5"
+        },
+        {
+          "value": "6",
+          "label": "CHANNEL-6"
+        },
+        {
+          "value": "7",
+          "label": "CHANNEL-7"
+        },
+        {
+          "value": "8",
+          "label": "CHANNEL-8"
+        }
+      ]
     }
   },
   "rules": {}

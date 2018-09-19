@@ -100,6 +100,7 @@ const getTelemetry = (comName, cb, ecb) => {
       try {
         let data = new DataView(new Uint8Array(buffer).buffer, 12);
         cb({
+          telemetry: true,
           acc: {
             x: data.getInt16(2, 1) / 512,
             y: data.getInt16(4, 1) / 512,
