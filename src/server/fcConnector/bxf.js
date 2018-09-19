@@ -33,11 +33,13 @@ const getConfig = (comName, cb, ecb) => {
           setTimeout(() => {
             //trim off " config\n";
             cb(JSON.parse(ret.slice(7)));
+            port && port.close();
           }, 1000);
         });
       }, 1000);
     });
   } catch (ex) {
+    port && port.close();
     console.log(ex);
     ecb && ecb(ex);
   }
@@ -51,12 +53,21 @@ const sendCommand = (comName, command, cb, ecb) => {
       new SerialPort(comName, {
         baudRate: 115200
       });
-    port.write(`${command}\n`, err => {
-      setTimeout(() => {
-        cb();
-      }, 1000);
+    port.on("close", () => {
+      port = undefined;
+      console.log("port closed");
+    });
+    port.on("data", data => {
+      cb(Array.from(new Uint8Array(data)));
+      port && port.close();
+    });
+    port.write("!\n", err => {
+      port.write(`${command}\n`, err => {
+        err && ecb && ecb(err);
+      });
     });
   } catch (ex) {
+    port && port.close();
     console.log(ex);
     ecb && ecb(ex);
   }

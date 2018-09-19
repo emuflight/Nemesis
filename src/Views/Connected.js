@@ -5,6 +5,7 @@ import MenuItem from "material-ui/MenuItem";
 import dynamicRoute from "./DynamicRoute";
 import FCConnector from "../utilities/FCConnector";
 import VersionInfoView from "./VersionInfoView";
+import TelemetryView from "./TelemetryView";
 import { RaisedButton, TextField } from "material-ui";
 
 export default class Connected extends Component {
@@ -95,6 +96,7 @@ export default class Connected extends Component {
                 this.setState({ craftName: newValue })
               }
             />
+            <TelemetryView />
           </div>
         </div>
         <AppBar
