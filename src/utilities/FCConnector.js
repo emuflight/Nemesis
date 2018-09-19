@@ -1,20 +1,24 @@
 export default new class FCConnector {
   serviceUrl = "http://localhost:9001";
   startDetect(onFcConnect) {
-    let connection = new WebSocket("ws://127.0.0.1:9002");
+    this.webSockets = new WebSocket("ws://127.0.0.1:9002");
 
-    connection.onopen = () => {
+    this.webSockets.addEventListener("open", () => {
       console.log("opened");
-    };
+    });
 
-    connection.onerror = error => {
+    this.webSockets.addEventListener("error", error => {
       console.warn(error);
-    };
+    });
 
-    connection.onmessage = message => {
+    this.webSockets.addEventListener("message", message => {
       let data = JSON.parse(message.data);
-      onFcConnect(data);
-    };
+      if (!data.telemetry) {
+        console.log(data);
+      } else {
+        onFcConnect(data);
+      }
+    });
   }
 
   tryGetConfig() {

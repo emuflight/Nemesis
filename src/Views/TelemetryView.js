@@ -8,6 +8,12 @@ import FCConnector from "../utilities/FCConnector";
 export default class TelemetryView extends Component {
   constructor(props) {
     super(props);
+
+    FCConnector.webSockets.addEventListener("message", message => {
+      let telemetry = JSON.parse(message.data);
+      this.setState({ telemetry });
+    });
+    FCConnector.webSockets.send("startTelemetry");
     this.state = {
       telemetry: {
         gyro: {
@@ -30,39 +36,6 @@ export default class TelemetryView extends Component {
   }
 
   handleClick = event => {
-    this.interval = setInterval(() => {
-      //msp 102 is telemetry
-      FCConnector.sendCommand("msp 102").then(response => {
-        response.json().then(buffer => {
-          try {
-            let data = new DataView(new Uint8Array(buffer).buffer, 42);
-            this.setState({
-              telemetry: {
-                acc: {
-                  x: data.getInt16(2, 1) / 512,
-                  y: data.getInt16(4, 1) / 512,
-                  z: data.getInt16(6, 1) / 512
-                },
-                gyro: {
-                  x: data.getInt16(8, 1) * (4 / 16.4),
-                  y: data.getInt16(10, 1) * (4 / 16.4),
-                  z: data.getInt16(12, 1) * (4 / 16.4)
-                },
-                mag: {
-                  x: data.getInt16(14, 1) / 1090,
-                  y: data.getInt16(16, 1) / 1090,
-                  z: data.getInt16(18, 1) / 1090
-                }
-              }
-            });
-          } catch (ex) {
-            console.warn(ex);
-          }
-        });
-
-        // this.setState({telemetry: response.json()});
-      });
-    }, 60);
     // This prevents ghost click.
     event.preventDefault();
     this.setState({

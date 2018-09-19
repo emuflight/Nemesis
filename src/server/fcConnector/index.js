@@ -23,6 +23,13 @@ module.exports = {
       return bxfConnector.sendCommand(deviceInfo.comName, command, cb, ecb);
     }
   },
+  getTelemetry(deviceInfo, cb, ecb) {
+    if (deviceInfo.hid) {
+      return rf1Connector.getTelemetry(deviceInfo.path, cb, ecb);
+    } else {
+      return bxfConnector.getTelemetry(deviceInfo.comName, cb, ecb);
+    }
+  },
   close(deviceInfo) {
     if (deviceInfo.hid) {
       return rf1Connector.close();

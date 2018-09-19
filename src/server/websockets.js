@@ -11,6 +11,7 @@ const server = http.createServer((request, response) => {
 });
 
 let connectedDevice;
+let telemetry;
 
 server.listen(9002, () => {});
 
@@ -48,11 +49,26 @@ wsServer.on("request", request => {
         connected: false
       })
     );
+    clearInterval(telemetry);
     // fcConnector.close(devices.getConnectedDevice());
   });
   // This is the most important callback for us, we'll handle
   // all messages from users here.
-  connection.on("message", message => {});
+  connection.on("message", message => {
+    if (message.utf8Data === "startTelemetry") {
+      telemetry = setInterval(() => {
+        fcConnector.getTelemetry(
+          devices.getConnectedDevice(),
+          telemetryData => {
+            telemetryData.telemetry = true;
+            connection.sendUTF(JSON.stringify(telemetryData));
+          }
+        );
+      }, 100);
+    }
+  });
 
-  connection.on("close", connection => {});
+  connection.on("close", connection => {
+    clearInterval(telemetry);
+  });
 });

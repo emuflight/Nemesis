@@ -34,9 +34,11 @@ const getConfig = (comName, cb, ecb) => {
             //trim off " config\n";
             cb(JSON.parse(ret.slice(7)));
             port && port.close();
+            //1000ms is about how long it takes to read the json data reliably
           }, 1000);
         });
-      }, 1000);
+        //200ms is ~as fast as we can go reliably
+      }, 200);
     });
   } catch (ex) {
     port && port.close();
@@ -58,13 +60,11 @@ const sendCommand = (comName, command, cb, ecb) => {
       console.log("port closed");
     });
     port.on("data", data => {
-      cb(Array.from(new Uint8Array(data)));
+      cb(data);
       port && port.close();
     });
-    port.write("!\n", err => {
-      port.write(`${command}\n`, err => {
-        err && ecb && ecb(err);
-      });
+    port.write(`${command}\n`, err => {
+      err && ecb && ecb(err);
     });
   } catch (ex) {
     port && port.close();
@@ -106,6 +106,41 @@ const setValue = (comName, name, newVal, cb, ecb) => {
   sendCommand(comName, `set ${name}=${newVal}`, cb, ecb);
 };
 
+const getTelemetry = (comName, cb, ecb) => {
+  sendCommand(
+    comName,
+    `msp 102`,
+    buffer => {
+      try {
+        let data = new DataView(new Uint8Array(buffer).buffer, 10);
+        cb({
+          acc: {
+            x: data.getInt16(2, 1) / 512,
+            y: data.getInt16(4, 1) / 512,
+            z: data.getInt16(6, 1) / 512
+          },
+          gyro: {
+            x: data.getInt16(8, 1) * (4 / 16.4),
+            y: data.getInt16(10, 1) * (4 / 16.4),
+            z: data.getInt16(12, 1) * (4 / 16.4)
+          },
+          mag: {
+            x: data.getInt16(14, 1) / 1090,
+            y: data.getInt16(16, 1) / 1090,
+            z: data.getInt16(18, 1) / 1090
+          }
+        });
+      } catch (ex) {
+        ecb && ecb(ex);
+      }
+    },
+    error => {
+      console.log("telemetry error:", error);
+      ecb(error);
+    }
+  );
+};
+
 const closeConnection = () => {
   port && port.close();
 };
@@ -115,6 +150,7 @@ module.exports = {
   close: closeConnection,
   updateIMUF: updateIMUF,
   getConfig: getConfig,
+  getTelemetry: getTelemetry,
   setValue: setValue
 };
 
