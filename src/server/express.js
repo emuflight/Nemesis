@@ -53,7 +53,9 @@ app.get("/send/:command", (req, res) => {
   devices.list((err, ports) => {
     let connectedDevice = ports[0];
     if (connectedDevice) {
-      fcConnector.sendCommand(connectedDevice, req.params.command, output => {
+      let command = req.params.command;
+      console.log(command);
+      fcConnector.sendCommand(connectedDevice, command, output => {
         if (output) {
           res.json(output);
         } else {

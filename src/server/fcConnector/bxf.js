@@ -16,7 +16,6 @@ const getConfig = (comName, cb, ecb) => {
     port.pipe(parser);
     port.on("close", () => {
       port = undefined;
-      console.log("port closed");
     });
     let ret = "";
     let sendNext = false;
@@ -48,7 +47,6 @@ const getConfig = (comName, cb, ecb) => {
 };
 
 const sendCommand = (comName, command, cb, ecb) => {
-  console.log(command);
   try {
     port =
       port ||
@@ -57,7 +55,6 @@ const sendCommand = (comName, command, cb, ecb) => {
       });
     port.on("close", () => {
       port = undefined;
-      console.log("port closed");
     });
     port.on("data", data => {
       cb(data);
@@ -112,7 +109,7 @@ const getTelemetry = (comName, cb, ecb) => {
     `msp 102`,
     buffer => {
       try {
-        let data = new DataView(new Uint8Array(buffer).buffer, 10);
+        let data = new DataView(new Uint8Array(buffer).buffer, 12);
         cb({
           acc: {
             x: data.getInt16(2, 1) / 512,
