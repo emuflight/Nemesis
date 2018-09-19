@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import AppBar from "material-ui/AppBar";
 import Drawer from "material-ui/Drawer";
+import Badge from "material-ui/Badge";
 import MenuItem from "material-ui/MenuItem";
+import Divider from "material-ui/Divider";
 import dynamicRoute from "./DynamicRoute";
-import FCConnector from "../utilities/FCConnector";
+import InfoBarView from "./InfoBarView";
 import VersionInfoView from "./VersionInfoView";
-import TelemetryView from "./TelemetryView";
-import { RaisedButton, TextField } from "material-ui";
 
 export default class Connected extends Component {
   constructor(props) {
@@ -27,11 +27,6 @@ export default class Connected extends Component {
     this.setState({ drawerOpen: !this.state.drawerOpen });
   };
 
-  handleSaveClick = () => {
-    this.setState({ isDirty: false });
-    FCConnector.saveConfig();
-  };
-
   handleMenuItemClick = event => {
     let newRoute = this.uiConfig.routes.find(
       route => route.key === event.currentTarget.id
@@ -42,7 +37,7 @@ export default class Connected extends Component {
     });
   };
 
-  notifyDirty(isDirty, item, newValue) {
+  notifyDirty = (isDirty, item, newValue) => {
     let notification = document.getElementById(item.id);
     if (notification) {
       notification.dispatchEvent(
@@ -50,60 +45,28 @@ export default class Connected extends Component {
       );
     }
     this.setState({ isDirty });
-  }
+  };
 
-  updateCraftName() {
-    this.setState({ namingCraft: true });
-    FCConnector.sendCommand(`name ${this.state.craftName}`).then(() => {
-      this.setState({ namingCraft: false });
-    });
-  }
   render() {
     return (
       <div style={{ display: "flex", flexDirection: "column" }}>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row-reverse",
-            padding: "10px"
-          }}
-        >
-          <RaisedButton
-            label="Save"
-            style={{ marginLeft: "10px" }}
-            primary={true}
-            disabled={!this.state.isDirty}
-            onClick={() => this.handleSaveClick()}
-          />
+        <InfoBarView
+          handleDrawerToggle={this.handleDrawerToggle}
+          fcConfig={this.fcConfig}
+          isDirty={this.state.isDirty}
+        />
+        <AppBar
+          title={this.state.currentRoute.title}
+          onLeftIconButtonClick={this.handleDrawerToggle}
+        />
+        <Drawer open={this.state.drawerOpen}>
           <VersionInfoView
             goToDFU={this.goToDFU}
             goToImuf={this.goToImuf}
             version={this.fcConfig.version}
             imuf={this.fcConfig.imuf}
           />
-          <div style={{ display: "flex", flex: "1", marginBottom: "10px" }}>
-            <h4 style={{ position: "relative", margin: "0 10px", top: "15px" }}>
-              Connected to:
-            </h4>
-            <TextField
-              id="craft_name"
-              placeholder="A craft has no name..."
-              defaultValue={this.state.craftName}
-              errorText={this.state.namingCraft && "Saving..."}
-              errorStyle={{ color: "rgb(0, 188, 212)" }}
-              onBlur={() => this.updateCraftName()}
-              onChange={(event, newValue) =>
-                this.setState({ craftName: newValue })
-              }
-            />
-            <TelemetryView />
-          </div>
-        </div>
-        <AppBar
-          title={this.state.currentRoute.title}
-          onLeftIconButtonClick={() => this.handleDrawerToggle()}
-        />
-        <Drawer open={this.state.drawerOpen}>
+          <Divider />
           {this.uiConfig.routes.map(route => {
             return (
               <MenuItem
@@ -111,7 +74,16 @@ export default class Connected extends Component {
                 key={route.key}
                 onClick={this.handleMenuItemClick}
               >
-                {route.title}
+                <div style={{ display: "flex" }}>
+                  <div style={{ flex: 1 }}>{route.title}</div>
+                  {route.incompeteItems && (
+                    <Badge
+                      style={{ top: "12px" }}
+                      badgeContent={route.incompeteItems}
+                      secondary={true}
+                    />
+                  )}
+                </div>
               </MenuItem>
             );
           })}
@@ -121,8 +93,7 @@ export default class Connected extends Component {
           this.state,
           this.fcConfig,
           this.uiConfig,
-          (isDirty, state, newValue) =>
-            this.notifyDirty(isDirty, state, newValue)
+          this.notifyDirty
         )}
       </div>
     );

@@ -1,22 +1,16 @@
 const SerialPort = require("serialport");
 const Readline = SerialPort.parsers.Readline;
 const imufFirmware = require("../firmware/imuf");
-let port;
 
 const getConfig = (comName, cb, ecb) => {
   try {
     const parser = new Readline({
       delimiter: "#"
     });
-    port =
-      port ||
-      new SerialPort(comName, {
-        baudRate: 115200
-      });
-    port.pipe(parser);
-    port.on("close", () => {
-      port = undefined;
+    let port = new SerialPort(comName, {
+      baudRate: 115200
     });
+    port.pipe(parser);
     let ret = "";
     let sendNext = false;
     parser.on("data", data => {
@@ -48,13 +42,8 @@ const getConfig = (comName, cb, ecb) => {
 
 const sendCommand = (comName, command, cb, ecb) => {
   try {
-    port =
-      port ||
-      new SerialPort(comName, {
-        baudRate: 115200
-      });
-    port.on("close", () => {
-      port = undefined;
+    let port = new SerialPort(comName, {
+      baudRate: 115200
     });
     port.on("data", data => {
       cb(data);
@@ -138,13 +127,8 @@ const getTelemetry = (comName, cb, ecb) => {
   );
 };
 
-const closeConnection = () => {
-  port && port.close();
-};
-
 module.exports = {
   sendCommand: sendCommand,
-  close: closeConnection,
   updateIMUF: updateIMUF,
   getConfig: getConfig,
   getTelemetry: getTelemetry,
@@ -225,15 +209,10 @@ const saveConfig = (comName, cb, ecb) => {
   }
 };
 
-const closeConnection = () => {
-  port && port.close();
-};
-
 module.exports = {
   getConfig: getConfig,
   setValue: setValue,
-  saveConfig: saveConfig,
-  close: closeConnection
+  saveConfig: saveConfig
 };
 
  */

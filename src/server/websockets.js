@@ -64,7 +64,7 @@ wsServer.on("request", request => {
             connection.sendUTF(JSON.stringify(telemetryData));
           }
         );
-      }, 100);
+      }, 150);
     }
   });
 

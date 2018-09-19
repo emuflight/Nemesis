@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Menu from "material-ui/Menu";
 import MenuItem from "material-ui/MenuItem";
 import Popover from "material-ui/Popover";
-import RaisedButton from "material-ui/RaisedButton";
+import { FlatButton } from "material-ui";
 
 export default class VersionInfoView extends Component {
   constructor(props) {
@@ -29,8 +29,13 @@ export default class VersionInfoView extends Component {
   };
   render() {
     return (
-      <div>
-        <RaisedButton onClick={this.handleClick} label="Version Info" />
+      <MenuItem style={{ display: "flex" }}>
+        <FlatButton
+          fullWidth={true}
+          onClick={this.handleClick}
+          label="Version Info"
+          primary={true}
+        />
         <Popover
           open={this.state.open}
           anchorEl={this.state.anchorEl}
@@ -53,7 +58,7 @@ export default class VersionInfoView extends Component {
             )}
           </Menu>
         </Popover>
-      </div>
+      </MenuItem>
     );
   }
 }

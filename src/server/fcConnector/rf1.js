@@ -67,13 +67,8 @@ const setValue = (comName, name, newVal, cb, ecb) => {
   sendCommand(comName, `set ${name}=${newVal}`, cb, ecb);
 };
 
-const closeConnection = () => {
-  port && port.close();
-};
-
 module.exports = {
   sendCommand: sendCommand,
-  close: closeConnection,
   updateIMUF: updateIMUF,
   getConfig: getConfig,
   setValue: setValue
