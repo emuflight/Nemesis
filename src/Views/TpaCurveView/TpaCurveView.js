@@ -78,7 +78,7 @@ export default class TpaCurveView extends Component {
           );
         })}
         <h5>KD</h5>
-        {this.state.ki.map((item, i) => {
+        {this.state.kd.map((item, i) => {
           return (
             <TpaCurveItemView
               key={`kd${i}`}
