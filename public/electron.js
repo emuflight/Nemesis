@@ -20,7 +20,7 @@ require("electron-dl")();
 let mainWindow;
 
 function createWindow() {
-  mainWindow = new BrowserWindow({ width: 900, height: 680 });
+  mainWindow = new BrowserWindow({ width: 1280, height: 1024 });
   mainWindow.loadURL(
     isDev
       ? "http://localhost:3000"

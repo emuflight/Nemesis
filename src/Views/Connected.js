@@ -219,6 +219,9 @@ export default class Connected extends Component {
         }}
       >
         <InfoBarView
+          notifyDirty={(isDirty, item, newValue) =>
+            this.notifyDirty(isDirty, item, newValue)
+          }
           handleDrawerToggle={this.handleDrawerToggle}
           fcConfig={this.fcConfig}
           isDirty={this.state.isDirty}

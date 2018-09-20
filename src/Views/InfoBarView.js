@@ -10,6 +10,7 @@ export default class InfoBarView extends Component {
   constructor(props) {
     super(props);
     this.handleDrawerToggle = props.handleDrawerToggle;
+    this.notifyDirty = props.notifyDirty;
     this.state = {
       setupCompleted: -1,
       craftName: props.fcConfig.craftName,
@@ -19,7 +20,7 @@ export default class InfoBarView extends Component {
   updateCraftName = () => {
     this.notifyDirty(true, this.state, this.state.craftName);
     this.setState({ namingCraft: true });
-    FCConnector.sendCommand(`name ${this.state.craftName}`).then(() => {
+    FCConnector.sendCommand(`name ${this.state.craftName || "-"}`).then(() => {
       this.setState({ namingCraft: false });
     });
   };

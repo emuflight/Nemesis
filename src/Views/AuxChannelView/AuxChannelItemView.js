@@ -50,8 +50,8 @@ export default class AuxChannelItemView extends Component {
             name={"mode" + this.state.id}
             floatingLabelText={"Mode"}
             value={this.state.mode}
-            onChange={mode => {
-              this.setState({ mode: mode, isDirty: true });
+            onChange={(event, key, payload) => {
+              this.setState({ mode: payload, isDirty: true });
             }}
           >
             {this.modes.map(item => {
@@ -68,8 +68,8 @@ export default class AuxChannelItemView extends Component {
             name={"aux" + this.state.id}
             floatingLabelText={"Aux Channel"}
             value={this.state.channel}
-            onChange={channel => {
-              this.setState({ channel: channel, isDirty: true });
+            onChange={(event, key, payload) => {
+              this.setState({ channel: payload, isDirty: true });
             }}
           >
             {this.channels.map(item => {
@@ -105,7 +105,6 @@ export default class AuxChannelItemView extends Component {
             style={{ flex: "1" }}
             className={"aux" + this.state.id}
             value={this.state.range}
-            disabled={!!this.state.isDirty}
             min={900}
             max={2100}
             scaleLength={100}

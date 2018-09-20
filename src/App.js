@@ -50,32 +50,39 @@ class App extends Component {
   };
 
   getFcConfig = () => {
-    return FCConnector.tryGetConfig().then(connectedDevice => {
-      if (connectedDevice.dfu) {
-        this.setState({
-          dfu: connectedDevice.dfu,
-          deviceInfo: connectedDevice
-        });
-      } else {
-        switch (connectedDevice.config.version.fw) {
-          case "RACEFLIGHT":
-            this.uiConfig = rf1UiConfig;
-            break;
-          default:
-            this.uiConfig = BxfUiConfig;
+    this.setState({ connecting: true });
+    return FCConnector.tryGetConfig()
+      .then(connectedDevice => {
+        if (connectedDevice.dfu) {
+          this.setState({
+            dfu: connectedDevice.dfu,
+            deviceInfo: connectedDevice
+          });
+        } else {
+          switch (connectedDevice.config.version.fw) {
+            case "RACEFLIGHT":
+              this.uiConfig = rf1UiConfig;
+              break;
+            default:
+              this.uiConfig = BxfUiConfig;
+          }
+          this.baseRoutes = this.baseRoutes || this.uiConfig.routes;
+          connectedDevice.config && this.setupRoutes(connectedDevice.config);
+          this.setState({
+            id: connectedDevice.comName,
+            deviceInfo: connectedDevice,
+            // currentConfig: fcConfig,
+            currentConfig: connectedDevice.config,
+            connected: true
+          });
         }
-        this.baseRoutes = this.baseRoutes || this.uiConfig.routes;
-        connectedDevice.config && this.setupRoutes(connectedDevice.config);
-        this.setState({
-          id: connectedDevice.comName,
-          deviceInfo: connectedDevice,
-          // currentConfig: fcConfig,
-          currentConfig: connectedDevice.config,
-          connected: true
-        });
-      }
-      return connectedDevice.config;
-    });
+        this.setState({ connecting: false });
+
+        return connectedDevice.config;
+      })
+      .catch(() => {
+        this.setState({ connecting: false });
+      });
   };
 
   componentDidMount() {
@@ -110,7 +117,7 @@ class App extends Component {
     } else {
       return (
         <MuiThemeProvider muiTheme={getMuiTheme(theme)}>
-          <Disconnected message={this.uiMessage} />
+          <Disconnected connecting={this.state.connecting} />
         </MuiThemeProvider>
       );
     }
