@@ -10,19 +10,19 @@ export default class InfoBarView extends Component {
   constructor(props) {
     super(props);
     this.handleDrawerToggle = props.handleDrawerToggle;
-    this.fcConfig = props.fcConfig;
     this.state = {
       setupCompleted: -1,
       craftName: props.fcConfig.craftName,
       isDirty: props.isDirty
     };
   }
-  updateCraftName() {
+  updateCraftName = () => {
+    this.notifyDirty(true, this.state, this.state.craftName);
     this.setState({ namingCraft: true });
     FCConnector.sendCommand(`name ${this.state.craftName}`).then(() => {
       this.setState({ namingCraft: false });
     });
-  }
+  };
 
   handleSaveClick = () => {
     FCConnector.saveConfig();
@@ -59,7 +59,7 @@ export default class InfoBarView extends Component {
           <TextField
             id="craft_name"
             placeholder="A craft has no name..."
-            defaultValue={this.state.craftName}
+            defaultValue={this.props.fcConfig.name}
             errorText={this.state.namingCraft && "Saving..."}
             errorStyle={{ color: "rgb(0, 188, 212)" }}
             onBlur={() => this.updateCraftName()}

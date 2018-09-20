@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import { List } from "material-ui/List";
 import AuxChannelItemView from "./AuxChannelItemView";
+import Paper from "material-ui/Paper";
 
 export default class AuxChannelView extends Component {
   constructor(props) {
     super(props);
     this.notifyDirty = props.notifyDirty;
     this.state = {
-      channels: props.channels.map((mode, i) => {
+      modes: props.modes.map((mode, i) => {
         let parts = mode.split("|");
 
         let id = i,
@@ -35,13 +36,15 @@ export default class AuxChannelView extends Component {
   render() {
     return (
       <List>
-        {this.state.channels.map(channel => {
+        {this.state.modes.map(mode => {
           return (
-            <AuxChannelItemView
-              notifyDirty={this.notifyDirty}
-              key={channel.id}
-              item={channel}
-            />
+            <Paper
+              key={mode.id}
+              zDepth={3}
+              style={{ margin: "10px", padding: "10px" }}
+            >
+              <AuxChannelItemView notifyDirty={this.notifyDirty} item={mode} />
+            </Paper>
           );
         })}
       </List>

@@ -30,13 +30,6 @@ module.exports = {
       return bxfConnector.getTelemetry(deviceInfo.comName, cb, ecb);
     }
   },
-  close(deviceInfo) {
-    if (deviceInfo.hid) {
-      return rf1Connector.close();
-    } else {
-      return bxfConnector.close();
-    }
-  },
   updateIMUF(deviceInfo, binUrl, notifyProgress, cb, ecb) {
     if (deviceInfo.hid) {
       return rf1Connector.updateIMUF(

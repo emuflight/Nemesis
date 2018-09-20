@@ -2,20 +2,12 @@ import React from "react";
 import ProfileView from "../ProfileView/ProfileView";
 import InputView from "../Items/InputView";
 import DropdownView from "../Items/DropdownView";
+import { toSimpleConfigObj } from "../../utilities/utils";
+import Paper from "material-ui/Paper";
 
-const mapToLabel = k => {
-  return {
-    label: k,
-    value: k
-  };
-};
 export default class RatesView extends ProfileView {
   constructor(props) {
     super(props);
-    props.fcConfig.rates_type.values = props.fcConfig.rates_type.values.map(
-      mapToLabel
-    );
-    props.fcConfig.rates_type.id = "rates_type";
     props.fcConfig.thr_expo.id = "thr_expo";
     props.fcConfig.roll_rc_rate.id = "roll_rc_rate";
     props.fcConfig.pitch_rc_rate.id = "pitch_rc_rate";
@@ -30,19 +22,17 @@ export default class RatesView extends ProfileView {
   getContent() {
     return (
       <div style={{ display: "flex", flexDirection: "column" }}>
-        <div style={{ display: "flex" }}>
+        <Paper zDepth={3} style={{ margin: "10px", padding: "10px" }}>
           <DropdownView
             notifyDirty={this.notifyDirty}
-            key={this.props.fcConfig.rates_type.id}
-            item={this.props.fcConfig.rates_type}
+            key={"rates_type"}
+            item={toSimpleConfigObj(
+              this.props.fcConfig.rates_type,
+              "rates_type"
+            )}
           />
-          <InputView
-            notifyDirty={this.notifyDirty}
-            key={this.props.fcConfig.thr_expo.id}
-            item={this.props.fcConfig.thr_expo}
-          />
-        </div>
-        <div style={{ display: "flex" }}>
+        </Paper>
+        <Paper zDepth={3} style={{ margin: "10px", padding: "10px" }}>
           <InputView
             notifyDirty={this.notifyDirty}
             key={this.props.fcConfig.roll_rc_rate.id}
@@ -58,8 +48,8 @@ export default class RatesView extends ProfileView {
             key={this.props.fcConfig.yaw_rc_rate.id}
             item={this.props.fcConfig.yaw_rc_rate}
           />
-        </div>
-        <div style={{ display: "flex" }}>
+        </Paper>
+        <Paper zDepth={3} style={{ margin: "10px", padding: "10px" }}>
           <InputView
             notifyDirty={this.notifyDirty}
             key={this.props.fcConfig.roll_srate.id}
@@ -75,8 +65,8 @@ export default class RatesView extends ProfileView {
             key={this.props.fcConfig.yaw_srate.id}
             item={this.props.fcConfig.yaw_srate}
           />
-        </div>
-        <div style={{ display: "flex" }}>
+        </Paper>
+        <Paper zDepth={3} style={{ margin: "10px", padding: "10px" }}>
           <InputView
             notifyDirty={this.notifyDirty}
             key={this.props.fcConfig.roll_expo.id}
@@ -92,7 +82,14 @@ export default class RatesView extends ProfileView {
             key={this.props.fcConfig.yaw_expo.id}
             item={this.props.fcConfig.yaw_expo}
           />
-        </div>
+        </Paper>
+        <Paper zDepth={3} style={{ margin: "10px", padding: "10px" }}>
+          <InputView
+            notifyDirty={this.notifyDirty}
+            key={this.props.fcConfig.thr_expo.id}
+            item={this.props.fcConfig.thr_expo}
+          />
+        </Paper>
       </div>
     );
   }

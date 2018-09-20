@@ -4,13 +4,8 @@ import DropdownView from "../Items/DropdownView";
 import InputView from "../Items/InputView";
 import ConfigListView from "../ConfigListView/ConfigListView";
 import TpaCurveView from "../TpaCurveView/TpaCurveView";
-
-const mapToLabel = k => {
-  return {
-    label: k,
-    value: k
-  };
-};
+import Paper from "material-ui/Paper";
+import { toSimpleConfigObj } from "../../utilities/utils";
 
 export default class PidsView extends ProfileView {
   constructor(props) {
@@ -19,18 +14,14 @@ export default class PidsView extends ProfileView {
       props.uiConfig.elements.gyro_sync_denom.values;
     props.fcConfig.pid_process_denom.values =
       props.uiConfig.elements.pid_process_denom.values;
-    props.fcConfig.buttered_pids.values = props.fcConfig.buttered_pids.values.map(
-      mapToLabel
-    );
-    props.fcConfig.tpa_type.values = props.fcConfig.tpa_type.values.map(
-      mapToLabel
-    );
     props.fcConfig.pid_process_denom.id = "pid_process_denom";
     props.fcConfig.gyro_sync_denom.id = "gyro_sync_denom";
     props.fcConfig.buttered_pids.id = "buttered_pids";
-    props.fcConfig.tpa_type.id = "tpa_type";
     props.fcConfig.tpa_breakpoint.id = "tpa_breakpoint";
     props.fcConfig.tpa_rate.id = "tpa_rate";
+    props.fcConfig.dterm_lowpass.id = "dterm_lowpass";
+    props.fcConfig.dterm_notch_hz.id = "dterm_notch_hz";
+    props.fcConfig.dterm_notch_cutoff.id = "dterm_notch_cutoff";
   }
   updatePidValues = newValue => {
     let gyroItem = this.props.fcConfig.gyro_sync_denom;
@@ -61,7 +52,7 @@ export default class PidsView extends ProfileView {
   getContent() {
     return (
       <div style={{ display: "flex", flexDirection: "column" }}>
-        <div style={{ display: "flex" }}>
+        <Paper zDepth={3} style={{ margin: "10px", padding: "10px" }}>
           <DropdownView
             notifyDirty={(isDirty, state, payload) => {
               this.updatePidValues(payload);
@@ -79,47 +70,91 @@ export default class PidsView extends ProfileView {
           <DropdownView
             id={"buttered_pids"}
             notifyDirty={this.notifyDirty}
-            item={this.props.fcConfig.buttered_pids}
+            item={toSimpleConfigObj(
+              this.props.fcConfig.buttered_pids,
+              "buttered_pids"
+            )}
           />
-        </div>
-        <div>
+        </Paper>
+        <Paper zDepth={3} style={{ margin: "10px", padding: "10px" }}>
           <div style={{ margin: "0 auto", width: "800px" }}>
             <ConfigListView
               notifyDirty={this.notifyDirty}
               items={this.props.items}
             />
           </div>
-        </div>
-        <div>
+        </Paper>
+        <Paper zDepth={3} style={{ margin: "10px", padding: "10px" }}>
+          {!this.props.fcConfig.imuf && (
+            <DropdownView
+              id={"dterm_lowpass_type"}
+              notifyDirty={this.notifyDirty}
+              item={toSimpleConfigObj(
+                this.props.fcConfig.dterm_lowpass_type,
+                "dterm_lowpass_type"
+              )}
+            />
+          )}
+          <DropdownView
+            id={"dterm_filter_style"}
+            notifyDirty={this.notifyDirty}
+            item={toSimpleConfigObj(
+              this.props.fcConfig.dterm_filter_style,
+              "dterm_filter_style"
+            )}
+          />
+        </Paper>
+        {!this.props.fcConfig.imuf && (
+          <Paper zDepth={3} style={{ margin: "10px", padding: "10px" }}>
+            <InputView
+              notifyDirty={this.notifyDirty}
+              key={this.props.fcConfig.dterm_lowpass.id}
+              item={this.props.fcConfig.dterm_lowpass}
+            />
+            <InputView
+              notifyDirty={this.notifyDirty}
+              key={this.props.fcConfig.dterm_notch_hz.id}
+              item={this.props.fcConfig.dterm_notch_hz}
+            />
+            <InputView
+              notifyDirty={this.notifyDirty}
+              key={this.props.fcConfig.dterm_notch_cutoff.id}
+              item={this.props.fcConfig.dterm_notch_cutoff}
+            />
+          </Paper>
+        )}
+
+        <Paper zDepth={3} style={{ margin: "10px", padding: "10px" }}>
           <DropdownView
             id={"tpa_type"}
             notifyDirty={(isDirty, state, payload) => {
               this.handleTpaChange(payload);
               this.notifyDirty(isDirty, state, payload);
             }}
-            item={this.props.fcConfig.tpa_type}
+            item={toSimpleConfigObj(this.props.fcConfig.tpa_type, "tpa_type")}
           />
-        </div>
-        {this.state.showTpaCurves ? (
-          <TpaCurveView
-            notifyDirty={this.notifyDirty}
-            key={"tpa_curves"}
-            item={this.props.fcConfig.tpa_curves}
-          />
-        ) : (
-          <div>
-            <InputView
+
+          {this.state.showTpaCurves ? (
+            <TpaCurveView
               notifyDirty={this.notifyDirty}
-              key={"tpa_breakpoint"}
-              item={this.props.fcConfig.tpa_breakpoint}
+              key={"tpa_curves"}
+              item={this.props.fcConfig.tpa_curves}
             />
-            <InputView
-              notifyDirty={this.notifyDirty}
-              key={"tpa_rate"}
-              item={this.props.fcConfig.tpa_rate}
-            />
-          </div>
-        )}
+          ) : (
+            <div>
+              <InputView
+                notifyDirty={this.notifyDirty}
+                key={"tpa_breakpoint"}
+                item={this.props.fcConfig.tpa_breakpoint}
+              />
+              <InputView
+                notifyDirty={this.notifyDirty}
+                key={"tpa_rate"}
+                item={this.props.fcConfig.tpa_rate}
+              />
+            </div>
+          )}
+        </Paper>
       </div>
     );
   }

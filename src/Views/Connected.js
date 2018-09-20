@@ -13,16 +13,14 @@ import ConfigListView from "./ConfigListView/ConfigListView";
 import FeaturesView from "./FeaturesView/FeaturesView";
 import PortsView from "./PortsView/PortsView";
 import CliView from "./CliView/CliView";
+import FiltersView from "./FiltersView/FiltersView";
 import PidsView from "./PidView/PidView";
 import RatesView from "./RatesView/RatesView";
 
 const getRouteItems = (routeName, fcConfig, uiConfig) => {
   return Object.keys(fcConfig)
     .filter(key => {
-      return (
-        routeName === "ADVANCED" ||
-        uiConfig.groups[routeName].indexOf(key) !== -1
-      );
+      return uiConfig.groups[routeName].indexOf(key) !== -1;
     })
     .map(k => {
       let itemObj = Object.assign(
@@ -155,7 +153,7 @@ export default class Connected extends Component {
       case "MODES":
         contents = (
           <AuxChannelView
-            channels={this.fcConfig.modes.values}
+            modes={this.fcConfig.modes.values}
             notifyDirty={(isDirty, item, newValue) =>
               this.notifyDirty(isDirty, item, newValue)
             }
@@ -176,6 +174,17 @@ export default class Connected extends Component {
       case "FEATURES":
         contents = (
           <FeaturesView
+            features={this.fcConfig.features.values}
+            notifyDirty={(isDirty, item, newValue) =>
+              this.notifyDirty(isDirty, item, newValue)
+            }
+          />
+        );
+        break;
+      case "FILTERS":
+        contents = (
+          <FiltersView
+            fcConfig={this.fcConfig}
             features={this.fcConfig.features.values}
             notifyDirty={(isDirty, item, newValue) =>
               this.notifyDirty(isDirty, item, newValue)
@@ -218,7 +227,13 @@ export default class Connected extends Component {
           title={this.state.currentRoute.title}
           onLeftIconButtonClick={this.handleDrawerToggle}
         />
-        <Drawer open={this.state.drawerOpen}>
+        <Drawer
+          docked={false}
+          open={this.state.drawerOpen}
+          onRequestChange={drawerOpen => {
+            this.setState({ drawerOpen });
+          }}
+        >
           <VersionInfoView
             goToDFU={this.goToDFU}
             goToImuf={this.goToImuf}

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import FeatureItemView from "./FeatureItemView";
-import { List } from "material-ui/List";
+import Paper from "material-ui/Paper";
+import { List } from "material-ui";
 
 export default class FeaturesView extends Component {
   constructor(props) {
@@ -8,27 +9,15 @@ export default class FeaturesView extends Component {
     this.notifyDirty = props.notifyDirty;
     this.state = {
       features: props.features.map(feature => {
-        let current = "ON",
+        let current = true,
           key = feature;
         if (feature.startsWith("-")) {
-          current = "OFF";
+          current = false;
           key = key.slice(1);
         }
         return {
           id: key,
-          key: key,
-          current: current,
-          mode: "LOOKUP",
-          values: [
-            {
-              value: "OFF",
-              label: "OFF"
-            },
-            {
-              value: "ON",
-              label: "ON"
-            }
-          ]
+          current: current
         };
       })
     };
@@ -37,17 +26,19 @@ export default class FeaturesView extends Component {
 
   render() {
     return (
-      <List>
-        {this.state.features.map(feature => {
-          return (
-            <FeatureItemView
-              notifyDirty={this.notifyDirty}
-              key={feature.id}
-              item={feature}
-            />
-          );
-        })}
-      </List>
+      <Paper zDepth={3} style={{ margin: "10px", padding: "10px" }}>
+        <List style={{ width: "300px" }}>
+          {this.state.features.map(feature => {
+            return (
+              <FeatureItemView
+                notifyDirty={this.notifyDirty}
+                key={feature.id}
+                item={feature}
+              />
+            );
+          })}
+        </List>
+      </Paper>
     );
   }
 }

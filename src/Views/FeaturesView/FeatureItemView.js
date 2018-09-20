@@ -1,48 +1,36 @@
-import React from "react";
-import DropdownView from "../Items/DropdownView";
-import SelectField from "material-ui/SelectField";
-import MenuItem from "material-ui/MenuItem";
+import React, { Component } from "react";
 import FCConnector from "../../utilities/FCConnector";
+import Toggle from "material-ui/Toggle";
+import { ListItem } from "material-ui";
 
-export default class FeatureItemView extends DropdownView {
+export default class FeatureItemView extends Component {
   constructor(props) {
     super(props);
     this.notifyDirty = props.notifyDirty;
+    this.state = {
+      checked: this.props.item.current
+    };
   }
-  componentDidMount() {
-    document.getElementById(this.props.item.id).$state = this.props.item;
-  }
+  handleToggle = payload => {
+    this.notifyDirty(true, this.props.item, payload);
+    this.setState({ checked: payload });
+    FCConnector.sendCommand(
+      `feature ${payload ? "" : "-"}${this.props.item.id}`
+    );
+  };
   render() {
     return (
-      <div id={this.props.item.id}>
-        <SelectField
+      <ListItem>
+        <Toggle
+          id={this.props.item.id}
+          label={this.props.item.id}
+          toggled={this.state.checked}
           className={this.props.item.id}
-          key={this.props.item.id}
-          floatingLabelText={this.props.item.id}
-          value={this.props.item.current}
-          disabled={this.props.item.isDirty}
-          errorText={this.props.item.isDirty && "Saving..."}
-          errorStyle={{ color: "rgb(0, 188, 212)" }}
-          onChange={(event, key, payload) => {
-            this.setState({ current: payload, isDirty: true });
-            FCConnector.sendCommand(
-              `feature ${payload === "OFF" ? "-" : ""}${this.props.item.id}`
-            ).then(() => {
-              this.setState({ isDirty: false });
-            });
+          onToggle={(event, isInputChecked) => {
+            this.handleToggle(isInputChecked);
           }}
-        >
-          {this.props.item.values.map(item => {
-            return (
-              <MenuItem
-                key={item.value}
-                primaryText={item.label}
-                value={item.value}
-              />
-            );
-          })}
-        </SelectField>
-      </div>
+        />
+      </ListItem>
     );
   }
 }

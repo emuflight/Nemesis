@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ConfigListView from "../ConfigListView/ConfigListView";
 import DropdownView from "../Items/DropdownView";
+import Paper from "material-ui/Paper";
 
 export default class ProfileView extends Component {
   constructor(props) {
@@ -26,13 +27,15 @@ export default class ProfileView extends Component {
   render() {
     return (
       <div>
-        <DropdownView
-          ref="profSelector"
-          style={{ display: "block" }}
-          notifyDirty={this.notifyDirty}
-          key={this.state.id}
-          item={this.state}
-        />
+        <Paper zDepth={3} style={{ margin: "10px", padding: "10px" }}>
+          <DropdownView
+            ref="profSelector"
+            style={{ display: "block" }}
+            notifyDirty={this.notifyDirty}
+            key={this.state.id}
+            item={this.state}
+          />
+        </Paper>
         {this.getContent()}
       </div>
     );

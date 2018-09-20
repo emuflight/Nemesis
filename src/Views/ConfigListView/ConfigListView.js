@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import DropdownView from "../Items/DropdownView";
 import SliderView from "../Items/SliderView";
 import InputView from "../Items/InputView";
-import { List } from "material-ui/List";
+import Paper from "material-ui/Paper";
 
 export default class ConfigListView extends Component {
   constructor(props) {
@@ -12,16 +12,24 @@ export default class ConfigListView extends Component {
 
   render() {
     return (
-      <List>
+      <Paper
+        zDepth={3}
+        style={{
+          margin: "10px",
+          padding: "10px",
+          display: "flex",
+          flexWrap: "wrap"
+        }}
+      >
         {this.props.items &&
-          this.props.items.map(item => {
+          this.props.items.map((item, i) => {
             let type = (item.element && item.element.type) || item.mode;
             switch (type) {
               case "slider":
                 return (
                   <SliderView
                     notifyDirty={this.notifyDirty}
-                    key={item.id}
+                    key={i}
                     item={item}
                     inputVal={item.current}
                   />
@@ -30,7 +38,7 @@ export default class ConfigListView extends Component {
                 return (
                   <ConfigListView
                     notifyDirty={this.notifyDirty}
-                    key={item.id}
+                    key={i}
                     items={item.values}
                   />
                 );
@@ -38,7 +46,7 @@ export default class ConfigListView extends Component {
                 return (
                   <DropdownView
                     notifyDirty={this.notifyDirty}
-                    key={item.id}
+                    key={i}
                     item={item}
                   />
                 );
@@ -46,13 +54,13 @@ export default class ConfigListView extends Component {
                 return (
                   <InputView
                     notifyDirty={this.notifyDirty}
-                    key={item.id}
+                    key={i}
                     item={item}
                   />
                 );
             }
           })}
-      </List>
+      </Paper>
     );
   }
 }

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { List } from "material-ui/List";
 import PortsItemView from "./PortsItemView";
 import DropdownView from "../Items/DropdownView";
+import Paper from "material-ui/Paper";
 
 export default class PortsView extends Component {
   constructor(props) {
@@ -44,7 +45,11 @@ export default class PortsView extends Component {
       <List>
         {this.state.ports.map((port, i) => {
           return (
-            <List key={port.id} style={{ display: "flex" }}>
+            <Paper
+              key={port.id}
+              zDepth={3}
+              style={{ margin: "10px", padding: "10px", display: "flex" }}
+            >
               <PortsItemView
                 notifyDirty={(dirty, stateObj, newVal) =>
                   this.handleDirty(dirty, stateObj, i, newVal)
@@ -57,7 +62,7 @@ export default class PortsView extends Component {
                   item={this.state.rxProvider}
                 />
               )}
-            </List>
+            </Paper>
           );
         })}
       </List>

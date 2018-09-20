@@ -34,7 +34,6 @@ const getConfig = (comName, cb, ecb) => {
       }, 200);
     });
   } catch (ex) {
-    port && port.close();
     console.log(ex);
     ecb && ecb(ex);
   }
@@ -59,7 +58,6 @@ const sendCommand = (comName, command, cb, ecb) => {
       err && ecb && ecb(err);
     });
   } catch (ex) {
-    port && port.close();
     console.log(ex);
     ecb && ecb(ex);
   }
