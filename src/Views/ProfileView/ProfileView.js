@@ -13,19 +13,27 @@ export default class ProfileView extends Component {
     };
   }
 
+  getContent() {
+    return (
+      <ConfigListView
+        ref="listView"
+        notifyDirty={this.notifyDirty}
+        items={this.props.items}
+      />
+    );
+  }
+
   render() {
     return (
       <div>
         <DropdownView
+          ref="profSelector"
           style={{ display: "block" }}
           notifyDirty={this.notifyDirty}
           key={this.state.id}
           item={this.state}
         />
-        <ConfigListView
-          notifyDirty={this.notifyDirty}
-          items={this.props.items}
-        />
+        {this.getContent()}
       </div>
     );
   }

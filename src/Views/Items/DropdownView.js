@@ -9,9 +9,7 @@ export default class DropdownView extends Component {
     this.state = props.item;
     this.notifyDirty = props.notifyDirty;
   }
-  componentDidMount() {
-    document.getElementById(this.state.id).$state = this.state;
-  }
+
   render() {
     return (
       <SelectField

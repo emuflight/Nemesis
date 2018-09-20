@@ -79,7 +79,7 @@ export default class TpaCurveView extends Component {
               Hide TPA
             </RaisedButton>
           </div>
-          <div style={{ margin: "0 auto", width: "800px" }}>
+          <div style={{ margin: "0 auto", width: "720px" }}>
             <h3>TPA Curves</h3>
             <h5>KP</h5>
             {this.state.kp.map((item, i) => {

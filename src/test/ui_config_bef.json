@@ -17,7 +17,6 @@
     "MODES": ["modes"],
 
     "PID": [
-      "buttered_pids",
       "p_pitch",
       "i_pitch",
       "d_pitch",
@@ -26,10 +25,7 @@
       "d_roll",
       "p_yaw",
       "i_yaw",
-      "d_yaw",
-      "pid_process_denom",
-      "gyro_sync_denom",
-      "tpa_curves"
+      "d_yaw"
     ],
     "RATES": [
       "thr_expo",
@@ -42,11 +38,7 @@
       "yaw_expo",
       "roll_srate",
       "pitch_srate",
-      "yaw_srate",
-      "tpa_rate",
-      "tpa_breakpoint",
-      "tpa_type",
-      "rate_profile"
+      "yaw_srate"
     ],
     "FILTERS": [
       "gyro_lpf",
@@ -61,16 +53,13 @@
       "dterm_lowpass",
       "dterm_notch_hz",
       "dterm_notch_cutoff",
-      "imuf_mode",
-      "imuf_rate",
       "imuf_roll_q",
       "imuf_pitch_q",
       "imuf_yaw_q",
       "imuf_w",
       "imuf_pitch_lpf_cutoff_hz",
       "imuf_roll_lpf_cutoff_hz",
-      "imuf_yaw_lpf_cutoff_hz",
-      "input_filtering_mode"
+      "imuf_yaw_lpf_cutoff_hz"
     ],
     "MOTORS": [
       "min_command",

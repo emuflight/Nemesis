@@ -12,8 +12,9 @@ import AuxChannelView from "./AuxChannelView/AuxChannelView";
 import ConfigListView from "./ConfigListView/ConfigListView";
 import FeaturesView from "./FeaturesView/FeaturesView";
 import PortsView from "./PortsView/PortsView";
-import ProfileView from "./ProfileView/ProfileView";
 import CliView from "./CliView/CliView";
+import PidsView from "./PidView/PidView";
+import RatesView from "./RatesView/RatesView";
 
 const getRouteItems = (routeName, fcConfig, uiConfig) => {
   return Object.keys(fcConfig)
@@ -83,12 +84,6 @@ export default class Connected extends Component {
   };
 
   notifyDirty = (isDirty, item, newValue) => {
-    let notification = document.getElementById(item.id);
-    if (notification) {
-      notification.dispatchEvent(
-        new CustomEvent("change", { detail: { item, newValue } })
-      );
-    }
     let updateObj = {
       isDirty: isDirty
     };
@@ -105,7 +100,9 @@ export default class Connected extends Component {
           this.fcConfig.pid_profile.values[this.state.pid_profile]
         );
         contents = (
-          <ProfileView
+          <PidsView
+            fcConfig={this.fcConfig}
+            uiConfig={this.uiConfig}
             notifyDirty={(isDirty, item, newValue) =>
               this.notifyDirty(isDirty, item, newValue)
             }
@@ -133,7 +130,8 @@ export default class Connected extends Component {
           this.fcConfig.rate_profile.values[this.state.rate_profile]
         );
         contents = (
-          <ProfileView
+          <RatesView
+            fcConfig={this.fcConfig}
             notifyDirty={(isDirty, item, newValue) =>
               this.notifyDirty(isDirty, item, newValue)
             }
@@ -207,7 +205,8 @@ export default class Connected extends Component {
           flexDirection: "column",
           position: "relative",
           flex: "1",
-          padding: "10px"
+          padding: "10px",
+          minHeight: "100%"
         }}
       >
         <InfoBarView
