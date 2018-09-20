@@ -32,20 +32,18 @@ export default class InputView extends ListItem {
 
   render() {
     return (
-      <div>
-        <TextField
-          key={this.state.id}
-          floatingLabelText={this.state.id}
-          defaultValue={this.state.current}
-          errorText={this.state.isDirty && "Saving..."}
-          errorStyle={{ color: "rgb(0, 188, 212)" }}
-          onBlur={() => this.updateValue()}
-          onChange={(event, newValue) => {
-            this.setState({ newValue });
-          }}
-          type="number"
-        />
-      </div>
+      <TextField
+        key={this.state.id}
+        floatingLabelText={this.state.id}
+        defaultValue={this.state.current}
+        errorText={this.state.isDirty && "Saving..."}
+        errorStyle={{ color: "rgb(0, 188, 212)" }}
+        onBlur={() => this.updateValue()}
+        onChange={(event, newValue) => {
+          this.setState({ newValue });
+        }}
+        type="number"
+      />
     );
   }
 }

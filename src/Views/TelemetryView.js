@@ -58,7 +58,7 @@ export default class TelemetryView extends Component {
   };
   render() {
     return (
-      <div style={{ padding: "0 10px" }}>
+      <div style={{ margin: "0 10px" }}>
         <RaisedButton onClick={this.handleClick} label="Telemetry" />
         <Popover
           open={this.state.open}

@@ -33,7 +33,6 @@ export default class PortsView extends Component {
   }
 
   handleDirty = (dirty, stateObj, index, newVal) => {
-    debugger;
     let ports = this.state.ports;
     ports[index].mode = newVal;
     this.setState(ports);
@@ -45,7 +44,7 @@ export default class PortsView extends Component {
       <List>
         {this.state.ports.map((port, i) => {
           return (
-            <div key={port.id} style={{ display: "flex" }}>
+            <List key={port.id} style={{ display: "flex" }}>
               <PortsItemView
                 notifyDirty={(dirty, stateObj, newVal) =>
                   this.handleDirty(dirty, stateObj, i, newVal)
@@ -58,7 +57,7 @@ export default class PortsView extends Component {
                   item={this.state.rxProvider}
                 />
               )}
-            </div>
+            </List>
           );
         })}
       </List>

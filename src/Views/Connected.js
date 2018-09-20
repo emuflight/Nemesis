@@ -3,6 +3,8 @@ import AppBar from "material-ui/AppBar";
 import Drawer from "material-ui/Drawer";
 import Badge from "material-ui/Badge";
 import MenuItem from "material-ui/MenuItem";
+import Paper from "material-ui/Paper";
+import List from "material-ui/List";
 import Divider from "material-ui/Divider";
 import InfoBarView from "./InfoBarView";
 import VersionInfoView from "./VersionInfoView";
@@ -199,7 +201,15 @@ export default class Connected extends Component {
         break;
     }
     return (
-      <div style={{ display: "flex", flexDirection: "column" }}>
+      <Paper
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          position: "relative",
+          flex: "1",
+          padding: "10px"
+        }}
+      >
         <InfoBarView
           handleDrawerToggle={this.handleDrawerToggle}
           fcConfig={this.fcConfig}
@@ -224,7 +234,7 @@ export default class Connected extends Component {
                 key={route.key}
                 onClick={this.handleMenuItemClick}
               >
-                <div style={{ display: "flex" }}>
+                <List style={{ display: "flex" }}>
                   <div style={{ flex: 1 }}>{route.title}</div>
                   {route.incompeteItems && (
                     <Badge
@@ -233,14 +243,14 @@ export default class Connected extends Component {
                       secondary={true}
                     />
                   )}
-                </div>
+                </List>
               </MenuItem>
             );
           })}
         </Drawer>
         {contents}
         <CliView />
-      </div>
+      </Paper>
     );
   }
 }

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import CircularProgress from "material-ui/CircularProgress";
+import List from "material-ui/List";
 import FCConnector from "../utilities/FCConnector";
 import TelemetryView from "./TelemetryView";
 import { RaisedButton, TextField } from "material-ui";
@@ -37,7 +38,7 @@ export default class InfoBarView extends Component {
 
   render() {
     return (
-      <div
+      <List
         style={{
           display: "flex",
           flexDirection: "row-reverse",
@@ -68,7 +69,7 @@ export default class InfoBarView extends Component {
           />
           <TelemetryView />
           {this.state.setupCompleted > -1 && (
-            <span
+            <List
               style={{ cursor: "pointer" }}
               onClick={() => this.handleDrawerToggle()}
             >
@@ -78,15 +79,15 @@ export default class InfoBarView extends Component {
                 size={35}
                 thickness={8}
               />
-              <span
+              <List
                 style={{ position: "relative", bottom: "15px", left: "3px" }}
               >
                 {this.setupPercentLabel}
-              </span>
-            </span>
+              </List>
+            </List>
           )}
         </div>
-      </div>
+      </List>
     );
   }
 }

@@ -12,10 +12,6 @@ export default class ConfigListView extends Component {
     this.notifyDirty = props.notifyDirty;
   }
 
-  shouldComponentUpdate(nextState) {
-    return true;
-  }
-
   render() {
     return (
       <List>

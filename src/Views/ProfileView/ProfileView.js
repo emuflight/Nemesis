@@ -16,13 +16,12 @@ export default class ProfileView extends Component {
   render() {
     return (
       <div>
-        <div>
-          <DropdownView
-            notifyDirty={this.notifyDirty}
-            key={this.state.id}
-            item={this.state}
-          />
-        </div>
+        <DropdownView
+          style={{ display: "block" }}
+          notifyDirty={this.notifyDirty}
+          key={this.state.id}
+          item={this.state}
+        />
         <ConfigListView
           notifyDirty={this.notifyDirty}
           items={this.props.items}
