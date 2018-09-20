@@ -61,6 +61,12 @@ export default new class FCConnector {
     );
   }
 
+  sendCliCommand(command) {
+    return this.sendCommand(command).then(response => {
+      return response.json();
+    });
+  }
+
   saveConfig() {
     return this.sendCommand("save");
   }

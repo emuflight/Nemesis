@@ -45,9 +45,15 @@ const sendCommand = (comName, command, cb, ecb) => {
     let port = new SerialPort(comName, {
       baudRate: 115200
     });
+    let ret = "";
+    let timeout;
     port.on("data", data => {
-      cb(data);
-      port && port.close();
+      ret += data;
+      timeout && clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        cb(ret);
+        port && port.close();
+      }, 200);
     });
     port.write(`${command}\n`, err => {
       err && ecb && ecb(err);

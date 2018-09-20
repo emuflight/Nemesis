@@ -11,6 +11,7 @@ import ConfigListView from "./ConfigListView/ConfigListView";
 import FeaturesView from "./FeaturesView/FeaturesView";
 import PortsView from "./PortsView/PortsView";
 import ProfileView from "./ProfileView/ProfileView";
+import CliView from "./CliView/CliView";
 
 const getRouteItems = (routeName, fcConfig, uiConfig) => {
   return Object.keys(fcConfig)
@@ -238,6 +239,7 @@ export default class Connected extends Component {
           })}
         </Drawer>
         {contents}
+        <CliView />
       </div>
     );
   }
