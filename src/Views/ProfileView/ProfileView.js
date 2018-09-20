@@ -9,8 +9,7 @@ export default class ProfileView extends Component {
     this.state = {
       id: props.id,
       current: props.active,
-      values: props.profileList,
-      config: props.items
+      values: props.profileList
     };
   }
 

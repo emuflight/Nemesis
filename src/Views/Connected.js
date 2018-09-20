@@ -123,6 +123,34 @@ export default class Connected extends Component {
         );
         break;
       }
+      case "RATES": {
+        let mergedProfile = Object.assign(
+          {},
+          this.fcConfig,
+          this.fcConfig.rate_profile.values[this.state.rate_profile]
+        );
+        contents = (
+          <ProfileView
+            notifyDirty={(isDirty, item, newValue) =>
+              this.notifyDirty(isDirty, item, newValue)
+            }
+            id={"rate_profile"}
+            active={this.state.rate_profile}
+            profileList={this.fcConfig.rate_profile.values.map((v, k) => {
+              return {
+                label: `Rate Profile ${k + 1}`,
+                value: k
+              };
+            })}
+            items={getRouteItems(
+              this.state.currentRoute.key,
+              mergedProfile,
+              this.uiConfig
+            )}
+          />
+        );
+        break;
+      }
       case "MODES":
         contents = (
           <AuxChannelView

@@ -37,20 +37,19 @@ export default class TpaCurveView extends Component {
   updateValue(k, i, state) {
     let updateObj = {};
     updateObj[k] = this.state[k];
-    updateObj[k][i] = state;
+    updateObj[k][i].current = state.inputVal;
     let middle = updateObj[k][i];
     let left = updateObj[k][i - 1];
     let right = updateObj[k][i + 1];
-    middle.current = middle.newValue;
     if (left) {
-      left.current = Math.floor((middle.newValue + left.current) / 2);
+      left.current = Math.floor((middle.current + left.current) / 2);
     }
     if (right) {
-      right.current = Math.floor((middle.newValue + right.current) / 2);
+      right.current = Math.floor((middle.current + right.current) / 2);
     }
     this.setState(updateObj);
-    FCConnector.sendCommand(
-      `tpacurve ${k} ${this.state[k].map(item => item.newValue).join("=")}`
+    return FCConnector.sendCommand(
+      `tpacurve ${k} ${this.state[k].map(item => item.current).join("=")}`
     );
   }
   render() {
