@@ -7,33 +7,32 @@ import FCConnector from "../../utilities/FCConnector";
 export default class FeatureItemView extends DropdownView {
   constructor(props) {
     super(props);
-    this.state = props.item;
     this.notifyDirty = props.notifyDirty;
   }
   componentDidMount() {
-    document.getElementById(this.state.id).$state = this.state;
+    document.getElementById(this.props.item.id).$state = this.props.item;
   }
   render() {
     return (
-      <div id={this.state.id}>
+      <div id={this.props.item.id}>
         <SelectField
-          className={this.state.id}
-          key={this.state.id}
-          floatingLabelText={this.state.id}
-          value={this.state.current}
-          disabled={this.state.isDirty}
-          errorText={this.state.isDirty && "Saving..."}
+          className={this.props.item.id}
+          key={this.props.item.id}
+          floatingLabelText={this.props.item.id}
+          value={this.props.item.current}
+          disabled={this.props.item.isDirty}
+          errorText={this.props.item.isDirty && "Saving..."}
           errorStyle={{ color: "rgb(0, 188, 212)" }}
           onChange={(event, key, payload) => {
             this.setState({ current: payload, isDirty: true });
             FCConnector.sendCommand(
-              `feature ${payload === "OFF" ? "-" : ""}${this.state.id}`
+              `feature ${payload === "OFF" ? "-" : ""}${this.props.item.id}`
             ).then(() => {
               this.setState({ isDirty: false });
             });
           }}
         >
-          {this.state.values.map(item => {
+          {this.props.item.values.map(item => {
             return (
               <MenuItem
                 key={item.value}

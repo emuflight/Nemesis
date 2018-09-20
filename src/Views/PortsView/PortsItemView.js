@@ -8,31 +8,30 @@ import FCConnector from "../../utilities/FCConnector";
 export default class PortsItemView extends Component {
   constructor(props) {
     super(props);
-    this.state = props.item;
     this.notifyDirty = props.notifyDirty;
     this.portModes = uiPorts.modes;
     this.portLabels = uiPorts.ports;
   }
   updateValue(payload) {
-    this.notifyDirty(true, this.state, payload);
+    this.notifyDirty(true, this.props.item, payload);
     FCConnector.sendCommand(
-      `serial ${this.state.id} ${payload} ${this.state.mspBaud} ${
-        this.state.gpsBaud
-      } ${this.state.telemBaud} ${this.state.bblBaud}`
+      `serial ${this.props.item.id} ${payload} ${this.props.item.mspBaud} ${
+        this.props.item.gpsBaud
+      } ${this.props.item.telemBaud} ${this.props.item.bblBaud}`
     ).then(() => {
       this.setState({ isDirty: false });
     });
   }
   render() {
     return (
-      <div id={this.state.id}>
+      <div id={this.props.item.id}>
         <SelectField
-          className={this.portLabels[this.state.id]}
-          key={this.portLabels[this.state.id]}
-          floatingLabelText={this.portLabels[this.state.id]}
-          value={this.state.mode}
-          disabled={this.state.id === "20" || this.state.isDirty}
-          errorText={this.state.isDirty && "Saving..."}
+          className={this.portLabels[this.props.item.id]}
+          key={this.portLabels[this.props.item.id]}
+          floatingLabelText={this.portLabels[this.props.item.id]}
+          value={this.props.item.mode}
+          disabled={this.props.item.id === "20" || this.props.item.isDirty}
+          errorText={this.props.item.isDirty && "Saving..."}
           errorStyle={{ color: "rgb(0, 188, 212)" }}
           onChange={(event, key, payload) => {
             console.log(payload);

@@ -6,56 +6,58 @@ import FCConnector from "../../utilities/FCConnector";
 export default class SliderView extends Component {
   constructor(props) {
     super(props);
-    props.item.newValue = props.item.current;
-    this.state = props.item;
     this.notifyDirty = props.notifyDirty;
-  }
-  updateValue() {
-    if (super.updateValue) {
-      super.updateValue();
-    } else {
-      let isDirty =
-        this.state.current !== this.state.newValue && !!this.state.current;
-      this.notifyDirty(isDirty, this.state, this.state.newValue);
-      this.setState({ current: this.state.newValue, isDirty: isDirty });
-      FCConnector.setValue(this.state.id, this.state.newValue).then(() => {
-        this.setState({ isDirty: false });
-      });
+    this.state = {
+      isDirty: false,
+      inputVal: this.props.item.current
+    };
+
+    this.parser = parseInt;
+    if (props.item.element.parse === "float") {
+      this.parser = parseFloat;
     }
+  }
+  updateValue(newVal) {
+    this.setState({ isDirty: true });
+    FCConnector.setValue(this.props.item.id, newVal).then(() => {
+      this.props.item.current = newVal;
+      this.setState({ isDirty: false, inputVal: newVal });
+    });
+  }
+  componentWillReceiveProps(nextProps) {
+    this.setState({ inputVal: nextProps.item.current });
   }
   render() {
-    let parser = parseInt;
-    if (this.state.element.parse === "float") {
-      parser = parseFloat;
-    }
     return (
-      <div id={this.state.id} style={{ display: "inline-block" }}>
-        <h5>{this.state.id}</h5>
+      <div id={this.props.item.id} style={{ display: "inline-block" }}>
+        <h5>{this.props.item.id}</h5>
         <Slider
           style={{ height: "80px", width: "80px" }}
-          className={this.state.id}
-          value={parser(this.state.current)}
+          className={this.props.item.id}
+          value={this.parser(this.props.item.current)}
           disabled={!!this.state.isDirty}
-          min={parser(this.state.min)}
-          max={parser(this.state.max)}
-          step={this.state.step}
-          axis={this.state.axis}
+          min={this.parser(this.props.item.min)}
+          max={this.parser(this.props.item.max)}
+          step={this.props.item.step}
+          axis={this.props.item.axis}
           onChange={(event, newValue) => {
-            this.setState({ newValue });
+            this.props.item.current = this.parser(newValue);
           }}
           onDragStop={() => {
-            this.updateValue();
+            this.updateValue(this.props.item.current);
           }}
         />
         <div>
           <TextField
-            name={this.state.id}
+            name={this.props.item.id}
             style={{ width: 40 }}
             type="number"
-            value={this.state.current}
-            onBlur={() => this.updateValue()}
-            onChange={(event, newValue) => {
-              this.setState({ newValue });
+            value={this.parser(this.state.inputVal)}
+            onBlur={() => {
+              this.updateValue(this.parser(this.state.inputVal));
+            }}
+            onChange={(event, newVal) => {
+              this.setState({ inputVal: newVal });
             }}
           />
         </div>

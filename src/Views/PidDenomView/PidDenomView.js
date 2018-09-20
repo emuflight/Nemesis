@@ -3,7 +3,6 @@ import DropdownView from "../Items/DropdownView";
 export default class PidDenomView extends DropdownView {
   constructor(props) {
     super(props);
-    this.state = props.item;
     this.notifyDirty = props.notifyDirty;
   }
   updateValues(values, newValue) {
@@ -23,7 +22,7 @@ export default class PidDenomView extends DropdownView {
     });
   }
   componentDidMount() {
-    this.originalValues = this.state.values;
+    this.originalValues = this.props.item.values;
     this.GyroDropdown = document.getElementById("gyro_sync_denom");
     this.updateValues(
       this.GyroDropdown.$state.values,

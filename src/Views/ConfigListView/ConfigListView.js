@@ -9,20 +9,18 @@ import { List } from "material-ui/List";
 export default class ConfigListView extends Component {
   constructor(props) {
     super(props);
-    this.items = props.items;
     this.notifyDirty = props.notifyDirty;
   }
 
   shouldComponentUpdate(nextState) {
-    this.items = nextState.items;
     return true;
   }
 
   render() {
     return (
       <List>
-        {this.items &&
-          this.items.map(item => {
+        {this.props.items &&
+          this.props.items.map(item => {
             let type = (item.element && item.element.type) || item.mode;
             switch (type) {
               case "TpaCurveView":
@@ -47,6 +45,7 @@ export default class ConfigListView extends Component {
                     notifyDirty={this.notifyDirty}
                     key={item.id}
                     item={item}
+                    inputVal={item.current}
                   />
                 );
               case "ARRAY":

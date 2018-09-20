@@ -9,29 +9,28 @@ import FCConnector from "../../utilities/FCConnector";
 export default class AuxChannelItemView extends Component {
   constructor(props) {
     super(props);
-    this.state = props.item;
     this.notifyDirty = props.notifyDirty;
     this.auxModes = auxModeList;
   }
   updateValue() {
     FCConnector.sendCommand(
-      `aux ${this.state.id} ${this.state.mode} ${this.state.auxId} ${
-        this.state.range[0]
-      } ${this.state.range[1]} 0`
+      `aux ${this.props.item.id} ${this.props.item.mode} ${
+        this.props.item.auxId
+      } ${this.props.item.range[0]} ${this.props.item.range[1]} 0`
     ).then(() => {
       this.setState({ isDirty: false });
     });
   }
   render() {
     return (
-      <div id={this.state.id}>
+      <div id={this.props.item.id}>
         <SelectField
-          className={"aux" + this.state.id}
-          key={this.state.id}
-          floatingLabelText={"aux channel " + (this.state.auxId + 1)}
-          value={this.state.mode}
-          disabled={this.state.isDirty}
-          errorText={this.state.isDirty && "Saving..."}
+          className={"aux" + this.props.item.id}
+          key={this.props.item.id}
+          floatingLabelText={"aux channel " + (this.props.item.auxId + 1)}
+          value={this.props.item.mode}
+          disabled={this.props.item.isDirty}
+          errorText={this.props.item.isDirty && "Saving..."}
           errorStyle={{ color: "rgb(0, 188, 212)" }}
           onChange={(event, key, payload) => {
             this.setState({ mode: payload, isDirty: true });
@@ -52,9 +51,9 @@ export default class AuxChannelItemView extends Component {
           <span style={{ margin: "20px", fontFamily: "inherit" }}>900</span>
           <Slider
             style={{ flex: "1" }}
-            className={"aux" + this.state.id}
-            value={this.state.range}
-            disabled={!!this.state.isDirty}
+            className={"aux" + this.props.item.id}
+            value={this.props.item.range}
+            disabled={!!this.props.item.isDirty}
             min={900}
             max={2100}
             scaleLength={100}

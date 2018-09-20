@@ -4,9 +4,45 @@ import Drawer from "material-ui/Drawer";
 import Badge from "material-ui/Badge";
 import MenuItem from "material-ui/MenuItem";
 import Divider from "material-ui/Divider";
-import dynamicRoute from "./DynamicRoute";
 import InfoBarView from "./InfoBarView";
 import VersionInfoView from "./VersionInfoView";
+import AuxChannelView from "./AuxChannelView/AuxChannelView";
+import ConfigListView from "./ConfigListView/ConfigListView";
+import FeaturesView from "./FeaturesView/FeaturesView";
+import PortsView from "./PortsView/PortsView";
+import ProfileView from "./ProfileView/ProfileView";
+
+const getRouteItems = (routeName, fcConfig, uiConfig) => {
+  return Object.keys(fcConfig)
+    .filter(key => {
+      return (
+        routeName === "ADVANCED" ||
+        uiConfig.groups[routeName].indexOf(key) !== -1
+      );
+    })
+    .map(k => {
+      let itemObj = Object.assign(
+        {
+          id: k,
+          element: uiConfig.elements[k]
+        },
+        fcConfig[k]
+      );
+      if (itemObj.element) {
+        itemObj.step = itemObj.element.step || itemObj.step;
+        itemObj.values = itemObj.element.values || itemObj.values;
+        itemObj.axis = itemObj.element.axis;
+      } else if (itemObj.values) {
+        itemObj.values = itemObj.values.map(item => {
+          return {
+            value: item,
+            label: item
+          };
+        });
+      }
+      return itemObj;
+    });
+};
 
 export default class Connected extends Component {
   constructor(props) {
@@ -15,7 +51,13 @@ export default class Connected extends Component {
     this.uiConfig = props.uiConfig;
     this.goToDFU = props.goToDFU;
     this.goToImuf = props.goToImuf;
+
+    let currentPidProfile = parseInt(this.fcConfig.pid_profile.current, 10);
+    let currentRateProfile = parseInt(this.fcConfig.rate_profile.current, 10);
+
     this.state = {
+      pid_profile: currentPidProfile,
+      rate_profile: currentRateProfile,
       craftName: this.fcConfig.name,
       isDirty: false,
       drawerOpen: false,
@@ -38,17 +80,95 @@ export default class Connected extends Component {
   };
 
   notifyDirty = (isDirty, item, newValue) => {
-    console.log(isDirty);
     let notification = document.getElementById(item.id);
     if (notification) {
       notification.dispatchEvent(
         new CustomEvent("change", { detail: { item, newValue } })
       );
     }
-    this.setState({ isDirty });
+    let updateObj = {
+      isDirty: isDirty
+    };
+    updateObj[item.id] = newValue;
+    this.setState(updateObj);
   };
-
   render() {
+    let contents;
+    switch (this.state.currentRoute.key) {
+      case "PID": {
+        let mergedProfile = Object.assign(
+          {},
+          this.fcConfig,
+          this.fcConfig.pid_profile.values[this.state.pid_profile]
+        );
+        contents = (
+          <ProfileView
+            notifyDirty={(isDirty, item, newValue) =>
+              this.notifyDirty(isDirty, item, newValue)
+            }
+            id={"pid_profile"}
+            active={this.state.pid_profile}
+            profileList={this.fcConfig.pid_profile.values.map((v, k) => {
+              return {
+                label: `Profile ${k + 1}`,
+                value: k
+              };
+            })}
+            items={getRouteItems(
+              this.state.currentRoute.key,
+              mergedProfile,
+              this.uiConfig
+            )}
+          />
+        );
+        break;
+      }
+      case "MODES":
+        contents = (
+          <AuxChannelView
+            channels={this.fcConfig.modes.values}
+            notifyDirty={(isDirty, item, newValue) =>
+              this.notifyDirty(isDirty, item, newValue)
+            }
+          />
+        );
+        break;
+      case "PORTS":
+        contents = (
+          <PortsView
+            rxProvider={this.fcConfig.serialrx_provider}
+            ports={this.fcConfig.ports.values}
+            notifyDirty={(isDirty, item, newValue) =>
+              this.notifyDirty(isDirty, item, newValue)
+            }
+          />
+        );
+        break;
+      case "FEATURES":
+        contents = (
+          <FeaturesView
+            features={this.fcConfig.features.values}
+            notifyDirty={(isDirty, item, newValue) =>
+              this.notifyDirty(isDirty, item, newValue)
+            }
+          />
+        );
+        break;
+      default:
+        contents = (
+          <ConfigListView
+            notifyDirty={(isDirty, item, newValue) =>
+              this.notifyDirty(isDirty, item, newValue)
+            }
+            items={getRouteItems(
+              this.state.currentRoute.key,
+              this.fcConfig,
+              this.uiConfig
+            )}
+          />
+        );
+        break;
+    }
     return (
       <div style={{ display: "flex", flexDirection: "column" }}>
         <InfoBarView
@@ -89,13 +209,7 @@ export default class Connected extends Component {
             );
           })}
         </Drawer>
-
-        {dynamicRoute(
-          this.state,
-          this.fcConfig,
-          this.uiConfig,
-          this.notifyDirty
-        )}
+        {contents}
       </div>
     );
   }

@@ -56,15 +56,15 @@ wsServer.on("request", request => {
   // all messages from users here.
   connection.on("message", message => {
     if (message.utf8Data === "startTelemetry") {
-      telemetry = setInterval(() => {
-        fcConnector.getTelemetry(
-          devices.getConnectedDevice(),
-          telemetryData => {
-            telemetryData.telemetry = true;
-            connection.sendUTF(JSON.stringify(telemetryData));
-          }
-        );
-      }, 150);
+      // telemetry = setInterval(() => {
+      //   fcConnector.getTelemetry(
+      //     devices.getConnectedDevice(),
+      //     telemetryData => {
+      //       telemetryData.telemetry = true;
+      //       connection.sendUTF(JSON.stringify(telemetryData));
+      //     }
+      //   );
+      // }, 150);
     }
   });
 

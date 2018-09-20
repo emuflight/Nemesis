@@ -28,7 +28,7 @@ const getConfig = (comName, cb, ecb) => {
             cb(JSON.parse(ret.slice(7)));
             port && port.close();
             //1000ms is about how long it takes to read the json data reliably
-          }, 1000);
+          }, 1200);
         });
         //200ms is ~as fast as we can go reliably
       }, 200);

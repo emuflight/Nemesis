@@ -29,7 +29,6 @@
       "d_yaw",
       "pid_process_denom",
       "gyro_sync_denom",
-      "pid_profile",
       "tpa_curves"
     ],
     "RATES": [
@@ -386,23 +385,6 @@
       "step": 1,
       "parse": "int",
       "axis": "y"
-    },
-    "pid_profile": {
-      "type": "LOOKUP",
-      "values": [
-        {
-          "value": "0",
-          "label": "Profile 1"
-        },
-        {
-          "value": "1",
-          "label": "Profile 2"
-        },
-        {
-          "value": "2",
-          "label": "Profile 3"
-        }
-      ]
     },
     "gyro_sync_denom": {
       "type": "LOOKUP",
