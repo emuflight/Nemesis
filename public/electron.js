@@ -1,7 +1,7 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const isDev = require("electron-is-dev");
-require("../src/server/express.js");
+require("./server/express.js");
 
 const { autoUpdater } = require("electron-updater");
 

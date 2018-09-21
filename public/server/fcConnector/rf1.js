@@ -1,5 +1,4 @@
 var HID = require("node-hid");
-var dummyConfig = require("../../test/test_rf1_config.json");
 
 const strToBytes = string => {
   var bytes = new Array(64);

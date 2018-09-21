@@ -6,6 +6,9 @@
   "description": "No more Mr. Nice Gaius!",
   "main": "public/electron.js",
   "repository": "https://github.com/heliorc/pegasus",
+  "buildDependenciesFromSource": true,
+  "nodeGypRebuild": false,
+  "npmRebuild": false,
   "build": {
     "appId": "com.pegasus",
     "files": [
@@ -19,24 +22,21 @@
   "dependencies": {
     "@material-ui/core": "^3.0.3",
     "electron-context-menu": "^0.10.0",
-    "electron-dl": "^1.12.0",
-    "electron-is-dev": "^0.3.0",
-    "electron-updater": "^2.10.1",
+    "electron-is-dev": "^1.0.1",
+    "electron-updater": "^3.1.2",
     "express": "^4.16.3",
     "material-ui": "^0.20.2",
     "material-ui-bottom-sheet": "^0.5.1",
     "material-ui-slider": "^0.1.0",
-    "node-fetch": "^2.2.0",
     "node-hid": "^0.7.3",
-    "node-sass-chokidar": "0.0.3",
-    "react": "^15.6.1",
+    "react": "^16.5.2",
     "react-custom-scrollbars": "^4.2.1",
-    "react-dom": "^15.6.1",
+    "react-dom": "^16.5.2",
     "react-markdown": "^3.6.0",
-    "react-scripts": "1.0.10",
+    "react-scripts": "1.1.5",
     "serialport": "^7.0.2",
-    "usb": "^1.3.3",
-    "websocket": "^1.0.26"
+    "usb": "github:tessel/node-usb#2961e948d93bec0cdd1908c03e3f1f98dfd3fd44",
+    "websocket": "^1.0.28"
   },
   "lint-staged": {
     "{{public,src}/**/*.{scss,js,json},package.json}": [
@@ -45,9 +45,9 @@
     ]
   },
   "scripts": {
-    "install": "electron-rebuild -w serialport -f && electron-rebuild -w node-hid -f && electron-rebuild -w node-sass -f && electron-rebuild -w usb -f",
+    "install": "electron-rebuild -w serialport,usb,node-hid,node-sass -f",
     "preship": "yarn build && yarn build-css",
-    "ship": "build --em.main=build/electron.js --win --ia32 -p always -c electron-builder.yml",
+    "ship": "build --win --ia32 -p always -c electron-builder.yml",
     "build-css": "node-sass-chokidar src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
     "start": "react-scripts start",
@@ -58,18 +58,19 @@
     "precommit": "lint-staged",
     "electron-dev": "concurrently \"yarn watch-css\" \"export BROWSER=none && yarn start\" \"wait-on http://localhost:3000 && electron .\"",
     "electron-dev-win": "concurrently \"yarn watch-css\" \"set BROWSER=none&&yarn start\" \"wait-on http://localhost:3000 && electron .\"",
-    "electron-pack": "build --em.main=build/electron.js --win --ia32 -c electron-builder.yml",
+    "electron-pack": "build --mac -c electron-builder.yml",
     "preelectron-pack": "yarn build && yarn build-css"
   },
   "devDependencies": {
+    "node-sass-chokidar": "0.0.3",
     "concurrently": "^3.5.0",
-    "electron": "^1.7.5",
-    "electron-builder": "^19.20.1",
+    "electron": "^3.0.0",
+    "electron-builder": "^20.28.4",
     "electron-packager": "^12.1.2",
     "electron-rebuild": "^1.8.2",
     "husky": "^0.14.3",
-    "lint-staged": "^4.2.3",
-    "prettier": "^1.7.4",
-    "wait-on": "^2.0.2"
+    "lint-staged": "^7.3.0",
+    "prettier": "^1.14.3",
+    "wait-on": "^3.0.1"
   }
 }
