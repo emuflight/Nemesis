@@ -21,18 +21,18 @@ class App extends Component {
       deviceInfo: {},
       connected: false
     };
-    ipcRenderer.on("updateReady", (event, text) => {
+    ipcRenderer.on("updateReady", () => {
       this.setState({ updateReady: true });
     });
     FCConnector.startDetect(device => {
       if (device.connected) {
         this.getFcConfig();
-      } else {
-        this.setState(device);
+      } else if (!device.progress) {
+        this.setState({ imuf: false, connected: false, dfu: false });
       }
     });
   }
-  setupRoutes(config) {
+  setupRoutes() {
     this.uiConfig.routes = this.baseRoutes.map(route => {
       return {
         key: route,
@@ -46,7 +46,7 @@ class App extends Component {
   };
 
   goToImuf = () => {
-    this.setState({ imuf: !this.state.imuf });
+    this.setState({ imuf: true });
   };
 
   getFcConfig = () => {
@@ -76,7 +76,8 @@ class App extends Component {
           });
         }
         this.setState({ connecting: false });
-
+        //TODO: remove this line:
+        this.goToImuf();
         return connectedDevice.config;
       })
       .catch(() => {
@@ -86,8 +87,6 @@ class App extends Component {
 
   componentDidMount() {
     this.getFcConfig();
-    //TODO: remove this line:
-    this.goToImuf();
   }
 
   render() {

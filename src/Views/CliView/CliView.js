@@ -15,13 +15,17 @@ export default class CliView extends Component {
     super(props);
     this.commandIndex = 0;
     this.prevCommands = [];
-    this.state = {};
+    this.state = {
+      cliBuffer: "#flyhelio\n\n#",
+      stayOpen: false,
+      disabled: false
+    };
   }
   toggleCli(state) {
     this.setState({
       cliBuffer: "#flyhelio\n\n#",
       command: "",
-      open: state
+      open: this.state.stayOpen || state
     });
     this.refs.cliInput.focus();
   }
@@ -126,6 +130,7 @@ export default class CliView extends Component {
                   name="cli-input"
                   placeholder="Enter cli commands..."
                   multiLine={true}
+                  disabled={this.state.disabled}
                   rowsMax={1}
                   fullWidth={true}
                   errorText={this.state.isDirty && "Sending..."}

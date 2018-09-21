@@ -25,7 +25,7 @@ export default class DfuView extends Component {
   }
 
   handleFlash() {
-    this.refs.cliView.toggleCli(true);
+    this.refs.cliView.setState({ open: true, stayOpen: true, disabled: true });
     this.setState({ isFlashing: true });
     FCConnector.flashDFU(this.state.current, progress => {
       this.setState({ progress });
@@ -55,7 +55,7 @@ export default class DfuView extends Component {
       });
     this.setState({
       items: firmwares,
-      current: firmwares[0].download_url,
+      current: firmwares[0].url,
       note: firmwares[0].note,
       isFlashing: false
     });
@@ -121,11 +121,7 @@ export default class DfuView extends Component {
           {this.state.items &&
             this.state.items.map((fw, index) => {
               return (
-                <MenuItem
-                  key={index}
-                  primaryText={fw.name}
-                  value={fw.download_url}
-                />
+                <MenuItem key={index} primaryText={fw.name} value={fw.url} />
               );
             })}
         </SelectField>

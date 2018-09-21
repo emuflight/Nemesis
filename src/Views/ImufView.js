@@ -31,13 +31,13 @@ export default class ImufView extends DfuView {
       });
     this.setState({
       items: firmwares,
-      current: firmwares[0].download_url,
+      current: firmwares[0].url,
       note: firmwares[0].note,
       isFlashing: false
     });
   }
   handleFlash() {
-    this.refs.cliView.toggleCli(true);
+    this.refs.cliView.setState({ open: true, stayOpen: true, disabled: true });
     this.setState({ isFlashing: true });
     FCConnector.flashIMUF(this.state.current, progress => {
       this.setState({ progress });
