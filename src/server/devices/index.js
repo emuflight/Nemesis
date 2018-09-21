@@ -3,8 +3,6 @@ const usb = require("usb");
 const HID = require("node-hid");
 const STM32USBInfo = require("./STM32USB.json");
 
-let connectedDevice;
-
 module.exports = {
   list: cb => {
     const devices = usb
@@ -38,12 +36,6 @@ module.exports = {
           ports.filter(port => port.vendorId === STM32USBInfo.octVendorId));
       cb(err, list);
     });
-  },
-  getConnectedDevice() {
-    return connectedDevice;
-  },
-  setConnectedDevice(newConnectedDevice) {
-    connectedDevice = newConnectedDevice;
   },
   flashDFU(buffer) {
     let DFUDevice = usb

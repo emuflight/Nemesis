@@ -20,9 +20,12 @@ wsServer = new WebSocketServer({
   httpServer: server
 });
 
+const clients = [];
+
 // WebSocket server
 wsServer.on("request", request => {
   var connection = request.accept(null, request.origin);
+  clients.push(connection);
   // Detect add/insert
   usb.on(`attach`, device => {
     setTimeout(() => {
@@ -30,12 +33,7 @@ wsServer.on("request", request => {
         connectedDevice = ports[0];
         if (connectedDevice) {
           connectedDevice.connected = true;
-          if (connectedDevice.dfu) {
-            connection.sendUTF(JSON.stringify(connectedDevice));
-          } else {
-            connection.sendUTF(JSON.stringify(connectedDevice));
-            devices.setConnectedDevice(connectedDevice);
-          }
+          connection.sendUTF(JSON.stringify(connectedDevice));
         }
       });
     }, 1500);
@@ -49,8 +47,7 @@ wsServer.on("request", request => {
         connected: false
       })
     );
-    clearInterval(telemetry);
-    // fcConnector.close(devices.getConnectedDevice());
+    // clearInterval(telemetry);
   });
   // This is the most important callback for us, we'll handle
   // all messages from users here.
@@ -58,7 +55,6 @@ wsServer.on("request", request => {
     if (message.utf8Data === "startTelemetry") {
       // telemetry = setInterval(() => {
       //   fcConnector.getTelemetry(
-      //     devices.getConnectedDevice(),
       //     telemetryData => {
       //       telemetryData.telemetry = true;
       //       connection.sendUTF(JSON.stringify(telemetryData));
@@ -70,5 +66,11 @@ wsServer.on("request", request => {
 
   connection.on("close", connection => {
     clearInterval(telemetry);
+    clients.pop();
   });
 });
+
+module.exports = {
+  wsServer: wsServer,
+  clients: clients
+};

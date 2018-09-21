@@ -71,7 +71,6 @@ class App extends Component {
           this.setState({
             id: connectedDevice.comName,
             deviceInfo: connectedDevice,
-            // currentConfig: fcConfig,
             currentConfig: connectedDevice.config,
             connected: true
           });
@@ -87,19 +86,21 @@ class App extends Component {
 
   componentDidMount() {
     this.getFcConfig();
+    //TODO: remove this line:
+    this.goToImuf();
   }
 
   render() {
     if (this.state.imuf) {
       return (
         <MuiThemeProvider muiTheme={getMuiTheme(theme)}>
-          <ImufView firmwares={this.state.deviceInfo.firmwares} />
+          <ImufView />
         </MuiThemeProvider>
       );
     } else if (this.state.dfu) {
       return (
         <MuiThemeProvider muiTheme={getMuiTheme(theme)}>
-          <DfuView firmwares={this.state.deviceInfo.firmwares} />
+          <DfuView />
         </MuiThemeProvider>
       );
     } else if (this.state.connected) {

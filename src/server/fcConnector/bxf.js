@@ -2,6 +2,18 @@ const SerialPort = require("serialport");
 const Readline = SerialPort.parsers.Readline;
 const imufFirmware = require("../firmware/imuf");
 
+let openPort;
+const ensurePort = comName => {
+  if (!openPort) {
+    openPort = new SerialPort(comName, {
+      baudRate: 115200
+    });
+    openPort.on("close", () => {
+      openPort = undefined;
+    });
+  }
+};
+
 const getConfig = (comName, cb, ecb) => {
   try {
     const parser = new Readline({
@@ -39,22 +51,21 @@ const getConfig = (comName, cb, ecb) => {
   }
 };
 
-const sendCommand = (comName, command, cb, ecb) => {
+const sendCommand = (comName, command, cb, ecb, waitMs = 200) => {
   try {
-    let port = new SerialPort(comName, {
-      baudRate: 115200
-    });
     let ret = "";
     let timeout;
-    port.on("data", data => {
+    ensurePort(comName);
+    openPort.on("data", data => {
       ret += data;
       timeout && clearTimeout(timeout);
       timeout = setTimeout(() => {
         cb(ret);
-        port && port.close();
-      }, 200);
+        openPort.close();
+        ret = "";
+      }, waitMs);
     });
-    port.write(`${command}\n`, err => {
+    openPort.write(`${command}\n`, err => {
       err && ecb && ecb(err);
     });
   } catch (ex) {
@@ -63,33 +74,50 @@ const sendCommand = (comName, command, cb, ecb) => {
   }
 };
 
-const updateIMUF = (comName, binName, notify, cb, ecb) => {
-  try {
-    imufFirmware.load(binName, fileBuffer => {
-      console.log(fileBuffer);
-
-      cb("done");
-      return;
-      sendCommand(comName, "imufbootloader\n", () => {
-        sendCommand(comName, "imufloadbin !\n", () => {
-          //repeat this line:
-          sendCommand(comName, "imufloadbin l\n", () => {
-            notify("progress");
-            // on the last one:
-            sendCommand(comName, "imufloadbin .\n", () => {
-              sendCommand(comName, "imufloadbin c\n", () => {
-                //notify when done
-                cb("done");
-              });
-            });
-          });
-        });
-      });
+const updateIMUF = (comName, binName, notify) => {
+  notify(`Downloading ${binName}...\n`);
+  imufFirmware.load(binName, fileBuffer => {
+    let binAsStr = fileBuffer.toString("hex");
+    // let binAsStr = fs.readFileSync(path.join(__dirname, './IMUF_1.1.0_STARBUCK_ALPHA.bin')).toString('hex');
+    ensurePort(comName);
+    let ret = "";
+    openPort.on("data", data => {
+      ret = data.toString("utf8");
     });
-  } catch (ex) {
-    console.log(ex);
-    ecb && ecb(ex);
-  }
+    openPort.write("imufbootloader\n");
+    setTimeout(() => {
+      if (ret.indexOf("BOOTLOADER") > -1) {
+        notify("Communicating with IMU-F...\n");
+        openPort.write("imufloadbin !\n");
+        setTimeout(() => {
+          if (ret.indexOf("SUCCESS") > -1) {
+            notify(`Loading binary onto IMU-F...\n`);
+            let index = 0;
+            let interval = setInterval(() => {
+              if (index < binAsStr.length) {
+                let tail = Math.min(binAsStr.length, index + 200);
+                let sending = `imufloadbin l64000000${binAsStr.slice(
+                  index,
+                  tail
+                )}\n`;
+                openPort.write(sending);
+                notify(".");
+                index = tail;
+              } else {
+                notify("\nFlashing IMU-F...\n");
+                clearInterval(interval);
+                openPort.write("imufflashbin\n");
+                setTimeout(() => {
+                  notify("\ndone!\n#flyhelio");
+                  openPort.close();
+                }, 10000);
+              }
+            }, 50);
+          }
+        }, 5000);
+      }
+    }, 5000);
+  });
 };
 
 const setValue = (comName, name, newVal, cb, ecb) => {

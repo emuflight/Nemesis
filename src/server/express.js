@@ -23,28 +23,15 @@ app.get("/device", (req, res) => {
     let connectedDevice = ports[0];
     if (connectedDevice) {
       if (connectedDevice.dfu) {
-        firmware.get(builds => {
-          connectedDevice.firmwares = builds;
-          res.json(connectedDevice);
-        });
+        res.json(connectedDevice);
       } else {
         fcConnector.getConfig(connectedDevice, config => {
-          if (config.version.indexOf("HESP") !== -1) {
-            imuf.get(bins => {
-              connectedDevice.config = config;
-              connectedDevice.firmwares = bins;
-              devices.setConnectedDevice(connectedDevice);
-              res.json(connectedDevice);
-            });
-          } else {
-            connectedDevice.config = config;
-            devices.setConnectedDevice(connectedDevice);
-            res.json(connectedDevice);
-          }
+          connectedDevice.config = config;
+          res.json(connectedDevice);
         });
       }
     } else {
-      res.sendStatus(500);
+      res.sendStatus(404);
     }
   });
 });
@@ -59,11 +46,11 @@ app.get("/send/:command", (req, res) => {
         if (output) {
           res.json(output);
         } else {
-          res.sendStatus(200);
+          res.sendStatus(202);
         }
       });
     } else {
-      res.sendStatus(500);
+      res.sendStatus(404);
     }
   });
 });
@@ -81,7 +68,7 @@ app.get("/set/:name/:value", (req, res) => {
         }
       );
     } else {
-      res.sendStatus(500);
+      res.sendStatus(404);
     }
   });
 });
@@ -94,12 +81,7 @@ app.get("/imuf/:binUrl", (req, res) => {
   devices.list((err, ports) => {
     let connectedDevice = ports[0];
     if (connectedDevice) {
-      fcConnector.updateIMUF(
-        connectedDevice,
-        req.params.binUrl,
-        progress => {},
-        complete => {}
-      );
+      fcConnector.updateIMUF(connectedDevice, req.params.binUrl);
       res.sendStatus(202);
     }
   });

@@ -1,5 +1,6 @@
 const bxfConnector = require("./bxf");
 const rf1Connector = require("./rf1");
+const websockets = require("../websockets");
 
 module.exports = {
   getConfig(deviceInfo, cb, ecb) {
@@ -30,20 +31,36 @@ module.exports = {
       return bxfConnector.getTelemetry(deviceInfo.comName, cb, ecb);
     }
   },
-  updateIMUF(deviceInfo, binUrl, notifyProgress, cb, ecb) {
+  updateIMUF(deviceInfo, binUrl, cb, ecb) {
     if (deviceInfo.hid) {
       return rf1Connector.updateIMUF(
-        deviceInfo,
+        deviceInfo.path,
         binUrl,
-        notifyProgress,
+        data => {
+          websockets.clients.forEach(client =>
+            client.sendUTF(
+              JSON.stringify({
+                progress: data
+              })
+            )
+          );
+        },
         cb,
         ecb
       );
     } else {
       return bxfConnector.updateIMUF(
-        deviceInfo,
+        deviceInfo.comName,
         binUrl,
-        notifyProgress,
+        data => {
+          websockets.clients.forEach(client =>
+            client.sendUTF(
+              JSON.stringify({
+                progress: data
+              })
+            )
+          );
+        },
         cb,
         ecb
       );

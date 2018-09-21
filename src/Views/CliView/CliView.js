@@ -19,7 +19,7 @@ export default class CliView extends Component {
   }
   toggleCli(state) {
     this.setState({
-      cliBuffer: "# ",
+      cliBuffer: "#flyhelio\n\n#",
       command: "",
       open: state
     });
@@ -107,7 +107,8 @@ export default class CliView extends Component {
                   color: "white",
                   boxSizing: "border-box",
                   userSelect: "text",
-                  whiteSpace: "pre-wrap"
+                  whiteSpace: "pre-wrap",
+                  wordBreak: "break-word"
                 }}
               >
                 {this.state.cliBuffer}
