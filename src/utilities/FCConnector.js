@@ -30,20 +30,29 @@ export default new class FCConnector {
         try {
           return response.json();
         } catch (ex) {
-          return Promise.reject(ex);
+          debugger;
+          return Promise.reject({
+            data: response.body.toString("utf8"),
+            error: ex
+          });
         }
       })
       .then(device => {
-        if (device.config) {
-          let versionParts = device.config.version.split("|");
-          device.config.version = {
-            fw: versionParts[0],
-            target: versionParts[1],
-            version: versionParts[3],
-            imuf: device.config.imuf
-          };
+        try {
+          if (device.config) {
+            let versionParts = device.config.version.split("|");
+            device.config.version = {
+              fw: versionParts[0],
+              target: versionParts[1],
+              version: versionParts[3],
+              imuf: device.config.imuf
+            };
+          }
+          return device;
+        } catch (ex) {
+          device.error = ex;
+          return Promise.reject(device);
         }
-        return device;
       });
   }
 

@@ -2,7 +2,6 @@ const express = require("express");
 const devices = require("./devices");
 const fcConnector = require("./fcConnector");
 const firmware = require("./firmware");
-const imuf = require("./firmware/imuf");
 const app = express();
 require("./websockets");
 
@@ -88,3 +87,8 @@ app.get("/imuf/:binUrl", (req, res) => {
 });
 
 app.listen(9001, () => console.log("usb interface listening on port 9001!"));
+
+module.exports = {
+  express,
+  app
+};

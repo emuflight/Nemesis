@@ -1,0 +1,5112 @@
+{
+  "align_gyro": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "DEFAULT",
+    "default": "DEFAULT",
+    "values": [
+      "DEFAULT",
+      "CW0",
+      "CW90",
+      "CW180",
+      "CW270",
+      "CW0FLIP",
+      "CW90FLIP",
+      "CW180FLIP",
+      "CW270FLIP",
+      "CW45",
+      "CW135",
+      "CW225",
+      "CW315",
+      "CW45FLIP",
+      "CW135FLIP",
+      "CW225FLIP",
+      "CW315FLIP"
+    ]
+  },
+  "gyro_lpf": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "EXPERIMENTAL",
+    "default": "EXPERIMENTAL",
+    "values": [
+      "OFF",
+      "188HZ",
+      "98HZ",
+      "42HZ",
+      "20HZ",
+      "10HZ",
+      "5HZ",
+      "EXPERIMENTAL"
+    ]
+  },
+  "gyro_sync_denom": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "2",
+    "default": "2",
+    "min": "1",
+    "max": "32"
+  },
+  "gyro_lowpass_type": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "BIQUAD",
+    "default": "BIQUAD",
+    "values": ["PT1", "BIQUAD", "FIR"]
+  },
+  "gyro_lowpass_hz": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "90",
+    "default": "90",
+    "min": "0",
+    "max": "255"
+  },
+  "gyro_notch1_hz": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "0",
+    "max": "16000"
+  },
+  "gyro_notch1_cutoff": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "0",
+    "max": "16000"
+  },
+  "gyro_notch2_hz": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "0",
+    "max": "16000"
+  },
+  "gyro_notch2_cutoff": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "0",
+    "max": "16000"
+  },
+  "imuf_mode": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "48",
+    "default": "48",
+    "min": "0",
+    "max": "255"
+  },
+  "imuf_rate": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "16K",
+    "default": "16K",
+    "values": ["32K", "16K", "8K", "4K", "2K", "1K"]
+  },
+  "imuf_roll_q": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "3000",
+    "default": "3000",
+    "min": "0",
+    "max": "16000"
+  },
+  "imuf_pitch_q": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "3000",
+    "default": "3000",
+    "min": "0",
+    "max": "16000"
+  },
+  "imuf_yaw_q": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "3000",
+    "default": "3000",
+    "min": "0",
+    "max": "16000"
+  },
+  "imuf_w": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "32",
+    "default": "32",
+    "min": "0",
+    "max": "300"
+  },
+  "imuf_pitch_lpf_cutoff_hz": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "80",
+    "default": "80",
+    "min": "0",
+    "max": "450"
+  },
+  "imuf_roll_lpf_cutoff_hz": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "80",
+    "default": "80",
+    "min": "0",
+    "max": "450"
+  },
+  "imuf_yaw_lpf_cutoff_hz": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "80",
+    "default": "80",
+    "min": "0",
+    "max": "450"
+  },
+  "moron_threshold": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "48",
+    "default": "48",
+    "min": "0",
+    "max": "200"
+  },
+  "gyro_offset_yaw": {
+    "scope": "GLOBAL",
+    "type": "INT16",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "-1000",
+    "max": "1000"
+  },
+  "gyro_overflow_detect": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "YAW",
+    "default": "YAW",
+    "values": ["OFF", "YAW", "ALL"]
+  },
+  "align_acc": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "DEFAULT",
+    "default": "DEFAULT",
+    "values": [
+      "DEFAULT",
+      "CW0",
+      "CW90",
+      "CW180",
+      "CW270",
+      "CW0FLIP",
+      "CW90FLIP",
+      "CW180FLIP",
+      "CW270FLIP",
+      "CW45",
+      "CW135",
+      "CW225",
+      "CW315",
+      "CW45FLIP",
+      "CW135FLIP",
+      "CW225FLIP",
+      "CW315FLIP"
+    ]
+  },
+  "acc_hardware": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "AUTO",
+    "default": "AUTO",
+    "values": [
+      "AUTO",
+      "NONE",
+      "ADXL345",
+      "MPU6050",
+      "MMA8452",
+      "BMA280",
+      "LSM303DLHC",
+      "MPU6000",
+      "MPU6500",
+      "MPU9250",
+      "ICM20601",
+      "ICM20602",
+      "ICM20608G",
+      "ICM20649",
+      "ICM20689",
+      "BMI160",
+      "ACC_IMUF9001",
+      "FAKE"
+    ]
+  },
+  "acc_lpf_hz": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "10",
+    "default": "10",
+    "min": "0",
+    "max": "400"
+  },
+  "acc_trim_pitch": {
+    "scope": "GLOBAL",
+    "type": "INT16",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "-300",
+    "max": "300"
+  },
+  "acc_trim_roll": {
+    "scope": "GLOBAL",
+    "type": "INT16",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "-300",
+    "max": "300"
+  },
+  "acc_calibration": {
+    "scope": "GLOBAL",
+    "type": "INT16",
+    "mode": "ARRAY",
+    "current": "0,0,0",
+    "default": "0,0,0"
+  },
+  "align_mag": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "DEFAULT",
+    "default": "DEFAULT",
+    "values": [
+      "DEFAULT",
+      "CW0",
+      "CW90",
+      "CW180",
+      "CW270",
+      "CW0FLIP",
+      "CW90FLIP",
+      "CW180FLIP",
+      "CW270FLIP",
+      "CW45",
+      "CW135",
+      "CW225",
+      "CW315",
+      "CW45FLIP",
+      "CW135FLIP",
+      "CW225FLIP",
+      "CW315FLIP"
+    ]
+  },
+  "mag_bustype": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "NONE",
+    "default": "NONE",
+    "values": ["NONE", "I2C", "SPI", "SLAVE"]
+  },
+  "mag_i2c_device": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "0",
+    "max": "3"
+  },
+  "mag_i2c_address": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "0",
+    "max": "119"
+  },
+  "mag_spi_device": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "0",
+    "max": "3"
+  },
+  "mag_hardware": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "NONE",
+    "default": "NONE",
+    "values": ["AUTO", "NONE", "HMC5883", "AK8975", "AK8963"]
+  },
+  "mag_declination": {
+    "scope": "GLOBAL",
+    "type": "INT16",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "-18000",
+    "max": "18000"
+  },
+  "mag_calibration": {
+    "scope": "GLOBAL",
+    "type": "INT16",
+    "mode": "ARRAY",
+    "current": "0,0,0",
+    "default": "0,0,0"
+  },
+  "mid_rc": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "1500",
+    "default": "1500",
+    "min": "1200",
+    "max": "1700"
+  },
+  "min_check": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "1050",
+    "default": "1050",
+    "min": "750",
+    "max": "2250"
+  },
+  "max_check": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "1900",
+    "default": "1900",
+    "min": "750",
+    "max": "2250"
+  },
+  "rssi_channel": {
+    "scope": "GLOBAL",
+    "type": "INT8",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "0",
+    "max": "18"
+  },
+  "rssi_scale": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "41",
+    "default": "41",
+    "min": "1",
+    "max": "255"
+  },
+  "rssi_invert": {
+    "scope": "GLOBAL",
+    "type": "INT8",
+    "mode": "LOOKUP",
+    "current": "OFF",
+    "default": "OFF",
+    "values": ["OFF", "ON"]
+  },
+  "rc_interp": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "MANUAL",
+    "default": "MANUAL",
+    "values": ["OFF", "PRESET", "AUTO", "MANUAL"]
+  },
+  "rc_interp_ch": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "RPYT",
+    "default": "RPYT",
+    "values": ["RP", "RPY", "RPYT"]
+  },
+  "rc_interp_int": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "14",
+    "default": "14",
+    "min": "1",
+    "max": "50"
+  },
+  "fpv_mix_degrees": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "0",
+    "max": "50"
+  },
+  "max_aux_channels": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "14",
+    "default": "14",
+    "min": "0",
+    "max": "14"
+  },
+  "serialrx_provider": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "SBUS",
+    "default": "SBUS",
+    "values": [
+      "SPEK1024",
+      "SPEK2048",
+      "SBUS",
+      "SUMD",
+      "SUMH",
+      "XB-B",
+      "XB-B-RJ01",
+      "IBUS",
+      "JETIEXBUS",
+      "CRSF",
+      "SRXL",
+      "CUSTOM",
+      "FPORT"
+    ]
+  },
+  "serialrx_inverted": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "OFF",
+    "default": "OFF",
+    "values": ["OFF", "ON"]
+  },
+  "spektrum_sat_bind": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "0",
+    "max": "10"
+  },
+  "spektrum_sat_bind_autoreset": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "ON",
+    "default": "ON",
+    "values": ["OFF", "ON"]
+  },
+  "airmode_start_throttle_percent": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "32",
+    "default": "32",
+    "min": "0",
+    "max": "100"
+  },
+  "rx_min_usec": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "885",
+    "default": "885",
+    "min": "750",
+    "max": "2250"
+  },
+  "rx_max_usec": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "2115",
+    "default": "2115",
+    "min": "750",
+    "max": "2250"
+  },
+  "serialrx_halfduplex": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "OFF",
+    "default": "OFF",
+    "values": ["OFF", "ON"]
+  },
+  "adc_device": {
+    "scope": "GLOBAL",
+    "type": "INT8",
+    "mode": "DIRECT",
+    "current": "1",
+    "default": "1",
+    "min": "0",
+    "max": "3"
+  },
+  "input_filtering_mode": {
+    "scope": "GLOBAL",
+    "type": "INT8",
+    "mode": "LOOKUP",
+    "current": "OFF",
+    "default": "OFF",
+    "values": ["OFF", "ON"]
+  },
+  "blackbox_p_ratio": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "32",
+    "default": "32",
+    "min": "0",
+    "max": "32767"
+  },
+  "blackbox_device": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "SPIFLASH",
+    "default": "SPIFLASH",
+    "values": ["NONE", "SPIFLASH", "SDCARD", "SERIAL"]
+  },
+  "blackbox_record_acc": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "ON",
+    "default": "ON",
+    "values": ["OFF", "ON"]
+  },
+  "blackbox_mode": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "NORMAL",
+    "default": "NORMAL",
+    "values": ["NORMAL", "MOTOR_TEST", "ALWAYS"]
+  },
+  "min_throttle": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "1070",
+    "default": "1070",
+    "min": "750",
+    "max": "2250"
+  },
+  "max_throttle": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "2000",
+    "default": "2000",
+    "min": "750",
+    "max": "2250"
+  },
+  "min_command": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "1000",
+    "default": "1000",
+    "min": "750",
+    "max": "2250"
+  },
+  "dshot_idle_value": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "450",
+    "default": "450",
+    "min": "0",
+    "max": "2000"
+  },
+  "dshot_burst": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "ON",
+    "default": "ON",
+    "values": ["OFF", "ON"]
+  },
+  "use_unsynced_pwm": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "OFF",
+    "default": "OFF",
+    "values": ["OFF", "ON"]
+  },
+  "motor_pwm_protocol": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "MULTISHOT",
+    "default": "MULTISHOT",
+    "values": [
+      "OFF",
+      "ONESHOT125",
+      "ONESHOT42",
+      "MULTISHOT",
+      "BRUSHED",
+      "DSHOT150",
+      "DSHOT300",
+      "DSHOT600",
+      "DSHOT1200",
+      "PROSHOT1000"
+    ]
+  },
+  "motor_pwm_rate": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "480",
+    "default": "480",
+    "min": "200",
+    "max": "32000"
+  },
+  "motor_pwm_inversion": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "OFF",
+    "default": "OFF",
+    "values": ["OFF", "ON"]
+  },
+  "thr_corr_value": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "0",
+    "max": "150"
+  },
+  "thr_corr_angle": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "800",
+    "default": "800",
+    "min": "1",
+    "max": "900"
+  },
+  "failsafe_delay": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "4",
+    "default": "4",
+    "min": "0",
+    "max": "200"
+  },
+  "failsafe_off_delay": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "10",
+    "default": "10",
+    "min": "0",
+    "max": "200"
+  },
+  "failsafe_throttle": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "1000",
+    "default": "1000",
+    "min": "750",
+    "max": "2250"
+  },
+  "failsafe_kill_switch": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "OFF",
+    "default": "OFF",
+    "values": ["OFF", "ON"]
+  },
+  "failsafe_throttle_low_delay": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "100",
+    "default": "100",
+    "min": "0",
+    "max": "300"
+  },
+  "failsafe_procedure": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "DROP",
+    "default": "DROP",
+    "values": ["AUTO-LAND", "DROP"]
+  },
+  "align_board_roll": {
+    "scope": "GLOBAL",
+    "type": "INT16",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "-180",
+    "max": "360"
+  },
+  "align_board_pitch": {
+    "scope": "GLOBAL",
+    "type": "INT16",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "-180",
+    "max": "360"
+  },
+  "align_board_yaw": {
+    "scope": "GLOBAL",
+    "type": "INT16",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "-180",
+    "max": "360"
+  },
+  "bat_capacity": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "0",
+    "max": "20000"
+  },
+  "vbat_max_cell_voltage": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "43",
+    "default": "43",
+    "min": "10",
+    "max": "50"
+  },
+  "vbat_full_cell_voltage": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "41",
+    "default": "41",
+    "min": "10",
+    "max": "50"
+  },
+  "vbat_min_cell_voltage": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "33",
+    "default": "33",
+    "min": "10",
+    "max": "50"
+  },
+  "vbat_warning_cell_voltage": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "35",
+    "default": "35",
+    "min": "10",
+    "max": "50"
+  },
+  "vbat_hysteresis": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "1",
+    "default": "1",
+    "min": "0",
+    "max": "250"
+  },
+  "current_meter": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "ADC",
+    "default": "ADC",
+    "values": ["NONE", "ADC", "VIRTUAL", "ESC", "MSP"]
+  },
+  "battery_meter": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "ADC",
+    "default": "ADC",
+    "values": ["NONE", "ADC", "ESC"]
+  },
+  "vbat_detect_cell_voltage": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "30",
+    "default": "30",
+    "min": "0",
+    "max": "200"
+  },
+  "use_vbat_alerts": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "ON",
+    "default": "ON",
+    "values": ["OFF", "ON"]
+  },
+  "use_cbat_alerts": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "OFF",
+    "default": "OFF",
+    "values": ["OFF", "ON"]
+  },
+  "cbat_alert_percent": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "10",
+    "default": "10",
+    "min": "0",
+    "max": "100"
+  },
+  "vbat_cutoff_percent": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "100",
+    "default": "100",
+    "min": "0",
+    "max": "100"
+  },
+  "vbat_scale": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "109",
+    "default": "109",
+    "min": "0",
+    "max": "255"
+  },
+  "ibata_scale": {
+    "scope": "GLOBAL",
+    "type": "INT16",
+    "mode": "DIRECT",
+    "current": "250",
+    "default": "250",
+    "min": "-16000",
+    "max": "16000"
+  },
+  "ibata_offset": {
+    "scope": "GLOBAL",
+    "type": "INT16",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "-16000",
+    "max": "16000"
+  },
+  "ibatv_scale": {
+    "scope": "GLOBAL",
+    "type": "INT16",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "-16000",
+    "max": "16000"
+  },
+  "ibatv_offset": {
+    "scope": "GLOBAL",
+    "type": "INT16",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "-16000",
+    "max": "16000"
+  },
+  "beeper_inversion": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "ON",
+    "default": "ON",
+    "values": ["OFF", "ON"]
+  },
+  "beeper_od": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "OFF",
+    "default": "OFF",
+    "values": ["OFF", "ON"]
+  },
+  "beeper_frequency": {
+    "scope": "GLOBAL",
+    "type": "INT16",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "0",
+    "max": "16000"
+  },
+  "beeper_dshot_beacon_tone": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "0",
+    "max": "5"
+  },
+  "yaw_motors_reversed": {
+    "scope": "GLOBAL",
+    "type": "INT8",
+    "mode": "LOOKUP",
+    "current": "OFF",
+    "default": "OFF",
+    "values": ["OFF", "ON"]
+  },
+  "3d_deadband_low": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "1406",
+    "default": "1406",
+    "min": "750",
+    "max": "1500"
+  },
+  "3d_deadband_high": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "1514",
+    "default": "1514",
+    "min": "1500",
+    "max": "2250"
+  },
+  "3d_neutral": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "1460",
+    "default": "1460",
+    "min": "750",
+    "max": "2250"
+  },
+  "3d_deadband_throttle": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "50",
+    "default": "50",
+    "min": "750",
+    "max": "2250"
+  },
+  "3d_switched_mode": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "OFF",
+    "default": "OFF",
+    "values": ["OFF", "ON"]
+  },
+  "thr_mid": {
+    "scope": "RATE",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "50",
+    "default": "50",
+    "min": "0",
+    "max": "100"
+  },
+  "thr_expo": {
+    "scope": "RATE",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "0",
+    "max": "100"
+  },
+  "rates_type": {
+    "scope": "RATE",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "BETAFLIGHT",
+    "default": "BETAFLIGHT",
+    "values": ["BETAFLIGHT", "RACEFLIGHT"]
+  },
+  "roll_rc_rate": {
+    "scope": "RATE",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "100",
+    "default": "100",
+    "min": "0",
+    "max": "255"
+  },
+  "pitch_rc_rate": {
+    "scope": "RATE",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "100",
+    "default": "100",
+    "min": "0",
+    "max": "255"
+  },
+  "yaw_rc_rate": {
+    "scope": "RATE",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "100",
+    "default": "100",
+    "min": "0",
+    "max": "255"
+  },
+  "roll_expo": {
+    "scope": "RATE",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "0",
+    "max": "100"
+  },
+  "pitch_expo": {
+    "scope": "RATE",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "0",
+    "max": "100"
+  },
+  "yaw_expo": {
+    "scope": "RATE",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "0",
+    "max": "100"
+  },
+  "roll_srate": {
+    "scope": "RATE",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "70",
+    "default": "70",
+    "min": "0",
+    "max": "255"
+  },
+  "pitch_srate": {
+    "scope": "RATE",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "70",
+    "default": "70",
+    "min": "0",
+    "max": "255"
+  },
+  "yaw_srate": {
+    "scope": "RATE",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "70",
+    "default": "70",
+    "min": "0",
+    "max": "255"
+  },
+  "tpa_rate": {
+    "scope": "RATE",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "10",
+    "default": "10",
+    "min": "0",
+    "max": "100"
+  },
+  "tpa_breakpoint": {
+    "scope": "RATE",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "1650",
+    "default": "1650",
+    "min": "750",
+    "max": "2250"
+  },
+  "tpa_type": {
+    "scope": "RATE",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "RACEFLIGHT",
+    "default": "RACEFLIGHT",
+    "values": ["BETAFLIGHT", "RACEFLIGHT"]
+  },
+  "reboot_character": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "82",
+    "default": "82",
+    "min": "48",
+    "max": "126"
+  },
+  "serial_update_rate_hz": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "100",
+    "default": "100",
+    "min": "100",
+    "max": "2000"
+  },
+  "accxy_deadband": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "40",
+    "default": "40",
+    "min": "0",
+    "max": "100"
+  },
+  "accz_deadband": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "40",
+    "default": "40",
+    "min": "0",
+    "max": "100"
+  },
+  "acc_unarmedcal": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "ON",
+    "default": "ON",
+    "values": ["OFF", "ON"]
+  },
+  "imu_dcm_kp": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "7013",
+    "default": "7013",
+    "min": "0",
+    "max": "32000"
+  },
+  "imu_dcm_ki": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "13",
+    "default": "13",
+    "min": "0",
+    "max": "32000"
+  },
+  "small_angle": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "25",
+    "default": "25",
+    "min": "0",
+    "max": "180"
+  },
+  "auto_disarm_delay": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "5",
+    "default": "5",
+    "min": "0",
+    "max": "60"
+  },
+  "gyro_cal_on_first_arm": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "OFF",
+    "default": "OFF",
+    "values": ["OFF", "ON"]
+  },
+  "use_stick_arming": {
+    "scope": "GLOBAL",
+    "type": "INT8",
+    "mode": "LOOKUP",
+    "current": "OFF",
+    "default": "OFF",
+    "values": ["OFF", "ON"]
+  },
+  "gps_provider": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "NMEA",
+    "default": "NMEA",
+    "values": ["NMEA", "UBLOX"]
+  },
+  "gps_sbas_mode": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "AUTO",
+    "default": "AUTO",
+    "values": ["AUTO", "EGNOS", "WAAS", "MSAS", "GAGAN"]
+  },
+  "gps_auto_config": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "ON",
+    "default": "ON",
+    "values": ["OFF", "ON"]
+  },
+  "gps_auto_baud": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "OFF",
+    "default": "OFF",
+    "values": ["OFF", "ON"]
+  },
+  "gps_wp_radius": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "200",
+    "default": "200",
+    "min": "0",
+    "max": "2000"
+  },
+  "nav_controls_heading": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "ON",
+    "default": "ON",
+    "values": ["OFF", "ON"]
+  },
+  "nav_speed_min": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "100",
+    "default": "100",
+    "min": "10",
+    "max": "2000"
+  },
+  "nav_speed_max": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "300",
+    "default": "300",
+    "min": "10",
+    "max": "2000"
+  },
+  "nav_slew_rate": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "30",
+    "default": "30",
+    "min": "0",
+    "max": "100"
+  },
+  "deadband": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "0",
+    "max": "32"
+  },
+  "yaw_deadband": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "0",
+    "max": "100"
+  },
+  "yaw_control_reversed": {
+    "scope": "GLOBAL",
+    "type": "INT8",
+    "mode": "LOOKUP",
+    "current": "OFF",
+    "default": "OFF",
+    "values": ["OFF", "ON"]
+  },
+  "pid_process_denom": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "1",
+    "default": "1",
+    "min": "1",
+    "max": "16"
+  },
+  "runaway_takeoff_prevention": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "OFF",
+    "default": "OFF",
+    "values": ["OFF", "ON"]
+  },
+  "runaway_takeoff_deactivate_delay": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "500",
+    "default": "500",
+    "min": "100",
+    "max": "1000"
+  },
+  "runaway_takeoff_deactivate_throttle_percent": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "25",
+    "default": "25",
+    "min": "0",
+    "max": "100"
+  },
+  "dterm_lowpass_type": {
+    "scope": "PROFILE",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "BIQUAD",
+    "default": "BIQUAD",
+    "values": ["PT1", "BIQUAD", "FIR"]
+  },
+  "dterm_filter_style": {
+    "scope": "PROFILE",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "KD_FILTER_NOSP",
+    "default": "KD_FILTER_NOSP",
+    "values": ["KD_FILTER_CLASSIC", "KD_FILTER_SP", "KD_FILTER_NOSP"]
+  },
+  "dterm_lowpass": {
+    "scope": "PROFILE",
+    "type": "INT16",
+    "mode": "DIRECT",
+    "current": "65",
+    "default": "65",
+    "min": "0",
+    "max": "16000"
+  },
+  "dterm_notch_hz": {
+    "scope": "PROFILE",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "260",
+    "default": "260",
+    "min": "0",
+    "max": "16000"
+  },
+  "dterm_notch_cutoff": {
+    "scope": "PROFILE",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "0",
+    "max": "16000"
+  },
+  "vbat_pid_gain": {
+    "scope": "PROFILE",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "OFF",
+    "default": "OFF",
+    "values": ["OFF", "ON"]
+  },
+  "pid_at_min_throttle": {
+    "scope": "PROFILE",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "ON",
+    "default": "ON",
+    "values": ["OFF", "ON"]
+  },
+  "anti_gravity_threshold": {
+    "scope": "PROFILE",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "350",
+    "default": "350",
+    "min": "20",
+    "max": "1000"
+  },
+  "anti_gravity_gain": {
+    "scope": "PROFILE",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "1000",
+    "default": "1000",
+    "min": "1000",
+    "max": "30000"
+  },
+  "setpoint_relax_ratio": {
+    "scope": "PROFILE",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "100",
+    "default": "100",
+    "min": "1",
+    "max": "100"
+  },
+  "dterm_setpoint_weight": {
+    "scope": "PROFILE",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "0",
+    "max": "254"
+  },
+  "acc_limit_yaw": {
+    "scope": "PROFILE",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "100",
+    "default": "100",
+    "min": "1",
+    "max": "500"
+  },
+  "acc_limit": {
+    "scope": "PROFILE",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "1",
+    "max": "500"
+  },
+  "crash_dthreshold": {
+    "scope": "PROFILE",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "50",
+    "default": "50",
+    "min": "0",
+    "max": "2000"
+  },
+  "crash_gthreshold": {
+    "scope": "PROFILE",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "400",
+    "default": "400",
+    "min": "0",
+    "max": "2000"
+  },
+  "crash_setpoint_threshold": {
+    "scope": "PROFILE",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "350",
+    "default": "350",
+    "min": "0",
+    "max": "2000"
+  },
+  "crash_time": {
+    "scope": "PROFILE",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "500",
+    "default": "500",
+    "min": "0",
+    "max": "5000"
+  },
+  "crash_delay": {
+    "scope": "PROFILE",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "0",
+    "max": "500"
+  },
+  "crash_recovery_angle": {
+    "scope": "PROFILE",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "10",
+    "default": "10",
+    "min": "0",
+    "max": "30"
+  },
+  "crash_recovery_rate": {
+    "scope": "PROFILE",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "100",
+    "default": "100",
+    "min": "0",
+    "max": "255"
+  },
+  "crash_limit_yaw": {
+    "scope": "PROFILE",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "200",
+    "default": "200",
+    "min": "0",
+    "max": "1000"
+  },
+  "crash_recovery": {
+    "scope": "PROFILE",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "OFF",
+    "default": "OFF",
+    "values": ["OFF", "ON", "BEEP"]
+  },
+  "iterm_windup": {
+    "scope": "PROFILE",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "50",
+    "default": "50",
+    "min": "30",
+    "max": "100"
+  },
+  "iterm_limit": {
+    "scope": "PROFILE",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "150",
+    "default": "150",
+    "min": "0",
+    "max": "500"
+  },
+  "pidsum_limit": {
+    "scope": "PROFILE",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "500",
+    "default": "500",
+    "min": "100",
+    "max": "1000"
+  },
+  "yaw_lowpass": {
+    "scope": "PROFILE",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "0",
+    "max": "500"
+  },
+  "buttered_pids": {
+    "scope": "PROFILE",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "ON",
+    "default": "ON",
+    "values": ["OFF", "ON"]
+  },
+  "p_pitch": {
+    "scope": "PROFILE",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "45",
+    "default": "45",
+    "min": "0",
+    "max": "200"
+  },
+  "i_pitch": {
+    "scope": "PROFILE",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "50",
+    "default": "50",
+    "min": "0",
+    "max": "200"
+  },
+  "d_pitch": {
+    "scope": "PROFILE",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "22",
+    "default": "22",
+    "min": "0",
+    "max": "200"
+  },
+  "p_roll": {
+    "scope": "PROFILE",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "45",
+    "default": "45",
+    "min": "0",
+    "max": "200"
+  },
+  "i_roll": {
+    "scope": "PROFILE",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "50",
+    "default": "50",
+    "min": "0",
+    "max": "200"
+  },
+  "d_roll": {
+    "scope": "PROFILE",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "20",
+    "default": "20",
+    "min": "0",
+    "max": "200"
+  },
+  "p_yaw": {
+    "scope": "PROFILE",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "45",
+    "default": "45",
+    "min": "0",
+    "max": "200"
+  },
+  "i_yaw": {
+    "scope": "PROFILE",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "50",
+    "default": "50",
+    "min": "0",
+    "max": "200"
+  },
+  "d_yaw": {
+    "scope": "PROFILE",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "15",
+    "default": "15",
+    "min": "0",
+    "max": "200"
+  },
+  "p_level": {
+    "scope": "PROFILE",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "50",
+    "default": "50",
+    "min": "0",
+    "max": "200"
+  },
+  "i_level": {
+    "scope": "PROFILE",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "50",
+    "default": "50",
+    "min": "0",
+    "max": "200"
+  },
+  "d_level": {
+    "scope": "PROFILE",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "75",
+    "default": "75",
+    "min": "0",
+    "max": "200"
+  },
+  "level_limit": {
+    "scope": "PROFILE",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "55",
+    "default": "55",
+    "min": "10",
+    "max": "90"
+  },
+  "horizon_tilt_effect": {
+    "scope": "PROFILE",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "75",
+    "default": "75",
+    "min": "0",
+    "max": "250"
+  },
+  "horizon_tilt_expert_mode": {
+    "scope": "PROFILE",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "OFF",
+    "default": "OFF",
+    "values": ["OFF", "ON"]
+  },
+  "gps_pos_p": {
+    "scope": "PROFILE",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "15",
+    "default": "15",
+    "min": "0",
+    "max": "200"
+  },
+  "gps_pos_i": {
+    "scope": "PROFILE",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "0",
+    "max": "200"
+  },
+  "gps_pos_d": {
+    "scope": "PROFILE",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "0",
+    "max": "200"
+  },
+  "gps_posr_p": {
+    "scope": "PROFILE",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "34",
+    "default": "34",
+    "min": "0",
+    "max": "200"
+  },
+  "gps_posr_i": {
+    "scope": "PROFILE",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "14",
+    "default": "14",
+    "min": "0",
+    "max": "200"
+  },
+  "gps_posr_d": {
+    "scope": "PROFILE",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "53",
+    "default": "53",
+    "min": "0",
+    "max": "200"
+  },
+  "gps_nav_p": {
+    "scope": "PROFILE",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "25",
+    "default": "25",
+    "min": "0",
+    "max": "200"
+  },
+  "gps_nav_i": {
+    "scope": "PROFILE",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "33",
+    "default": "33",
+    "min": "0",
+    "max": "200"
+  },
+  "gps_nav_d": {
+    "scope": "PROFILE",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "83",
+    "default": "83",
+    "min": "0",
+    "max": "200"
+  },
+  "tlm_switch": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "OFF",
+    "default": "OFF",
+    "values": ["OFF", "ON"]
+  },
+  "tlm_inverted": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "OFF",
+    "default": "OFF",
+    "values": ["OFF", "ON"]
+  },
+  "tlm_halfduplex": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "OFF",
+    "default": "OFF",
+    "values": ["OFF", "ON"]
+  },
+  "frsky_default_lat": {
+    "scope": "GLOBAL",
+    "type": "INT16",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "-9000",
+    "max": "9000"
+  },
+  "frsky_default_long": {
+    "scope": "GLOBAL",
+    "type": "INT16",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "-18000",
+    "max": "18000"
+  },
+  "frsky_gps_format": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "0",
+    "max": "1"
+  },
+  "frsky_unit": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "IMPERIAL",
+    "default": "IMPERIAL",
+    "values": ["IMPERIAL", "METRIC"]
+  },
+  "frsky_vfas_precision": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "0",
+    "max": "1"
+  },
+  "hott_alarm_int": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "5",
+    "default": "5",
+    "min": "0",
+    "max": "120"
+  },
+  "pid_in_tlm": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "OFF",
+    "default": "OFF",
+    "values": ["OFF", "ON"]
+  },
+  "report_cell_voltage": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "OFF",
+    "default": "OFF",
+    "values": ["OFF", "ON"]
+  },
+  "ibus_sensor": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "ARRAY",
+    "current": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
+    "default": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0"
+  },
+  "ledstrip_visual_beeper": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "OFF",
+    "default": "OFF",
+    "values": ["OFF", "ON"]
+  },
+  "osd_units": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "METRIC",
+    "default": "METRIC",
+    "values": ["IMPERIAL", "METRIC"]
+  },
+  "osd_warnings": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "-1",
+    "default": "-1",
+    "min": "0",
+    "max": "32767"
+  },
+  "osd_rssi_alarm": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "20",
+    "default": "20",
+    "min": "0",
+    "max": "100"
+  },
+  "osd_cap_alarm": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "2200",
+    "default": "2200",
+    "min": "0",
+    "max": "20000"
+  },
+  "osd_alt_alarm": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "100",
+    "default": "100",
+    "min": "0",
+    "max": "10000"
+  },
+  "osd_ah_max_pit": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "20",
+    "default": "20",
+    "min": "0",
+    "max": "90"
+  },
+  "osd_ah_max_rol": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "40",
+    "default": "40",
+    "min": "0",
+    "max": "90"
+  },
+  "osd_tim1": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "2560",
+    "default": "2560",
+    "min": "0",
+    "max": "32767"
+  },
+  "osd_tim2": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "2561",
+    "default": "2561",
+    "min": "0",
+    "max": "32767"
+  },
+  "osd_vbat_pos": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "234",
+    "default": "234",
+    "min": "0",
+    "max": "3071"
+  },
+  "osd_rssi_pos": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "234",
+    "default": "234",
+    "min": "0",
+    "max": "3071"
+  },
+  "osd_tim_1_pos": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "234",
+    "default": "234",
+    "min": "0",
+    "max": "3071"
+  },
+  "osd_tim_2_pos": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "234",
+    "default": "234",
+    "min": "0",
+    "max": "3071"
+  },
+  "osd_remaining_time_estimate_pos": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "234",
+    "default": "234",
+    "min": "0",
+    "max": "3071"
+  },
+  "osd_flymode_pos": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "234",
+    "default": "234",
+    "min": "0",
+    "max": "3071"
+  },
+  "osd_throttle_pos": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "234",
+    "default": "234",
+    "min": "0",
+    "max": "3071"
+  },
+  "osd_vtx_channel_pos": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "234",
+    "default": "234",
+    "min": "0",
+    "max": "3071"
+  },
+  "osd_crosshairs": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "234",
+    "default": "234",
+    "min": "0",
+    "max": "3071"
+  },
+  "osd_ah_sbar": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "234",
+    "default": "234",
+    "min": "0",
+    "max": "3071"
+  },
+  "osd_ah_pos": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "234",
+    "default": "234",
+    "min": "0",
+    "max": "3071"
+  },
+  "osd_current_pos": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "234",
+    "default": "234",
+    "min": "0",
+    "max": "3071"
+  },
+  "osd_mah_drawn_pos": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "234",
+    "default": "234",
+    "min": "0",
+    "max": "3071"
+  },
+  "osd_craft_name_pos": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "234",
+    "default": "234",
+    "min": "0",
+    "max": "3071"
+  },
+  "osd_gps_speed_pos": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "234",
+    "default": "234",
+    "min": "0",
+    "max": "3071"
+  },
+  "osd_gps_lon_pos": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "234",
+    "default": "234",
+    "min": "0",
+    "max": "3071"
+  },
+  "osd_gps_lat_pos": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "234",
+    "default": "234",
+    "min": "0",
+    "max": "3071"
+  },
+  "osd_gps_sats_pos": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "234",
+    "default": "234",
+    "min": "0",
+    "max": "3071"
+  },
+  "osd_home_dir_pos": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "234",
+    "default": "234",
+    "min": "0",
+    "max": "3071"
+  },
+  "osd_home_dist_pos": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "234",
+    "default": "234",
+    "min": "0",
+    "max": "3071"
+  },
+  "osd_compass_bar_pos": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "234",
+    "default": "234",
+    "min": "0",
+    "max": "3071"
+  },
+  "osd_altitude_pos": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "234",
+    "default": "234",
+    "min": "0",
+    "max": "3071"
+  },
+  "osd_pid_roll_pos": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "234",
+    "default": "234",
+    "min": "0",
+    "max": "3071"
+  },
+  "osd_pid_pitch_pos": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "234",
+    "default": "234",
+    "min": "0",
+    "max": "3071"
+  },
+  "osd_pid_yaw_pos": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "234",
+    "default": "234",
+    "min": "0",
+    "max": "3071"
+  },
+  "osd_debug_pos": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "234",
+    "default": "234",
+    "min": "0",
+    "max": "3071"
+  },
+  "osd_power_pos": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "234",
+    "default": "234",
+    "min": "0",
+    "max": "3071"
+  },
+  "osd_pidrate_profile_pos": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "234",
+    "default": "234",
+    "min": "0",
+    "max": "3071"
+  },
+  "osd_warnings_pos": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "2377",
+    "default": "2377",
+    "min": "0",
+    "max": "3071"
+  },
+  "osd_avg_cell_voltage_pos": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "234",
+    "default": "234",
+    "min": "0",
+    "max": "3071"
+  },
+  "osd_pit_ang_pos": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "234",
+    "default": "234",
+    "min": "0",
+    "max": "3071"
+  },
+  "osd_rol_ang_pos": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "234",
+    "default": "234",
+    "min": "0",
+    "max": "3071"
+  },
+  "osd_battery_usage_pos": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "234",
+    "default": "234",
+    "min": "0",
+    "max": "3071"
+  },
+  "osd_disarmed_pos": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "234",
+    "default": "234",
+    "min": "0",
+    "max": "3071"
+  },
+  "osd_nheading_pos": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "234",
+    "default": "234",
+    "min": "0",
+    "max": "3071"
+  },
+  "osd_nvario_pos": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "234",
+    "default": "234",
+    "min": "0",
+    "max": "3071"
+  },
+  "osd_esc_tmp_pos": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "234",
+    "default": "234",
+    "min": "0",
+    "max": "3071"
+  },
+  "osd_esc_rpm_pos": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "234",
+    "default": "234",
+    "min": "0",
+    "max": "3071"
+  },
+  "osd_rtc_date_time_pos": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "234",
+    "default": "234",
+    "min": "0",
+    "max": "3071"
+  },
+  "osd_adjustment_range_pos": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "234",
+    "default": "234",
+    "min": "0",
+    "max": "3071"
+  },
+  "osd_core_temp_pos": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "234",
+    "default": "234",
+    "min": "0",
+    "max": "3071"
+  },
+  "osd_stat_max_spd": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "ON",
+    "default": "ON",
+    "values": ["OFF", "ON"]
+  },
+  "osd_stat_max_dist": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "OFF",
+    "default": "OFF",
+    "values": ["OFF", "ON"]
+  },
+  "osd_stat_min_batt": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "ON",
+    "default": "ON",
+    "values": ["OFF", "ON"]
+  },
+  "osd_stat_min_rssi": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "ON",
+    "default": "ON",
+    "values": ["OFF", "ON"]
+  },
+  "osd_stat_max_curr": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "ON",
+    "default": "ON",
+    "values": ["OFF", "ON"]
+  },
+  "osd_stat_used_mah": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "ON",
+    "default": "ON",
+    "values": ["OFF", "ON"]
+  },
+  "osd_stat_max_alt": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "OFF",
+    "default": "OFF",
+    "values": ["OFF", "ON"]
+  },
+  "osd_stat_bbox": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "ON",
+    "default": "ON",
+    "values": ["OFF", "ON"]
+  },
+  "osd_stat_endbatt": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "OFF",
+    "default": "OFF",
+    "values": ["OFF", "ON"]
+  },
+  "osd_stat_bb_no": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "ON",
+    "default": "ON",
+    "values": ["OFF", "ON"]
+  },
+  "osd_stat_rtc_date_time": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "OFF",
+    "default": "OFF",
+    "values": ["OFF", "ON"]
+  },
+  "osd_stat_tim_1": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "OFF",
+    "default": "OFF",
+    "values": ["OFF", "ON"]
+  },
+  "osd_stat_tim_2": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "ON",
+    "default": "ON",
+    "values": ["OFF", "ON"]
+  },
+  "task_statistics": {
+    "scope": "GLOBAL",
+    "type": "INT8",
+    "mode": "LOOKUP",
+    "current": "ON",
+    "default": "ON",
+    "values": ["OFF", "ON"]
+  },
+  "debug_mode": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "NONE",
+    "default": "NONE",
+    "values": [
+      "NONE",
+      "CYCLETIME",
+      "BATTERY",
+      "GYRO",
+      "ACCELEROMETER",
+      "PIDLOOP",
+      "NOTCH",
+      "RC_INTERPOLATION",
+      "ANGLERATE",
+      "ESC_SENSOR",
+      "SCHEDULER",
+      "STACK",
+      "ESC_SENSOR_RPM",
+      "ESC_SENSOR_TMP",
+      "ALTITUDE",
+      "FFT",
+      "FFT_TIME",
+      "FFT_FREQ",
+      "RX_FRSKY_SPI",
+      "GYRO_RAW",
+      "MAX7456_SIGNAL",
+      "MAX7456_SPICLOCK",
+      "SBUS",
+      "FPORT",
+      "RANGEFINDER",
+      "RANGEFINDER_QUALITY",
+      "LIDAR_TF",
+      "CORE_TEMP",
+      "RUNAWAY_TAKEOFF",
+      "IMU"
+    ]
+  },
+  "rate_6pos_switch": {
+    "scope": "GLOBAL",
+    "type": "INT8",
+    "mode": "LOOKUP",
+    "current": "OFF",
+    "default": "OFF",
+    "values": ["OFF", "ON"]
+  },
+  "cpu_overclock": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "192MHZ",
+    "default": "192MHZ",
+    "values": ["OFF", "192MHZ", "216MHZ", "240MHZ"]
+  },
+  "pwr_on_arm_grace": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "5",
+    "default": "5",
+    "min": "0",
+    "max": "30"
+  },
+  "vtx_band": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "4",
+    "default": "4",
+    "min": "1",
+    "max": "5"
+  },
+  "vtx_channel": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "1",
+    "default": "1",
+    "min": "1",
+    "max": "8"
+  },
+  "vtx_power": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "1",
+    "default": "1",
+    "min": "0",
+    "max": "4"
+  },
+  "vtx_low_power_disarm": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "OFF",
+    "default": "OFF",
+    "values": ["OFF", "ON"]
+  },
+  "vtx_freq": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "5740",
+    "default": "5740",
+    "min": "0",
+    "max": "5999"
+  },
+  "vtx_pit_mode_freq": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "0",
+    "max": "5999"
+  },
+  "vtx_halfduplex": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "ON",
+    "default": "ON",
+    "values": ["OFF", "ON"]
+  },
+  "vcd_video_system": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "0",
+    "max": "2"
+  },
+  "vcd_h_offset": {
+    "scope": "GLOBAL",
+    "type": "INT8",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "-32",
+    "max": "31"
+  },
+  "vcd_v_offset": {
+    "scope": "GLOBAL",
+    "type": "INT8",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "-15",
+    "max": "16"
+  },
+  "max7456_clock": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "DEFAULT",
+    "default": "DEFAULT",
+    "values": ["HALF", "DEFAULT", "FULL"]
+  },
+  "displayport_msp_col_adjust": {
+    "scope": "GLOBAL",
+    "type": "INT8",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "-6",
+    "max": "0"
+  },
+  "displayport_msp_row_adjust": {
+    "scope": "GLOBAL",
+    "type": "INT8",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "-3",
+    "max": "0"
+  },
+  "displayport_max7456_col_adjust": {
+    "scope": "GLOBAL",
+    "type": "INT8",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "-6",
+    "max": "0"
+  },
+  "displayport_max7456_row_adjust": {
+    "scope": "GLOBAL",
+    "type": "INT8",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "-3",
+    "max": "0"
+  },
+  "displayport_max7456_inv": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "OFF",
+    "default": "OFF",
+    "values": ["OFF", "ON"]
+  },
+  "displayport_max7456_blk": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "0",
+    "max": "3"
+  },
+  "displayport_max7456_wht": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "2",
+    "default": "2",
+    "min": "0",
+    "max": "3"
+  },
+  "esc_sensor_halfduplex": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "OFF",
+    "default": "OFF",
+    "values": ["OFF", "ON"]
+  },
+  "led_inversion": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "0",
+    "default": "0",
+    "min": "0",
+    "max": "7"
+  },
+  "dashboard_i2c_bus": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "2",
+    "default": "2",
+    "min": "0",
+    "max": "3"
+  },
+  "dashboard_i2c_addr": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "DIRECT",
+    "current": "60",
+    "default": "60",
+    "min": "8",
+    "max": "119"
+  },
+  "camera_control_mode": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "HARDWARE_PWM",
+    "default": "HARDWARE_PWM",
+    "values": ["HARDWARE_PWM", "SOFTWARE_PWM", "DAC"]
+  },
+  "camera_control_ref_voltage": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "330",
+    "default": "330",
+    "min": "200",
+    "max": "400"
+  },
+  "camera_control_key_delay": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "180",
+    "default": "180",
+    "min": "100",
+    "max": "500"
+  },
+  "camera_control_internal_resistance": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "DIRECT",
+    "current": "470",
+    "default": "470",
+    "min": "10",
+    "max": "1000"
+  },
+  "pinio_config": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "ARRAY",
+    "current": "1,1,1,1",
+    "default": "1,1,1,1"
+  },
+  "pinio_box": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "ARRAY",
+    "current": "255,255,255,255",
+    "default": "255,255,255,255"
+  },
+  "usb_hid_cdc": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "OFF",
+    "default": "OFF",
+    "values": ["OFF", "ON"]
+  },
+  "pid_profile": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "0",
+    "values": [
+      {
+        "dterm_lowpass_type": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "LOOKUP",
+          "current": "BIQUAD",
+          "default": "BIQUAD",
+          "values": ["PT1", "BIQUAD", "FIR"]
+        },
+        "dterm_filter_style": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "LOOKUP",
+          "current": "KD_FILTER_NOSP",
+          "default": "KD_FILTER_NOSP",
+          "values": ["KD_FILTER_CLASSIC", "KD_FILTER_SP", "KD_FILTER_NOSP"]
+        },
+        "dterm_lowpass": {
+          "scope": "PROFILE",
+          "type": "INT16",
+          "mode": "DIRECT",
+          "current": "65",
+          "default": "65",
+          "min": "0",
+          "max": "16000"
+        },
+        "dterm_notch_hz": {
+          "scope": "PROFILE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "260",
+          "default": "260",
+          "min": "0",
+          "max": "16000"
+        },
+        "dterm_notch_cutoff": {
+          "scope": "PROFILE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "0",
+          "default": "0",
+          "min": "0",
+          "max": "16000"
+        },
+        "vbat_pid_gain": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "LOOKUP",
+          "current": "OFF",
+          "default": "OFF",
+          "values": ["OFF", "ON"]
+        },
+        "pid_at_min_throttle": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "LOOKUP",
+          "current": "ON",
+          "default": "ON",
+          "values": ["OFF", "ON"]
+        },
+        "anti_gravity_threshold": {
+          "scope": "PROFILE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "350",
+          "default": "350",
+          "min": "20",
+          "max": "1000"
+        },
+        "anti_gravity_gain": {
+          "scope": "PROFILE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "1000",
+          "default": "1000",
+          "min": "1000",
+          "max": "30000"
+        },
+        "setpoint_relax_ratio": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "100",
+          "default": "100",
+          "min": "1",
+          "max": "100"
+        },
+        "dterm_setpoint_weight": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "0",
+          "default": "0",
+          "min": "0",
+          "max": "254"
+        },
+        "acc_limit_yaw": {
+          "scope": "PROFILE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "100",
+          "default": "100",
+          "min": "1",
+          "max": "500"
+        },
+        "acc_limit": {
+          "scope": "PROFILE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "0",
+          "default": "0",
+          "min": "1",
+          "max": "500"
+        },
+        "crash_dthreshold": {
+          "scope": "PROFILE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "50",
+          "default": "50",
+          "min": "0",
+          "max": "2000"
+        },
+        "crash_gthreshold": {
+          "scope": "PROFILE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "400",
+          "default": "400",
+          "min": "0",
+          "max": "2000"
+        },
+        "crash_setpoint_threshold": {
+          "scope": "PROFILE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "350",
+          "default": "350",
+          "min": "0",
+          "max": "2000"
+        },
+        "crash_time": {
+          "scope": "PROFILE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "500",
+          "default": "500",
+          "min": "0",
+          "max": "5000"
+        },
+        "crash_delay": {
+          "scope": "PROFILE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "0",
+          "default": "0",
+          "min": "0",
+          "max": "500"
+        },
+        "crash_recovery_angle": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "10",
+          "default": "10",
+          "min": "0",
+          "max": "30"
+        },
+        "crash_recovery_rate": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "100",
+          "default": "100",
+          "min": "0",
+          "max": "255"
+        },
+        "crash_limit_yaw": {
+          "scope": "PROFILE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "200",
+          "default": "200",
+          "min": "0",
+          "max": "1000"
+        },
+        "crash_recovery": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "LOOKUP",
+          "current": "OFF",
+          "default": "OFF",
+          "values": ["OFF", "ON", "BEEP"]
+        },
+        "iterm_windup": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "50",
+          "default": "50",
+          "min": "30",
+          "max": "100"
+        },
+        "iterm_limit": {
+          "scope": "PROFILE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "150",
+          "default": "150",
+          "min": "0",
+          "max": "500"
+        },
+        "pidsum_limit": {
+          "scope": "PROFILE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "500",
+          "default": "500",
+          "min": "100",
+          "max": "1000"
+        },
+        "yaw_lowpass": {
+          "scope": "PROFILE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "0",
+          "default": "0",
+          "min": "0",
+          "max": "500"
+        },
+        "buttered_pids": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "LOOKUP",
+          "current": "ON",
+          "default": "ON",
+          "values": ["OFF", "ON"]
+        },
+        "p_pitch": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "45",
+          "default": "45",
+          "min": "0",
+          "max": "200"
+        },
+        "i_pitch": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "50",
+          "default": "50",
+          "min": "0",
+          "max": "200"
+        },
+        "d_pitch": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "22",
+          "default": "22",
+          "min": "0",
+          "max": "200"
+        },
+        "p_roll": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "45",
+          "default": "45",
+          "min": "0",
+          "max": "200"
+        },
+        "i_roll": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "50",
+          "default": "50",
+          "min": "0",
+          "max": "200"
+        },
+        "d_roll": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "20",
+          "default": "20",
+          "min": "0",
+          "max": "200"
+        },
+        "p_yaw": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "45",
+          "default": "45",
+          "min": "0",
+          "max": "200"
+        },
+        "i_yaw": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "50",
+          "default": "50",
+          "min": "0",
+          "max": "200"
+        },
+        "d_yaw": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "15",
+          "default": "15",
+          "min": "0",
+          "max": "200"
+        },
+        "p_level": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "50",
+          "default": "50",
+          "min": "0",
+          "max": "200"
+        },
+        "i_level": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "50",
+          "default": "50",
+          "min": "0",
+          "max": "200"
+        },
+        "d_level": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "75",
+          "default": "75",
+          "min": "0",
+          "max": "200"
+        },
+        "level_limit": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "55",
+          "default": "55",
+          "min": "10",
+          "max": "90"
+        },
+        "horizon_tilt_effect": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "75",
+          "default": "75",
+          "min": "0",
+          "max": "250"
+        },
+        "horizon_tilt_expert_mode": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "LOOKUP",
+          "current": "OFF",
+          "default": "OFF",
+          "values": ["OFF", "ON"]
+        },
+        "gps_pos_p": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "15",
+          "default": "15",
+          "min": "0",
+          "max": "200"
+        },
+        "gps_pos_i": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "0",
+          "default": "0",
+          "min": "0",
+          "max": "200"
+        },
+        "gps_pos_d": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "0",
+          "default": "0",
+          "min": "0",
+          "max": "200"
+        },
+        "gps_posr_p": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "34",
+          "default": "34",
+          "min": "0",
+          "max": "200"
+        },
+        "gps_posr_i": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "14",
+          "default": "14",
+          "min": "0",
+          "max": "200"
+        },
+        "gps_posr_d": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "53",
+          "default": "53",
+          "min": "0",
+          "max": "200"
+        },
+        "gps_nav_p": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "25",
+          "default": "25",
+          "min": "0",
+          "max": "200"
+        },
+        "gps_nav_i": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "33",
+          "default": "33",
+          "min": "0",
+          "max": "200"
+        },
+        "gps_nav_d": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "83",
+          "default": "83",
+          "min": "0",
+          "max": "200"
+        }
+      },
+      {
+        "dterm_lowpass_type": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "LOOKUP",
+          "current": "BIQUAD",
+          "default": "BIQUAD",
+          "values": ["PT1", "BIQUAD", "FIR"]
+        },
+        "dterm_filter_style": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "LOOKUP",
+          "current": "KD_FILTER_NOSP",
+          "default": "KD_FILTER_NOSP",
+          "values": ["KD_FILTER_CLASSIC", "KD_FILTER_SP", "KD_FILTER_NOSP"]
+        },
+        "dterm_lowpass": {
+          "scope": "PROFILE",
+          "type": "INT16",
+          "mode": "DIRECT",
+          "current": "65",
+          "default": "65",
+          "min": "0",
+          "max": "16000"
+        },
+        "dterm_notch_hz": {
+          "scope": "PROFILE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "260",
+          "default": "260",
+          "min": "0",
+          "max": "16000"
+        },
+        "dterm_notch_cutoff": {
+          "scope": "PROFILE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "0",
+          "default": "0",
+          "min": "0",
+          "max": "16000"
+        },
+        "vbat_pid_gain": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "LOOKUP",
+          "current": "OFF",
+          "default": "OFF",
+          "values": ["OFF", "ON"]
+        },
+        "pid_at_min_throttle": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "LOOKUP",
+          "current": "ON",
+          "default": "ON",
+          "values": ["OFF", "ON"]
+        },
+        "anti_gravity_threshold": {
+          "scope": "PROFILE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "350",
+          "default": "350",
+          "min": "20",
+          "max": "1000"
+        },
+        "anti_gravity_gain": {
+          "scope": "PROFILE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "1000",
+          "default": "1000",
+          "min": "1000",
+          "max": "30000"
+        },
+        "setpoint_relax_ratio": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "100",
+          "default": "100",
+          "min": "1",
+          "max": "100"
+        },
+        "dterm_setpoint_weight": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "0",
+          "default": "0",
+          "min": "0",
+          "max": "254"
+        },
+        "acc_limit_yaw": {
+          "scope": "PROFILE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "100",
+          "default": "100",
+          "min": "1",
+          "max": "500"
+        },
+        "acc_limit": {
+          "scope": "PROFILE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "0",
+          "default": "0",
+          "min": "1",
+          "max": "500"
+        },
+        "crash_dthreshold": {
+          "scope": "PROFILE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "50",
+          "default": "50",
+          "min": "0",
+          "max": "2000"
+        },
+        "crash_gthreshold": {
+          "scope": "PROFILE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "400",
+          "default": "400",
+          "min": "0",
+          "max": "2000"
+        },
+        "crash_setpoint_threshold": {
+          "scope": "PROFILE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "350",
+          "default": "350",
+          "min": "0",
+          "max": "2000"
+        },
+        "crash_time": {
+          "scope": "PROFILE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "500",
+          "default": "500",
+          "min": "0",
+          "max": "5000"
+        },
+        "crash_delay": {
+          "scope": "PROFILE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "0",
+          "default": "0",
+          "min": "0",
+          "max": "500"
+        },
+        "crash_recovery_angle": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "10",
+          "default": "10",
+          "min": "0",
+          "max": "30"
+        },
+        "crash_recovery_rate": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "100",
+          "default": "100",
+          "min": "0",
+          "max": "255"
+        },
+        "crash_limit_yaw": {
+          "scope": "PROFILE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "200",
+          "default": "200",
+          "min": "0",
+          "max": "1000"
+        },
+        "crash_recovery": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "LOOKUP",
+          "current": "OFF",
+          "default": "OFF",
+          "values": ["OFF", "ON", "BEEP"]
+        },
+        "iterm_windup": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "50",
+          "default": "50",
+          "min": "30",
+          "max": "100"
+        },
+        "iterm_limit": {
+          "scope": "PROFILE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "150",
+          "default": "150",
+          "min": "0",
+          "max": "500"
+        },
+        "pidsum_limit": {
+          "scope": "PROFILE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "500",
+          "default": "500",
+          "min": "100",
+          "max": "1000"
+        },
+        "yaw_lowpass": {
+          "scope": "PROFILE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "0",
+          "default": "0",
+          "min": "0",
+          "max": "500"
+        },
+        "buttered_pids": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "LOOKUP",
+          "current": "ON",
+          "default": "ON",
+          "values": ["OFF", "ON"]
+        },
+        "p_pitch": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "45",
+          "default": "45",
+          "min": "0",
+          "max": "200"
+        },
+        "i_pitch": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "50",
+          "default": "50",
+          "min": "0",
+          "max": "200"
+        },
+        "d_pitch": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "22",
+          "default": "22",
+          "min": "0",
+          "max": "200"
+        },
+        "p_roll": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "45",
+          "default": "45",
+          "min": "0",
+          "max": "200"
+        },
+        "i_roll": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "50",
+          "default": "50",
+          "min": "0",
+          "max": "200"
+        },
+        "d_roll": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "20",
+          "default": "20",
+          "min": "0",
+          "max": "200"
+        },
+        "p_yaw": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "45",
+          "default": "45",
+          "min": "0",
+          "max": "200"
+        },
+        "i_yaw": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "50",
+          "default": "50",
+          "min": "0",
+          "max": "200"
+        },
+        "d_yaw": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "15",
+          "default": "15",
+          "min": "0",
+          "max": "200"
+        },
+        "p_level": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "50",
+          "default": "50",
+          "min": "0",
+          "max": "200"
+        },
+        "i_level": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "50",
+          "default": "50",
+          "min": "0",
+          "max": "200"
+        },
+        "d_level": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "75",
+          "default": "75",
+          "min": "0",
+          "max": "200"
+        },
+        "level_limit": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "55",
+          "default": "55",
+          "min": "10",
+          "max": "90"
+        },
+        "horizon_tilt_effect": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "75",
+          "default": "75",
+          "min": "0",
+          "max": "250"
+        },
+        "horizon_tilt_expert_mode": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "LOOKUP",
+          "current": "OFF",
+          "default": "OFF",
+          "values": ["OFF", "ON"]
+        },
+        "gps_pos_p": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "15",
+          "default": "15",
+          "min": "0",
+          "max": "200"
+        },
+        "gps_pos_i": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "0",
+          "default": "0",
+          "min": "0",
+          "max": "200"
+        },
+        "gps_pos_d": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "0",
+          "default": "0",
+          "min": "0",
+          "max": "200"
+        },
+        "gps_posr_p": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "34",
+          "default": "34",
+          "min": "0",
+          "max": "200"
+        },
+        "gps_posr_i": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "14",
+          "default": "14",
+          "min": "0",
+          "max": "200"
+        },
+        "gps_posr_d": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "53",
+          "default": "53",
+          "min": "0",
+          "max": "200"
+        },
+        "gps_nav_p": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "25",
+          "default": "25",
+          "min": "0",
+          "max": "200"
+        },
+        "gps_nav_i": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "33",
+          "default": "33",
+          "min": "0",
+          "max": "200"
+        },
+        "gps_nav_d": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "83",
+          "default": "83",
+          "min": "0",
+          "max": "200"
+        }
+      },
+      {
+        "dterm_lowpass_type": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "LOOKUP",
+          "current": "BIQUAD",
+          "default": "BIQUAD",
+          "values": ["PT1", "BIQUAD", "FIR"]
+        },
+        "dterm_filter_style": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "LOOKUP",
+          "current": "KD_FILTER_NOSP",
+          "default": "KD_FILTER_NOSP",
+          "values": ["KD_FILTER_CLASSIC", "KD_FILTER_SP", "KD_FILTER_NOSP"]
+        },
+        "dterm_lowpass": {
+          "scope": "PROFILE",
+          "type": "INT16",
+          "mode": "DIRECT",
+          "current": "65",
+          "default": "65",
+          "min": "0",
+          "max": "16000"
+        },
+        "dterm_notch_hz": {
+          "scope": "PROFILE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "260",
+          "default": "260",
+          "min": "0",
+          "max": "16000"
+        },
+        "dterm_notch_cutoff": {
+          "scope": "PROFILE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "0",
+          "default": "0",
+          "min": "0",
+          "max": "16000"
+        },
+        "vbat_pid_gain": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "LOOKUP",
+          "current": "OFF",
+          "default": "OFF",
+          "values": ["OFF", "ON"]
+        },
+        "pid_at_min_throttle": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "LOOKUP",
+          "current": "ON",
+          "default": "ON",
+          "values": ["OFF", "ON"]
+        },
+        "anti_gravity_threshold": {
+          "scope": "PROFILE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "350",
+          "default": "350",
+          "min": "20",
+          "max": "1000"
+        },
+        "anti_gravity_gain": {
+          "scope": "PROFILE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "1000",
+          "default": "1000",
+          "min": "1000",
+          "max": "30000"
+        },
+        "setpoint_relax_ratio": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "100",
+          "default": "100",
+          "min": "1",
+          "max": "100"
+        },
+        "dterm_setpoint_weight": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "0",
+          "default": "0",
+          "min": "0",
+          "max": "254"
+        },
+        "acc_limit_yaw": {
+          "scope": "PROFILE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "100",
+          "default": "100",
+          "min": "1",
+          "max": "500"
+        },
+        "acc_limit": {
+          "scope": "PROFILE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "0",
+          "default": "0",
+          "min": "1",
+          "max": "500"
+        },
+        "crash_dthreshold": {
+          "scope": "PROFILE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "50",
+          "default": "50",
+          "min": "0",
+          "max": "2000"
+        },
+        "crash_gthreshold": {
+          "scope": "PROFILE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "400",
+          "default": "400",
+          "min": "0",
+          "max": "2000"
+        },
+        "crash_setpoint_threshold": {
+          "scope": "PROFILE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "350",
+          "default": "350",
+          "min": "0",
+          "max": "2000"
+        },
+        "crash_time": {
+          "scope": "PROFILE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "500",
+          "default": "500",
+          "min": "0",
+          "max": "5000"
+        },
+        "crash_delay": {
+          "scope": "PROFILE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "0",
+          "default": "0",
+          "min": "0",
+          "max": "500"
+        },
+        "crash_recovery_angle": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "10",
+          "default": "10",
+          "min": "0",
+          "max": "30"
+        },
+        "crash_recovery_rate": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "100",
+          "default": "100",
+          "min": "0",
+          "max": "255"
+        },
+        "crash_limit_yaw": {
+          "scope": "PROFILE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "200",
+          "default": "200",
+          "min": "0",
+          "max": "1000"
+        },
+        "crash_recovery": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "LOOKUP",
+          "current": "OFF",
+          "default": "OFF",
+          "values": ["OFF", "ON", "BEEP"]
+        },
+        "iterm_windup": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "50",
+          "default": "50",
+          "min": "30",
+          "max": "100"
+        },
+        "iterm_limit": {
+          "scope": "PROFILE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "150",
+          "default": "150",
+          "min": "0",
+          "max": "500"
+        },
+        "pidsum_limit": {
+          "scope": "PROFILE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "500",
+          "default": "500",
+          "min": "100",
+          "max": "1000"
+        },
+        "yaw_lowpass": {
+          "scope": "PROFILE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "0",
+          "default": "0",
+          "min": "0",
+          "max": "500"
+        },
+        "buttered_pids": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "LOOKUP",
+          "current": "ON",
+          "default": "ON",
+          "values": ["OFF", "ON"]
+        },
+        "p_pitch": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "45",
+          "default": "45",
+          "min": "0",
+          "max": "200"
+        },
+        "i_pitch": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "50",
+          "default": "50",
+          "min": "0",
+          "max": "200"
+        },
+        "d_pitch": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "22",
+          "default": "22",
+          "min": "0",
+          "max": "200"
+        },
+        "p_roll": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "45",
+          "default": "45",
+          "min": "0",
+          "max": "200"
+        },
+        "i_roll": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "50",
+          "default": "50",
+          "min": "0",
+          "max": "200"
+        },
+        "d_roll": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "20",
+          "default": "20",
+          "min": "0",
+          "max": "200"
+        },
+        "p_yaw": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "45",
+          "default": "45",
+          "min": "0",
+          "max": "200"
+        },
+        "i_yaw": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "50",
+          "default": "50",
+          "min": "0",
+          "max": "200"
+        },
+        "d_yaw": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "15",
+          "default": "15",
+          "min": "0",
+          "max": "200"
+        },
+        "p_level": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "50",
+          "default": "50",
+          "min": "0",
+          "max": "200"
+        },
+        "i_level": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "50",
+          "default": "50",
+          "min": "0",
+          "max": "200"
+        },
+        "d_level": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "75",
+          "default": "75",
+          "min": "0",
+          "max": "200"
+        },
+        "level_limit": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "55",
+          "default": "55",
+          "min": "10",
+          "max": "90"
+        },
+        "horizon_tilt_effect": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "75",
+          "default": "75",
+          "min": "0",
+          "max": "250"
+        },
+        "horizon_tilt_expert_mode": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "LOOKUP",
+          "current": "OFF",
+          "default": "OFF",
+          "values": ["OFF", "ON"]
+        },
+        "gps_pos_p": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "15",
+          "default": "15",
+          "min": "0",
+          "max": "200"
+        },
+        "gps_pos_i": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "0",
+          "default": "0",
+          "min": "0",
+          "max": "200"
+        },
+        "gps_pos_d": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "0",
+          "default": "0",
+          "min": "0",
+          "max": "200"
+        },
+        "gps_posr_p": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "34",
+          "default": "34",
+          "min": "0",
+          "max": "200"
+        },
+        "gps_posr_i": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "14",
+          "default": "14",
+          "min": "0",
+          "max": "200"
+        },
+        "gps_posr_d": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "53",
+          "default": "53",
+          "min": "0",
+          "max": "200"
+        },
+        "gps_nav_p": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "25",
+          "default": "25",
+          "min": "0",
+          "max": "200"
+        },
+        "gps_nav_i": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "33",
+          "default": "33",
+          "min": "0",
+          "max": "200"
+        },
+        "gps_nav_d": {
+          "scope": "PROFILE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "83",
+          "default": "83",
+          "min": "0",
+          "max": "200"
+        }
+      }
+    ]
+  },
+  "rate_profile": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "LOOKUP",
+    "current": "0",
+    "values": [
+      {
+        "thr_mid": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "50",
+          "default": "50",
+          "min": "0",
+          "max": "100"
+        },
+        "thr_expo": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "0",
+          "default": "0",
+          "min": "0",
+          "max": "100"
+        },
+        "rates_type": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "LOOKUP",
+          "current": "BETAFLIGHT",
+          "default": "BETAFLIGHT",
+          "values": ["BETAFLIGHT", "RACEFLIGHT"]
+        },
+        "roll_rc_rate": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "100",
+          "default": "100",
+          "min": "0",
+          "max": "255"
+        },
+        "pitch_rc_rate": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "100",
+          "default": "100",
+          "min": "0",
+          "max": "255"
+        },
+        "yaw_rc_rate": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "100",
+          "default": "100",
+          "min": "0",
+          "max": "255"
+        },
+        "roll_expo": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "0",
+          "default": "0",
+          "min": "0",
+          "max": "100"
+        },
+        "pitch_expo": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "0",
+          "default": "0",
+          "min": "0",
+          "max": "100"
+        },
+        "yaw_expo": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "0",
+          "default": "0",
+          "min": "0",
+          "max": "100"
+        },
+        "roll_srate": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "70",
+          "default": "70",
+          "min": "0",
+          "max": "255"
+        },
+        "pitch_srate": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "70",
+          "default": "70",
+          "min": "0",
+          "max": "255"
+        },
+        "yaw_srate": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "70",
+          "default": "70",
+          "min": "0",
+          "max": "255"
+        },
+        "tpa_rate": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "10",
+          "default": "10",
+          "min": "0",
+          "max": "100"
+        },
+        "tpa_breakpoint": {
+          "scope": "RATE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "1650",
+          "default": "1650",
+          "min": "750",
+          "max": "2250"
+        },
+        "tpa_type": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "LOOKUP",
+          "current": "RACEFLIGHT",
+          "default": "RACEFLIGHT",
+          "values": ["BETAFLIGHT", "RACEFLIGHT"]
+        }
+      },
+      {
+        "thr_mid": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "50",
+          "default": "50",
+          "min": "0",
+          "max": "100"
+        },
+        "thr_expo": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "0",
+          "default": "0",
+          "min": "0",
+          "max": "100"
+        },
+        "rates_type": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "LOOKUP",
+          "current": "BETAFLIGHT",
+          "default": "BETAFLIGHT",
+          "values": ["BETAFLIGHT", "RACEFLIGHT"]
+        },
+        "roll_rc_rate": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "100",
+          "default": "100",
+          "min": "0",
+          "max": "255"
+        },
+        "pitch_rc_rate": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "100",
+          "default": "100",
+          "min": "0",
+          "max": "255"
+        },
+        "yaw_rc_rate": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "100",
+          "default": "100",
+          "min": "0",
+          "max": "255"
+        },
+        "roll_expo": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "0",
+          "default": "0",
+          "min": "0",
+          "max": "100"
+        },
+        "pitch_expo": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "0",
+          "default": "0",
+          "min": "0",
+          "max": "100"
+        },
+        "yaw_expo": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "0",
+          "default": "0",
+          "min": "0",
+          "max": "100"
+        },
+        "roll_srate": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "70",
+          "default": "70",
+          "min": "0",
+          "max": "255"
+        },
+        "pitch_srate": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "70",
+          "default": "70",
+          "min": "0",
+          "max": "255"
+        },
+        "yaw_srate": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "70",
+          "default": "70",
+          "min": "0",
+          "max": "255"
+        },
+        "tpa_rate": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "10",
+          "default": "10",
+          "min": "0",
+          "max": "100"
+        },
+        "tpa_breakpoint": {
+          "scope": "RATE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "1650",
+          "default": "1650",
+          "min": "750",
+          "max": "2250"
+        },
+        "tpa_type": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "LOOKUP",
+          "current": "RACEFLIGHT",
+          "default": "RACEFLIGHT",
+          "values": ["BETAFLIGHT", "RACEFLIGHT"]
+        }
+      },
+      {
+        "thr_mid": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "50",
+          "default": "50",
+          "min": "0",
+          "max": "100"
+        },
+        "thr_expo": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "0",
+          "default": "0",
+          "min": "0",
+          "max": "100"
+        },
+        "rates_type": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "LOOKUP",
+          "current": "BETAFLIGHT",
+          "default": "BETAFLIGHT",
+          "values": ["BETAFLIGHT", "RACEFLIGHT"]
+        },
+        "roll_rc_rate": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "100",
+          "default": "100",
+          "min": "0",
+          "max": "255"
+        },
+        "pitch_rc_rate": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "100",
+          "default": "100",
+          "min": "0",
+          "max": "255"
+        },
+        "yaw_rc_rate": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "100",
+          "default": "100",
+          "min": "0",
+          "max": "255"
+        },
+        "roll_expo": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "0",
+          "default": "0",
+          "min": "0",
+          "max": "100"
+        },
+        "pitch_expo": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "0",
+          "default": "0",
+          "min": "0",
+          "max": "100"
+        },
+        "yaw_expo": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "0",
+          "default": "0",
+          "min": "0",
+          "max": "100"
+        },
+        "roll_srate": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "70",
+          "default": "70",
+          "min": "0",
+          "max": "255"
+        },
+        "pitch_srate": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "70",
+          "default": "70",
+          "min": "0",
+          "max": "255"
+        },
+        "yaw_srate": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "70",
+          "default": "70",
+          "min": "0",
+          "max": "255"
+        },
+        "tpa_rate": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "10",
+          "default": "10",
+          "min": "0",
+          "max": "100"
+        },
+        "tpa_breakpoint": {
+          "scope": "RATE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "1650",
+          "default": "1650",
+          "min": "750",
+          "max": "2250"
+        },
+        "tpa_type": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "LOOKUP",
+          "current": "RACEFLIGHT",
+          "default": "RACEFLIGHT",
+          "values": ["BETAFLIGHT", "RACEFLIGHT"]
+        }
+      },
+      {
+        "thr_mid": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "50",
+          "default": "50",
+          "min": "0",
+          "max": "100"
+        },
+        "thr_expo": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "0",
+          "default": "0",
+          "min": "0",
+          "max": "100"
+        },
+        "rates_type": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "LOOKUP",
+          "current": "BETAFLIGHT",
+          "default": "BETAFLIGHT",
+          "values": ["BETAFLIGHT", "RACEFLIGHT"]
+        },
+        "roll_rc_rate": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "100",
+          "default": "100",
+          "min": "0",
+          "max": "255"
+        },
+        "pitch_rc_rate": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "100",
+          "default": "100",
+          "min": "0",
+          "max": "255"
+        },
+        "yaw_rc_rate": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "100",
+          "default": "100",
+          "min": "0",
+          "max": "255"
+        },
+        "roll_expo": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "0",
+          "default": "0",
+          "min": "0",
+          "max": "100"
+        },
+        "pitch_expo": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "0",
+          "default": "0",
+          "min": "0",
+          "max": "100"
+        },
+        "yaw_expo": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "0",
+          "default": "0",
+          "min": "0",
+          "max": "100"
+        },
+        "roll_srate": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "70",
+          "default": "70",
+          "min": "0",
+          "max": "255"
+        },
+        "pitch_srate": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "70",
+          "default": "70",
+          "min": "0",
+          "max": "255"
+        },
+        "yaw_srate": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "70",
+          "default": "70",
+          "min": "0",
+          "max": "255"
+        },
+        "tpa_rate": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "10",
+          "default": "10",
+          "min": "0",
+          "max": "100"
+        },
+        "tpa_breakpoint": {
+          "scope": "RATE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "1650",
+          "default": "1650",
+          "min": "750",
+          "max": "2250"
+        },
+        "tpa_type": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "LOOKUP",
+          "current": "RACEFLIGHT",
+          "default": "RACEFLIGHT",
+          "values": ["BETAFLIGHT", "RACEFLIGHT"]
+        }
+      },
+      {
+        "thr_mid": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "50",
+          "default": "50",
+          "min": "0",
+          "max": "100"
+        },
+        "thr_expo": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "0",
+          "default": "0",
+          "min": "0",
+          "max": "100"
+        },
+        "rates_type": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "LOOKUP",
+          "current": "BETAFLIGHT",
+          "default": "BETAFLIGHT",
+          "values": ["BETAFLIGHT", "RACEFLIGHT"]
+        },
+        "roll_rc_rate": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "100",
+          "default": "100",
+          "min": "0",
+          "max": "255"
+        },
+        "pitch_rc_rate": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "100",
+          "default": "100",
+          "min": "0",
+          "max": "255"
+        },
+        "yaw_rc_rate": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "100",
+          "default": "100",
+          "min": "0",
+          "max": "255"
+        },
+        "roll_expo": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "0",
+          "default": "0",
+          "min": "0",
+          "max": "100"
+        },
+        "pitch_expo": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "0",
+          "default": "0",
+          "min": "0",
+          "max": "100"
+        },
+        "yaw_expo": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "0",
+          "default": "0",
+          "min": "0",
+          "max": "100"
+        },
+        "roll_srate": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "70",
+          "default": "70",
+          "min": "0",
+          "max": "255"
+        },
+        "pitch_srate": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "70",
+          "default": "70",
+          "min": "0",
+          "max": "255"
+        },
+        "yaw_srate": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "70",
+          "default": "70",
+          "min": "0",
+          "max": "255"
+        },
+        "tpa_rate": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "10",
+          "default": "10",
+          "min": "0",
+          "max": "100"
+        },
+        "tpa_breakpoint": {
+          "scope": "RATE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "1650",
+          "default": "1650",
+          "min": "750",
+          "max": "2250"
+        },
+        "tpa_type": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "LOOKUP",
+          "current": "RACEFLIGHT",
+          "default": "RACEFLIGHT",
+          "values": ["BETAFLIGHT", "RACEFLIGHT"]
+        }
+      },
+      {
+        "thr_mid": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "50",
+          "default": "50",
+          "min": "0",
+          "max": "100"
+        },
+        "thr_expo": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "0",
+          "default": "0",
+          "min": "0",
+          "max": "100"
+        },
+        "rates_type": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "LOOKUP",
+          "current": "BETAFLIGHT",
+          "default": "BETAFLIGHT",
+          "values": ["BETAFLIGHT", "RACEFLIGHT"]
+        },
+        "roll_rc_rate": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "100",
+          "default": "100",
+          "min": "0",
+          "max": "255"
+        },
+        "pitch_rc_rate": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "100",
+          "default": "100",
+          "min": "0",
+          "max": "255"
+        },
+        "yaw_rc_rate": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "100",
+          "default": "100",
+          "min": "0",
+          "max": "255"
+        },
+        "roll_expo": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "0",
+          "default": "0",
+          "min": "0",
+          "max": "100"
+        },
+        "pitch_expo": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "0",
+          "default": "0",
+          "min": "0",
+          "max": "100"
+        },
+        "yaw_expo": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "0",
+          "default": "0",
+          "min": "0",
+          "max": "100"
+        },
+        "roll_srate": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "70",
+          "default": "70",
+          "min": "0",
+          "max": "255"
+        },
+        "pitch_srate": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "70",
+          "default": "70",
+          "min": "0",
+          "max": "255"
+        },
+        "yaw_srate": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "70",
+          "default": "70",
+          "min": "0",
+          "max": "255"
+        },
+        "tpa_rate": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "DIRECT",
+          "current": "10",
+          "default": "10",
+          "min": "0",
+          "max": "100"
+        },
+        "tpa_breakpoint": {
+          "scope": "RATE",
+          "type": "UINT16",
+          "mode": "DIRECT",
+          "current": "1650",
+          "default": "1650",
+          "min": "750",
+          "max": "2250"
+        },
+        "tpa_type": {
+          "scope": "RATE",
+          "type": "UINT8",
+          "mode": "LOOKUP",
+          "current": "RACEFLIGHT",
+          "default": "RACEFLIGHT",
+          "values": ["BETAFLIGHT", "RACEFLIGHT"]
+        }
+      }
+    ]
+  },
+  "features": {
+    "scope": "GLOBAL",
+    "type": "UINT8",
+    "mode": "ARRAY",
+    "current": "0",
+    "values": [
+      "-RX_PPM",
+      "-INFLIGHT_ACC_CAL",
+      "RX_SERIAL",
+      "-MOTOR_STOP",
+      "-SERVO_TILT",
+      "-SOFTSERIAL",
+      "-GPS",
+      "-RANGEFINDER",
+      "TELEMETRY",
+      "-3D",
+      "-RX_PARALLEL_PWM",
+      "-RX_MSP",
+      "-RSSI_ADC",
+      "-LED_STRIP",
+      "-DISPLAY",
+      "OSD",
+      "-CHANNEL_FORWARDING",
+      "-TRANSPONDER",
+      "AIRMODE",
+      "-RX_SPI",
+      "-SOFTSPI",
+      "-ESC_SENSOR",
+      "-ANTI_GRAVITY",
+      "-DYNAMIC_FILTER",
+      "-LEGACY_SA_SUPPORT"
+    ]
+  },
+  "ports": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "ARRAY",
+    "values": [
+      "20|1|115200|57600|0|115200",
+      "0|0|115200|57600|0|115200",
+      "1|64|115200|57600|0|115200",
+      "2|0|115200|57600|0|115200",
+      "3|0|115200|57600|0|115200",
+      "4|0|115200|57600|0|115200"
+    ]
+  },
+  "modes": {
+    "scope": "GLOBAL",
+    "type": "UINT16",
+    "mode": "ARRAY",
+    "values": [
+      "0|0|0|900|900|0",
+      "1|0|0|900|900|0",
+      "2|0|0|900|900|0",
+      "3|0|0|900|900|0",
+      "4|0|0|900|900|0",
+      "5|0|0|900|900|0",
+      "6|0|0|900|900|0",
+      "7|0|0|900|900|0",
+      "8|0|0|900|900|0",
+      "9|0|0|900|900|0",
+      "10|0|0|900|900|0",
+      "11|0|0|900|900|0",
+      "12|0|0|900|900|0",
+      "13|0|0|900|900|0",
+      "14|0|0|900|900|0",
+      "15|0|0|900|900|0",
+      "16|0|0|900|900|0",
+      "17|0|0|900|900|0",
+      "18|0|0|900|900|0",
+      "19|0|0|900|900|0"
+    ]
+  },
+  "tpa_curves": {
+    "kp": ["100", "100", "95", "95", "95", "95", "95", "100", "100"],
+    "kd": ["100", "100", "100", "100", "100", "100", "100", "100", "100"],
+    "ki": ["100", "95", "90", "85", "85", "85", "85", "100", "100"]
+  },
+  "name": "",
+  "version": "ButtFlight|FAKEFAKE|FAKE|3.5.2",
+  "imuf": "108"
+}

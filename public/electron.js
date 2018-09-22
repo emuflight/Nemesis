@@ -1,10 +1,8 @@
-const { app, BrowserWindow, ipcMain } = require("electron");
+const { app, BrowserWindow, ipcMain, Menu} = require("electron");
 const path = require("path");
-const isDev = require("electron-is-dev");
-require("./server/express.js");
+const server = require("./server/express.js");
 
-const { autoUpdater } = require("electron-updater");
-
+// const { autoUpdater } = require("electron-updater");
 require("electron-context-menu")({
   prepend: (params, browserWindow) => [
     {
@@ -15,24 +13,105 @@ require("electron-context-menu")({
   ]
 });
 
-require("electron-dl")();
-
 let mainWindow;
 
+server.app.use(server.express.static(path.join(__dirname, '/')));
+
 function createWindow() {
-  mainWindow = new BrowserWindow({ width: 1280, height: 1024 });
-  mainWindow.loadURL(
-    isDev
-      ? "http://localhost:3000"
-      : `file://${path.join(__dirname, "../build/index.html")}`
-  ); // load the react app
+  mainWindow = new BrowserWindow({
+    titleBarStyle: 'hidden',
+    width: 1281,
+    height: 800,
+    minWidth: 1281,
+    minHeight: 800, 
+    backgroundColor: '#303030',
+    icon: path.join(__dirname, '../build/android-chrome-192x192.png'),
+    webPreferences: {
+      webSecurity: false
+    },
+    node: {
+      __dirname: false
+    },
+  });
+  let isProd = __dirname.indexOf('app.asar') > -1;
+  let port = isProd ? 9001 : 3000;
+  mainWindow.loadURL(`http://localhost:${port}/`); // load the react app
   mainWindow.on("closed", () => (mainWindow = null));
+  return isProd || mainWindow.webContents.openDevTools();
 }
 
+function createMenu() {
+  const application = {
+    label: "Application",
+    submenu: [
+      {
+        label: "About Application",
+        selector: "orderFrontStandardAboutPanel:"
+      },
+      {
+        type: "separator"
+      },
+      {
+        label: "Quit",
+        accelerator: "Command+Q",
+        click: () => {
+          app.quit()
+        }
+      }
+    ]
+  }
+
+  const edit = {
+    label: "Edit",
+    submenu: [
+      {
+        label: "Undo",
+        accelerator: "CmdOrCtrl+Z",
+        selector: "undo:"
+      },
+      {
+        label: "Redo",
+        accelerator: "Shift+CmdOrCtrl+Z",
+        selector: "redo:"
+      },
+      {
+        type: "separator"
+      },
+      {
+        label: "Cut",
+        accelerator: "CmdOrCtrl+X",
+        selector: "cut:"
+      },
+      {
+        label: "Copy",
+        accelerator: "CmdOrCtrl+C",
+        selector: "copy:"
+      },
+      {
+        label: "Paste",
+        accelerator: "CmdOrCtrl+V",
+        selector: "paste:"
+      },
+      {
+        label: "Select All",
+        accelerator: "CmdOrCtrl+A",
+        selector: "selectAll:"
+      }
+    ]
+  }
+
+  const template = [
+    application,
+    edit
+  ]
+
+  Menu.setApplicationMenu(Menu.buildFromTemplate(template))
+}
 // when the app is loaded create a BrowserWindow and check for updates
 app.on("ready", function() {
   createWindow();
-  if (!isDev) autoUpdater.checkForUpdates();
+  createMenu();
+  // if (!isDev) autoUpdater.checkForUpdates();
 });
 
 // on MacOS leave process running also with no windows
@@ -50,11 +129,11 @@ app.on("activate", () => {
 });
 
 // when the update has been downloaded and is ready to be installed, notify the BrowserWindow
-autoUpdater.on("update-downloaded", info => {
-  mainWindow.webContents.send("updateReady");
-});
+// autoUpdater.on("update-downloaded", info => {
+//   mainWindow.webContents.send("updateReady");
+// });
 
 // when receiving a quitAndInstall signal, quit and install the new version ;)
 ipcMain.on("quitAndInstall", (event, arg) => {
-  autoUpdater.quitAndInstall();
+  // autoUpdater.quitAndInstall();
 });

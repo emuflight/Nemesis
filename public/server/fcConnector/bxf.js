@@ -1,6 +1,7 @@
 const SerialPort = require("serialport");
 const Readline = SerialPort.parsers.Readline;
 const imufFirmware = require("../firmware/imuf");
+const fakeConfig = require("../config/test_buf_config.json");
 
 let openPort;
 const ensurePort = comName => {
@@ -14,6 +15,20 @@ const ensurePort = comName => {
   }
 };
 
+const getVersion = (comName, cb) => {
+  sendCommand(
+    comName,
+    "version",
+    data => {
+      if (data.indexOf("IMUF") === -1) {
+        cb(data);
+      } else {
+        cb("needupdate");
+      }
+    },
+    500
+  );
+};
 const getConfig = (comName, cb, ecb) => {
   try {
     const parser = new Readline({
@@ -33,21 +48,40 @@ const getConfig = (comName, cb, ecb) => {
     });
     port.write("!\n", err => {
       setTimeout(() => {
-        port.write("config\n", err => {
-          sendNext = true;
-          setTimeout(() => {
-            //trim off " config\n";
-            cb(JSON.parse(ret.slice(7)));
-            port && port.close();
-            //1000ms is about how long it takes to read the json data reliably
-          }, 1200);
-        });
+        try {
+          port.write("config\n", err => {
+            sendNext = true;
+            try {
+              setTimeout(() => {
+                try {
+                  //trim off " config\n";
+                  cb(JSON.parse(ret.slice(7)));
+                  port && port.close();
+                } catch (ex) {
+                  port && port.close();
+                  getVersion(comName, cb);
+                  console.log(ex);
+                }
+                //1000ms is about how long it takes to read the json data reliably
+              }, 1200);
+            } catch (ex) {
+              port && port.close();
+              getVersion(comName, cb);
+              console.log(ex);
+            }
+          });
+        } catch (ex) {
+          port && port.close();
+          getVersion(comName, cb);
+          console.log(ex);
+        }
         //200ms is ~as fast as we can go reliably
       }, 200);
     });
   } catch (ex) {
+    port && port.close();
+    getVersion(comName, cb);
     console.log(ex);
-    ecb && ecb(ex);
   }
 };
 

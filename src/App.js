@@ -10,25 +10,20 @@ import DfuView from "./Views/DfuView";
 import FCConnector from "./utilities/FCConnector";
 import rf1UiConfig from "./test/ui_config_rf1.json";
 import BxfUiConfig from "./test/ui_config_bef.json";
-const electron = window.require("electron"); // little trick to import electron in react
-const ipcRenderer = electron.ipcRenderer;
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      updateReady: false,
       deviceInfo: {},
       connected: false
     };
-    ipcRenderer.on("updateReady", () => {
-      this.setState({ updateReady: true });
-    });
+    
     FCConnector.startDetect(device => {
       if (device.connected) {
         this.getFcConfig();
       } else if (!device.progress) {
-        this.setState({ imuf: false, connected: false, dfu: false });
+        this.setState({ imuf: false, connected: false, dfu: false,deviceInfo: undefined});
       }
     });
   }
@@ -60,11 +55,14 @@ class App extends Component {
           });
         } else {
           switch (connectedDevice.config.version.fw) {
+            case "ButterFlight":
+              this.uiConfig = BxfUiConfig;
+              break;
             case "RACEFLIGHT":
               this.uiConfig = rf1UiConfig;
               break;
             default:
-              this.uiConfig = BxfUiConfig;
+              return this.setState({connecting: false, incompatible: true});
           }
           this.baseRoutes = this.baseRoutes || this.uiConfig.routes;
           connectedDevice.config && this.setupRoutes(connectedDevice.config);
@@ -80,8 +78,8 @@ class App extends Component {
         this.goToImuf();
         return connectedDevice.config;
       })
-      .catch(() => {
-        this.setState({ connecting: false });
+      .catch((device) => {
+        this.setState({ connecting: false, deviceInfo: device});
       });
   };
 
@@ -117,7 +115,7 @@ class App extends Component {
     } else {
       return (
         <MuiThemeProvider muiTheme={getMuiTheme(theme)}>
-          <Disconnected connecting={this.state.connecting} />
+          <Disconnected connecting={this.state.connecting} device={this.state.deviceInfo} />
         </MuiThemeProvider>
       );
     }

@@ -3,34 +3,20 @@
   "name": "pegasus",
   "icons": [
     {
-      "src": "/android-chrome-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png"
+        "src": "/android-chrome-192x192.png",
+        "sizes": "192x192",
+        "type": "image/png"
     },
     {
-      "src": "/android-chrome-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png"
+        "src": "/android-chrome-512x512.png",
+        "sizes": "512x512",
+        "type": "image/png"
     }
   ],
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
   "permissions": [
-    "https://maps.googleapis.com/*",
-    "https://*.github.com/",
-    "https://*.githubusercontent.com/",
-    "http://*.baseflight.net/",
-    "https://*.amazonaws.com/",
-    "serial",
-    "usb",
-    "storage",
-    "fileSystem",
-    "fileSystem.write",
-    "fileSystem.retainEntries",
-    "notifications",
-    "alwaysOnTopWindows",
-    "webview"
-  ],
-  "start_url": "./index.html",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+    "http://localhost:9001",
+    "https://www.heliorc.com"
+  ]
 }
