@@ -4,27 +4,33 @@ const imufFirmware = require("../firmware/imuf");
 const fakeConfig = require("../config/test_buf_config.json");
 
 let openPort;
-const ensurePort = comName => {
+const ensurePort = (comName, cb, ecb) => {
   openPort = new SerialPort(comName, {
     baudRate: 115200
   });
   openPort.on("close", () => {
     openPort = undefined;
   });
-  openPort.isOpen || openPort.open();
+  try {
+    if (openPort.isOpen) {
+      cb();
+    } else {
+      openPort.open(cb);
+    }
+  } catch (ex) {
+    ecb(ex);
+    console.log("error attempting to open", ex);
+  }
 };
 
-const getVersion = (comName, cb) => {
+const getVersion = (comName, cb, ecb) => {
   sendCommand(
     comName,
     "version",
     data => {
-      if (data.indexOf("IMUF") === -1) {
-        cb(data);
-      } else {
-        cb("needupdate");
-      }
+      cb(data);
     },
+    ecb,
     500
   );
 };
@@ -45,28 +51,33 @@ const getConfig = (comName, cb, ecb) => {
         sendNext = false;
       }
     });
-    port.open();
-    port.write("!\n", err => {
-      setTimeout(() => {
-        port.write("config\n", err => {
-          sendNext = true;
-          setTimeout(() => {
-            try {
-              //trim off " config\n";
-              cb(JSON.parse(ret.slice(7)));
-              port && port.close();
-            } catch (ex) {
-              port && port.close();
-              getVersion(comName, cb);
-            }
-            //1000ms is about how long it takes to read the json data reliably
-          }, 1200);
-        });
-        //200ms is ~as fast as we can go reliably
-      }, 200);
-    });
+    const getter = () => {
+      port.write("!\n", err => {
+        setTimeout(() => {
+          port.write("config\n", err => {
+            sendNext = true;
+            setTimeout(() => {
+              try {
+                //trim off " config\n";
+                cb(JSON.parse(ret.slice(7)));
+              } catch (ex) {
+                getVersion(comName, cb);
+              }
+              port.isOpen && port.close();
+              //1000ms is about how long it takes to read the json data reliably
+            }, 1200);
+          });
+          //200ms is ~as fast as we can go reliably
+        }, 200);
+      });
+    };
+    if (port.isOpen) {
+      getter();
+    } else {
+      port.open(getter);
+    }
   } catch (ex) {
-    port && port.close();
+    port.isOpen && port.close();
     getVersion(comName, cb);
     console.log(ex);
   }
@@ -76,20 +87,26 @@ const sendCommand = (comName, command, cb, ecb, waitMs = 200) => {
   try {
     let ret = "";
     let timeout;
-    ensurePort(comName);
-    openPort.on("data", data => {
-      ret += data;
-      timeout && clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        cb(ret);
-        openPort.close();
-        ret = "";
-      }, waitMs);
-    });
-    openPort.write(`${command}\n`, err => {
-      err && ecb && ecb(err);
-    });
+    ensurePort(
+      comName,
+      () => {
+        openPort.on("data", data => {
+          ret += data;
+          timeout && clearTimeout(timeout);
+          timeout = setTimeout(() => {
+            cb(ret);
+            openPort.isOpen && openPort.close();
+            ret = "";
+          }, waitMs);
+        });
+        openPort.write(`${command}\n`, err => {
+          err && ecb && ecb(err);
+        });
+      },
+      ecb
+    );
   } catch (ex) {
+    openPort.isOpen && port.close();
     console.log(ex);
     ecb && ecb(ex);
   }
@@ -100,44 +117,49 @@ const updateIMUF = (comName, binName, notify) => {
   imufFirmware.load(binName, fileBuffer => {
     let binAsStr = fileBuffer.toString("hex");
     // let binAsStr = fs.readFileSync(path.join(__dirname, './IMUF_1.1.0_STARBUCK_ALPHA.bin')).toString('hex');
-    ensurePort(comName);
-    let ret = "";
-    openPort.on("data", data => {
-      ret = data.toString("utf8");
-    });
-    openPort.write("imufbootloader\n");
-    setTimeout(() => {
-      if (ret.indexOf("BOOTLOADER") > -1) {
-        notify("Communicating with IMU-F...\n");
-        openPort.write("imufloadbin !\n");
+    ensurePort(
+      comName,
+      () => {
+        let ret = "";
+        openPort.on("data", data => {
+          ret = data.toString("utf8");
+        });
+        openPort.write("imufbootloader\n");
         setTimeout(() => {
-          if (ret.indexOf("SUCCESS") > -1) {
-            notify(`Loading binary onto IMU-F...\n`);
-            let index = 0;
-            let interval = setInterval(() => {
-              if (index < binAsStr.length) {
-                let tail = Math.min(binAsStr.length, index + 200);
-                let sending = `imufloadbin l64000000${binAsStr.slice(
-                  index,
-                  tail
-                )}\n`;
-                openPort.write(sending);
-                notify(".");
-                index = tail;
-              } else {
-                notify("\nFlashing IMU-F...\n");
-                clearInterval(interval);
-                openPort.write("imufflashbin\n");
-                setTimeout(() => {
-                  notify("\ndone!\n#flyhelio");
-                  openPort.close();
-                }, 10000);
+          if (ret.indexOf("BOOTLOADER") > -1) {
+            notify("Communicating with IMU-F...\n");
+            openPort.write("imufloadbin !\n");
+            setTimeout(() => {
+              if (ret.indexOf("SUCCESS") > -1) {
+                notify(`Loading binary onto IMU-F...\n`);
+                let index = 0;
+                let interval = setInterval(() => {
+                  if (index < binAsStr.length) {
+                    let tail = Math.min(binAsStr.length, index + 200);
+                    let sending = `imufloadbin l64000000${binAsStr.slice(
+                      index,
+                      tail
+                    )}\n`;
+                    openPort.write(sending);
+                    notify(".");
+                    index = tail;
+                  } else {
+                    notify("\nFlashing IMU-F...\n");
+                    clearInterval(interval);
+                    openPort.write("imufflashbin\n");
+                    setTimeout(() => {
+                      notify("\ndone!\n#flyhelio");
+                      openPort.close();
+                    }, 10000);
+                  }
+                }, 50);
               }
-            }, 50);
+            }, 5000);
           }
         }, 5000);
-      }
-    }, 5000);
+      },
+      ecb
+    );
   });
 };
 
