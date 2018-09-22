@@ -78,9 +78,7 @@ class App extends Component {
             connected: true
           });
         }
-        this.setState({ connecting: false });
-        //TODO: remove this line:
-        this.goToImuf();
+        this.setState({ connecting: false });    
         return connectedDevice.config;
       })
       .catch(device => {

@@ -5,14 +5,13 @@ const fakeConfig = require("../config/test_buf_config.json");
 
 let openPort;
 const ensurePort = comName => {
-  if (!openPort) {
-    openPort = new SerialPort(comName, {
-      baudRate: 115200
-    });
-    openPort.on("close", () => {
-      openPort = undefined;
-    });
-  }
+  openPort = new SerialPort(comName, {
+    baudRate: 115200
+  });
+  openPort.on("close", () => {
+    openPort = undefined;
+  });
+  openPort.isOpen || openPort.open();
 };
 
 const getVersion = (comName, cb) => {
@@ -46,35 +45,23 @@ const getConfig = (comName, cb, ecb) => {
         sendNext = false;
       }
     });
+    port.open();
     port.write("!\n", err => {
       setTimeout(() => {
-        try {
-          port.write("config\n", err => {
-            sendNext = true;
+        port.write("config\n", err => {
+          sendNext = true;
+          setTimeout(() => {
             try {
-              setTimeout(() => {
-                try {
-                  //trim off " config\n";
-                  cb(JSON.parse(ret.slice(7)));
-                  port && port.close();
-                } catch (ex) {
-                  port && port.close();
-                  getVersion(comName, cb);
-                  console.log(ex);
-                }
-                //1000ms is about how long it takes to read the json data reliably
-              }, 1200);
+              //trim off " config\n";
+              cb(JSON.parse(ret.slice(7)));
+              port && port.close();
             } catch (ex) {
               port && port.close();
               getVersion(comName, cb);
-              console.log(ex);
             }
-          });
-        } catch (ex) {
-          port && port.close();
-          getVersion(comName, cb);
-          console.log(ex);
-        }
+            //1000ms is about how long it takes to read the json data reliably
+          }, 1200);
+        });
         //200ms is ~as fast as we can go reliably
       }, 200);
     });
