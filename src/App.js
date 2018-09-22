@@ -18,12 +18,17 @@ class App extends Component {
       deviceInfo: {},
       connected: false
     };
-    
+
     FCConnector.startDetect(device => {
       if (device.connected) {
         this.getFcConfig();
       } else if (!device.progress) {
-        this.setState({ imuf: false, connected: false, dfu: false,deviceInfo: undefined});
+        this.setState({
+          imuf: false,
+          connected: false,
+          dfu: false,
+          deviceInfo: undefined
+        });
       }
     });
   }
@@ -62,7 +67,7 @@ class App extends Component {
               this.uiConfig = rf1UiConfig;
               break;
             default:
-              return this.setState({connecting: false, incompatible: true});
+              return this.setState({ connecting: false, incompatible: true });
           }
           this.baseRoutes = this.baseRoutes || this.uiConfig.routes;
           connectedDevice.config && this.setupRoutes(connectedDevice.config);
@@ -78,8 +83,8 @@ class App extends Component {
         this.goToImuf();
         return connectedDevice.config;
       })
-      .catch((device) => {
-        this.setState({ connecting: false, deviceInfo: device});
+      .catch(device => {
+        this.setState({ connecting: false, deviceInfo: device });
       });
   };
 
@@ -115,7 +120,10 @@ class App extends Component {
     } else {
       return (
         <MuiThemeProvider muiTheme={getMuiTheme(theme)}>
-          <Disconnected connecting={this.state.connecting} device={this.state.deviceInfo} />
+          <Disconnected
+            connecting={this.state.connecting}
+            device={this.state.deviceInfo}
+          />
         </MuiThemeProvider>
       );
     }

@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, Menu} = require("electron");
+const { app, BrowserWindow, ipcMain, Menu } = require("electron");
 const path = require("path");
 const server = require("./server/express.js");
 
@@ -15,25 +15,25 @@ require("electron-context-menu")({
 
 let mainWindow;
 
-server.app.use(server.express.static(path.join(__dirname, '/')));
+server.app.use(server.express.static(path.join(__dirname, "/")));
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    titleBarStyle: 'hidden',
+    titleBarStyle: "hidden",
     width: 1281,
     height: 800,
     minWidth: 1281,
-    minHeight: 800, 
-    backgroundColor: '#303030',
-    icon: path.join(__dirname, '../build/android-chrome-192x192.png'),
+    minHeight: 800,
+    backgroundColor: "#303030",
+    icon: path.join(__dirname, "../build/android-chrome-192x192.png"),
     webPreferences: {
       webSecurity: false
     },
     node: {
       __dirname: false
-    },
+    }
   });
-  let isProd = __dirname.indexOf('app.asar') > -1;
+  let isProd = __dirname.indexOf("app.asar") > -1;
   let port = isProd ? 9001 : 3000;
   mainWindow.loadURL(`http://localhost:${port}/`); // load the react app
   mainWindow.on("closed", () => (mainWindow = null));
@@ -55,11 +55,11 @@ function createMenu() {
         label: "Quit",
         accelerator: "Command+Q",
         click: () => {
-          app.quit()
+          app.quit();
         }
       }
     ]
-  }
+  };
 
   const edit = {
     label: "Edit",
@@ -98,14 +98,11 @@ function createMenu() {
         selector: "selectAll:"
       }
     ]
-  }
+  };
 
-  const template = [
-    application,
-    edit
-  ]
+  const template = [application, edit];
 
-  Menu.setApplicationMenu(Menu.buildFromTemplate(template))
+  Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 }
 // when the app is loaded create a BrowserWindow and check for updates
 app.on("ready", function() {
