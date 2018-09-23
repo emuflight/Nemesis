@@ -25,7 +25,7 @@
       "CW315FLIP"
     ]
   },
-  "gyro_lpf": {
+  "gyro_hardware_lpf": {
     "scope": "GLOBAL",
     "type": "UINT8",
     "mode": "LOOKUP",
@@ -1405,7 +1405,7 @@
     "min": "0",
     "max": "100"
   },
-  "dterm_lowpass_type": {
+  "dterm_lowpass_hz_type": {
     "scope": "PROFILE",
     "type": "UINT8",
     "mode": "LOOKUP",
@@ -1413,15 +1413,7 @@
     "default": "BIQUAD",
     "values": ["PT1", "BIQUAD", "FIR"]
   },
-  "dterm_filter_style": {
-    "scope": "PROFILE",
-    "type": "UINT8",
-    "mode": "LOOKUP",
-    "current": "KD_FILTER_NOSP",
-    "default": "KD_FILTER_NOSP",
-    "values": ["KD_FILTER_CLASSIC", "KD_FILTER_SP", "KD_FILTER_NOSP"]
-  },
-  "dterm_lowpass": {
+  "dterm_lowpass_hz": {
     "scope": "PROFILE",
     "type": "INT16",
     "mode": "DIRECT",
@@ -2847,7 +2839,7 @@
     "current": "0",
     "values": [
       {
-        "dterm_lowpass_type": {
+        "dterm_lowpass_hz_type": {
           "scope": "PROFILE",
           "type": "UINT8",
           "mode": "LOOKUP",
@@ -2855,15 +2847,7 @@
           "default": "BIQUAD",
           "values": ["PT1", "BIQUAD", "FIR"]
         },
-        "dterm_filter_style": {
-          "scope": "PROFILE",
-          "type": "UINT8",
-          "mode": "LOOKUP",
-          "current": "KD_FILTER_NOSP",
-          "default": "KD_FILTER_NOSP",
-          "values": ["KD_FILTER_CLASSIC", "KD_FILTER_SP", "KD_FILTER_NOSP"]
-        },
-        "dterm_lowpass": {
+        "dterm_lowpass_hz": {
           "scope": "PROFILE",
           "type": "INT16",
           "mode": "DIRECT",
@@ -3301,7 +3285,7 @@
         }
       },
       {
-        "dterm_lowpass_type": {
+        "dterm_lowpass_hz_type": {
           "scope": "PROFILE",
           "type": "UINT8",
           "mode": "LOOKUP",
@@ -3309,15 +3293,7 @@
           "default": "BIQUAD",
           "values": ["PT1", "BIQUAD", "FIR"]
         },
-        "dterm_filter_style": {
-          "scope": "PROFILE",
-          "type": "UINT8",
-          "mode": "LOOKUP",
-          "current": "KD_FILTER_NOSP",
-          "default": "KD_FILTER_NOSP",
-          "values": ["KD_FILTER_CLASSIC", "KD_FILTER_SP", "KD_FILTER_NOSP"]
-        },
-        "dterm_lowpass": {
+        "dterm_lowpass_hz": {
           "scope": "PROFILE",
           "type": "INT16",
           "mode": "DIRECT",
@@ -3755,7 +3731,7 @@
         }
       },
       {
-        "dterm_lowpass_type": {
+        "dterm_lowpass_hz_type": {
           "scope": "PROFILE",
           "type": "UINT8",
           "mode": "LOOKUP",
@@ -3763,15 +3739,7 @@
           "default": "BIQUAD",
           "values": ["PT1", "BIQUAD", "FIR"]
         },
-        "dterm_filter_style": {
-          "scope": "PROFILE",
-          "type": "UINT8",
-          "mode": "LOOKUP",
-          "current": "KD_FILTER_NOSP",
-          "default": "KD_FILTER_NOSP",
-          "values": ["KD_FILTER_CLASSIC", "KD_FILTER_SP", "KD_FILTER_NOSP"]
-        },
-        "dterm_lowpass": {
+        "dterm_lowpass_hz": {
           "scope": "PROFILE",
           "type": "INT16",
           "mode": "DIRECT",

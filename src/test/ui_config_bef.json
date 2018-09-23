@@ -41,7 +41,7 @@
       "yaw_srate"
     ],
     "FILTERS": [
-      "gyro_lpf",
+      "gyro_hardware_lpf",
       "gyro_lowpass_type",
       "gyro_lowpass_hz",
       "gyro_notch1_hz",

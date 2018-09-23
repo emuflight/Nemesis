@@ -13,15 +13,15 @@ export default class AuxChannelItemView extends Component {
     this.state = props.item;
     this.notifyDirty = props.notifyDirty;
     this.modes = auxModeList;
-    this.channels = new Array(13).fill(undefined).map((k, i) => {
-      if (!i) {
+    this.channels = new Array(14).fill(undefined).map((k, i) => {
+      if (i == 13) {
         return {
           label: "NONE",
-          value: 0
+          value: -1
         };
       } else {
         return {
-          label: `AUX ${i}`,
+          label: `AUX ${i + 1}`,
           value: i
         };
       }

@@ -28,8 +28,11 @@ export default class FiltersView extends ConfigListView {
         <Paper zDepth={3} style={{ margin: "10px", padding: "10px" }}>
           <DropdownView
             notifyDirty={this.notifyDirty}
-            key={"gyro_lpf"}
-            item={toSimpleConfigObj(this.props.fcConfig.gyro_lpf, "gyro_lpf")}
+            key={"gyro_hardware_lpf"}
+            item={toSimpleConfigObj(
+              this.props.fcConfig.gyro_hardware_lpf,
+              "gyro_hardware_lpf"
+            )}
           />
           <DropdownView
             notifyDirty={this.notifyDirty}
