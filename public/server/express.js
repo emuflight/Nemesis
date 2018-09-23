@@ -24,10 +24,16 @@ app.get("/device", (req, res) => {
       if (connectedDevice.dfu) {
         res.json(connectedDevice);
       } else {
-        fcConnector.getConfig(connectedDevice, config => {
-          connectedDevice.config = config;
-          res.json(connectedDevice);
-        });
+        fcConnector.getConfig(
+          connectedDevice,
+          config => {
+            connectedDevice.config = config;
+            res.json(connectedDevice);
+          },
+          () => {
+            res.sendStatus(500);
+          }
+        );
       }
     } else {
       res.sendStatus(404);
