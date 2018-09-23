@@ -6,21 +6,16 @@ const fakeConfig = require("../config/test_buf_config.json");
 let openPort;
 const ensurePort = (comName, cb, ecb) => {
   openPort = new SerialPort(comName, {
-    baudRate: 115200
+    autoOpen: false
   });
-  openPort.on("close", () => {
-    openPort = undefined;
-  });
-  try {
-    if (openPort.isOpen) {
-      cb();
-    } else {
+  setTimeout(() => {
+    try {
       openPort.open(cb);
+    } catch (ex) {
+      ecb(ex);
+      console.log("error attempting to open", ex);
     }
-  } catch (ex) {
-    ecb(ex);
-    console.log("error attempting to open", ex);
-  }
+  }, 100);
 };
 
 const getVersion = (comName, cb, ecb) => {
@@ -35,52 +30,51 @@ const getVersion = (comName, cb, ecb) => {
   );
 };
 const getConfig = (comName, cb, ecb) => {
-  try {
-    const parser = new Readline({
-      delimiter: "#"
-    });
-    let port = new SerialPort(comName, {
-      baudRate: 115200
-    });
-    port.pipe(parser);
-    let ret = "";
-    let sendNext = false;
-    parser.on("data", data => {
-      if (sendNext) {
-        ret = data;
-        sendNext = false;
-      }
-    });
-    const getter = () => {
-      port.write("!\n", err => {
-        setTimeout(() => {
-          port.write("config\n", err => {
-            sendNext = true;
-            setTimeout(() => {
-              try {
-                //trim off " config\n";
-                cb(JSON.parse(ret.slice(7)));
-              } catch (ex) {
-                getVersion(comName, cb);
-              }
-              port.isOpen && port.close();
-              //1000ms is about how long it takes to read the json data reliably
-            }, 1200);
-          });
-          //200ms is ~as fast as we can go reliably
-        }, 200);
-      });
-    };
-    if (port.isOpen) {
-      getter();
-    } else {
-      port.open(getter);
+  const parser = new Readline({
+    delimiter: "#"
+  });
+  let port = new SerialPort(comName, {
+    autoOpen: false
+  });
+  port.pipe(parser);
+  let ret = "";
+  let sendNext = false;
+  parser.on("data", data => {
+    if (sendNext) {
+      ret = data;
+      sendNext = false;
     }
-  } catch (ex) {
-    port.isOpen && port.close();
-    getVersion(comName, cb);
-    console.log(ex);
-  }
+  });
+  const getter = () => {
+    port.write("!\n", err => {
+      setTimeout(() => {
+        port.write("config\n", err => {
+          sendNext = true;
+          setTimeout(() => {
+            try {
+              //trim off " config\n";
+
+              port.isOpen && port.close();
+              cb(JSON.parse(ret.slice(7)));
+            } catch (ex) {
+              port.isOpen && port.close();
+              getVersion(comName, cb);
+            }
+            //1000ms is about how long it takes to read the json data reliably
+          }, 1200);
+        });
+        //200ms is ~as fast as we can go reliably
+      }, 200);
+    });
+  };
+  setTimeout(() => {
+    try {
+      port.open(getter);
+    } catch (ex) {
+      ecb(ex);
+      console.log("error attempting to open", ex);
+    }
+  }, 100);
 };
 
 const sendCommand = (comName, command, cb, ecb, waitMs = 200) => {
@@ -106,7 +100,6 @@ const sendCommand = (comName, command, cb, ecb, waitMs = 200) => {
       ecb
     );
   } catch (ex) {
-    openPort.isOpen && port.close();
     console.log(ex);
     ecb && ecb(ex);
   }
@@ -149,7 +142,7 @@ const updateIMUF = (comName, binName, notify) => {
                     openPort.write("imufflashbin\n");
                     setTimeout(() => {
                       notify("\ndone!\n#flyhelio");
-                      openPort.close();
+                      openPort.isOpen && openPort.close();
                     }, 10000);
                   }
                 }, 50);
