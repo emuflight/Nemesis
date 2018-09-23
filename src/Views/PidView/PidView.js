@@ -19,7 +19,7 @@ export default class PidsView extends ProfileView {
     props.fcConfig.buttered_pids.id = "buttered_pids";
     props.fcConfig.tpa_breakpoint.id = "tpa_breakpoint";
     props.fcConfig.tpa_rate.id = "tpa_rate";
-    props.fcConfig.dterm_lowpass.id = "dterm_lowpass";
+    props.fcConfig.dterm_lowpass_hz.id = "dterm_lowpass_hz";
     props.fcConfig.dterm_notch_hz.id = "dterm_notch_hz";
     props.fcConfig.dterm_notch_cutoff.id = "dterm_notch_cutoff";
   }
@@ -87,29 +87,21 @@ export default class PidsView extends ProfileView {
         <Paper zDepth={3} style={{ margin: "10px", padding: "10px" }}>
           {!this.props.fcConfig.imuf && (
             <DropdownView
-              id={"dterm_lowpass_type"}
+              id={"dterm_lowpass_hz_type"}
               notifyDirty={this.notifyDirty}
               item={toSimpleConfigObj(
-                this.props.fcConfig.dterm_lowpass_type,
-                "dterm_lowpass_type"
+                this.props.fcConfig.dterm_lowpass_hz_type,
+                "dterm_lowpass_hz_type"
               )}
             />
           )}
-          <DropdownView
-            id={"dterm_filter_style"}
-            notifyDirty={this.notifyDirty}
-            item={toSimpleConfigObj(
-              this.props.fcConfig.dterm_filter_style,
-              "dterm_filter_style"
-            )}
-          />
         </Paper>
         {!this.props.fcConfig.imuf && (
           <Paper zDepth={3} style={{ margin: "10px", padding: "10px" }}>
             <InputView
               notifyDirty={this.notifyDirty}
-              key={this.props.fcConfig.dterm_lowpass.id}
-              item={this.props.fcConfig.dterm_lowpass}
+              key={this.props.fcConfig.dterm_lowpass_hz.id}
+              item={this.props.fcConfig.dterm_lowpass_hz}
             />
             <InputView
               notifyDirty={this.notifyDirty}

@@ -17,8 +17,15 @@ export default class AuxChannelView extends Component {
           channel = parseInt(parts[2], 10),
           start = parseInt(parts[3], 10),
           end = parseInt(parts[4], 10);
-        auxMode =
+        channel =
           auxMode === 0 && channel === 0 && start === 900 && end === 900
+            ? -1
+            : channel;
+        auxMode =
+          auxMode === 0 &&
+          (channel === 0 || channel === -1) &&
+          start === 900 &&
+          end === 900
             ? -1
             : auxMode;
         return {

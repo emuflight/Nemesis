@@ -61,7 +61,7 @@ const getConfig = (comName, cb, ecb) => {
               getVersion(comName, cb);
             }
             //1000ms is about how long it takes to read the json data reliably
-          }, 1200);
+          }, 2200);
         });
         //200ms is ~as fast as we can go reliably
       }, 200);
@@ -226,7 +226,7 @@ const getConfig = (comName, cb, ecb) => {
       console.log("port closed");
     });
     parser.on("data", data => {
-      
+
       let ret = data.replace(/#/g, '').replace("config", "");
       if (ret.length > 10) {
         cb(ret);
@@ -241,7 +241,7 @@ const getConfig = (comName, cb, ecb) => {
         });
       }, 1000);
     });
-    
+
   } catch (ex) {
     console.log(ex);
     ecb && ecb(ex);
