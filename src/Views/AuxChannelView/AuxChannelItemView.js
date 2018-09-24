@@ -14,7 +14,7 @@ export default class AuxChannelItemView extends Component {
     this.notifyDirty = props.notifyDirty;
     this.modes = auxModeList;
     this.channels = new Array(14).fill(undefined).map((k, i) => {
-      if (i == 13) {
+      if (i === 13) {
         return {
           label: "NONE",
           value: -1

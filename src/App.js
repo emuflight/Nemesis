@@ -8,8 +8,6 @@ import Disconnected from "./Views/Disconnected";
 import ImufView from "./Views/ImufView";
 import DfuView from "./Views/DfuView";
 import FCConnector from "./utilities/FCConnector";
-import rf1UiConfig from "./test/ui_config_rf1.json";
-import BxfUiConfig from "./test/ui_config_bef.json";
 
 class App extends Component {
   constructor(props) {
@@ -32,14 +30,6 @@ class App extends Component {
       }
     });
   }
-  setupRoutes() {
-    this.uiConfig.routes = this.baseRoutes.map(route => {
-      return {
-        key: route,
-        title: route
-      };
-    });
-  }
 
   goToDFU = () => {
     FCConnector.goToDFU();
@@ -53,36 +43,22 @@ class App extends Component {
     this.setState({ connecting: true });
     return FCConnector.tryGetConfig()
       .then(connectedDevice => {
-        if (connectedDevice.dfu) {
-          this.setState({
-            dfu: connectedDevice.dfu,
-            deviceInfo: connectedDevice
-          });
-        } else {
-          switch (connectedDevice.config.version.fw) {
-            case "ButterFlight":
-              this.uiConfig = BxfUiConfig;
-              break;
-            case "RACEFLIGHT":
-              this.uiConfig = rf1UiConfig;
-              break;
-            default:
-              return this.setState({ connecting: false, incompatible: true });
-          }
-          this.baseRoutes = this.baseRoutes || this.uiConfig.routes;
-          connectedDevice.config && this.setupRoutes(connectedDevice.config);
-          this.setState({
-            id: connectedDevice.comName,
-            deviceInfo: connectedDevice,
-            currentConfig: connectedDevice.config,
-            connected: true
-          });
-        }
-        this.setState({ connecting: false });
+        this.setState({
+          connecting: false,
+          dfu: connectedDevice.dfu,
+          id: connectedDevice.comName,
+          deviceInfo: connectedDevice,
+          currentConfig: connectedDevice.config,
+          connected: true
+        });
         return connectedDevice.config;
       })
       .catch(device => {
-        this.setState({ connecting: false, deviceInfo: device });
+        this.setState({
+          connecting: false,
+          deviceInfo: device,
+          incompatible: true
+        });
       });
   };
 
@@ -110,7 +86,6 @@ class App extends Component {
             goToDFU={this.goToDFU}
             goToImuf={this.goToImuf}
             connectinId={this.state.id}
-            uiConfig={this.uiConfig}
             fcConfig={this.state.currentConfig}
           />
         </MuiThemeProvider>

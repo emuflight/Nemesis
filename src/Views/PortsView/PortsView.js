@@ -12,24 +12,9 @@ export default class PortsView extends Component {
       rxProvider: {
         id: "serialrx_provider",
         current: props.rxProvider.current,
-        values: props.rxProvider.values.map(provider => {
-          return {
-            value: provider,
-            label: provider
-          };
-        })
+        values: props.rxProvider.values
       },
-      ports: props.ports.map(port => {
-        let parts = port.split("|");
-        return {
-          id: parts[0],
-          mode: parts[1],
-          mspBaud: parts[2],
-          gpsBaud: parts[3],
-          telemBaud: parts[4],
-          bblBaud: parts[5]
-        };
-      })
+      ports: props.ports
     };
   }
 

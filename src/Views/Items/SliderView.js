@@ -13,7 +13,7 @@ export default class SliderView extends Component {
     };
 
     this.parser = parseInt;
-    if (props.item.element.parse === "float") {
+    if (props.item.parse === "float") {
       this.parser = parseFloat;
     }
   }

@@ -1,0 +1,447 @@
+{
+  "routes": [
+    "PID",
+    "RATES",
+    "FILTERS",
+    "MOTORS",
+    "MODES",
+    "RX",
+    "FEATURES",
+    "VTX",
+    "OSD",
+    "PORTS",
+    "BLACKBOX",
+    "ADVANCED"
+  ],
+  "groups": {
+    "MODES": ["modes"],
+
+    "PID": [
+      "p_pitch",
+      "i_pitch",
+      "d_pitch",
+      "p_roll",
+      "i_roll",
+      "d_roll",
+      "p_yaw",
+      "i_yaw",
+      "d_yaw"
+    ],
+    "RATES": [
+      "thr_expo",
+      "rates_type",
+      "roll_rc_rate",
+      "pitch_rc_rate",
+      "yaw_rc_rate",
+      "roll_expo",
+      "pitch_expo",
+      "yaw_expo",
+      "roll_srate",
+      "pitch_srate",
+      "yaw_srate"
+    ],
+    "FILTERS": [
+      "gyro_hardware_lpf",
+      "gyro_lowpass_type",
+      "gyro_lowpass_hz",
+      "gyro_notch1_hz",
+      "gyro_notch1_cutoff",
+      "gyro_notch2_hz",
+      "gyro_notch2_cutoff",
+      "imuf_roll_q",
+      "imuf_pitch_q",
+      "imuf_yaw_q",
+      "imuf_w",
+      "imuf_pitch_lpf_cutoff_hz",
+      "imuf_roll_lpf_cutoff_hz",
+      "imuf_yaw_lpf_cutoff_hz"
+    ],
+    "MOTORS": [
+      "min_command",
+      "dshot_idle_value",
+      "dshot_burst",
+      "use_unsynced_pwm",
+      "motor_pwm_protocol",
+      "motor_pwm_rate",
+      "motor_pwm_inversion",
+      "yaw_motors_reversed",
+      "3d_deadband_low",
+      "3d_deadband_high",
+      "3d_neutral",
+      "3d_deadband_throttle",
+      "3d_switched_mode",
+      "align_gyro",
+      "align_acc",
+      "align_mag",
+      "align_board_roll",
+      "align_board_pitch",
+      "align_board_yaw"
+    ],
+    "RX": [
+      "mid_rc",
+      "thr_mid",
+      "min_check",
+      "max_check",
+      "rssi_channel",
+      "rssi_scale",
+      "rssi_invert",
+      "rc_interp",
+      "rc_interp_ch",
+      "rc_interp_int",
+      "serialrx_provider",
+      "serialrx_inverted",
+      "spektrum_sat_bind",
+      "spektrum_sat_bind_autoreset",
+      "serialrx_halfduplex",
+      "rx_min_usec",
+      "rx_max_usec",
+      "min_throttle",
+      "max_throttle",
+      "failsafe_delay",
+      "failsafe_off_delay",
+      "failsafe_throttle",
+      "failsafe_kill_switch",
+      "failsafe_throttle_low_delay",
+      "failsafe_procedure",
+      "serial_update_rate_hz",
+      "accxy_deadband",
+      "accz_deadband",
+      "acc_unarmedcal",
+      "tlm_switch",
+      "tlm_inverted",
+      "tlm_halfduplex",
+      "frsky_default_lat",
+      "frsky_default_long",
+      "frsky_gps_format",
+      "frsky_unit",
+      "frsky_vfas_precision",
+      "hott_alarm_int",
+      "pid_in_tlm",
+      "report_cell_voltage",
+      "ibus_sensor",
+      "deadband",
+      "yaw_deadband",
+      "yaw_control_reversed"
+    ],
+    "FEATURES": ["features"],
+    "VTX": [
+      "vtx_band",
+      "vtx_channel",
+      "vtx_power",
+      "vtx_low_power_disarm",
+      "vtx_freq",
+      "vtx_pit_mode_freq",
+      "vtx_halfduplex",
+      "vcd_video_system",
+      "vcd_h_offset",
+      "vcd_v_offset"
+    ],
+    "OSD": [
+      "osd_units",
+      "osd_warnings",
+      "osd_rssi_alarm",
+      "osd_cap_alarm",
+      "osd_alt_alarm",
+      "osd_ah_max_pit",
+      "osd_ah_max_rol",
+      "osd_tim1",
+      "osd_tim2",
+      "osd_vbat_pos",
+      "osd_rssi_pos",
+      "osd_tim_1_pos",
+      "osd_tim_2_pos",
+      "osd_remaining_time_estimate_pos",
+      "osd_flymode_pos",
+      "osd_throttle_pos",
+      "osd_vtx_channel_pos",
+      "osd_crosshairs",
+      "osd_ah_sbar",
+      "osd_ah_pos",
+      "osd_current_pos",
+      "osd_mah_drawn_pos",
+      "osd_craft_name_pos",
+      "osd_gps_speed_pos",
+      "osd_gps_lon_pos",
+      "osd_gps_lat_pos",
+      "osd_gps_sats_pos",
+      "osd_home_dir_pos",
+      "osd_home_dist_pos",
+      "osd_compass_bar_pos",
+      "osd_altitude_pos",
+      "osd_pid_roll_pos",
+      "osd_pid_pitch_pos",
+      "osd_pid_yaw_pos",
+      "osd_debug_pos",
+      "osd_power_pos",
+      "osd_pidrate_profile_pos",
+      "osd_warnings_pos",
+      "osd_avg_cell_voltage_pos",
+      "osd_pit_ang_pos",
+      "osd_rol_ang_pos",
+      "osd_battery_usage_pos",
+      "osd_disarmed_pos",
+      "osd_nheading_pos",
+      "osd_nvario_pos",
+      "osd_esc_tmp_pos",
+      "osd_esc_rpm_pos",
+      "osd_rtc_date_time_pos",
+      "osd_adjustment_range_pos",
+      "osd_core_temp_pos",
+      "osd_stat_max_spd",
+      "osd_stat_max_dist",
+      "osd_stat_min_batt",
+      "osd_stat_min_rssi",
+      "osd_stat_max_curr",
+      "osd_stat_used_mah",
+      "osd_stat_max_alt",
+      "osd_stat_bbox",
+      "osd_stat_endbatt",
+      "osd_stat_bb_no",
+      "osd_stat_rtc_date_time",
+      "osd_stat_tim_1",
+      "osd_stat_tim_2"
+    ],
+    "PORTS": ["ports"],
+    "BLACKBOX": [
+      "blackbox_p_ratio",
+      "blackbox_device",
+      "blackbox_record_acc",
+      "blackbox_mode"
+    ],
+    "ADVANCED": ["advanced"]
+  },
+  "elements": {
+    "p_roll": {
+      "mode": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "y"
+    },
+    "i_roll": {
+      "mode": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "y"
+    },
+    "d_roll": {
+      "mode": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "y"
+    },
+    "p_pitch": {
+      "mode": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "y"
+    },
+    "i_pitch": {
+      "mode": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "y"
+    },
+    "d_pitch": {
+      "mode": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "y"
+    },
+    "p_yaw": {
+      "mode": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "y"
+    },
+    "i_yaw": {
+      "mode": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "y"
+    },
+    "d_yaw": {
+      "mode": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "y"
+    },
+    "gyro_sync_denom": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "1",
+          "label": "32khz"
+        },
+        {
+          "value": "2",
+          "label": "16khz"
+        },
+        {
+          "value": "4",
+          "label": "8khz"
+        },
+        {
+          "value": "8",
+          "label": "4khz"
+        },
+        {
+          "value": "16",
+          "label": "2khz"
+        },
+        {
+          "value": "32",
+          "label": "1khz"
+        }
+      ]
+    },
+    "blackbox_p_ratio": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "1",
+          "label": "32khz"
+        },
+        {
+          "value": "2",
+          "label": "16khz"
+        },
+        {
+          "value": "4",
+          "label": "8khz"
+        },
+        {
+          "value": "8",
+          "label": "4khz"
+        },
+        {
+          "value": "16",
+          "label": "2khz"
+        },
+        {
+          "value": "32",
+          "label": "1khz"
+        }
+      ]
+    },
+    "pid_process_denom": {
+      "mode": "PidDenomView",
+      "values": [
+        {
+          "value": "1",
+          "label": "32khz"
+        },
+        {
+          "value": "2",
+          "label": "16khz"
+        },
+        {
+          "value": "4",
+          "label": "8khz"
+        },
+        {
+          "value": "8",
+          "label": "4khz"
+        },
+        {
+          "value": "16",
+          "label": "2khz"
+        },
+        {
+          "value": "32",
+          "label": "1khz"
+        }
+      ]
+    },
+    "tpa_curves": {
+      "mode": "TpaCurveView"
+    },
+    "vtx_band": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "1",
+          "label": "BOSCAM - A"
+        },
+        {
+          "value": "2",
+          "label": "BOSCAM - B"
+        },
+        {
+          "value": "3",
+          "label": "DJI"
+        },
+        {
+          "value": "4",
+          "label": "FATSHARK"
+        },
+        {
+          "value": "5",
+          "label": "RACEBAND"
+        }
+      ]
+    },
+    "vtx_power": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "1",
+          "label": "25mw"
+        },
+        {
+          "value": "2",
+          "label": "200mw"
+        },
+        {
+          "value": "3",
+          "label": "500mw"
+        },
+        {
+          "value": "4",
+          "label": "800mw"
+        }
+      ]
+    },
+    "vtx_channel": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "1",
+          "label": "CHANNEL-1"
+        },
+        {
+          "value": "2",
+          "label": "CHANNEL-2"
+        },
+        {
+          "value": "3",
+          "label": "CHANNEL-3"
+        },
+        {
+          "value": "4",
+          "label": "CHANNEL-4"
+        },
+        {
+          "value": "5",
+          "label": "CHANNEL-5"
+        },
+        {
+          "value": "6",
+          "label": "CHANNEL-6"
+        },
+        {
+          "value": "7",
+          "label": "CHANNEL-7"
+        },
+        {
+          "value": "8",
+          "label": "CHANNEL-8"
+        }
+      ]
+    }
+  },
+  "keymap": {
+    "gyro_lpf": "gyro_hardware_lpf",
+    "dterm_lowpass_type": "dterm_lowpass_hz_type",
+    "dterm_lowpass": "dterm_lowpass_hz"
+  }
+}

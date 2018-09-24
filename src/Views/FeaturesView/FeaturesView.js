@@ -8,18 +8,7 @@ export default class FeaturesView extends Component {
     super(props);
     this.notifyDirty = props.notifyDirty;
     this.state = {
-      features: props.features.map(feature => {
-        let current = true,
-          key = feature;
-        if (feature.startsWith("-")) {
-          current = false;
-          key = key.slice(1);
-        }
-        return {
-          id: key,
-          current: current
-        };
-      })
+      features: props.features
     };
     this.notifyDirty = props.notifyDirty;
   }

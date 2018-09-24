@@ -26,9 +26,8 @@ app.get("/device", (req, res) => {
       } else {
         fcConnector.getConfig(
           connectedDevice,
-          config => {
-            connectedDevice.config = config;
-            res.json(connectedDevice);
+          deviceConfig => {
+            res.json(deviceConfig);
           },
           () => {
             res.sendStatus(500);

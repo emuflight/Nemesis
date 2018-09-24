@@ -17,53 +17,50 @@ import FiltersView from "./FiltersView/FiltersView";
 import PidsView from "./PidView/PidView";
 import RatesView from "./RatesView/RatesView";
 
-const getRouteItems = (routeName, fcConfig, uiConfig) => {
+const skipprops = [
+  "pid_profile",
+  "rate_profile",
+  "modes",
+  "features",
+  "ports",
+  "imuf",
+  "name",
+  "version",
+  "pidProfileList",
+  "rateProfileList",
+  "currentPidProfile",
+  "currentRateProfile",
+  "startingRoute",
+  "tpa_curves",
+  "pinio_box",
+  "pinio_config"
+];
+const getRouteItems = (routeName, fcConfig) => {
   return Object.keys(fcConfig)
     .filter(key => {
-      return uiConfig.groups[routeName].indexOf(key) !== -1;
-    })
-    .map(k => {
-      let itemObj = Object.assign(
-        {
-          id: k,
-          element: uiConfig.elements[k]
-        },
-        fcConfig[k]
-      );
-      if (itemObj.element) {
-        itemObj.step = itemObj.element.step || itemObj.step;
-        itemObj.values = itemObj.element.values || itemObj.values;
-        itemObj.axis = itemObj.element.axis;
-      } else if (itemObj.values) {
-        itemObj.values = itemObj.values.map(item => {
-          return {
-            value: item,
-            label: item
-          };
-        });
+      if (routeName === "ADVANCED") {
+        return skipprops.indexOf(key) < 0 && !fcConfig[key].route;
       }
-      return itemObj;
-    });
+      return fcConfig[key].route === routeName;
+    })
+    .map(k => fcConfig[k]);
 };
 
 export default class Connected extends Component {
   constructor(props) {
     super(props);
     this.fcConfig = props.fcConfig;
-    this.uiConfig = props.uiConfig;
     this.goToDFU = props.goToDFU;
     this.goToImuf = props.goToImuf;
 
-    let currentPidProfile = parseInt(this.fcConfig.pid_profile.current, 10);
-    let currentRateProfile = parseInt(this.fcConfig.rate_profile.current, 10);
-
+    this.routes = this.fcConfig.routes;
     this.state = {
-      pid_profile: currentPidProfile,
-      rate_profile: currentRateProfile,
+      pid_profile: this.fcConfig.currentPidProfile,
+      rate_profile: this.fcConfig.currentRateProfile,
       craftName: this.fcConfig.name,
       isDirty: false,
       drawerOpen: false,
-      currentRoute: props.uiConfig.routes[0]
+      currentRoute: this.fcConfig.startingRoute
     };
   }
 
@@ -72,7 +69,7 @@ export default class Connected extends Component {
   };
 
   handleMenuItemClick = event => {
-    let newRoute = this.uiConfig.routes.find(
+    let newRoute = this.routes.find(
       route => route.key === event.currentTarget.id
     );
     this.setState({
@@ -100,23 +97,13 @@ export default class Connected extends Component {
         contents = (
           <PidsView
             fcConfig={this.fcConfig}
-            uiConfig={this.uiConfig}
             notifyDirty={(isDirty, item, newValue) =>
               this.notifyDirty(isDirty, item, newValue)
             }
             id={"pid_profile"}
             active={this.state.pid_profile}
-            profileList={this.fcConfig.pid_profile.values.map((v, k) => {
-              return {
-                label: `Profile ${k + 1}`,
-                value: k
-              };
-            })}
-            items={getRouteItems(
-              this.state.currentRoute.key,
-              mergedProfile,
-              this.uiConfig
-            )}
+            profileList={this.fcConfig.pidProfileList}
+            items={getRouteItems(this.state.currentRoute.key, mergedProfile)}
           />
         );
         break;
@@ -135,17 +122,8 @@ export default class Connected extends Component {
             }
             id={"rate_profile"}
             active={this.state.rate_profile}
-            profileList={this.fcConfig.rate_profile.values.map((v, k) => {
-              return {
-                label: `Rate Profile ${k + 1}`,
-                value: k
-              };
-            })}
-            items={getRouteItems(
-              this.state.currentRoute.key,
-              mergedProfile,
-              this.uiConfig
-            )}
+            profileList={this.fcConfig.rateProfileList}
+            items={getRouteItems(this.state.currentRoute.key, mergedProfile)}
           />
         );
         break;
@@ -198,11 +176,7 @@ export default class Connected extends Component {
             notifyDirty={(isDirty, item, newValue) =>
               this.notifyDirty(isDirty, item, newValue)
             }
-            items={getRouteItems(
-              this.state.currentRoute.key,
-              this.fcConfig,
-              this.uiConfig
-            )}
+            items={getRouteItems(this.state.currentRoute.key, this.fcConfig)}
           />
         );
         break;
@@ -244,7 +218,7 @@ export default class Connected extends Component {
             imuf={this.fcConfig.imuf}
           />
           <Divider />
-          {this.uiConfig.routes.map(route => {
+          {this.routes.map(route => {
             return (
               <MenuItem
                 id={route.key}

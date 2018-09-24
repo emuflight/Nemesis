@@ -1,11 +1,9 @@
 const SerialPort = require("serialport");
-const Readline = SerialPort.parsers.Readline;
 const imufFirmware = require("../firmware/imuf");
-const fakeConfig = require("../config/test_buf_config.json");
 
 let openPort;
-const ensurePort = (comName, cb, ecb) => {
-  openPort = new SerialPort(comName, {
+const ensurePort = (device, cb, ecb) => {
+  openPort = new SerialPort(device.comName, {
     autoOpen: false
   });
   setTimeout(() => {
@@ -18,9 +16,9 @@ const ensurePort = (comName, cb, ecb) => {
   }, 100);
 };
 
-const getVersion = (comName, cb, ecb) => {
+const getVersion = (device, cb, ecb) => {
   sendCommand(
-    comName,
+    device,
     "version",
     data => {
       cb(data);
@@ -29,60 +27,39 @@ const getVersion = (comName, cb, ecb) => {
     500
   );
 };
-const getConfig = (comName, cb, ecb) => {
-  const parser = new Readline({
-    delimiter: "#"
-  });
-  let port = new SerialPort(comName, {
-    autoOpen: false
-  });
-  port.pipe(parser);
-  let ret = "";
-  let sendNext = false;
-  parser.on("data", data => {
-    if (sendNext) {
-      ret = data;
-      sendNext = false;
-    }
-  });
-  const getter = () => {
-    port.write("!\n", err => {
+const getConfig = (device, cb, ecb) => {
+  sendCommand(
+    device,
+    "!",
+    () => {
       setTimeout(() => {
-        port.write("config\n", err => {
-          sendNext = true;
-          setTimeout(() => {
+        sendCommand(
+          device,
+          "config",
+          conf => {
             try {
               //trim off " config\n";
-
-              port.isOpen && port.close();
-              cb(JSON.parse(ret.slice(7)));
+              conf = JSON.parse(conf.slice(7, conf.length - 2));
             } catch (ex) {
-              port.isOpen && port.close();
-              getVersion(comName, cb);
+              return getVersion(device, cb);
             }
-            //1000ms is about how long it takes to read the json data reliably
-          }, 2200);
-        });
-        //200ms is ~as fast as we can go reliably
-      }, 200);
-    });
-  };
-  setTimeout(() => {
-    try {
-      port.open(getter);
-    } catch (ex) {
-      ecb(ex);
-      console.log("error attempting to open", ex);
-    }
-  }, 100);
+            cb(conf);
+          },
+          ecb,
+          2200
+        );
+      }, 100);
+    },
+    ecb
+  );
 };
 
-const sendCommand = (comName, command, cb, ecb, waitMs = 200) => {
+const sendCommand = (device, command, cb, ecb, waitMs = 200) => {
   try {
     let ret = "";
     let timeout;
     ensurePort(
-      comName,
+      device,
       () => {
         openPort.on("data", data => {
           ret += data;
@@ -105,13 +82,13 @@ const sendCommand = (comName, command, cb, ecb, waitMs = 200) => {
   }
 };
 
-const updateIMUF = (comName, binName, notify) => {
+const updateIMUF = (device, binName, notify) => {
   notify(`Downloading ${binName}...\n`);
   imufFirmware.load(binName, fileBuffer => {
     let binAsStr = fileBuffer.toString("hex");
     // let binAsStr = fs.readFileSync(path.join(__dirname, './IMUF_1.1.0_STARBUCK_ALPHA.bin')).toString('hex');
     ensurePort(
-      comName,
+      device,
       () => {
         let ret = "";
         openPort.on("data", data => {
@@ -156,13 +133,13 @@ const updateIMUF = (comName, binName, notify) => {
   });
 };
 
-const setValue = (comName, name, newVal, cb, ecb) => {
-  sendCommand(comName, `set ${name}=${newVal}`, cb, ecb);
+const setValue = (device, name, newVal, cb, ecb) => {
+  sendCommand(device, `set ${name}=${newVal}`, cb, ecb);
 };
 
-const getTelemetry = (comName, cb, ecb) => {
+const getTelemetry = (device, cb, ecb) => {
   sendCommand(
-    comName,
+    device,
     `msp 102`,
     buffer => {
       try {
