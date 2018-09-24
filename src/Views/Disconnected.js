@@ -47,7 +47,7 @@ export default class Disconnected extends React.Component {
           )}
           {openCli && (
             <CliView
-              startText={device.config}
+              startText={device.error}
               stayOpen={!!openCli}
               ref="cliView"
             />

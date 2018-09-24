@@ -29,8 +29,8 @@ app.get("/device", (req, res) => {
           deviceConfig => {
             res.json(deviceConfig);
           },
-          () => {
-            res.sendStatus(500);
+          device => {
+            res.status(426).send(device);
           }
         );
       }

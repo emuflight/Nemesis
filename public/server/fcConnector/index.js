@@ -115,7 +115,13 @@ const applyUIConfig = (device, config, uiConfig) => {
       title: route
     };
   });
-
+  let versionParts = config.version.split("|");
+  config.version = {
+    fw: versionParts[0],
+    target: versionParts[1],
+    version: versionParts[3],
+    imuf: config.imuf
+  };
   config.startingRoute = config.routes[0];
   device.config = config;
 
@@ -130,7 +136,11 @@ module.exports = {
       return bxfConnector.getConfig(
         deviceInfo,
         config => {
-          cb(applyUIConfig(deviceInfo, config, BxfUiConfig));
+          if (config.incompatible) {
+            ecb(Object.assign({ error: config.version }, deviceInfo, config));
+          } else {
+            cb(applyUIConfig(deviceInfo, config, BxfUiConfig));
+          }
         },
         ecb
       );

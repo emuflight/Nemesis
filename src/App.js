@@ -41,25 +41,18 @@ class App extends Component {
 
   getFcConfig = () => {
     this.setState({ connecting: true });
-    return FCConnector.tryGetConfig()
-      .then(connectedDevice => {
-        this.setState({
-          connecting: false,
-          dfu: connectedDevice.dfu,
-          id: connectedDevice.comName,
-          deviceInfo: connectedDevice,
-          currentConfig: connectedDevice.config,
-          connected: true
-        });
-        return connectedDevice.config;
-      })
-      .catch(device => {
-        this.setState({
-          connecting: false,
-          deviceInfo: device,
-          incompatible: true
-        });
+    return FCConnector.tryGetConfig().then(device => {
+      this.setState({
+        connecting: false,
+        dfu: device.dfu,
+        id: device.comName,
+        deviceInfo: device,
+        currentConfig: device.config,
+        connected: !device.incompatible,
+        incompatible: device.incompatible
       });
+      return device.config;
+    });
   };
 
   componentDidMount() {
