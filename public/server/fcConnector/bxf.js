@@ -91,49 +91,45 @@ const updateIMUF = (device, binName, notify) => {
   imufFirmware.load(binName, fileBuffer => {
     let binAsStr = fileBuffer.toString("hex");
     // let binAsStr = fs.readFileSync(path.join(__dirname, './IMUF_1.1.0_STARBUCK_ALPHA.bin')).toString('hex');
-    ensurePort(
-      device,
-      () => {
-        let ret = "";
-        openPort.on("data", data => {
-          ret = data.toString("utf8");
-        });
-        openPort.write("imufbootloader\n");
-        setTimeout(() => {
-          if (ret.indexOf("BOOTLOADER") > -1) {
-            notify("Communicating with IMU-F...\n");
-            openPort.write("imufloadbin !\n");
-            setTimeout(() => {
-              if (ret.indexOf("SUCCESS") > -1) {
-                notify(`Loading binary onto IMU-F...\n`);
-                let index = 0;
-                let interval = setInterval(() => {
-                  if (index < binAsStr.length) {
-                    let tail = Math.min(binAsStr.length, index + 200);
-                    let sending = `imufloadbin l64000000${binAsStr.slice(
-                      index,
-                      tail
-                    )}\n`;
-                    openPort.write(sending);
-                    notify(".");
-                    index = tail;
-                  } else {
-                    notify("\nFlashing IMU-F...\n");
-                    clearInterval(interval);
-                    openPort.write("imufflashbin\n");
-                    setTimeout(() => {
-                      notify("\ndone!\n#flyhelio");
-                      openPort.isOpen && openPort.close();
-                    }, 10000);
-                  }
-                }, 50);
-              }
-            }, 5000);
-          }
-        }, 5000);
-      },
-      ecb
-    );
+    ensurePort(device, () => {
+      let ret = "";
+      openPort.on("data", data => {
+        ret = data.toString("utf8");
+      });
+      openPort.write("imufbootloader\n");
+      setTimeout(() => {
+        if (ret.indexOf("BOOTLOADER") > -1) {
+          notify("Communicating with IMU-F...\n");
+          openPort.write("imufloadbin !\n");
+          setTimeout(() => {
+            if (ret.indexOf("SUCCESS") > -1) {
+              notify(`Loading binary onto IMU-F...\n`);
+              let index = 0;
+              let interval = setInterval(() => {
+                if (index < binAsStr.length) {
+                  let tail = Math.min(binAsStr.length, index + 200);
+                  let sending = `imufloadbin l64000000${binAsStr.slice(
+                    index,
+                    tail
+                  )}\n`;
+                  openPort.write(sending);
+                  notify(".");
+                  index = tail;
+                } else {
+                  notify("\nFlashing IMU-F...\n");
+                  clearInterval(interval);
+                  openPort.write("imufflashbin\n");
+                  setTimeout(() => {
+                    notify("\ndone!\n#flyhelio");
+                    openPort.isOpen && openPort.close();
+                  }, 10000);
+                }
+              }, 50);
+            }
+          }, 5000);
+        }
+      }, 5000);
+    });
   });
 };
 
