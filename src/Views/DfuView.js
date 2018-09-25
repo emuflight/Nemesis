@@ -32,9 +32,14 @@ export default class DfuView extends Component {
     this.setState({ isFlashing: true });
     FCConnector.flashDFU(this.state.current, progress => {
       this.setState({ progress });
-    }).then(done => {
-      this.setState({ isFlashing: false, note: done });
-    });
+    })
+      .then(done => {
+        this.setState({ isFlashing: false, note: done });
+      })
+      .catch(error => {
+        this.setState({ progress: "Unable to load file" });
+        localStorage.clear();
+      });
   }
   get releasesKey() {
     return "firmwareReleases";
@@ -56,10 +61,11 @@ export default class DfuView extends Component {
         file.note =
           "Release notes: https://github.com/ButterFlight/butterflight/releases";
         return file;
-      });
+      })
+      .reverse();
     this.setState({
       items: firmwares,
-      current: firmwares[0].url,
+      current: firmwares[0].download_url,
       note: firmwares[0].note,
       isFlashing: false
     });
@@ -118,16 +124,16 @@ export default class DfuView extends Component {
         </Typography>
         <HelperSelect
           label={this.flText}
-          value={this.state.current || "NONE"}
+          value={this.state.current}
           disabled={this.state.isFlashing}
-          onChange={(event, key, payload) => {
-            this.setState({ current: payload });
+          onChange={event => {
+            this.setState({ current: event.target.value });
           }}
           items={
             this.state.items &&
             this.state.items.map(fw => {
               return {
-                value: fw.url,
+                value: fw.download_url,
                 label: fw.name
               };
             })

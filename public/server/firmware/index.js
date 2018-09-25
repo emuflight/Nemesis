@@ -35,9 +35,11 @@ module.exports = new class {
         }
       },
       (error, response, body) => {
-        let resJson = JSON.parse(body);
-        let fileBuffer = new Buffer(resJson.content, resJson.encoding);
-        callback(fileBuffer);
+        if (response.statusCode >= 400) {
+          callback({ error: body });
+        } else {
+          callback(body);
+        }
       }
     );
   }

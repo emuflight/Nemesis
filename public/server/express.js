@@ -78,17 +78,21 @@ app.get("/set/:name/:value", (req, res) => {
 });
 app.get("/flash/:binUrl", (req, res) => {
   firmware.load(req.params.binUrl, fileBuffer => {
-    devices.flashDFU(fileBuffer, data => {
-      websockets.clients.forEach(client =>
-        client.sendUTF(
-          JSON.stringify({
-            progress: data + "\n"
-          })
-        )
-      );
-    });
+    if (fileBuffer.error) {
+      res.status(404).send(fileBuffer.error);
+    } else {
+      res.sendStatus(202);
+      devices.flashDFU(fileBuffer, data => {
+        websockets.clients.forEach(client =>
+          client.sendUTF(
+            JSON.stringify({
+              progress: data + "\n"
+            })
+          )
+        );
+      });
+    }
   });
-  res.sendStatus(202);
 });
 
 app.get("/imuf/:binUrl", (req, res) => {

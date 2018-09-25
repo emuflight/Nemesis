@@ -64,7 +64,7 @@ const sendCommand = (path, command, cb, ecb, waitMs = 200) => {
     device.on("error", error => {
       device.close();
       console.log("HID ERROR:", error);
-      ecb(error);
+      ecb & ecb(error);
     });
     device.write(strToBytes(`${command}\n`));
   } catch (ex) {
