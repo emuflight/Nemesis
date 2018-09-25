@@ -42,7 +42,11 @@ module.exports = {
     });
   },
   flashDFU: (fileBuffer, notify) => {
-    let filePath = `${path.join(__dirname, "../firmware/cache/temp.bin")}`;
+    let isProd = __dirname.indexOf("app.asar") > -1;
+    let relative = isProd ? "../../../.." : "../../..";
+    let dfuPath = `${relative}/public/server/utils/dfu/`;
+
+    let filePath = `${path.join(__dirname, dfuPath, "temp.bin")}`;
     fs.writeFileSync(filePath, fileBuffer);
     var fileStats = fs.statSync(filePath);
     notify(`File size on disk:${fileStats.size}`);
@@ -53,12 +57,10 @@ module.exports = {
     if (platform === "win32") {
       executable += ".exe";
     }
-    let isProd = __dirname.indexOf("app.asar") > -1;
+
     let command = `${path.join(
       __dirname,
-      isProd
-        ? "../../../../public/server/utils/dfu"
-        : "../../../public/server/utils/dfu",
+      dfuPath,
       platform,
       os.arch(),
       executable
