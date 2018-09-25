@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import Menu from "material-ui/Menu";
-import MenuItem from "material-ui/MenuItem";
-import Popover from "material-ui/Popover";
-import { FlatButton } from "material-ui";
+import List from "@material-ui/core/List";
+import MenuItem from "@material-ui/core/MenuItem";
+import Popover from "@material-ui/core/Popover";
+import Button from "@material-ui/core/Button";
 
 export default class VersionInfoView extends Component {
   constructor(props) {
@@ -11,6 +11,7 @@ export default class VersionInfoView extends Component {
     this.goToDFU = props.goToDFU;
     this.goToImuf = props.goToImuf;
     this.state = props.version;
+    this.state.open = false;
   }
 
   handleClick = event => {
@@ -30,33 +31,24 @@ export default class VersionInfoView extends Component {
   render() {
     return (
       <MenuItem style={{ display: "flex" }}>
-        <FlatButton
-          fullWidth={true}
-          onClick={this.handleClick}
-          label="Version Info"
-          primary={true}
-        />
+        <Button onClick={this.handleClick}>Version Info</Button>
         <Popover
           open={this.state.open}
           anchorEl={this.state.anchorEl}
           anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
-          targetOrigin={{ horizontal: "left", vertical: "top" }}
-          onRequestClose={this.handleRequestClose}
         >
-          <Menu>
-            <MenuItem primaryText={"Firmware: " + this.state.fw} />
-            <MenuItem primaryText={"Target: " + this.state.target} />
-            <MenuItem
-              onClick={() => this.goToDFU()}
-              primaryText={"Version: " + this.state.version}
-            />
+          <List>
+            <MenuItem>{"Firmware: " + this.state.fw}</MenuItem>
+            <MenuItem>{"Target: " + this.state.target}</MenuItem>
+            <MenuItem onClick={() => this.goToDFU()}>
+              {"Version: " + this.state.version}
+            </MenuItem>
             {this.state.imuf && (
-              <MenuItem
-                onClick={() => this.goToImuf()}
-                primaryText={"IMU-F Version: " + this.state.imuf}
-              />
+              <MenuItem onClick={() => this.goToImuf()}>
+                {"IMU-F Version: " + this.state.imuf}
+              </MenuItem>
             )}
-          </Menu>
+          </List>
         </Popover>
       </MenuItem>
     );

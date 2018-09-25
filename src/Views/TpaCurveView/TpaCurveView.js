@@ -1,10 +1,8 @@
 import React, { Component } from "react";
-// import Slider from "material-ui/Slider";
-// import TextField from "material-ui/TextField";
-// import FCConnector from "../../utilities/FCConnector";
 import TpaCurveItemView from "./TpaCurveItemView";
 import FCConnector from "../../utilities/FCConnector";
-import RaisedButton from "material-ui/RaisedButton/RaisedButton";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
 
 const formatCurveItems = array => {
   return array.map((item, i) => {
@@ -53,70 +51,77 @@ export default class TpaCurveView extends Component {
     );
   }
   render() {
-    if (!this.state.showCurves) {
-      return (
+    return (
+      <div>
         <div>
-          <RaisedButton
+          <Button
             onClick={() => {
-              this.setState({ showCurves: true });
+              this.setState({ showCurves: !this.state.showCurves });
             }}
-            primary={true}
+            color="primary"
           >
-            Show TPA
-          </RaisedButton>
+            {`${this.state.showCurves ? "Hide" : "Show"} TPA`}
+          </Button>
         </div>
-      );
-    } else {
-      return (
-        <div>
-          <div>
-            <RaisedButton
-              onClick={() => {
-                this.setState({ showCurves: false });
-              }}
-              primary={true}
-            >
-              Hide TPA
-            </RaisedButton>
+        {this.state.showCurves && (
+          <div
+            style={{
+              margin: "0 auto",
+              width: "720px",
+              display: "flex",
+              flexDirection: "column"
+            }}
+          >
+            <Typography variant="headline">TPA Curves</Typography>
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <Typography>KP</Typography>
+
+              <div style={{ display: "flex" }}>
+                {this.state.kp.map((item, i) => {
+                  return (
+                    <TpaCurveItemView
+                      key={`kp${i}`}
+                      updateCurve={state => this.updateValue("kp", i, state)}
+                      notifyDirty={this.notifyDirty}
+                      item={item}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <Typography>KI</Typography>
+              <div style={{ display: "flex" }}>
+                {this.state.ki.map((item, i) => {
+                  return (
+                    <TpaCurveItemView
+                      key={`ki${i}`}
+                      updateCurve={state => this.updateValue("ki", i, state)}
+                      notifyDirty={this.notifyDirty}
+                      item={item}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <Typography>KD</Typography>
+              <div style={{ display: "flex" }}>
+                {this.state.kd.map((item, i) => {
+                  return (
+                    <TpaCurveItemView
+                      key={`kd${i}`}
+                      updateCurve={state => this.updateValue("kd", i, state)}
+                      notifyDirty={this.notifyDirty}
+                      item={item}
+                    />
+                  );
+                })}
+              </div>
+            </div>
           </div>
-          <div style={{ margin: "0 auto", width: "720px" }}>
-            <h3>TPA Curves</h3>
-            <h5>KP</h5>
-            {this.state.kp.map((item, i) => {
-              return (
-                <TpaCurveItemView
-                  key={`kp${i}`}
-                  updateCurve={state => this.updateValue("kp", i, state)}
-                  notifyDirty={this.notifyDirty}
-                  item={item}
-                />
-              );
-            })}
-            <h5>KI</h5>
-            {this.state.ki.map((item, i) => {
-              return (
-                <TpaCurveItemView
-                  key={`ki${i}`}
-                  updateCurve={state => this.updateValue("ki", i, state)}
-                  notifyDirty={this.notifyDirty}
-                  item={item}
-                />
-              );
-            })}
-            <h5>KD</h5>
-            {this.state.kd.map((item, i) => {
-              return (
-                <TpaCurveItemView
-                  key={`kd${i}`}
-                  updateCurve={state => this.updateValue("kd", i, state)}
-                  notifyDirty={this.notifyDirty}
-                  item={item}
-                />
-              );
-            })}
-          </div>
-        </div>
-      );
-    }
+        )}
+      </div>
+    );
   }
 }

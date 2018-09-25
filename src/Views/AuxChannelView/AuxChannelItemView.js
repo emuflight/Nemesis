@@ -1,11 +1,11 @@
 import auxModeList from "./aux_mode_list.json";
 
 import React, { Component } from "react";
-import SelectField from "material-ui/SelectField";
 import { Slider } from "material-ui-slider";
-import MenuItem from "material-ui/MenuItem";
+import HelperSelect from "../Items/HelperSelect";
 import FCConnector from "../../utilities/FCConnector";
-import RaisedButton from "material-ui/RaisedButton";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
 
 export default class AuxChannelItemView extends Component {
   constructor(props) {
@@ -42,46 +42,28 @@ export default class AuxChannelItemView extends Component {
   render() {
     return (
       <div style={{ display: "flex", flexDirection: "column" }}>
-        <div>
+        <Typography>
           <strong>{"Aux Id: " + (this.state.id + 1)}</strong>
-        </div>
+        </Typography>
         <div style={{ display: "flex" }}>
-          <SelectField
-            name={"mode" + this.state.id}
-            floatingLabelText={"Mode"}
+          <HelperSelect
+            name={"mode " + this.state.id}
+            label={"Mode"}
             value={this.state.mode}
             onChange={(event, key, payload) => {
               this.setState({ mode: payload, isDirty: true });
             }}
-          >
-            {this.modes.map(item => {
-              return (
-                <MenuItem
-                  key={item.value}
-                  primaryText={item.label}
-                  value={item.value}
-                />
-              );
-            })}
-          </SelectField>
-          <SelectField
-            name={"aux" + this.state.id}
-            floatingLabelText={"Aux Channel"}
+            items={this.modes}
+          />
+          <HelperSelect
+            name={"aux " + this.state.id}
+            label={"Aux Channel"}
             value={this.state.channel}
             onChange={(event, key, payload) => {
               this.setState({ channel: payload, isDirty: true });
             }}
-          >
-            {this.channels.map(item => {
-              return (
-                <MenuItem
-                  key={item.value}
-                  primaryText={item.label}
-                  value={item.value}
-                />
-              );
-            })}
-          </SelectField>
+            items={this.channels}
+          />
           {this.state.isDirty && (
             <div
               style={{
@@ -90,17 +72,20 @@ export default class AuxChannelItemView extends Component {
                 flexDirection: "row-reverse"
               }}
             >
-              <RaisedButton
+              <Button
                 name="aux_save"
-                primary={true}
                 onClick={() => this.updateValue()}
-                label="Save Mode"
-              />
+                color="primary"
+              >
+                Save Mode
+              </Button>
             </div>
           )}
         </div>
         <div style={{ display: "flex" }}>
-          <span style={{ margin: "20px", fontFamily: "inherit" }}>900</span>
+          <Typography style={{ margin: "20px", fontFamily: "inherit" }}>
+            900
+          </Typography>
           <Slider
             style={{ flex: "1" }}
             className={"aux" + this.state.id}
@@ -113,7 +98,7 @@ export default class AuxChannelItemView extends Component {
               this.setState({ range, isDirty: true });
             }}
           />
-          <span style={{ margin: "20px" }}>2100</span>
+          <Typography style={{ margin: "20px" }}>2100</Typography>
         </div>
       </div>
     );

@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import CircularProgress from "material-ui/CircularProgress";
-import List from "material-ui/List";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import List from "@material-ui/core/List";
 import FCConnector from "../utilities/FCConnector";
 import TelemetryView from "./TelemetryView";
-import { RaisedButton, TextField } from "material-ui";
+import TextField from "@material-ui/core/TextField";
 
 // const calculatePercentComplete = fcConfig => {};
 export default class InfoBarView extends Component {
@@ -25,10 +25,6 @@ export default class InfoBarView extends Component {
     });
   };
 
-  handleSaveClick = () => {
-    FCConnector.saveConfig();
-  };
-
   get setupPercentLabel() {
     const complete = "complete";
     if (this.state.setupCompleted >= 100) {
@@ -41,18 +37,11 @@ export default class InfoBarView extends Component {
     return (
       <List
         style={{
+          marginLeft: "20px",
           display: "flex",
-          flexDirection: "row-reverse",
           padding: "10px"
         }}
       >
-        <RaisedButton
-          label="Save"
-          style={{ marginLeft: "10px" }}
-          primary={true}
-          disabled={!this.props.isDirty}
-          onClick={() => this.handleSaveClick()}
-        />
         <div style={{ display: "flex", flex: "1", marginBottom: "10px" }}>
           <h4 style={{ position: "relative", margin: "0 10px", top: "15px" }}>
             Connected to:
@@ -61,8 +50,6 @@ export default class InfoBarView extends Component {
             id="craft_name"
             placeholder="A craft has no name..."
             defaultValue={this.props.fcConfig.name}
-            errorText={this.state.namingCraft && "Saving..."}
-            errorStyle={{ color: "rgb(0, 188, 212)" }}
             onBlur={() => this.updateCraftName()}
             onChange={(event, newValue) =>
               this.setState({ craftName: newValue })

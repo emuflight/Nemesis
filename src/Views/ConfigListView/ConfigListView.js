@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import DropdownView from "../Items/DropdownView";
 import SliderView from "../Items/SliderView";
 import InputView from "../Items/InputView";
-import Paper from "material-ui/Paper";
+import Paper from "@material-ui/core/Paper";
+import theme from "../../Themes/Dark";
 
 export default class ConfigListView extends Component {
   constructor(props) {
@@ -13,7 +14,8 @@ export default class ConfigListView extends Component {
   render() {
     return (
       <Paper
-        zDepth={3}
+        theme={theme}
+        elevation={3}
         style={{
           margin: "10px",
           padding: "10px",

@@ -1,13 +1,11 @@
 import React, { Component } from "react";
-import theme from "material-ui/styles/baseThemes/darkBaseTheme";
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import getMuiTheme from "material-ui/styles/getMuiTheme";
-
 import Connected from "./Views/Connected";
 import Disconnected from "./Views/Disconnected";
 import ImufView from "./Views/ImufView";
 import DfuView from "./Views/DfuView";
 import FCConnector from "./utilities/FCConnector";
+import theme from "./Themes/Dark";
+import { MuiThemeProvider } from "@material-ui/core/styles";
 
 class App extends Component {
   constructor(props) {
@@ -62,19 +60,19 @@ class App extends Component {
   render() {
     if (this.state.imuf) {
       return (
-        <MuiThemeProvider muiTheme={getMuiTheme(theme)}>
+        <MuiThemeProvider theme={theme}>
           <ImufView />
         </MuiThemeProvider>
       );
     } else if (this.state.dfu) {
       return (
-        <MuiThemeProvider muiTheme={getMuiTheme(theme)}>
+        <MuiThemeProvider theme={theme}>
           <DfuView />
         </MuiThemeProvider>
       );
     } else if (this.state.connected) {
       return (
-        <MuiThemeProvider muiTheme={getMuiTheme(theme)}>
+        <MuiThemeProvider theme={theme}>
           <Connected
             goToDFU={this.goToDFU}
             goToImuf={this.goToImuf}
@@ -85,7 +83,7 @@ class App extends Component {
       );
     } else {
       return (
-        <MuiThemeProvider muiTheme={getMuiTheme(theme)}>
+        <MuiThemeProvider theme={theme}>
           <Disconnected
             connecting={this.state.connecting}
             device={this.state.deviceInfo}

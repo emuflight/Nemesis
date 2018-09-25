@@ -1,18 +1,21 @@
 import React, { Component } from "react";
-import SelectField from "material-ui/SelectField";
-import MenuItem from "material-ui/MenuItem";
-import RaisedButton from "material-ui/RaisedButton";
-import Paper from "material-ui/Paper";
+import Button from "@material-ui/core/Button";
+import Paper from "@material-ui/core/Paper";
 import FCConnector from "../utilities/FCConnector";
 import CliView from "./CliView/CliView";
 import ReactMarkdown from "react-markdown";
+import HelperSelect from "./Items/HelperSelect";
+import theme from "../Themes/Dark";
+import Typography from "@material-ui/core/Typography";
 
 export default class DfuView extends Component {
   constructor(props) {
     super(props);
     this.title = this.flText = "Select a firmware to flash";
     this.btnLabel = "Update";
-    this.state = {};
+    this.state = {
+      current: ""
+    };
 
     FCConnector.webSockets.addEventListener("message", message => {
       try {
@@ -104,36 +107,48 @@ export default class DfuView extends Component {
           flexDirection: "column",
           position: "relative",
           flex: "1",
-          padding: "10px",
-          minHeight: "100%"
+          padding: "30px 10px 0 10px",
+          minHeight: "100%",
+          boxSizing: "border-box"
         }}
       >
-        <p>{this.title}</p>
-        <SelectField
-          autoWidth={true}
-          floatingLabelText={this.flText}
-          value={this.state.current}
+        <Typography paragraph variant="title">
+          {this.title}
+        </Typography>
+        <HelperSelect
+          label={this.flText}
+          value={this.state.current || "NONE"}
           disabled={this.state.isFlashing}
           onChange={(event, key, payload) => {
             this.setState({ current: payload });
           }}
-        >
-          {this.state.items &&
-            this.state.items.map((fw, index) => {
-              return (
-                <MenuItem key={index} primaryText={fw.name} value={fw.url} />
-              );
-            })}
-        </SelectField>
-        <RaisedButton
+          items={
+            this.state.items &&
+            this.state.items.map(fw => {
+              return {
+                value: fw.url,
+                label: fw.name
+              };
+            })
+          }
+        />
+        <Button
           style={{ margin: "20px" }}
-          primary={true}
+          color="primary"
+          variant="contained"
           onClick={() => this.handleFlash()}
           disabled={this.state.isFlashing}
-          label={this.btnLabel}
-        />
-        <Paper zDepth={3} style={{ margin: "10px", padding: "10px" }}>
-          <ReactMarkdown source={this.state.note} />
+        >
+          {this.btnLabel}
+        </Button>
+        <Paper
+          theme={theme}
+          elevation={3}
+          style={{ margin: "10px", padding: "10px" }}
+        >
+          <Typography>
+            <ReactMarkdown source={this.state.note} classNames={theme} />
+          </Typography>
         </Paper>
         <CliView ref="cliView" />
       </Paper>

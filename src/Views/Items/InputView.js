@@ -1,9 +1,8 @@
-import React from "react";
-import TextField from "material-ui/TextField";
-import { ListItem } from "material-ui/List";
+import React, { Component } from "react";
+import TextField from "@material-ui/core/TextField";
 import FCConnector from "../../utilities/FCConnector";
 
-export default class InputView extends ListItem {
+export default class InputView extends Component {
   constructor(props) {
     super(props);
     this.state = props.item;
@@ -34,10 +33,9 @@ export default class InputView extends ListItem {
     return (
       <TextField
         key={this.state.id}
-        floatingLabelText={this.state.id}
-        defaultValue={this.state.current}
-        errorText={this.state.isDirty && "Saving..."}
-        errorStyle={{ color: "rgb(0, 188, 212)" }}
+        disabled={this.state.isDirty}
+        helperText={this.state.id}
+        value={this.state.current}
         onBlur={() => this.updateValue()}
         onChange={(event, newValue) => {
           this.setState({ newValue });

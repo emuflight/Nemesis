@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import Popover from "material-ui/Popover";
-import MenuItem from "material-ui/MenuItem";
-import Menu from "material-ui/Menu";
-import RaisedButton from "material-ui/RaisedButton";
+import Popover from "@material-ui/core/Popover";
+import MenuItem from "@material-ui/core/MenuItem";
+import Menu from "@material-ui/core/Menu";
+import Button from "@material-ui/core/Button";
 import FCConnector from "../utilities/FCConnector";
 
 export default class TelemetryView extends Component {
@@ -21,6 +21,7 @@ export default class TelemetryView extends Component {
     });
     FCConnector.webSockets.send("startTelemetry");
     this.state = {
+      open: false,
       telemetry: {
         gyro: {
           x: 0,
@@ -59,7 +60,9 @@ export default class TelemetryView extends Component {
   render() {
     return (
       <div style={{ margin: "0 10px" }}>
-        <RaisedButton onClick={this.handleClick} label="Telemetry" />
+        <Button onClick={this.handleClick} color="primary">
+          Telemetry
+        </Button>
         <Popover
           open={this.state.open}
           anchorEl={this.state.anchorEl}

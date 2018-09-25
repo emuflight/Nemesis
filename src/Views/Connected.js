@@ -1,12 +1,11 @@
 import React, { Component } from "react";
-import AppBar from "material-ui/AppBar";
-import Drawer from "material-ui/Drawer";
-import Badge from "material-ui/Badge";
-import MenuItem from "material-ui/MenuItem";
-import Paper from "material-ui/Paper";
-import List from "material-ui/List";
-import Divider from "material-ui/Divider";
-import InfoBarView from "./InfoBarView";
+import Drawer from "@material-ui/core/Drawer";
+import MenuItem from "@material-ui/core/MenuItem";
+import Paper from "@material-ui/core/Paper";
+import List from "@material-ui/core/List";
+import Divider from "@material-ui/core/Divider";
+import Badge from "@material-ui/core/Badge";
+import theme from "../Themes/Dark";
 import VersionInfoView from "./VersionInfoView";
 import AuxChannelView from "./AuxChannelView/AuxChannelView";
 import ConfigListView from "./ConfigListView/ConfigListView";
@@ -16,6 +15,7 @@ import CliView from "./CliView/CliView";
 import FiltersView from "./FiltersView/FiltersView";
 import PidsView from "./PidView/PidView";
 import RatesView from "./RatesView/RatesView";
+import AppBarView from "./AppBarView/AppBarView";
 
 const skipprops = [
   "pid_profile",
@@ -66,6 +66,9 @@ export default class Connected extends Component {
 
   handleDrawerToggle = () => {
     this.setState({ drawerOpen: !this.state.drawerOpen });
+  };
+  handleSearch = () => {
+    //TODO: filter config values based on text.
   };
 
   handleMenuItemClick = event => {
@@ -183,34 +186,34 @@ export default class Connected extends Component {
     }
     return (
       <Paper
+        theme={theme}
+        elevation={3}
         style={{
           display: "flex",
           flexDirection: "column",
           position: "relative",
           flex: "1",
-          padding: "10px",
-          minHeight: "100%"
+          padding: "30px 10px 10px 10px",
+          minHeight: "100%",
+          boxSizing: "border-box"
         }}
       >
-        <InfoBarView
-          notifyDirty={(isDirty, item, newValue) =>
-            this.notifyDirty(isDirty, item, newValue)
-          }
+        <AppBarView
+          position="absolute"
           handleDrawerToggle={this.handleDrawerToggle}
-          fcConfig={this.fcConfig}
-          isDirty={this.state.isDirty}
-        />
-        <AppBar
+          handleSearch={this.handleSearch}
           title={this.state.currentRoute.title}
-          onLeftIconButtonClick={this.handleDrawerToggle}
+          fcConfig={this.fcConfig}
+          notifyDirty={this.notifyDirty}
+          isDirty={this.isDirty}
         />
         <Drawer
-          docked={false}
           open={this.state.drawerOpen}
-          onRequestChange={drawerOpen => {
-            this.setState({ drawerOpen });
+          onClose={() => {
+            this.setState({ drawerOpen: false });
           }}
         >
+          <Divider style={{ marginTop: "30px" }} />
           <VersionInfoView
             goToDFU={this.goToDFU}
             goToImuf={this.goToImuf}

@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import FCConnector from "../../utilities/FCConnector";
-import Toggle from "material-ui/Toggle";
-import { ListItem } from "material-ui";
+import FormGroup from "@material-ui/core/FormGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Switch from "@material-ui/core/Switch";
 
 export default class FeatureItemView extends Component {
   constructor(props) {
@@ -20,17 +21,20 @@ export default class FeatureItemView extends Component {
   };
   render() {
     return (
-      <ListItem>
-        <Toggle
-          id={this.props.item.id}
+      <FormGroup component="fieldset">
+        <FormControlLabel
+          control={
+            <Switch
+              id={this.props.item.id}
+              checked={this.state.checked}
+              onChange={(event, isInputChecked) => {
+                this.handleToggle(isInputChecked);
+              }}
+            />
+          }
           label={this.props.item.id}
-          toggled={this.state.checked}
-          className={this.props.item.id}
-          onToggle={(event, isInputChecked) => {
-            this.handleToggle(isInputChecked);
-          }}
         />
-      </ListItem>
+      </FormGroup>
     );
   }
 }

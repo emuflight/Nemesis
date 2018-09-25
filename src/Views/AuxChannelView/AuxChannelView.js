@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { List } from "material-ui/List";
+import List from "@material-ui/core/List";
 import AuxChannelItemView from "./AuxChannelItemView";
-import Paper from "material-ui/Paper";
+import Paper from "@material-ui/core/Paper";
+import theme from "../../Themes/Dark";
 
 export default class AuxChannelView extends Component {
   constructor(props) {
@@ -20,7 +21,8 @@ export default class AuxChannelView extends Component {
           return (
             <Paper
               key={mode.id}
-              zDepth={3}
+              theme={theme}
+              elevation={3}
               style={{ margin: "10px", padding: "10px" }}
             >
               <AuxChannelItemView notifyDirty={this.notifyDirty} item={mode} />

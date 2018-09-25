@@ -5,11 +5,11 @@ export default class TpaCurveItemView extends SliderView {
     super(props);
     this.notifyDirty = props.notifyDirty;
     this.updateCurve = props.updateCurve;
+    this.parser = parseInt;
     this.state = {
       isDirty: false,
       inputVal: this.props.item.current
     };
-    this.parser = parseInt;
   }
   updateValue(newVal) {
     this.props.item.current = newVal;

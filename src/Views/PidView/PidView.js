@@ -4,7 +4,8 @@ import DropdownView from "../Items/DropdownView";
 import InputView from "../Items/InputView";
 import ConfigListView from "../ConfigListView/ConfigListView";
 import TpaCurveView from "../TpaCurveView/TpaCurveView";
-import Paper from "material-ui/Paper";
+import Paper from "@material-ui/core/Paper";
+import theme from "../../Themes/Dark";
 
 export default class PidsView extends ProfileView {
   updatePidValues = newValue => {
@@ -36,7 +37,11 @@ export default class PidsView extends ProfileView {
   getContent() {
     return (
       <div style={{ display: "flex", flexDirection: "column" }}>
-        <Paper zDepth={3} style={{ margin: "10px", padding: "10px" }}>
+        <Paper
+          theme={theme}
+          elevation={3}
+          style={{ margin: "10px", padding: "10px" }}
+        >
           <DropdownView
             notifyDirty={(isDirty, state, payload) => {
               this.updatePidValues(payload);
@@ -54,7 +59,11 @@ export default class PidsView extends ProfileView {
             item={this.props.fcConfig.buttered_pids}
           />
         </Paper>
-        <Paper zDepth={3} style={{ margin: "10px", padding: "10px" }}>
+        <Paper
+          theme={theme}
+          elevation={3}
+          style={{ margin: "10px", padding: "10px" }}
+        >
           <div style={{ margin: "0 auto", width: "800px" }}>
             <ConfigListView
               notifyDirty={this.notifyDirty}
@@ -62,7 +71,11 @@ export default class PidsView extends ProfileView {
             />
           </div>
         </Paper>
-        <Paper zDepth={3} style={{ margin: "10px", padding: "10px" }}>
+        <Paper
+          theme={theme}
+          elevation={3}
+          style={{ margin: "10px", padding: "10px" }}
+        >
           {!this.props.fcConfig.imuf && (
             <DropdownView
               notifyDirty={this.notifyDirty}
@@ -71,7 +84,11 @@ export default class PidsView extends ProfileView {
           )}
         </Paper>
         {!this.props.fcConfig.imuf && (
-          <Paper zDepth={3} style={{ margin: "10px", padding: "10px" }}>
+          <Paper
+            theme={theme}
+            elevation={3}
+            style={{ margin: "10px", padding: "10px" }}
+          >
             <InputView
               notifyDirty={this.notifyDirty}
               key={this.props.fcConfig.dterm_lowpass_hz.id}
@@ -90,7 +107,11 @@ export default class PidsView extends ProfileView {
           </Paper>
         )}
 
-        <Paper zDepth={3} style={{ margin: "10px", padding: "10px" }}>
+        <Paper
+          theme={theme}
+          elevation={3}
+          style={{ margin: "10px", padding: "10px" }}
+        >
           <DropdownView
             notifyDirty={(isDirty, state, payload) => {
               this.handleTpaChange(payload);

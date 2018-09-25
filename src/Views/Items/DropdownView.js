@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import SelectField from "material-ui/SelectField";
-import MenuItem from "material-ui/MenuItem";
+import HelperSelect from "./HelperSelect";
 import FCConnector from "../../utilities/FCConnector";
 
 export default class DropdownView extends Component {
@@ -12,16 +11,15 @@ export default class DropdownView extends Component {
 
   render() {
     return (
-      <SelectField
+      <HelperSelect
         id={this.state.id}
         className={this.state.id}
         key={this.state.id}
-        floatingLabelText={this.state.id}
+        label={this.state.id}
         value={this.state.current}
         disabled={!!this.state.isDirty}
-        errorText={this.state.isDirty && "Saving..."}
-        errorStyle={{ color: "rgb(0, 188, 212)" }}
-        onChange={(event, key, payload) => {
+        onChange={event => {
+          let payload = event.target.value;
           let isDirty = this.state.current !== payload && !!this.state.current;
           this.notifyDirty(isDirty, this.state, payload);
           this.setState({ current: payload, isDirty: isDirty });
@@ -29,17 +27,8 @@ export default class DropdownView extends Component {
             this.setState({ isDirty: false });
           });
         }}
-      >
-        {this.state.values.map(item => {
-          return (
-            <MenuItem
-              key={item.value}
-              primaryText={item.label}
-              value={item.value}
-            />
-          );
-        })}
-      </SelectField>
+        items={this.state.values}
+      />
     );
   }
 }

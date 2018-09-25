@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { List } from "material-ui/List";
 import PortsItemView from "./PortsItemView";
 import DropdownView from "../Items/DropdownView";
-import Paper from "material-ui/Paper";
+import Paper from "@material-ui/core/Paper";
+import theme from "../../Themes/Dark";
 
 export default class PortsView extends Component {
   constructor(props) {
@@ -27,12 +27,13 @@ export default class PortsView extends Component {
 
   render() {
     return (
-      <List>
+      <div>
         {this.state.ports.map((port, i) => {
           return (
             <Paper
               key={port.id}
-              zDepth={3}
+              theme={theme}
+              elevation={3}
               style={{ margin: "10px", padding: "10px", display: "flex" }}
             >
               <PortsItemView
@@ -50,7 +51,7 @@ export default class PortsView extends Component {
             </Paper>
           );
         })}
-      </List>
+      </div>
     );
   }
 }
