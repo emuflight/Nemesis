@@ -57,7 +57,7 @@ const sendCommand = (path, command, cb, ecb, waitMs = 200) => {
       }
       timeout && clearTimeout(timeout);
       timeout = setTimeout(() => {
-        cb(ret.slice(0, ret.indexOf("\n\0")));
+        cb(ret.slice(0, ret.indexOf("\n\0")).replace(/\u0001|\u0000/gim, ""));
         device.close();
       }, waitMs);
     });
