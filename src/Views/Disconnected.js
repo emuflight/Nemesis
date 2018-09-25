@@ -32,6 +32,7 @@ export default class Disconnected extends React.Component {
               alt="Helio RC, LLL"
               src="/android-chrome-192x192.png"
               style={{ width: 60, height: 60 }}
+              onClick={() => localStorage.clear()}
             />
             <Typography style={{ marginBottom: 12 }} color="textSecondary">
               Pegasus multi-firmware UI

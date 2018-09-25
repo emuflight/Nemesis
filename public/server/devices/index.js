@@ -53,9 +53,12 @@ module.exports = {
     if (platform === "win32") {
       executable += ".exe";
     }
+    let isProd = __dirname.indexOf("app.asar") > -1;
     let command = `${path.join(
       __dirname,
-      "../utils/dfu",
+      isProd
+        ? "../../../../public/server/utils/dfu"
+        : "../../../public/server/utils/dfu",
       platform,
       os.arch(),
       executable

@@ -10,6 +10,7 @@
   "nodeGypRebuild": false,
   "npmRebuild": false,
   "build": {
+    "extraResources": "public/server/utils/dfu/**/*",
     "appId": "com.pegasus",
     "files": [
       "build/**/*",
