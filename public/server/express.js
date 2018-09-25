@@ -82,7 +82,7 @@ app.get("/flash/:binUrl", (req, res) => {
       websockets.clients.forEach(client =>
         client.sendUTF(
           JSON.stringify({
-            progress: data
+            progress: data + "\n"
           })
         )
       );

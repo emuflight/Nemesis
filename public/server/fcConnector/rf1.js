@@ -17,12 +17,21 @@ const getConfig = (path, cb, ecb) => {
   const sendCB = () => {
     setTimeout(() => {
       device.close();
-      ret = ret.replace(/\u0001|\u0000|\n/gim, "");
-      ret = ret.slice(0, ret.indexOf("}}") + 2);
-      ret = JSON.parse(ret);
-      ret.version = "RACEFLIGHT|HELIO_SPRING|HESP|392";
-      ret.imuf = "108";
-      cb(ret);
+      try {
+        let data = ret.replace(/\u0001|\u0000|\n/gim, "");
+        data = data.slice(0, ret.indexOf("}}") + 2);
+        data = JSON.parse(data);
+        data.version = "RACEFLIGHT|HELIO_SPRING|HESP|392";
+        data.imuf = "108";
+        cb(data);
+      } catch (ex) {
+        console.log(ex);
+        cb({
+          version: "RACEFLIGHT|HELIO_SPRING|HESP|392",
+          error: ret,
+          incompatible: true
+        });
+      }
     }, 1000);
   };
   device.on("data", function(data) {
@@ -36,21 +45,28 @@ const getConfig = (path, cb, ecb) => {
   device.write(sendBytes);
 };
 
-const sendCommand = (path, command, cb, ecb) => {
+const sendCommand = (path, command, cb, ecb, waitMs = 200) => {
   try {
     var device = new HID.HID(path);
-    let sendBytes = strToBytes(`${command}\n`);
+    let ret = "";
+    let timeout;
     device.on("data", data => {
-      device.close();
-      console.log("HID DATA:", data);
-      cb(data);
+      ret += data.toString("utf8");
+      if (ret.indexOf("\n\0") === -1) {
+        device.write(strToBytes("more\n"));
+      }
+      timeout && clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        cb(ret.slice(0, ret.indexOf("\n\0")));
+        device.close();
+      }, waitMs);
     });
     device.on("error", error => {
       device.close();
       console.log("HID ERROR:", error);
       ecb(error);
     });
-    device.write(sendBytes);
+    device.write(strToBytes(`${command}\n`));
   } catch (ex) {
     device.close();
     console.log("HID EXCEPTON:", ex);
@@ -59,7 +75,7 @@ const sendCommand = (path, command, cb, ecb) => {
 };
 
 const updateIMUF = (comName, binName, notify, cb, ecb) => {
-  cb();
+  ecb("not implemented");
 };
 
 const setValue = (comName, name, newVal, cb, ecb) => {
