@@ -46,13 +46,20 @@ app.get("/send/:command", (req, res) => {
     if (connectedDevice) {
       let command = req.params.command;
       console.log(command);
-      fcConnector.sendCommand(connectedDevice, command, output => {
-        if (output) {
-          res.json(output);
-        } else {
-          res.sendStatus(202);
+      fcConnector.sendCommand(
+        connectedDevice,
+        command,
+        output => {
+          if (output) {
+            res.json(output);
+          } else {
+            res.sendStatus(202);
+          }
+        },
+        err => {
+          res.status(400).send(err);
         }
-      });
+      );
     } else {
       res.sendStatus(404);
     }
@@ -69,6 +76,9 @@ app.get("/set/:name/:value", (req, res) => {
         config => {
           connectedDevice.config = config;
           res.json(connectedDevice);
+        },
+        err => {
+          res.status(400).send(err);
         }
       );
     } else {

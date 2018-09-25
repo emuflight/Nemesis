@@ -50,11 +50,13 @@ class App extends Component {
         incompatible: device.incompatible
       });
       return device.config;
-    });
+    }).catch(()=> this.setState({connecting: false}));
   };
 
   componentDidMount() {
-    this.getFcConfig();
+    if (!this.state.connecting) {
+      this.getFcConfig();
+    }
   }
 
   render() {

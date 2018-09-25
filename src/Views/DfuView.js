@@ -17,17 +17,19 @@ export default class DfuView extends Component {
       current: "",
       progress: ""
     };
-
+    let isProgressStarted = false;
     FCConnector.webSockets.addEventListener("message", message => {
       try {
         let notification = JSON.parse(message.data);
         if (notification.progress) {
-          if (notification.progress.indexOf("Download        [") > -1) {
+          let haspercent = notification.progress.indexOf("%") > -1;
+          if (isProgressStarted && haspercent) {
             this.refs.cliView.replaceLine(
-              /Download\s+\[.+/gim,
+              /Download\s+\[.+\n/gim,
               notification.progress
             );
           } else {
+            isProgressStarted = haspercent;
             this.refs.cliView.appendCliBuffer(notification.progress || "");
           }
         }

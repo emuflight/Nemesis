@@ -58,9 +58,16 @@ export default class CliView extends Component {
       e.stopPropagation();
       e.target.value = "";
       this.setState({ isDirty: true });
-      FCConnector.sendCliCommand(this.state.command).then(resp =>
-        this.appendCliBuffer(resp)
-      );
+      FCConnector.sendCliCommand(this.state.command)
+        .catch(err => {
+          console.log(err);
+          return { error: err };
+        })
+        .then(resp => {
+          if (typeof resp === "string") {
+            this.appendCliBuffer(resp);
+          }
+        });
     }
   };
   render() {
