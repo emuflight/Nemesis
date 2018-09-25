@@ -73,7 +73,7 @@ export default class Connected extends Component {
 
   handleMenuItemClick = event => {
     let newRoute = this.routes.find(
-      route => route.key === event.currentTarget.id
+      route => route.key === event.target.textContent
     );
     this.setState({
       drawerOpen: false,
@@ -90,100 +90,116 @@ export default class Connected extends Component {
   };
   render() {
     let contents;
-    switch (this.state.currentRoute.key) {
-      case "PID": {
-        let mergedProfile = Object.assign(
-          {},
-          this.fcConfig,
-          this.fcConfig.pid_profile.values[this.state.pid_profile]
-        );
-        contents = (
-          <PidsView
-            fcConfig={this.fcConfig}
-            notifyDirty={(isDirty, item, newValue) =>
-              this.notifyDirty(isDirty, item, newValue)
-            }
-            id={"pid_profile"}
-            active={this.state.pid_profile}
-            profileList={this.fcConfig.pidProfileList}
-            items={getRouteItems(this.state.currentRoute.key, mergedProfile)}
-          />
-        );
-        break;
+    if (this.props.device.hid) {
+      let routeItems = getRouteItems(
+        this.state.currentRoute.key,
+        this.fcConfig
+      );
+      contents = (
+        <ConfigListView
+          notifyDirty={(isDirty, item, newValue) =>
+            this.notifyDirty(isDirty, item, newValue)
+          }
+          items={routeItems}
+        />
+      );
+    } else {
+      switch (this.state.currentRoute.key) {
+        case "PID": {
+          let mergedProfile = Object.assign(
+            {},
+            this.fcConfig,
+            this.fcConfig.pid_profile.values[this.state.pid_profile]
+          );
+          contents = (
+            <PidsView
+              fcConfig={this.fcConfig}
+              notifyDirty={(isDirty, item, newValue) =>
+                this.notifyDirty(isDirty, item, newValue)
+              }
+              id={"pid_profile"}
+              active={this.state.pid_profile}
+              profileList={this.fcConfig.pidProfileList}
+              items={getRouteItems(this.state.currentRoute.key, mergedProfile)}
+            />
+          );
+          break;
+        }
+        case "RATES": {
+          let mergedProfile = Object.assign(
+            {},
+            this.fcConfig,
+            this.fcConfig.rate_profile.values[this.state.rate_profile]
+          );
+          contents = (
+            <RatesView
+              fcConfig={this.fcConfig}
+              notifyDirty={(isDirty, item, newValue) =>
+                this.notifyDirty(isDirty, item, newValue)
+              }
+              id={"rate_profile"}
+              active={this.state.rate_profile}
+              profileList={this.fcConfig.rateProfileList}
+              items={getRouteItems(this.state.currentRoute.key, mergedProfile)}
+            />
+          );
+          break;
+        }
+        case "MODES":
+          contents = (
+            <AuxChannelView
+              modes={this.fcConfig.modes.values}
+              notifyDirty={(isDirty, item, newValue) =>
+                this.notifyDirty(isDirty, item, newValue)
+              }
+            />
+          );
+          break;
+        case "PORTS":
+          contents = (
+            <PortsView
+              rxProvider={this.fcConfig.serialrx_provider}
+              ports={this.fcConfig.ports.values}
+              notifyDirty={(isDirty, item, newValue) =>
+                this.notifyDirty(isDirty, item, newValue)
+              }
+            />
+          );
+          break;
+        case "FEATURES":
+          contents = (
+            <FeaturesView
+              features={this.fcConfig.features.values}
+              notifyDirty={(isDirty, item, newValue) =>
+                this.notifyDirty(isDirty, item, newValue)
+              }
+            />
+          );
+          break;
+        case "FILTERS":
+          contents = (
+            <FiltersView
+              fcConfig={this.fcConfig}
+              features={this.fcConfig.features.values}
+              notifyDirty={(isDirty, item, newValue) =>
+                this.notifyDirty(isDirty, item, newValue)
+              }
+            />
+          );
+          break;
+        default:
+          contents = (
+            <ConfigListView
+              notifyDirty={(isDirty, item, newValue) =>
+                this.notifyDirty(isDirty, item, newValue)
+              }
+              items={getRouteItems(this.state.currentRoute.key, this.fcConfig)}
+            />
+          );
+          break;
       }
-      case "RATES": {
-        let mergedProfile = Object.assign(
-          {},
-          this.fcConfig,
-          this.fcConfig.rate_profile.values[this.state.rate_profile]
-        );
-        contents = (
-          <RatesView
-            fcConfig={this.fcConfig}
-            notifyDirty={(isDirty, item, newValue) =>
-              this.notifyDirty(isDirty, item, newValue)
-            }
-            id={"rate_profile"}
-            active={this.state.rate_profile}
-            profileList={this.fcConfig.rateProfileList}
-            items={getRouteItems(this.state.currentRoute.key, mergedProfile)}
-          />
-        );
-        break;
-      }
-      case "MODES":
-        contents = (
-          <AuxChannelView
-            modes={this.fcConfig.modes.values}
-            notifyDirty={(isDirty, item, newValue) =>
-              this.notifyDirty(isDirty, item, newValue)
-            }
-          />
-        );
-        break;
-      case "PORTS":
-        contents = (
-          <PortsView
-            rxProvider={this.fcConfig.serialrx_provider}
-            ports={this.fcConfig.ports.values}
-            notifyDirty={(isDirty, item, newValue) =>
-              this.notifyDirty(isDirty, item, newValue)
-            }
-          />
-        );
-        break;
-      case "FEATURES":
-        contents = (
-          <FeaturesView
-            features={this.fcConfig.features.values}
-            notifyDirty={(isDirty, item, newValue) =>
-              this.notifyDirty(isDirty, item, newValue)
-            }
-          />
-        );
-        break;
-      case "FILTERS":
-        contents = (
-          <FiltersView
-            fcConfig={this.fcConfig}
-            features={this.fcConfig.features.values}
-            notifyDirty={(isDirty, item, newValue) =>
-              this.notifyDirty(isDirty, item, newValue)
-            }
-          />
-        );
-        break;
-      default:
-        contents = (
-          <ConfigListView
-            notifyDirty={(isDirty, item, newValue) =>
-              this.notifyDirty(isDirty, item, newValue)
-            }
-            items={getRouteItems(this.state.currentRoute.key, this.fcConfig)}
-          />
-        );
-        break;
     }
+
     return (
       <Paper
         theme={theme}

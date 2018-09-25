@@ -81,6 +81,7 @@ class App extends Component {
             goToDFU={this.goToDFU}
             goToImuf={this.goToImuf}
             connectinId={this.state.id}
+            device={this.state.deviceInfo}
             fcConfig={this.state.currentConfig}
           />
         </MuiThemeProvider>

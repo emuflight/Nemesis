@@ -21,8 +21,8 @@ const getConfig = (device, cb, ecb) => {
         ret = ret
           .slice(0, ret.indexOf("\n\0"))
           .replace(/\u0001|\u0000|\n/gim, "");
-        let data = ret.slice(1, ret.indexOf("}}") + 2);
-        data = JSON.parse(data);
+        // let data = ret.slice(0, ret.indexOf("}}") + 2);
+        let data = JSON.parse(ret);
         data.version = "RACEFLIGHT|HELIO_SPRING|HESP|392";
         data.imuf = "108";
         cb(data);

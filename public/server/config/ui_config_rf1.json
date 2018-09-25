@@ -13,8 +13,8 @@
     "ADVANCED"
   ],
   "groups": {
-    "OSD": [],
-    "BLACKBOX": [],
+    "OSD": ["osd"],
+    "BLACKBOX": ["blackbox"],
     "PID": [
       "yaw_wc1",
       "roll_wc1",
@@ -316,168 +316,9 @@
     ],
     "ADVANCED": ["advanced"]
   },
-  "elements": {
-    "p_roll": {
-      "type": "slider",
-      "step": 1,
-      "parse": "int",
-      "axis": "y"
-    },
-    "i_roll": {
-      "type": "slider",
-      "step": 1,
-      "parse": "int",
-      "axis": "y"
-    },
-    "d_roll": {
-      "type": "slider",
-      "step": 1,
-      "parse": "int",
-      "axis": "y"
-    },
-    "p_pitch": {
-      "type": "slider",
-      "step": 1,
-      "parse": "int",
-      "axis": "y"
-    },
-    "i_pitch": {
-      "type": "slider",
-      "step": 1,
-      "parse": "int",
-      "axis": "y"
-    },
-    "d_pitch": {
-      "type": "slider",
-      "step": 1,
-      "parse": "int",
-      "axis": "y"
-    },
-    "p_yaw": {
-      "type": "slider",
-      "step": 1,
-      "parse": "int",
-      "axis": "y"
-    },
-    "i_yaw": {
-      "type": "slider",
-      "step": 1,
-      "parse": "int",
-      "axis": "y"
-    },
-    "d_yaw": {
-      "type": "slider",
-      "step": 1,
-      "parse": "int",
-      "axis": "y"
-    },
-    "pid_profile": {
-      "type": "LOOKUP",
-      "values": [
-        {
-          "value": "0",
-          "label": "Profile 1"
-        },
-        {
-          "value": "1",
-          "label": "Profile 2"
-        },
-        {
-          "value": "2",
-          "label": "Profile 3"
-        }
-      ]
-    },
-    "gyro_sync_denom": {
-      "type": "LOOKUP",
-      "values": [
-        {
-          "value": "1",
-          "label": "32khz"
-        },
-        {
-          "value": "2",
-          "label": "16khz"
-        },
-        {
-          "value": "4",
-          "label": "8khz"
-        },
-        {
-          "value": "8",
-          "label": "4khz"
-        },
-        {
-          "value": "16",
-          "label": "2khz"
-        },
-        {
-          "value": "32",
-          "label": "1khz"
-        }
-      ]
-    },
-    "blackbox_p_ratio": {
-      "type": "LOOKUP",
-      "values": [
-        {
-          "value": "1",
-          "label": "32khz"
-        },
-        {
-          "value": "2",
-          "label": "16khz"
-        },
-        {
-          "value": "4",
-          "label": "8khz"
-        },
-        {
-          "value": "8",
-          "label": "4khz"
-        },
-        {
-          "value": "16",
-          "label": "2khz"
-        },
-        {
-          "value": "32",
-          "label": "1khz"
-        }
-      ]
-    },
-    "pid_process_denom": {
-      "type": "PidDenomView",
-      "values": [
-        {
-          "value": "1",
-          "label": "32khz"
-        },
-        {
-          "value": "2",
-          "label": "16khz"
-        },
-        {
-          "value": "4",
-          "label": "8khz"
-        },
-        {
-          "value": "8",
-          "label": "4khz"
-        },
-        {
-          "value": "16",
-          "label": "2khz"
-        },
-        {
-          "value": "32",
-          "label": "1khz"
-        }
-      ]
-    }
-  },
+  "elements": {},
   "keymap": {
-    "gyro_lpf": "gyro_hardware_lpf",
+    "yaw_kd_rap": "dterm_lowpass_hz",
     "dterm_lowpass_type": "dterm_lowpass_hz_type",
     "dterm_lowpass": "dterm_lowpass_hz"
   }

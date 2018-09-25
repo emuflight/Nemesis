@@ -1,8 +1,8 @@
 const bxfConnector = require("./bxf");
 const rf1Connector = require("./rf1");
 const websockets = require("../websockets");
-const utils = require("../utils/utils.js");
 const BxfUiConfig = require("../config/ui_config_bef.json");
+const rf1UiConfig = require("../config/ui_config_rf1.json");
 
 const skipprops = [
   "pid_profile",
@@ -12,6 +12,19 @@ const skipprops = [
   "ports",
   "tpa_curves"
 ];
+const createMockObj = (id, val) => {
+  return {
+    id: id,
+    current: 0,
+    mode: "DIRECT",
+    values: [
+      { name: id + 0, value: 0 },
+      { name: id + 1, value: 1 },
+      { name: id + 2, value: 2 }
+    ]
+  };
+};
+
 const formatConfig = (conf, uiConf) => {
   Object.keys(conf).forEach(key => {
     if (skipprops.indexOf(key) > -1) return;
@@ -41,74 +54,90 @@ const formatConfig = (conf, uiConf) => {
 const applyUIConfig = (device, config, uiConfig) => {
   formatConfig(config, uiConfig);
 
-  config.pidProfileList = config.pid_profile.values.map((v, k) => {
-    formatConfig(v, uiConfig);
-    return {
-      label: `Profile ${k + 1}`,
-      value: k
-    };
-  });
-  config.rateProfileList = config.rate_profile.values.map((v, k) => {
-    formatConfig(v, uiConfig);
-    return {
-      label: `Profile ${k + 1}`,
-      value: k
-    };
-  });
-  config.modes.values = config.modes.values.map((mode, i) => {
-    let parts = mode.split("|");
-
-    let id = i,
-      auxId = parseInt(parts[0], 10) || i,
-      auxMode = parseInt(parts[1], 10),
-      channel = parseInt(parts[2], 10),
-      start = parseInt(parts[3], 10),
-      end = parseInt(parts[4], 10);
-    channel =
-      auxMode === 0 && channel === 0 && start === 900 && end === 900
-        ? -1
-        : channel;
-    auxMode =
-      auxMode === 0 &&
-      (channel === 0 || channel === -1) &&
-      start === 900 &&
-      end === 900
-        ? -1
-        : auxMode;
-    return {
-      id: id,
-      auxId: auxId,
-      mode: auxMode,
-      channel: channel,
-      range: [start, end]
-    };
-  });
-  config.features.values = config.features.values.map(feature => {
-    let current = true,
-      key = feature;
-    if (feature.startsWith("-")) {
-      current = false;
-      key = key.slice(1);
-    }
-    return {
-      id: key,
-      current: current
-    };
-  });
-
-  config.ports.values = config.ports.values.map(port => {
-    let parts = port.split("|");
-    return {
-      id: parts[0],
-      mode: parts[1],
-      mspBaud: parts[2],
-      gpsBaud: parts[3],
-      telemBaud: parts[4],
-      bblBaud: parts[5]
-    };
-  });
+  if (config.pid_profile) {
+    config.pidProfileList = config.pid_profile.values.map((v, k) => {
+      formatConfig(v, uiConfig);
+      return {
+        label: `Profile ${k + 1}`,
+        value: k
+      };
+    });
+  } else {
+    config.pid_profile = createMockObj("pid_profile");
+  }
   config.currentPidProfile = parseInt(config.pid_profile.current, 10);
+
+  if (config.rate_profile) {
+    config.rateProfileList = config.rate_profile.values.map((v, k) => {
+      formatConfig(v, uiConfig);
+      return {
+        label: `Profile ${k + 1}`,
+        value: k
+      };
+    });
+  } else {
+    config.rate_profile = createMockObj("rate_profile");
+  }
   config.currentRateProfile = parseInt(config.rate_profile.current, 10);
+  if (config.modes) {
+    config.modes.values = config.modes.values.map((mode, i) => {
+      let parts = mode.split("|");
+
+      let id = i,
+        auxId = parseInt(parts[0], 10) || i,
+        auxMode = parseInt(parts[1], 10),
+        channel = parseInt(parts[2], 10),
+        start = parseInt(parts[3], 10),
+        end = parseInt(parts[4], 10);
+      channel =
+        auxMode === 0 && channel === 0 && start === 900 && end === 900
+          ? -1
+          : channel;
+      auxMode =
+        auxMode === 0 &&
+        (channel === 0 || channel === -1) &&
+        start === 900 &&
+        end === 900
+          ? -1
+          : auxMode;
+      return {
+        id: id,
+        auxId: auxId,
+        mode: auxMode,
+        channel: channel,
+        range: [start, end]
+      };
+    });
+  }
+  if (config.features) {
+    config.features.values = config.features.values.map(feature => {
+      let current = true,
+        key = feature;
+      if (feature.startsWith("-")) {
+        current = false;
+        key = key.slice(1);
+      }
+      return {
+        id: key,
+        current: current
+      };
+    });
+  }
+
+  if (config.ports) {
+    config.ports.values.map(port => {
+      let parts = port.split("|");
+      return {
+        id: parts[0],
+        mode: parts[1],
+        mspBaud: parts[2],
+        gpsBaud: parts[3],
+        telemBaud: parts[4],
+        bblBaud: parts[5]
+      };
+    });
+  }
+
   config.routes = uiConfig.routes.map(route => {
     return {
       key: route,
@@ -131,7 +160,13 @@ const applyUIConfig = (device, config, uiConfig) => {
 module.exports = {
   getConfig(deviceInfo, cb, ecb) {
     if (deviceInfo.hid) {
-      return rf1Connector.getConfig(deviceInfo, cb, ecb);
+      return rf1Connector.getConfig(
+        deviceInfo,
+        config => {
+          cb(applyUIConfig(deviceInfo, config, rf1UiConfig));
+        },
+        ecb
+      );
     } else {
       return bxfConnector.getConfig(
         deviceInfo,
@@ -170,7 +205,7 @@ module.exports = {
   updateIMUF(deviceInfo, binUrl, cb, ecb) {
     if (deviceInfo.hid) {
       return rf1Connector.updateIMUF(
-        deviceInfo.path,
+        deviceInfo,
         binUrl,
         data => {
           websockets.clients.forEach(client =>

@@ -24,13 +24,13 @@ export default class ConfigListView extends Component {
         }}
       >
         {this.props.items &&
-          this.props.items.map((item, i) => {
+          this.props.items.map(item => {
             switch (item.mode) {
               case "slider":
                 return (
                   <SliderView
                     notifyDirty={this.notifyDirty}
-                    key={i}
+                    key={item.id}
                     item={item}
                     inputVal={item.current}
                   />
@@ -47,7 +47,7 @@ export default class ConfigListView extends Component {
                 return (
                   <DropdownView
                     notifyDirty={this.notifyDirty}
-                    key={i}
+                    key={item.id}
                     item={item}
                   />
                 );
@@ -55,7 +55,7 @@ export default class ConfigListView extends Component {
                 return (
                   <InputView
                     notifyDirty={this.notifyDirty}
-                    key={i}
+                    key={item.id}
                     item={item}
                   />
                 );
