@@ -131,7 +131,7 @@ const applyUIConfig = (device, config, uiConfig) => {
 module.exports = {
   getConfig(deviceInfo, cb, ecb) {
     if (deviceInfo.hid) {
-      return rf1Connector.getConfig(deviceInfo.path, cb, ecb);
+      return rf1Connector.getConfig(deviceInfo, cb, ecb);
     } else {
       return bxfConnector.getConfig(
         deviceInfo,
@@ -148,21 +148,21 @@ module.exports = {
   },
   setValue(deviceInfo, key, value, cb, ecb) {
     if (deviceInfo.hid) {
-      return rf1Connector.setValue(deviceInfo.path, key, value, cb, ecb);
+      return rf1Connector.setValue(deviceInfo, key, value, cb, ecb);
     } else {
       return bxfConnector.setValue(deviceInfo, key, value, cb, ecb);
     }
   },
   sendCommand(deviceInfo, command, cb, ecb) {
     if (deviceInfo.hid) {
-      return rf1Connector.sendCommand(deviceInfo.path, command, cb, ecb);
+      return rf1Connector.sendCommand(deviceInfo, command, cb, ecb);
     } else {
       return bxfConnector.sendCommand(deviceInfo, command, cb, ecb);
     }
   },
   getTelemetry(deviceInfo, cb, ecb) {
     if (deviceInfo.hid) {
-      return rf1Connector.getTelemetry(deviceInfo.path, cb, ecb);
+      return rf1Connector.getTelemetry(deviceInfo, cb, ecb);
     } else {
       return bxfConnector.getTelemetry(deviceInfo, cb, ecb);
     }

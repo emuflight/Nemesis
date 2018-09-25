@@ -44,20 +44,40 @@ module.exports = {
   flashDFU: (fileBuffer, notify) => {
     let filePath = `${path.join(__dirname, "../firmware/cache/temp.bin")}`;
     fs.writeFileSync(filePath, fileBuffer);
+    var fileStats = fs.statSync(filePath);
+    notify(`File size on disk:${fileStats.size}`);
+
     // let buffer = fs.readFileSync(filePath);
+    let platform = os.platform();
+    let executable = "dfu-util";
+    if (platform === "win32") {
+      executable += ".exe";
+    }
     let command = `${path.join(
       __dirname,
       "../utils/dfu",
-      os.platform(),
-      os.arch()
-    )}/dfu-util`;
+      platform,
+      os.arch(),
+      executable
+    )}`;
 
-    child_process
-      .spawn(command, ["-a", "0", "-s", "0x08000000:leave", "-D", filePath])
-      .stdout.on("data", data => {
-        output = data.toString("utf8");
-        console.log(output);
-        notify(output);
-      });
+    let dfuProcess = child_process.spawn(command, [
+      "-a",
+      "0",
+      "-s",
+      "0x08000000:mass-erase:force:leave",
+      "-D",
+      filePath
+    ]);
+    dfuProcess.stdout.on("data", data => {
+      output = data.toString("utf8");
+      console.log(output);
+      notify(output);
+    });
+    dfuProcess.stderr.on("data", data => {
+      output = data.toString("utf8");
+      console.log(output);
+      notify(output);
+    });
   }
 };

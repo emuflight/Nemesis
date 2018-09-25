@@ -29,7 +29,14 @@ export default class CliView extends Component {
       open: openState
     });
   }
-  setCliBuffer(resp) {
+  replaceLine(lineRegex, update) {
+    this.setState({
+      isDirty: false,
+      cliBuffer: this.state.cliBuffer.replace(lineRegex, update)
+    });
+    this.refs.cliScroll.scrollTop = this.refs.cliScroll.scrollHeight;
+  }
+  appendCliBuffer(resp) {
     this.setState({ isDirty: false, cliBuffer: this.state.cliBuffer + resp });
     this.refs.cliScroll.scrollTop = this.refs.cliScroll.scrollHeight;
   }
@@ -52,7 +59,7 @@ export default class CliView extends Component {
       e.target.value = "";
       this.setState({ isDirty: true });
       FCConnector.sendCliCommand(this.state.command).then(resp =>
-        this.setCliBuffer(resp)
+        this.appendCliBuffer(resp)
       );
     }
   };

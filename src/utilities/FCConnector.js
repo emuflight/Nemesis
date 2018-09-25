@@ -58,7 +58,7 @@ export default new class FCConnector {
     return this.sendCommand("bl");
   }
 
-  flashDFU(binUrl, notifyProgress) {
+  flashDFU(binUrl) {
     return fetch(`${this.serviceUrl}/flash/${encodeURIComponent(binUrl)}`).then(
       response => {
         return response.json();

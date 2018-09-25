@@ -10,16 +10,18 @@ const strToBytes = string => {
   return bytes;
 };
 
-const getConfig = (path, cb, ecb) => {
-  var device = new HID.HID(path);
+const getConfig = (device, cb, ecb) => {
+  var device = new HID.HID(device.path);
   let sendBytes = strToBytes("config\n");
   let ret = "";
   const sendCB = () => {
     setTimeout(() => {
       device.close();
       try {
-        let data = ret.replace(/\u0001|\u0000|\n/gim, "");
-        data = data.slice(0, ret.indexOf("}}") + 2);
+        ret = ret
+          .slice(0, ret.indexOf("\n\0"))
+          .replace(/\u0001|\u0000|\n/gim, "");
+        let data = ret.slice(1, ret.indexOf("}}") + 2);
         data = JSON.parse(data);
         data.version = "RACEFLIGHT|HELIO_SPRING|HESP|392";
         data.imuf = "108";
@@ -45,9 +47,9 @@ const getConfig = (path, cb, ecb) => {
   device.write(sendBytes);
 };
 
-const sendCommand = (path, command, cb, ecb, waitMs = 200) => {
+const sendCommand = (device, command, cb, ecb, waitMs = 200) => {
   try {
-    var device = new HID.HID(path);
+    var device = new HID.HID(device.path);
     let ret = "";
     let timeout;
     device.on("data", data => {
@@ -75,7 +77,7 @@ const sendCommand = (path, command, cb, ecb, waitMs = 200) => {
 };
 
 const updateIMUF = (comName, binName, notify, cb, ecb) => {
-  ecb("not implemented");
+  ecb && ecb("not implemented");
 };
 
 const setValue = (comName, name, newVal, cb, ecb) => {

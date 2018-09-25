@@ -1,5 +1,4 @@
-const request = require("request");
-const devices = require("../devices");
+const request = require("request").defaults({ encoding: null });
 
 module.exports = new class {
   get(cb) {

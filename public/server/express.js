@@ -77,20 +77,18 @@ app.get("/set/:name/:value", (req, res) => {
   });
 });
 app.get("/flash/:binUrl", (req, res) => {
+  websockets.notifyProgress(`Fetching binary from ${req.params.binUrl}...\n`);
   firmware.load(req.params.binUrl, fileBuffer => {
+    //if (parseInt(req.params.binSize, 10) !== fileBuffer.length) {
+    //    websockets.notifyProgress(`Aborted DFU due to file-size mismatch after download...\nExpected: ${req.params.binSize} bytes\nActual: ${fileBuffer.length}bytes...\n`);
+    //} else {
+    websockets.notifyProgress(`Fetched ${fileBuffer.length} bytes...\n`);
+    //}
     if (fileBuffer.error) {
       res.status(404).send(fileBuffer.error);
     } else {
       res.sendStatus(202);
-      devices.flashDFU(fileBuffer, data => {
-        websockets.clients.forEach(client =>
-          client.sendUTF(
-            JSON.stringify({
-              progress: data + "\n"
-            })
-          )
-        );
-      });
+      devices.flashDFU(fileBuffer, websockets.notifyProgress);
     }
   });
 });

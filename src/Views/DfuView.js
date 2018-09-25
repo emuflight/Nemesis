@@ -14,13 +14,23 @@ export default class DfuView extends Component {
     this.title = this.flText = "Select a firmware to flash";
     this.btnLabel = "FLASH";
     this.state = {
-      current: ""
+      current: "",
+      progress: ""
     };
 
     FCConnector.webSockets.addEventListener("message", message => {
       try {
         let notification = JSON.parse(message.data);
-        this.refs.cliView.setCliBuffer(notification.progress);
+        if (notification.progress) {
+          if (notification.progress.indexOf("Download        [") > -1) {
+            this.refs.cliView.replaceLine(
+              /Download\s+\[.+/gim,
+              notification.progress
+            );
+          } else {
+            this.refs.cliView.appendCliBuffer(notification.progress || "");
+          }
+        }
       } catch (ex) {
         console.warn(ex);
       }

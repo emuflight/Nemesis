@@ -70,7 +70,18 @@ wsServer.on("request", request => {
   });
 });
 
+const notifyProgress = data => {
+  clients.forEach(client =>
+    client.sendUTF(
+      JSON.stringify({
+        progress: data + "\n"
+      })
+    )
+  );
+};
+
 module.exports = {
   wsServer: wsServer,
-  clients: clients
+  clients: clients,
+  notifyProgress: notifyProgress
 };
