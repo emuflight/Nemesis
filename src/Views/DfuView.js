@@ -12,7 +12,7 @@ export default class DfuView extends Component {
   constructor(props) {
     super(props);
     this.title = this.flText = "Select a firmware to flash";
-    this.btnLabel = "Update";
+    this.btnLabel = "FLASH";
     this.state = {
       current: ""
     };
@@ -40,18 +40,20 @@ export default class DfuView extends Component {
     return "firmwareReleases";
   }
   get releaseUrl() {
-    return "https://api.github.com/repos/heliorc/imuf-release/contents";
+    return "https://api.github.com/repos/heliorc/imuf_dev_repo/contents";
   }
 
   get releaseNotesUrl() {
-    return "https://github.com/ButterFlight/butterflight/releases";
+    return "https://raw.githubusercontent.com/ButterFlight/butterflight/master/README.md";
   }
 
   setFirmware(data) {
+    debugger;
     let firmwares = data
-      .filter(file => file.name.endsWith(".hex"))
+      .filter(
+        file => file.name.endsWith(".bin") && !file.name.startsWith("IMUF")
+      )
       .map(file => {
-        file.name = file.name.replace("_MSD_1.0.0_IMUF", " IMU-F");
         file.note =
           "Release notes: https://github.com/ButterFlight/butterflight/releases";
         return file;

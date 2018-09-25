@@ -2,6 +2,10 @@ const SerialPort = require("serialport");
 const usb = require("usb");
 const HID = require("node-hid");
 const STM32USBInfo = require("./STM32USB.json");
+const child_process = require("child_process");
+const fs = require("fs");
+const os = require("os");
+const path = require("path");
 
 module.exports = {
   list: cb => {
@@ -37,16 +41,23 @@ module.exports = {
       cb(err, list);
     });
   },
-  flashDFU(buffer) {
-    let DFUDevice = usb
-      .getDeviceList()
-      .filter(
-        device => device.deviceDescriptor.idVendor == STM32USBInfo.vendorId
-      )[0];
-    DFUDevice.open();
-    DFUDevice.interface(0).claim();
+  flashDFU: (fileBuffer, notify) => {
+    let filePath = `${path.join(__dirname, "../firmware/cache/temp.bin")}`;
+    fs.writeFileSync(filePath, fileBuffer);
+    // let buffer = fs.readFileSync(filePath);
+    let command = `${path.join(
+      __dirname,
+      "../utils/dfu",
+      os.platform(),
+      os.arch()
+    )}/dfu-util`;
 
-    //TODO: flash dfu
-    console.log(DFUDevice);
+    child_process
+      .spawn(command, ["-a", "0", "-s", "0x08000000:leave", "-D", filePath])
+      .stdout.on("data", data => {
+        output = data.toString("utf8");
+        console.log(output);
+        notify(output);
+      });
   }
 };

@@ -3,7 +3,7 @@ const devices = require("./devices");
 const fcConnector = require("./fcConnector");
 const firmware = require("./firmware");
 const app = express();
-require("./websockets");
+const websockets = require("./websockets");
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -77,7 +77,17 @@ app.get("/set/:name/:value", (req, res) => {
   });
 });
 app.get("/flash/:binUrl", (req, res) => {
-  firmware.flash(req.params.binUrl);
+  firmware.load(req.params.binUrl, fileBuffer => {
+    devices.flashDFU(fileBuffer, data => {
+      websockets.clients.forEach(client =>
+        client.sendUTF(
+          JSON.stringify({
+            progress: data
+          })
+        )
+      );
+    });
+  });
   res.sendStatus(202);
 });
 
