@@ -48,7 +48,6 @@ export default class DfuView extends Component {
   }
 
   setFirmware(data) {
-    debugger;
     let firmwares = data
       .filter(
         file => file.name.endsWith(".bin") && !file.name.startsWith("IMUF")
