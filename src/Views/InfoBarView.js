@@ -48,6 +48,7 @@ export default class InfoBarView extends Component {
           </h4>
           <TextField
             id="craft_name"
+            style={{ color: "grey" }}
             placeholder="A craft has no name..."
             defaultValue={this.props.fcConfig.name}
             onBlur={() => this.updateCraftName()}

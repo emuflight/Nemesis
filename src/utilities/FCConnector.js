@@ -55,7 +55,7 @@ export default new class FCConnector {
   }
 
   goToDFU() {
-    return this.sendCommand("bl");
+    return fetch(`${this.serviceUrl}/dfu`);
   }
 
   flashDFU(binUrl) {

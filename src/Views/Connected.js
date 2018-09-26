@@ -50,7 +50,6 @@ export default class Connected extends Component {
   constructor(props) {
     super(props);
     this.fcConfig = props.fcConfig;
-    this.goToDFU = props.goToDFU;
     this.goToImuf = props.goToImuf;
 
     this.routes = this.fcConfig.routes;
@@ -231,7 +230,6 @@ export default class Connected extends Component {
         >
           <Divider style={{ marginTop: "30px" }} />
           <VersionInfoView
-            goToDFU={this.goToDFU}
             goToImuf={this.goToImuf}
             version={this.fcConfig.version}
             imuf={this.fcConfig.imuf}

@@ -202,6 +202,13 @@ module.exports = {
       return bxfConnector.getTelemetry(deviceInfo, cb, ecb);
     }
   },
+  rebootDFU(deviceInfo, cb, ecb) {
+    if (deviceInfo.hid) {
+      return rf1Connector.sendCommand(deviceInfo, "rebootDFU", cb, ecb);
+    } else {
+      return bxfConnector.sendCommand(deviceInfo, "bl", cb, ecb);
+    }
+  },
   updateIMUF(deviceInfo, binUrl, cb, ecb) {
     if (deviceInfo.hid) {
       return rf1Connector.updateIMUF(

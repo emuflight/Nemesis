@@ -29,10 +29,6 @@ class App extends Component {
     });
   }
 
-  goToDFU = () => {
-    FCConnector.goToDFU();
-  };
-
   goToImuf = () => {
     this.setState({ imuf: true });
   };
@@ -65,7 +61,7 @@ class App extends Component {
     if (this.state.imuf) {
       return (
         <MuiThemeProvider theme={theme}>
-          <ImufView />
+          <ImufView goBack={()=> this.setState({imuf: false})} />
         </MuiThemeProvider>
       );
     } else if (this.state.dfu) {
@@ -78,7 +74,6 @@ class App extends Component {
       return (
         <MuiThemeProvider theme={theme}>
           <Connected
-            goToDFU={this.goToDFU}
             goToImuf={this.goToImuf}
             connectinId={this.state.id}
             device={this.state.deviceInfo}

@@ -37,6 +37,8 @@ export default class DfuView extends Component {
         console.warn(ex);
       }
     });
+
+    this.goBack = props.goBack;
   }
 
   handleFlash() {
@@ -126,14 +128,22 @@ export default class DfuView extends Component {
           flexDirection: "column",
           position: "relative",
           flex: "1",
-          padding: "30px 10px 0 10px",
+          padding: "30px 10px 10px 10px",
           minHeight: "100%",
           boxSizing: "border-box"
         }}
       >
-        <Typography paragraph variant="title">
-          {this.title}
-        </Typography>
+        <div style={{ display: "flex" }}>
+          <Typography paragraph variant="title">
+            {this.title}
+          </Typography>
+          <div style={{ flexGrow: 1 }} />
+          {this.props.goBack && (
+            <Button color="primary" onClick={this.props.goBack}>
+              Go Back
+            </Button>
+          )}
+        </div>
         <HelperSelect
           label={this.flText}
           value={this.state.current}

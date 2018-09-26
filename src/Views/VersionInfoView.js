@@ -3,15 +3,19 @@ import List from "@material-ui/core/List";
 import MenuItem from "@material-ui/core/MenuItem";
 import Popover from "@material-ui/core/Popover";
 import Button from "@material-ui/core/Button";
+import FCConnector from "../utilities/FCConnector";
 
 export default class VersionInfoView extends Component {
   constructor(props) {
     super(props);
 
-    this.goToDFU = props.goToDFU;
     this.goToImuf = props.goToImuf;
     this.state = props.version;
     this.state.open = false;
+  }
+
+  goToDFU() {
+    FCConnector.goToDFU();
   }
 
   handleClick = event => {
@@ -36,6 +40,7 @@ export default class VersionInfoView extends Component {
           open={this.state.open}
           anchorEl={this.state.anchorEl}
           anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
+          onClose={() => this.setState({ open: false })}
         >
           <List>
             <MenuItem>{"Firmware: " + this.state.fw}</MenuItem>

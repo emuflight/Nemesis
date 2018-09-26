@@ -16,11 +16,6 @@ export default class CliView extends Component {
       open: this.props.stayOpen || !!this.props.open
     };
   }
-  componentDidMount() {
-    if (this.state.open && this.refs.cliInput) {
-      this.refs.cliInput.focus();
-    }
-  }
   toggleCli(state) {
     let openState = this.state.stayOpen || state;
     this.setState({

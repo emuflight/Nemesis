@@ -113,6 +113,21 @@ app.get("/imuf/:binUrl", (req, res) => {
   });
 });
 
+app.get("/dfu", (req, res) => {
+  devices.list((err, ports) => {
+    let connectedDevice = ports[0];
+    if (connectedDevice) {
+      fcConnector.rebootDFU(
+        connectedDevice,
+        () => {
+          res.sendStatus(202);
+        },
+        () => res.sendStatus(400)
+      );
+    }
+  });
+});
+
 app.listen(9001, () => console.log("usb interface listening on port 9001!"));
 
 module.exports = {
