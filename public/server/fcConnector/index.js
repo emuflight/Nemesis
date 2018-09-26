@@ -195,12 +195,22 @@ module.exports = {
       return bxfConnector.sendCommand(deviceInfo, command, cb, ecb);
     }
   },
-  getTelemetry(deviceInfo, cb, ecb) {
-    if (deviceInfo.hid) {
-      return rf1Connector.getTelemetry(deviceInfo, cb, ecb);
-    } else {
-      return bxfConnector.getTelemetry(deviceInfo, cb, ecb);
-    }
+  startTelemetry(deviceInfo, cb) {
+    websockets.startTelemetry(deviceInfo, timerFunc => {
+      if (deviceInfo.hid) {
+        return rf1Connector.getTelemetry(deviceInfo, timerFunc, err =>
+          console.log(err)
+        );
+      } else {
+        return bxfConnector.getTelemetry(deviceInfo, timerFunc, err =>
+          console.log(err)
+        );
+      }
+    });
+    cb();
+  },
+  stopTelemetry() {
+    websockets.stopTelemetry();
   },
   rebootDFU(deviceInfo, cb, ecb) {
     if (deviceInfo.hid) {

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Popover from "@material-ui/core/Popover";
 import MenuItem from "@material-ui/core/MenuItem";
-import Menu from "@material-ui/core/Menu";
+import List from "@material-ui/core/List";
 import Button from "@material-ui/core/Button";
 import FCConnector from "../utilities/FCConnector";
 
@@ -19,7 +19,6 @@ export default class TelemetryView extends Component {
         console.warn("unable to parse telemetry", ex);
       }
     });
-    FCConnector.webSockets.send("startTelemetry");
     this.state = {
       open: false,
       telemetry: {
@@ -49,43 +48,35 @@ export default class TelemetryView extends Component {
       open: true,
       anchorEl: event.currentTarget
     });
+    FCConnector.startTelemetry();
   };
 
-  handleRequestClose = () => {
-    clearInterval(this.interval);
+  handleClose = () => {
     this.setState({
       open: false
     });
+    FCConnector.stopTelemetry();
   };
   render() {
     return (
       <div style={{ margin: "0 10px" }}>
-        <Button onClick={this.handleClick} color="primary">
+        <Button onClick={this.handleClick} color="secondary">
           Telemetry
         </Button>
         <Popover
           open={this.state.open}
           anchorEl={this.state.anchorEl}
           anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
-          targetOrigin={{ horizontal: "left", vertical: "top" }}
-          onRequestClose={this.handleRequestClose}
+          onClose={this.handleClose}
         >
-          <Menu>
-            <MenuItem
-              primaryText={"Gyro Roll: " + this.state.telemetry.gyro.x}
-            />
-            <MenuItem
-              primaryText={"Gyro Pitch: " + this.state.telemetry.gyro.y}
-            />
-            <MenuItem
-              primaryText={"Gyro Yaw: " + this.state.telemetry.gyro.z}
-            />
-            <MenuItem primaryText={"Acc Roll: " + this.state.telemetry.acc.x} />
-            <MenuItem
-              primaryText={"Acc Pitch: " + this.state.telemetry.acc.y}
-            />
-            <MenuItem primaryText={"Acc Yaw: " + this.state.telemetry.acc.z} />
-          </Menu>
+          <List>
+            <MenuItem>{"Gyro Roll: " + this.state.telemetry.gyro.x}</MenuItem>
+            <MenuItem>{"Gyro Pitch: " + this.state.telemetry.gyro.y}</MenuItem>
+            <MenuItem>{"Gyro Yaw: " + this.state.telemetry.gyro.z}</MenuItem>
+            <MenuItem>{"Acc Roll: " + this.state.telemetry.acc.x}</MenuItem>
+            <MenuItem>{"Acc Pitch: " + this.state.telemetry.acc.y}</MenuItem>
+            <MenuItem>{"Acc Yaw: " + this.state.telemetry.acc.z}</MenuItem>
+          </List>
         </Popover>
       </div>
     );

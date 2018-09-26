@@ -142,6 +142,8 @@ const getTelemetry = (device, cb, ecb) => {
     device,
     `msp 102`,
     buffer => {
+      console.log("HALLO");
+
       try {
         let data = new DataView(new Uint8Array(buffer).buffer, 12);
         cb({
@@ -163,13 +165,15 @@ const getTelemetry = (device, cb, ecb) => {
           }
         });
       } catch (ex) {
+        console.log(ex);
         ecb && ecb(ex);
       }
     },
     error => {
       console.log("telemetry error:", error);
       ecb(error);
-    }
+    },
+    400
   );
 };
 

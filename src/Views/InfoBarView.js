@@ -56,7 +56,7 @@ export default class InfoBarView extends Component {
               this.setState({ craftName: newValue })
             }
           />
-          <TelemetryView />
+          <TelemetryView style={{ flexGrow: 1 }} />
           {this.state.setupCompleted > -1 && (
             <List
               style={{ cursor: "pointer" }}

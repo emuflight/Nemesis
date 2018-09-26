@@ -47,46 +47,84 @@ const getConfig = (device, cb, ecb) => {
   device.write(sendBytes);
 };
 
+// let connectedDevice;
 const sendCommand = (device, command, cb, ecb, waitMs = 200) => {
   try {
-    var device = new HID.HID(device.path);
+    let connectedDevice = new HID.HID(device.path);
     let ret = "";
     let timeout;
-    device.on("data", data => {
+    connectedDevice.on("data", data => {
       ret += data.toString("utf8");
       if (ret.indexOf("\n\0") === -1) {
-        device.write(strToBytes("more\n"));
+        connectedDevice.write(strToBytes("more\n"));
       }
       timeout && clearTimeout(timeout);
       timeout = setTimeout(() => {
+        connectedDevice.close();
         cb(ret.slice(0, ret.indexOf("\n\0")).replace(/\u0001|\u0000/gim, ""));
-        device.close();
       }, waitMs);
     });
-    device.on("error", error => {
-      device.close();
+    connectedDevice.on("error", error => {
+      connectedDevice.close();
       console.log("HID ERROR:", error);
       ecb & ecb(error);
     });
-    device.write(strToBytes(`${command}\n`));
+    connectedDevice.write(strToBytes(`${command}\n`));
   } catch (ex) {
-    device.close();
     console.log("HID EXCEPTON:", ex);
     ecb && ecb(ex);
   }
 };
 
-const updateIMUF = (comName, binName, notify, cb, ecb) => {
+const updateIMUF = (codeviceName, binName, notify, cb, ecb) => {
   ecb && ecb("not implemented");
 };
 
-const setValue = (comName, name, newVal, cb, ecb) => {
-  sendCommand(comName, `set ${name}=${newVal}`, cb, ecb);
+const setValue = (device, name, newVal, cb, ecb) => {
+  sendCommand(device, `set ${name}=${newVal}`, cb, ecb);
+};
+
+const getTelemetry = (device, cb, ecb) => {
+  sendCommand(
+    device,
+    `telem`,
+    telemString => {
+      let obj = {};
+      telemString.split("\n#tm ").forEach(part => {
+        let vals = part.split("=");
+        obj[vals[0].replace("#tm ", "")] = parseFloat(vals[1]);
+      });
+      cb({
+        pitch: obj.pitch,
+        roll: obj.roll,
+        heading: obj.heading,
+        acc: {
+          x: obj.ax,
+          y: obj.ay,
+          z: obj.az
+        },
+        gyro: {
+          x: obj.gx,
+          y: obj.gy,
+          z: obj.gz
+        },
+        q: {
+          x: obj.qx,
+          y: obj.qy,
+          z: obj.qz,
+          w: obj.qw
+        }
+      });
+    },
+    ecb,
+    20
+  );
 };
 
 module.exports = {
   sendCommand: sendCommand,
   updateIMUF: updateIMUF,
   getConfig: getConfig,
+  getTelemetry: getTelemetry,
   setValue: setValue
 };

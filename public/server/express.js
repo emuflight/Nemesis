@@ -128,6 +128,27 @@ app.get("/dfu", (req, res) => {
   });
 });
 
+app.get("/telem/start", (req, res) => {
+  devices.list((err, ports) => {
+    let connectedDevice = ports[0];
+    if (connectedDevice) {
+      fcConnector.startTelemetry(
+        connectedDevice,
+        () => {
+          res.sendStatus(202);
+        },
+        err => {
+          res.status(400).send(err);
+        }
+      );
+    }
+  });
+});
+app.get("/telem/stop", (req, res) => {
+  fcConnector.stopTelemetry();
+  res.sendStatus(202);
+});
+
 app.listen(9001, () => console.log("usb interface listening on port 9001!"));
 
 module.exports = {

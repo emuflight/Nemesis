@@ -58,6 +58,14 @@ export default new class FCConnector {
     return fetch(`${this.serviceUrl}/dfu`);
   }
 
+  startTelemetry() {
+    return fetch(`${this.serviceUrl}/telem/start`);
+  }
+
+  stopTelemetry() {
+    return fetch(`${this.serviceUrl}/telem/stop`);
+  }
+
   flashDFU(binUrl) {
     return fetch(`${this.serviceUrl}/flash/${encodeURIComponent(binUrl)}`).then(
       response => {

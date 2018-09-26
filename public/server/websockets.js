@@ -3,8 +3,6 @@ const WebSocketServer = require("websocket").server;
 const devices = require("./devices");
 const http = require("http");
 
-const fcConnector = require("./fcConnector");
-
 const server = http.createServer((request, response) => {
   // process HTTP request. Since we're writing just WebSockets
   // server we don't have to implement anything.
@@ -47,25 +45,14 @@ wsServer.on("request", request => {
         connected: false
       })
     );
-    // clearInterval(telemetry);
+    connection.close();
   });
   // This is the most important callback for us, we'll handle
   // all messages from users here.
-  connection.on("message", message => {
-    if (message.utf8Data === "startTelemetry") {
-      // telemetry = setInterval(() => {
-      //   fcConnector.getTelemetry(
-      //     telemetryData => {
-      //       telemetryData.telemetry = true;
-      //       connection.sendUTF(JSON.stringify(telemetryData));
-      //     }
-      //   );
-      // }, 150);
-    }
-  });
+  connection.on("message", message => {});
 
   connection.on("close", connection => {
-    clearInterval(telemetry);
+    stopTelemetry();
     clients.pop();
   });
 });
@@ -80,8 +67,22 @@ const notifyProgress = data => {
   );
 };
 
+const startTelemetry = (deviceInfo, telemetryCallback) => {
+  telemetry = setInterval(() => {
+    telemetryCallback(telemetryData => {
+      telemetryData.telemetry = true;
+      clients.forEach(client => client.sendUTF(JSON.stringify(telemetryData)));
+    });
+  }, deviceInfo.hid ? 100 : 500);
+};
+const stopTelemetry = () => {
+  clearInterval(telemetry);
+};
+
 module.exports = {
   wsServer: wsServer,
   clients: clients,
+  startTelemetry: startTelemetry,
+  stopTelemetry: stopTelemetry,
   notifyProgress: notifyProgress
 };

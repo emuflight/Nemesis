@@ -61,7 +61,7 @@ class App extends Component {
     if (this.state.imuf) {
       return (
         <MuiThemeProvider theme={theme}>
-          <ImufView goBack={()=> this.setState({imuf: false})} />
+          <ImufView goBack={() => this.setState({ imuf: false })} />
         </MuiThemeProvider>
       );
     } else if (this.state.dfu) {
