@@ -45,7 +45,6 @@ wsServer.on("request", request => {
         connected: false
       })
     );
-    connection.close();
   });
   // This is the most important callback for us, we'll handle
   // all messages from users here.
