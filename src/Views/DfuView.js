@@ -80,7 +80,6 @@ export default class DfuView extends Component {
     this.setState({
       items: firmwares,
       current: firmwares[0].download_url,
-      note: firmwares[0].note,
       isFlashing: false
     });
   }
