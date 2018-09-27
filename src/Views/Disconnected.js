@@ -62,7 +62,9 @@ export default class Disconnected extends React.Component {
             {openCli && (
               <CliView
                 open={!!openCli}
-                startText={device.error}
+                startText={`**********<h1>YOU ARE IN CLI MODE.\nTHIS FIRMWARE IS NOT OFFICIALLY SUPPORTED.\nPLEASE REBOOT INTO DFU AND FLASH A SUPPORTED VERSION.</h1>**********\n${
+                  device.error
+                }`}
                 stayOpen={!!openCli}
                 ref="cliView"
               />

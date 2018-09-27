@@ -19,7 +19,7 @@ export default class CliView extends Component {
   toggleCli(state) {
     let openState = this.state.stayOpen || state;
     this.setState({
-      cliBuffer: "#flyhelio\n\n#",
+      cliBuffer: this.props.startText || "#flyhelio\n\n#",
       command: "",
       open: openState
     });
@@ -113,16 +113,16 @@ export default class CliView extends Component {
                 style={{
                   padding: "5px",
                   fontFamily: "monospace",
-                  fontWeight: "bold",
-                  color: "white",
+                  fontSize: "14px",
+                  fontWeight: "600",
+                  color: "orange",
                   boxSizing: "border-box",
                   userSelect: "text",
                   whiteSpace: "pre-wrap",
                   wordBreak: "break-word"
                 }}
-              >
-                {this.state.cliBuffer}
-              </div>
+                dangerouslySetInnerHTML={{ __html: this.state.cliBuffer }}
+              />
             </div>
             <TextField
               ref="cliInput"
