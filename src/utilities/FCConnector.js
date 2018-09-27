@@ -54,7 +54,8 @@ export default new class FCConnector {
     return this.sendCommand("save");
   }
 
-  goToDFU() {
+  goToDFU(target) {
+    this.currentTarget = target;
     return fetch(`${this.serviceUrl}/dfu`);
   }
 
@@ -72,6 +73,16 @@ export default new class FCConnector {
         return response.json();
       }
     );
+  }
+
+  flashDFULocal(binUrl) {
+    return fetch(`${this.serviceUrl}/flash`, {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      mode: "cors", // no-cors, cors, *same-origin
+      body: binUrl
+    }).then(response => {
+      return response.json();
+    });
   }
 
   flashIMUF(binUrl, notifyProgress) {

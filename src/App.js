@@ -19,12 +19,20 @@ class App extends Component {
       if (device.connected) {
         this.getFcConfig();
       } else if (!device.progress) {
-        this.setState({
+        let stateObj = {
           imuf: false,
           connected: false,
           dfu: false,
           deviceInfo: undefined
-        });
+        }
+        if (this.state.dfu){
+          //wait a bit so that the user can see the dfu message
+          setTimeout(()=>{
+          this.setState(stateObj);
+          }, 2000)
+        } else {
+          this.setState(stateObj);
+        }
       }
     });
   }
@@ -46,6 +54,7 @@ class App extends Component {
           connected: !device.incompatible,
           incompatible: device.incompatible
         });
+        FCConnector.currentTarget = "";
         return device.config;
       })
       .catch(() => this.setState({ connecting: false }));
@@ -67,7 +76,7 @@ class App extends Component {
     } else if (this.state.dfu) {
       return (
         <MuiThemeProvider theme={theme}>
-          <DfuView />
+          <DfuView target={FCConnector.currentTarget}/>
         </MuiThemeProvider>
       );
     } else if (this.state.connected) {

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
@@ -16,19 +15,17 @@ class HelperSelect extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <FormControl className={classes.formControl}>
+      <FormControl style={this.props.style} className={classes.formControl}>
         <InputLabel shrink htmlFor={`${this.props.name}-label-placeholder`}>
           {this.props.label}
         </InputLabel>
         <Select
           value={this.props.value}
           onChange={this.props.onChange}
-          input={
-            <Input
-              name={this.props.name}
-              id={`${this.props.name}-label-placeholder`}
-            />
-          }
+          inputProps={{
+            id: `${this.props.name}-label-placeholder`,
+            name: this.props.name
+          }}
           displayEmpty
           disabled={this.props.disabled}
           name={this.props.name}

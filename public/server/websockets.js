@@ -45,9 +45,7 @@ wsServer.on("request", request => {
   // all messages from users here.
   connection.on("message", message => {});
 
-  connection.on("close", connection => {
-    clients.pop();
-  });
+  connection.on("close", connection => {});
 });
 
 const notifyProgress = data => {

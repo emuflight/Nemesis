@@ -12,7 +12,7 @@ export default class CliView extends Component {
     this.state = {
       cliBuffer: this.props.startText || "#flyhelio\n\n#",
       stayOpen: !!this.props.stayOpen || false,
-      disabled: false,
+      disabled: this.props.disabled || false,
       open: this.props.stayOpen || !!this.props.open
     };
   }
@@ -24,15 +24,16 @@ export default class CliView extends Component {
       open: openState
     });
   }
-  replaceLine(lineRegex, update) {
+  replaceLast(update) {
     this.setState({
       isDirty: false,
-      cliBuffer: this.state.cliBuffer.replace(lineRegex, update)
+      cliBuffer: this.prevCli + update
     });
     this.refs.cliScroll.scrollTop = this.refs.cliScroll.scrollHeight;
   }
   appendCliBuffer(resp) {
-    this.setState({ isDirty: false, cliBuffer: this.state.cliBuffer + resp });
+    this.prevCli = this.state.cliBuffer;
+    this.setState({ isDirty: false, cliBuffer: this.prevCli + resp });
     this.refs.cliScroll.scrollTop = this.refs.cliScroll.scrollHeight;
   }
   handleKeyDown = e => {
@@ -68,21 +69,22 @@ export default class CliView extends Component {
   render() {
     return (
       <div>
-        {!this.state.open && (
-          <Keyboard
-            style={{
-              position: "fixed",
-              bottom: "20px",
-              right: "20px",
-              color: "rgb(0, 151, 167)"
-            }}
-            onClick={() => this.toggleCli(true)}
-          />
-        )}
+        {!this.state.open &&
+          !this.state.disabled && (
+            <Keyboard
+              style={{
+                position: "fixed",
+                bottom: "20px",
+                right: "20px",
+                color: "rgb(0, 151, 167)"
+              }}
+              onClick={() => this.toggleCli(true)}
+            />
+          )}
         <SwipeableDrawer
           anchor="bottom"
-          onOpen={() => this.refs.cliInput.focus()}
-          onClose={() => this.toggleCli(false)}
+          onOpen={() => {}}
+          onClose={() => !this.state.disabled && this.toggleCli(false)}
           open={this.state.open}
         >
           <div

@@ -3,6 +3,7 @@ import List from "@material-ui/core/List";
 import MenuItem from "@material-ui/core/MenuItem";
 import Popover from "@material-ui/core/Popover";
 import Button from "@material-ui/core/Button";
+import Launch from "@material-ui/icons/Launch";
 import FCConnector from "../utilities/FCConnector";
 
 export default class VersionInfoView extends Component {
@@ -12,10 +13,6 @@ export default class VersionInfoView extends Component {
     this.goToImuf = props.goToImuf;
     this.state = props.version;
     this.state.open = false;
-  }
-
-  goToDFU() {
-    FCConnector.goToDFU();
   }
 
   handleClick = event => {
@@ -45,12 +42,18 @@ export default class VersionInfoView extends Component {
           <List>
             <MenuItem>{"Firmware: " + this.state.fw}</MenuItem>
             <MenuItem>{"Target: " + this.state.target}</MenuItem>
-            <MenuItem onClick={() => this.goToDFU()}>
-              {"Version: " + this.state.version}
+            <MenuItem style={{ display: "flex" }}>
+              <div style={{ flexGrow: 1 }}>
+                {"Version: " + this.state.version}
+              </div>
+              <Launch onClick={() => FCConnector.goToDFU(this.state.target)} />
             </MenuItem>
             {this.state.imuf && (
-              <MenuItem onClick={() => this.goToImuf()}>
-                {"IMU-F Version: " + this.state.imuf}
+              <MenuItem style={{ display: "flex" }}>
+                <div style={{ flexGrow: 1 }}>
+                  {"IMU-F Version: " + this.state.imuf}
+                </div>
+                <Launch onClick={() => this.goToImuf()} />
               </MenuItem>
             )}
           </List>

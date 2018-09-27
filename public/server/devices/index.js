@@ -70,7 +70,7 @@ module.exports = {
       "-a",
       "0",
       "-s",
-      "0x08000000:mass-erase:force:leave",
+      "0x08000000:leave",
       "-D",
       filePath
     ]);

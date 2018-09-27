@@ -125,6 +125,11 @@ app.on("activate", () => {
   }
 });
 
+process.on('uncaughtException', function (error) {
+  process.stdout.write(error);
+  // Handle the error
+});
+
 // when the update has been downloaded and is ready to be installed, notify the BrowserWindow
 // autoUpdater.on("update-downloaded", info => {
 //   mainWindow.webContents.send("updateReady");

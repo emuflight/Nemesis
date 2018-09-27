@@ -7,7 +7,14 @@ export default class ImufView extends DfuView {
     this.title = "IMU-F Updater";
     this.flText = "Select a version to flash IMU-F";
     this.btnLabel = "Update";
-    this.state = {};
+    this.state = {
+      currentTarget: "IMU-F",
+      current: "IMU-F",
+      progress: "",
+      hasTarget: true,
+      allowUpload: false,
+      targetItems: ["IMU-F"]
+    };
   }
   get releasesKey() {
     return "imufReleases";
@@ -21,18 +28,10 @@ export default class ImufView extends DfuView {
   }
 
   setFirmware(data) {
-    let firmwares = data
-      .reverse()
-      .filter(file => file.name.endsWith(".bin"))
-      .map(file => {
-        file.note =
-          "See the release notes here: https://github.com/heliorc/imuf-release/blob/master/CHANGELOG.md";
-        return file;
-      });
+    let firmwares = data.reverse().filter(file => file.name.endsWith(".bin"));
     this.setState({
       items: firmwares,
       current: firmwares[0].download_url,
-      note: firmwares[0].note,
       isFlashing: false
     });
   }

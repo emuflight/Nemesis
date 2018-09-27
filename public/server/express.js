@@ -4,7 +4,9 @@ const fcConnector = require("./fcConnector");
 const firmware = require("./firmware");
 const app = express();
 const websockets = require("./websockets");
+const fileUpload = require("express-fileupload");
 
+app.use(fileUpload());
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
@@ -68,6 +70,28 @@ app.get("/set/:name/:value", (req, res) => {
     }
   });
 });
+
+app.post("/flash", (req, res) => {
+  if (!req.files) {
+    return res.sendStatus(400);
+  }
+  let fileObj = req.files.bin;
+  let binBuffer = req.files.bin.data;
+  let message = `Recieved ${binBuffer.length} bytes from ${fileObj.name}...\n`;
+  if (fileObj.name.endsWith(".hex")) {
+    let converted = firmware.convertToBin(binBuffer);
+    binBuffer = converted.bin;
+    message = `Converted ${fileObj.name} size: ${
+      converted.hex.length
+    } to .bin ...\n`;
+  }
+  console.log(message);
+  websockets.notifyProgress(message);
+
+  devices.flashDFU(binBuffer, websockets.notifyProgress);
+  res.sendStatus(202);
+});
+
 app.get("/flash/:binUrl", (req, res) => {
   websockets.notifyProgress(`Fetching binary from ${req.params.binUrl}...\n`);
   firmware.load(req.params.binUrl, fileBuffer => {
