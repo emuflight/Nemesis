@@ -1,5 +1,6 @@
 const SerialPort = require("serialport");
 const imufFirmware = require("../firmware/imuf");
+const os = require("os");
 
 const getConfig = device => {
   return sendCommand(device, "!").then(() => {
@@ -20,6 +21,7 @@ const getConfig = device => {
 const sendCommand = (device, command, waitMs = 200) => {
   return new Promise((resolve, reject) => {
     let port = new SerialPort(device.comName, {
+      baudRate: 115200,
       autoOpen: false
     });
     let ret = "";
@@ -37,19 +39,27 @@ const sendCommand = (device, command, waitMs = 200) => {
         ret = "";
       }, waitMs);
     });
-    port.open(openError => {
-      if (openError) {
-        console.log("OPEN ERROR: ", openError);
-        reject(openError);
-      } else {
-        port.write(`${command}\n`, err => {
-          if (err) {
-            console.log("WRITE ERROR: ", err);
-            err && reject(err);
-          }
-        });
-      }
-    });
+    const openSerial = () => {
+      port.open(openError => {
+        if (openError) {
+          console.log("OPEN ERROR: ", openError);
+          reject(openError);
+        } else {
+          port.write(`${command}\n`, err => {
+            if (err) {
+              console.log("WRITE ERROR: ", err);
+              err && reject(err);
+            }
+          });
+        }
+      });
+    };
+    if (os.platform() === "win32") {
+      //windows is stupid slow
+      setTimeout(openSerial, 200);
+    } else {
+      openSerial();
+    }
   });
 };
 
@@ -59,6 +69,7 @@ const updateIMUF = (device, binName, notify) => {
     let binAsStr = fileBuffer.toString("hex");
     // let binAsStr = fs.readFileSync(path.join(__dirname, './IMUF_1.1.0_STARBUCK_ALPHA.bin')).toString('hex');
     let port = new SerialPort(device.comName, {
+      baudRate: 115200,
       autoOpen: false
     });
     let ret = "";
