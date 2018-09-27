@@ -125,7 +125,7 @@ app.on("activate", () => {
   }
 });
 
-process.on('uncaughtException', function (error) {
+process.on("uncaughtException", function(error) {
   process.stdout.write(error);
   // Handle the error
 });

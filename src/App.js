@@ -24,15 +24,8 @@ class App extends Component {
           connected: false,
           dfu: false,
           deviceInfo: undefined
-        }
-        if (this.state.dfu){
-          //wait a bit so that the user can see the dfu message
-          setTimeout(()=>{
-          this.setState(stateObj);
-          }, 2000)
-        } else {
-          this.setState(stateObj);
-        }
+        };
+        this.setState(stateObj);
       }
     });
   }
@@ -76,7 +69,7 @@ class App extends Component {
     } else if (this.state.dfu) {
       return (
         <MuiThemeProvider theme={theme}>
-          <DfuView target={FCConnector.currentTarget}/>
+          <DfuView target={FCConnector.currentTarget} />
         </MuiThemeProvider>
       );
     } else if (this.state.connected) {
