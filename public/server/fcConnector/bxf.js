@@ -1,89 +1,56 @@
 const SerialPort = require("serialport");
 const imufFirmware = require("../firmware/imuf");
 
-let openPort;
-const ensurePort = (device, cb, ecb) => {
-  openPort = new SerialPort(device.comName, {
-    autoOpen: false
+const getConfig = device => {
+  return sendCommand(device, "!").then(() => {
+    return sendCommand(device, "config", 2200).then(conf => {
+      try {
+        //trim off " config\n";
+        return JSON.parse(conf.slice(7, conf.length - 2));
+      } catch (ex) {
+        console.log(ex);
+        return sendCommand(device, "version").then(version => {
+          return { version: version, incompatible: true };
+        });
+      }
+    });
   });
-  setTimeout(() => {
-    try {
-      openPort.open(cb);
-    } catch (ex) {
-      ecb(ex);
-      console.log("error attempting to open", ex);
-    }
-  }, 100);
 };
 
-const getVersion = (device, cb, ecb) => {
-  sendCommand(
-    device,
-    "version",
-    data => {
-      cb(data);
-    },
-    ecb,
-    500
-  );
-};
-const getConfig = (device, cb, ecb) => {
-  sendCommand(
-    device,
-    "!",
-    () => {
-      setTimeout(() => {
-        sendCommand(
-          device,
-          "config",
-          conf => {
-            try {
-              //trim off " config\n";
-              cb(JSON.parse(conf.slice(7, conf.length - 2)));
-            } catch (ex) {
-              console.log(ex);
-              setTimeout(() => {
-                getVersion(device, version => {
-                  cb({ version: version, incompatible: true });
-                });
-              }, 100);
-            }
-          },
-          ecb,
-          2200
-        );
-      }, 100);
-    },
-    ecb
-  );
-};
-
-const sendCommand = (device, command, cb, ecb, waitMs = 200) => {
-  try {
+const sendCommand = (device, command, waitMs = 200) => {
+  return new Promise((resolve, reject) => {
+    let port = new SerialPort(device.comName, {
+      autoOpen: false
+    });
     let ret = "";
     let timeout;
-    ensurePort(
-      device,
-      () => {
-        openPort.on("data", data => {
-          ret += data;
-          timeout && clearTimeout(timeout);
-          timeout = setTimeout(() => {
-            cb(ret);
-            openPort.isOpen && openPort.close();
-            ret = "";
-          }, waitMs);
+    port.on("error", err => {
+      console.log("ERROR: ", err);
+      reject(err);
+    });
+    port.on("data", data => {
+      ret += data;
+      timeout && clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        port.close();
+        resolve(ret);
+        ret = "";
+      }, waitMs);
+    });
+    port.open(openError => {
+      if (openError) {
+        console.log("OPEN ERROR: ", openError);
+        reject(openError);
+      } else {
+        port.write(`${command}\n`, err => {
+          if (err) {
+            console.log("WRITE ERROR: ", err);
+            err && reject(err);
+          }
         });
-        openPort.write(`${command}\n`, err => {
-          err && ecb && ecb(err);
-        });
-      },
-      ecb
-    );
-  } catch (ex) {
-    console.log(ex);
-    ecb && ecb(ex);
-  }
+      }
+    });
+  });
 };
 
 const updateIMUF = (device, binName, notify) => {
@@ -91,90 +58,90 @@ const updateIMUF = (device, binName, notify) => {
   imufFirmware.load(binName, fileBuffer => {
     let binAsStr = fileBuffer.toString("hex");
     // let binAsStr = fs.readFileSync(path.join(__dirname, './IMUF_1.1.0_STARBUCK_ALPHA.bin')).toString('hex');
-    ensurePort(device, () => {
-      let ret = "";
-      openPort.on("data", data => {
-        ret = data.toString("utf8");
-      });
-      openPort.write("imufbootloader\n");
-      setTimeout(() => {
-        if (ret.indexOf("BOOTLOADER") > -1) {
-          notify("Communicating with IMU-F...\n");
-          openPort.write("imufloadbin !\n");
-          setTimeout(() => {
-            if (ret.indexOf("SUCCESS") > -1) {
-              notify(`Loading binary onto IMU-F...\n`);
-              let index = 0;
-              let interval = setInterval(() => {
-                if (index < binAsStr.length) {
-                  let tail = Math.min(binAsStr.length, index + 200);
-                  let sending = `imufloadbin l64000000${binAsStr.slice(
-                    index,
-                    tail
-                  )}\n`;
-                  openPort.write(sending);
-                  notify(".");
-                  index = tail;
-                } else {
-                  notify("\nFlashing IMU-F...\n");
-                  clearInterval(interval);
-                  openPort.write("imufflashbin\n");
-                  setTimeout(() => {
-                    notify("\ndone!\n#flyhelio");
-                    openPort.isOpen && openPort.close();
-                  }, 10000);
-                }
-              }, 50);
-            }
-          }, 5000);
-        }
-      }, 5000);
+    let port = new SerialPort(device.comName, {
+      autoOpen: false
+    });
+    let ret = "";
+    port.on("error", err => {
+      ecb && ecb(err);
+    });
+    port.on("data", data => {
+      ret = data.toString("utf8");
+    });
+    port.open(openError => {
+      if (!openError) {
+        port.write("imufbootloader\n", err => {
+          if (!err) {
+            setTimeout(() => {
+              if (ret.indexOf("BOOTLOADER") > -1) {
+                notify("Communicating with IMU-F...\n");
+                port.write("imufloadbin !\n");
+                setTimeout(() => {
+                  if (ret.indexOf("SUCCESS") > -1) {
+                    notify(`Loading binary onto IMU-F...\n`);
+                    let index = 0;
+                    let interval = setInterval(() => {
+                      if (index < binAsStr.length) {
+                        let tail = Math.min(binAsStr.length, index + 200);
+                        let sending = `imufloadbin l64000000${binAsStr.slice(
+                          index,
+                          tail
+                        )}\n`;
+                        port.write(sending);
+                        notify(".");
+                        index = tail;
+                      } else {
+                        notify("\nFlashing IMU-F...\n");
+                        clearInterval(interval);
+                        port.write("imufflashbin\n");
+                        setTimeout(() => {
+                          port.close();
+                          notify("\ndone!\n#flyhelio");
+                        }, 10000);
+                      }
+                    }, 50);
+                  }
+                }, 5000);
+              }
+            }, 5000);
+          }
+        });
+      }
     });
   });
 };
 
-const setValue = (device, name, newVal, cb, ecb) => {
-  sendCommand(device, `set ${name}=${newVal}`, cb, ecb);
+const setValue = (device, name, newVal) => {
+  return sendCommand(device, `set ${name}=${newVal}`);
 };
 
-const getTelemetry = (device, cb, ecb) => {
-  sendCommand(
-    device,
-    `msp 102`,
-    buffer => {
-      console.log("HALLO");
-
-      try {
-        let data = new DataView(new Uint8Array(buffer).buffer, 12);
-        cb({
-          telemetry: true,
-          acc: {
-            x: data.getInt16(2, 1) / 512,
-            y: data.getInt16(4, 1) / 512,
-            z: data.getInt16(6, 1) / 512
-          },
-          gyro: {
-            x: data.getInt16(8, 1) * (4 / 16.4),
-            y: data.getInt16(10, 1) * (4 / 16.4),
-            z: data.getInt16(12, 1) * (4 / 16.4)
-          },
-          mag: {
-            x: data.getInt16(14, 1) / 1090,
-            y: data.getInt16(16, 1) / 1090,
-            z: data.getInt16(18, 1) / 1090
-          }
-        });
-      } catch (ex) {
-        console.log(ex);
-        ecb && ecb(ex);
-      }
-    },
-    error => {
-      console.log("telemetry error:", error);
-      ecb(error);
-    },
-    400
-  );
+const getTelemetry = device => {
+  return sendCommand(device, `msp 102`, 50).then(buffer => {
+    try {
+      let data = new DataView(new Uint8Array(buffer).buffer, 12);
+      return {
+        telemetry: true,
+        acc: {
+          x: data.getInt16(2, 1) / 512,
+          y: data.getInt16(4, 1) / 512,
+          z: data.getInt16(6, 1) / 512
+        },
+        gyro: {
+          x: data.getInt16(8, 1) * (4 / 16.4),
+          y: data.getInt16(10, 1) * (4 / 16.4),
+          z: data.getInt16(12, 1) * (4 / 16.4)
+        },
+        mag: {
+          x: data.getInt16(14, 1) / 1090,
+          y: data.getInt16(16, 1) / 1090,
+          z: data.getInt16(18, 1) / 1090
+        }
+      };
+    } catch (ex) {
+      console.log(ex);
+      return Proimise.reject(ex);
+    }
+  });
 };
 
 module.exports = {

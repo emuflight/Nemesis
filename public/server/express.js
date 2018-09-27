@@ -19,20 +19,16 @@ app.use(function(req, res, next) {
 
 app.get("/device", (req, res) => {
   devices.list((err, ports) => {
+    if (err) return res.status(400).send(err);
     let connectedDevice = ports[0];
     if (connectedDevice) {
       if (connectedDevice.dfu) {
         res.json(connectedDevice);
       } else {
-        fcConnector.getConfig(
-          connectedDevice,
-          deviceConfig => {
-            res.json(deviceConfig);
-          },
-          device => {
-            res.status(426).send(device);
-          }
-        );
+        fcConnector
+          .getConfig(connectedDevice)
+          .then(deviceConfig => res.json(deviceConfig))
+          .catch(error => res.status(426).send(error));
       }
     } else {
       res.sendStatus(404);
@@ -42,24 +38,15 @@ app.get("/device", (req, res) => {
 
 app.get("/send/:command", (req, res) => {
   devices.list((err, ports) => {
-    let connectedDevice = ports[0];
+    if (err) return res.status(400).send(err);
+    let connectedDevice = ports[0],
+      command = req.params.command;
+
     if (connectedDevice) {
-      let command = req.params.command;
-      console.log(command);
-      fcConnector.sendCommand(
-        connectedDevice,
-        command,
-        output => {
-          if (output) {
-            res.json(output);
-          } else {
-            res.sendStatus(202);
-          }
-        },
-        err => {
-          res.status(400).send(err);
-        }
-      );
+      fcConnector
+        .sendCommand(connectedDevice, command)
+        .then(output => (output ? res.json(output) : res.sendStatus(202)))
+        .catch(error => res.status(400).send(error));
     } else {
       res.sendStatus(404);
     }
@@ -67,20 +54,15 @@ app.get("/send/:command", (req, res) => {
 });
 app.get("/set/:name/:value", (req, res) => {
   devices.list((err, ports) => {
-    let connectedDevice = ports[0];
+    if (err) return res.status(400).send(err);
+    let connectedDevice = ports[0],
+      name = req.params.name,
+      value = req.params.value;
     if (connectedDevice) {
-      fcConnector.setValue(
-        connectedDevice,
-        req.params.name,
-        req.params.value,
-        config => {
-          connectedDevice.config = config;
-          res.json(connectedDevice);
-        },
-        err => {
-          res.status(400).send(err);
-        }
-      );
+      fcConnector
+        .setValue(connectedDevice, name, value)
+        .then(() => res.sendStatus(202))
+        .catch(error => res.status(400).send(error));
     } else {
       res.sendStatus(404);
     }
@@ -97,14 +79,15 @@ app.get("/flash/:binUrl", (req, res) => {
     if (fileBuffer.error) {
       res.status(404).send(fileBuffer.error);
     } else {
-      res.sendStatus(202);
       devices.flashDFU(fileBuffer, websockets.notifyProgress);
+      res.sendStatus(202);
     }
   });
 });
 
 app.get("/imuf/:binUrl", (req, res) => {
   devices.list((err, ports) => {
+    if (err) return res.status(400).send(err);
     let connectedDevice = ports[0];
     if (connectedDevice) {
       fcConnector.updateIMUF(connectedDevice, req.params.binUrl);
@@ -115,32 +98,26 @@ app.get("/imuf/:binUrl", (req, res) => {
 
 app.get("/dfu", (req, res) => {
   devices.list((err, ports) => {
+    if (err) return res.status(400).send(err);
     let connectedDevice = ports[0];
     if (connectedDevice) {
-      fcConnector.rebootDFU(
-        connectedDevice,
-        () => {
-          res.sendStatus(202);
-        },
-        () => res.sendStatus(400)
-      );
+      fcConnector
+        .rebootDFU(connectedDevice)
+        .then(() => res.sendStatus(202))
+        .catch(() => res.sendStatus(400));
     }
   });
 });
 
 app.get("/telem/start", (req, res) => {
   devices.list((err, ports) => {
+    if (err) return res.status(400).send(err);
     let connectedDevice = ports[0];
     if (connectedDevice) {
-      fcConnector.startTelemetry(
-        connectedDevice,
-        () => {
-          res.sendStatus(202);
-        },
-        err => {
-          res.status(400).send(err);
-        }
-      );
+      fcConnector
+        .startTelemetry(connectedDevice)
+        .then(() => res.sendStatus(202))
+        .catch(error => res.status(400).send(error));
     }
   });
 });

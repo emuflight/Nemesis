@@ -158,65 +158,52 @@ const applyUIConfig = (device, config, uiConfig) => {
 };
 
 module.exports = {
-  getConfig(deviceInfo, cb, ecb) {
+  getConfig(deviceInfo) {
     if (deviceInfo.hid) {
-      return rf1Connector.getConfig(
-        deviceInfo,
-        config => {
-          cb(applyUIConfig(deviceInfo, config, rf1UiConfig));
-        },
-        ecb
-      );
+      return rf1Connector.getConfig(deviceInfo).then(config => {
+        return applyUIConfig(deviceInfo, config, rf1UiConfig);
+      });
     } else {
-      return bxfConnector.getConfig(
-        deviceInfo,
-        config => {
-          if (config.incompatible) {
-            ecb(Object.assign({ error: config.version }, deviceInfo, config));
-          } else {
-            cb(applyUIConfig(deviceInfo, config, BxfUiConfig));
-          }
-        },
-        ecb
-      );
+      return bxfConnector.getConfig(deviceInfo).then(config => {
+        if (config.incompatible) {
+          return Object.assign({ error: config.version }, deviceInfo, config);
+        } else {
+          return applyUIConfig(deviceInfo, config, BxfUiConfig);
+        }
+      });
     }
   },
-  setValue(deviceInfo, key, value, cb, ecb) {
+  setValue(deviceInfo, key, value) {
     if (deviceInfo.hid) {
-      return rf1Connector.setValue(deviceInfo, key, value, cb, ecb);
+      return rf1Connector.setValue(deviceInfo, key, value);
     } else {
-      return bxfConnector.setValue(deviceInfo, key, value, cb, ecb);
+      return bxfConnector.setValue(deviceInfo, key, value);
     }
   },
-  sendCommand(deviceInfo, command, cb, ecb) {
+  sendCommand(deviceInfo, command) {
     if (deviceInfo.hid) {
-      return rf1Connector.sendCommand(deviceInfo, command, cb, ecb);
+      return rf1Connector.sendCommand(deviceInfo, command, 20);
     } else {
-      return bxfConnector.sendCommand(deviceInfo, command, cb, ecb);
+      return bxfConnector.sendCommand(deviceInfo, command);
     }
   },
   startTelemetry(deviceInfo, cb) {
     websockets.startTelemetry(deviceInfo, timerFunc => {
       if (deviceInfo.hid) {
-        return rf1Connector.getTelemetry(deviceInfo, timerFunc, err =>
-          console.log(err)
-        );
+        return rf1Connector.getTelemetry(deviceInfo).then(timerFunc);
       } else {
-        return bxfConnector.getTelemetry(deviceInfo, timerFunc, err =>
-          console.log(err)
-        );
+        return bxfConnector.getTelemetry(deviceInfo).then(timerFunc);
       }
     });
-    cb();
   },
   stopTelemetry() {
     websockets.stopTelemetry();
   },
-  rebootDFU(deviceInfo, cb, ecb) {
+  rebootDFU(deviceInfo) {
     if (deviceInfo.hid) {
-      return rf1Connector.sendCommand(deviceInfo, "rebootDFU", cb, ecb);
+      return rf1Connector.sendCommand(deviceInfo, "rebootDFU");
     } else {
-      return bxfConnector.sendCommand(deviceInfo, "bl", cb, ecb);
+      return bxfConnector.sendCommand(deviceInfo, "bl");
     }
   },
   updateIMUF(deviceInfo, binUrl, cb, ecb) {
