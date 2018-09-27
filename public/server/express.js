@@ -114,10 +114,8 @@ app.get("/telem/start", (req, res) => {
     if (err) return res.status(400).send(err);
     let connectedDevice = ports[0];
     if (connectedDevice) {
-      fcConnector
-        .startTelemetry(connectedDevice)
-        .then(() => res.sendStatus(202))
-        .catch(error => res.status(400).send(error));
+      fcConnector.startTelemetry(connectedDevice);
+      res.sendStatus(202);
     }
   });
 });

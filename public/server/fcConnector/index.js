@@ -157,6 +157,7 @@ const applyUIConfig = (device, config, uiConfig) => {
   return device;
 };
 
+let telemetryInterval;
 module.exports = {
   getConfig(deviceInfo) {
     if (deviceInfo.hid) {
@@ -187,17 +188,24 @@ module.exports = {
       return bxfConnector.sendCommand(deviceInfo, command);
     }
   },
-  startTelemetry(deviceInfo, cb) {
-    websockets.startTelemetry(deviceInfo, timerFunc => {
+
+  startTelemetry(deviceInfo) {
+    telemetryInterval = setInterval(() => {
       if (deviceInfo.hid) {
-        return rf1Connector.getTelemetry(deviceInfo).then(timerFunc);
+        return rf1Connector.getTelemetry(deviceInfo).then(telemData => {
+          websockets.notifyTelem(telemData);
+          return telemData;
+        });
       } else {
-        return bxfConnector.getTelemetry(deviceInfo).then(timerFunc);
+        return bxfConnector.getTelemetry(deviceInfo).then(telemData => {
+          websockets.notifyTelem(telemData);
+          return telemData;
+        });
       }
-    });
+    }, 100);
   },
   stopTelemetry() {
-    websockets.stopTelemetry();
+    clearInterval(telemetryInterval);
   },
   rebootDFU(deviceInfo) {
     if (deviceInfo.hid) {

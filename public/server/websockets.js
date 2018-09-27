@@ -8,9 +8,6 @@ const server = http.createServer((request, response) => {
   // server we don't have to implement anything.
 });
 
-let connectedDevice;
-let telemetry;
-
 server.listen(9002, () => {});
 
 // create the server
@@ -26,15 +23,13 @@ wsServer.on("request", request => {
   clients.push(connection);
   // Detect add/insert
   usb.on(`attach`, device => {
-    setTimeout(() => {
-      devices.list((err, ports) => {
-        connectedDevice = ports[0];
-        if (connectedDevice) {
-          connectedDevice.connected = true;
-          connection.sendUTF(JSON.stringify(connectedDevice));
-        }
-      });
-    }, 1500);
+    devices.list((err, ports) => {
+      connectedDevice = ports[0];
+      if (connectedDevice) {
+        connectedDevice.connected = true;
+        connection.sendUTF(JSON.stringify(connectedDevice));
+      }
+    });
   });
 
   // Detect remove
@@ -51,7 +46,6 @@ wsServer.on("request", request => {
   connection.on("message", message => {});
 
   connection.on("close", connection => {
-    stopTelemetry();
     clients.pop();
   });
 });
@@ -66,22 +60,14 @@ const notifyProgress = data => {
   );
 };
 
-const startTelemetry = (deviceInfo, telemetryCallback) => {
-  telemetry = setInterval(() => {
-    telemetryCallback(telemetryData => {
-      telemetryData.telemetry = true;
-      clients.forEach(client => client.sendUTF(JSON.stringify(telemetryData)));
-    });
-  }, deviceInfo.hid ? 100 : 500);
-};
-const stopTelemetry = () => {
-  clearInterval(telemetry);
+const notifyTelem = telemetryData => {
+  telemetryData.telemetry = true;
+  clients.forEach(client => client.sendUTF(JSON.stringify(telemetryData)));
 };
 
 module.exports = {
   wsServer: wsServer,
   clients: clients,
-  startTelemetry: startTelemetry,
-  stopTelemetry: stopTelemetry,
-  notifyProgress: notifyProgress
+  notifyProgress: notifyProgress,
+  notifyTelem: notifyTelem
 };
