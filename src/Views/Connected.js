@@ -288,6 +288,7 @@ export default class Connected extends Component {
         <CliView />
         {this.state.openAssistant && (
           <AssistantView
+            fw={this.fcConfig.version.fw.indexOf("B") > -1 ? "bxf" : "rf1"}
             open={this.state.openAssistant}
             onClose={() => this.closeAssistant()}
             type={this.state.assistantType}

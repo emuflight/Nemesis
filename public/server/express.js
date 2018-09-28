@@ -47,7 +47,7 @@ app.get("/send/:command", (req, res) => {
     if (connectedDevice) {
       fcConnector
         .sendCommand(connectedDevice, command)
-        .then(output => (output ? res.json(output) : res.sendStatus(202)))
+        .then(output => res.status(200).send(output))
         .catch(error => res.status(400).send(error));
     } else {
       res.sendStatus(404);
@@ -167,8 +167,7 @@ app.get("/telem/stop", (req, res) => {
 });
 
 app.get("/assistant/:fw/:id", (req, res) => {
-  let assistantData = require(`./config/assistant/${req.params.fw.toLowerCase() ||
-    "bxf"}/${req.params.id.toLowerCase()}.json`);
+  let assistantData = require(`./config/assistant/${req.params.fw.toLowerCase()}/${req.params.id.toLowerCase()}.json`);
   res.json(assistantData);
 });
 

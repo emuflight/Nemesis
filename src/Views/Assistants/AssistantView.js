@@ -13,13 +13,20 @@ export default class AssistantView extends Component {
     };
   }
   componentDidMount() {
-    return FCConnector.getAssistant(this.props.type).then(assistant => {
-      this.setState({
-        steps: assistant,
-        currentStep: assistant[0],
-        open: true
-      });
-    });
+    return FCConnector.getAssistant(this.props.type, this.props.fw).then(
+      assistant => {
+        this.setState({
+          steps: assistant,
+          currentStep: assistant[0],
+          open: true
+        });
+      }
+    );
+  }
+  handleNext() {
+    if (!this.state.next) {
+      this.props.onClose();
+    }
   }
   render() {
     return (
@@ -46,7 +53,7 @@ export default class AssistantView extends Component {
             style={{ flex: 1, display: "flex" }}
             type={this.props.type}
             items={this.state.currentStep.options}
-            onFinish={() => this.setState({ open: false, route: "" })}
+            onFinish={() => this.handleNext()}
           />
         </Paper>
       </Modal>

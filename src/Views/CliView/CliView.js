@@ -26,14 +26,14 @@ export default class CliView extends Component {
   }
   replaceLast(update) {
     this.setState({
-      isDirty: false,
+      disabled: false,
       cliBuffer: this.prevCli + update
     });
     this.refs.cliScroll.scrollTop = this.refs.cliScroll.scrollHeight;
   }
   appendCliBuffer(resp) {
     this.prevCli = this.state.cliBuffer;
-    this.setState({ isDirty: false, cliBuffer: this.prevCli + resp });
+    this.setState({ disabled: false, cliBuffer: this.prevCli + resp });
     this.refs.cliScroll.scrollTop = this.refs.cliScroll.scrollHeight;
   }
   handleKeyDown = e => {
@@ -53,17 +53,12 @@ export default class CliView extends Component {
       e.preventDefault();
       e.stopPropagation();
       e.target.value = "";
-      this.setState({ isDirty: true });
-      FCConnector.sendCliCommand(this.state.command)
-        .catch(err => {
-          console.log(err);
-          return { error: err };
-        })
-        .then(resp => {
-          if (typeof resp === "string") {
-            this.appendCliBuffer(resp);
-          }
-        });
+      this.setState({ disabled: true });
+      let commands = this.state.command.split(/\r|\n/gim);
+      FCConnector.sendBulkCommands(commands).then(resp => {
+        this.appendCliBuffer(resp);
+        this.setState({ disabled: false });
+      });
     }
   };
   render() {

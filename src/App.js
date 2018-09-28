@@ -26,6 +26,11 @@ class App extends Component {
           deviceInfo: undefined
         };
         this.setState(stateObj);
+      } else {
+        this.setState({
+          connecting: false,
+          connected: false
+        })
       }
     });
   }
@@ -44,13 +49,17 @@ class App extends Component {
           id: device.comName,
           deviceInfo: device,
           currentConfig: device.config,
+          connecting: false,
           connected: !device.incompatible,
           incompatible: device.incompatible
         });
         FCConnector.currentTarget = "";
         return device.config;
       })
-      .catch(() => this.setState({ connecting: false }));
+      .catch(() => this.setState({ 
+        connecting: false,
+        connected: false
+      }));
   };
 
   componentDidMount() {

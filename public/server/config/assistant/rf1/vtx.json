@@ -6,7 +6,7 @@
         "image": "./dfu.gif",
         "title": "TBS",
         "headline": "Unify Pro",
-        "command": "serial ${0} 2048 115200 57600 0 115200",
+        "commands": ["serial ${0} 2048 115200 57600 0 115200"],
         "commandOptions": [
           {
             "title": "Uart 2",
@@ -26,7 +26,7 @@
         "image": "./dfu.gif",
         "title": "ImmersionRC Tramp",
         "headline": "ImmersionRC Tramp",
-        "command": "serial ${0} 8192 115200 57600 0 115200",
+        "commands": ["serial ${0} 8192 115200 57600 0 115200"],
         "commandOptions": [
           {
             "title": "Uart 2",
@@ -46,7 +46,7 @@
         "image": "./dfu.gif",
         "title": "AKK/Legacy Smart Audio",
         "headline": "AKK/Legacy Smart Audio",
-        "command": "serial ${0} 2048 115200 57600 0 115200\n",
+        "commands": ["serial ${0} 2048 115200 57600 0 115200\n"],
         "commandOptions": [
           {
             "title": "Uart 2",

@@ -46,10 +46,33 @@ export default new class FCConnector {
 
   sendCliCommand(command) {
     return this.sendCommand(command).then(response => {
-      return response.json();
+      return response.text();
     });
   }
 
+  sendBulkCommands(commands, progress) {
+    return new Promise((resolve, reject) => {
+      let response = "";
+      let i = 1;
+      const sendNext = com => {
+        this.sendCliCommand(com)
+          .catch(err => {
+            console.log(err);
+            reject(err);
+          })
+          .then(resp => {
+            response += resp;
+            progress && progress(i++);
+            if (commands.length) {
+              sendNext(commands.shift());
+            } else {
+              resolve(response);
+            }
+          });
+      };
+      sendNext(commands.shift());
+    });
+  }
   saveConfig() {
     return this.sendCommand("save");
   }
@@ -59,9 +82,7 @@ export default new class FCConnector {
     return fetch(`${this.serviceUrl}/dfu`);
   }
 
-  getAssistant(type) {
-    //TODO: make this derived from config
-    let fw = "bxf";
+  getAssistant(type, fw) {
     return fetch(`${this.serviceUrl}/assistant/${fw}/${type}`).then(resp =>
       resp.json()
     );

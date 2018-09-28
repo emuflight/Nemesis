@@ -42,9 +42,7 @@ const sendCommand = (device, command, waitMs = 200) => {
       timeout && clearTimeout(timeout);
       timeout = setTimeout(() => {
         connectedDevice.close();
-        resolve(
-          ret.slice(0, ret.indexOf("\n\0")).replace(/\u0001|\u0000/gim, "")
-        );
+        resolve(ret.slice(0, ret.indexOf("\n\0") + 1).replace(/\u0001/gim, ""));
       }, waitMs);
     });
     connectedDevice.on("error", error => {

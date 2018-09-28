@@ -1,24 +1,39 @@
 [
   {
-    "id": "reciever",
+    "id": "reciever type",
     "options": [
       {
         "image": "assets/frsky.png",
         "title": "FrSky",
         "headline": "FrSky",
-        "command": "set telem_spek=0\nset telem_sport=14"
+        "commands": ["set telem_spek=0", "set telem_sport=14", "save"],
+        "verify": {
+          "command": "wiz rx",
+          "until": "found on usart",
+          "error": "not found"
+        }
       },
       {
         "image": "assets/crossfire.png",
         "title": "Crossfire",
         "headline": "Crossfire",
-        "command": "crsf_b2"
+        "commands": ["crsf_b2", "save"],
+        "verify": {
+          "command": "wiz rx",
+          "until": "found on usart",
+          "error": "not found"
+        }
       },
       {
         "image": "assets/spektrum.png",
         "title": "Spektrum",
         "headline": "Spektrum",
-        "command": "set telem_spek=1\nset telem_sport=0"
+        "commands": ["set telem_spek=1", "set telem_sport=0", "save"],
+        "verify": {
+          "command": "wiz rx",
+          "until": "found on usart",
+          "error": "not found"
+        }
       }
     ]
   }

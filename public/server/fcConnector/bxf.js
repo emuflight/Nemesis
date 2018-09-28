@@ -1,6 +1,5 @@
 const SerialPort = require("serialport");
 const imufFirmware = require("../firmware/imuf");
-const { StringDecoder } = require("string_decoder");
 let openConnection;
 
 const setupConnection = device => {
@@ -34,6 +33,7 @@ const setupConnection = device => {
       });
       openConnection.on("error", err => {
         console.log("ERROR: ", err);
+        openConnection = undefined;
         reject(err);
       });
       // openConnection.setEncoding('utf8');
