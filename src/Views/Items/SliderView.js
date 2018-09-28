@@ -7,7 +7,6 @@ import Typography from "@material-ui/core/Typography";
 export default class SliderView extends Component {
   constructor(props) {
     super(props);
-    this.notifyDirty = props.notifyDirty;
     this.parser = parseInt;
     if (props.item.parse === "float") {
       this.parser = parseFloat;
@@ -21,6 +20,7 @@ export default class SliderView extends Component {
     this.setState({ isDirty: true });
     FCConnector.setValue(this.props.item.id, newVal).then(() => {
       this.props.item.current = newVal;
+      this.props.notifyDirty(true, this.state, newVal);
       this.setState({ isDirty: false, inputVal: newVal });
     });
   }

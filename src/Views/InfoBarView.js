@@ -10,19 +10,19 @@ export default class InfoBarView extends Component {
   constructor(props) {
     super(props);
     this.handleDrawerToggle = props.handleDrawerToggle;
-    this.notifyDirty = props.notifyDirty;
     this.state = {
       setupCompleted: -1,
-      craftName: props.fcConfig.craftName,
-      isDirty: props.isDirty
+      craftName: props.fcConfig.craftName
     };
   }
   updateCraftName = () => {
-    this.notifyDirty(true, this.state, this.state.craftName);
-    this.setState({ namingCraft: true });
-    FCConnector.sendCommand(`name ${this.state.craftName || "-"}`).then(() => {
-      this.setState({ namingCraft: false });
-    });
+    if (this.props.fcConfig.craftName !== this.state.craftName) {
+      FCConnector.sendCommand(`name ${this.state.craftName || "-"}`).then(
+        () => {
+          this.props.notifyDirty(true, this.state, this.state.craftName);
+        }
+      );
+    }
   };
 
   get setupPercentLabel() {
@@ -52,9 +52,7 @@ export default class InfoBarView extends Component {
             placeholder="A craft has no name..."
             defaultValue={this.props.fcConfig.name}
             onBlur={() => this.updateCraftName()}
-            onChange={(event, newValue) =>
-              this.setState({ craftName: newValue })
-            }
+            onChange={event => this.setState({ craftName: event.target.value })}
           />
           <TelemetryView style={{ flexGrow: 1 }} />
           {this.state.setupCompleted > -1 && (

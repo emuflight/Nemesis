@@ -7,7 +7,6 @@ import theme from "../../Themes/Dark";
 export default class ProfileView extends Component {
   constructor(props) {
     super(props);
-    this.notifyDirty = props.notifyDirty;
     this.state = {
       id: props.id,
       current: props.active,
@@ -19,7 +18,7 @@ export default class ProfileView extends Component {
     return (
       <ConfigListView
         ref="listView"
-        notifyDirty={this.notifyDirty}
+        notifyDirty={this.props.notifyDirty}
         items={this.props.items}
       />
     );
@@ -36,7 +35,7 @@ export default class ProfileView extends Component {
           <DropdownView
             ref="profSelector"
             style={{ display: "block" }}
-            notifyDirty={this.notifyDirty}
+            notifyDirty={this.props.notifyDirty}
             key={this.state.id}
             item={this.state}
           />

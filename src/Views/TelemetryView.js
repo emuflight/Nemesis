@@ -60,7 +60,7 @@ export default class TelemetryView extends Component {
   render() {
     return (
       <div style={{ margin: "0 10px" }}>
-        <Button onClick={this.handleClick} color="secondary">
+        <Button onClick={this.handleClick} color="primary" variant="raised">
           Telemetry
         </Button>
         <Popover

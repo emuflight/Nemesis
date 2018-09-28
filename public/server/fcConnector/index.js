@@ -183,7 +183,7 @@ module.exports = {
   },
   sendCommand(deviceInfo, command) {
     if (deviceInfo.hid) {
-      return rf1Connector.sendCommand(deviceInfo, command, 20);
+      return rf1Connector.sendCommand(deviceInfo, command);
     } else {
       return bxfConnector.sendCommand(deviceInfo, command);
     }
@@ -212,6 +212,13 @@ module.exports = {
       return rf1Connector.sendCommand(deviceInfo, "rebootDFU");
     } else {
       return bxfConnector.sendCommand(deviceInfo, "bl");
+    }
+  },
+  saveEEPROM(deviceInfo) {
+    if (deviceInfo.hid) {
+      return rf1Connector.saveEEPROM(deviceInfo);
+    } else {
+      return bxfConnector.saveEEPROM(deviceInfo);
     }
   },
   updateIMUF(deviceInfo, binUrl, cb, ecb) {

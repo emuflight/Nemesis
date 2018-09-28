@@ -2,20 +2,11 @@ import React, { Component } from "react";
 import DropdownView from "../Items/DropdownView";
 import SliderView from "../Items/SliderView";
 import InputView from "../Items/InputView";
-import Paper from "@material-ui/core/Paper";
-import theme from "../../Themes/Dark";
 
 export default class ConfigListView extends Component {
-  constructor(props) {
-    super(props);
-    this.notifyDirty = props.notifyDirty;
-  }
-
   render() {
     return (
-      <Paper
-        theme={theme}
-        elevation={3}
+      <div
         style={{
           margin: "10px",
           padding: "10px",
@@ -29,7 +20,7 @@ export default class ConfigListView extends Component {
               case "slider":
                 return (
                   <SliderView
-                    notifyDirty={this.notifyDirty}
+                    notifyDirty={this.props.notifyDirty}
                     key={item.id}
                     item={item}
                     inputVal={item.current}
@@ -38,7 +29,7 @@ export default class ConfigListView extends Component {
               // case "ARRAY":
               //   return (
               //     <ConfigListView
-              //       notifyDirty={this.notifyDirty}
+              //       notifyDirty={this.props.notifyDirty}
               //       key={i}
               //       items={item.values}
               //     />
@@ -46,7 +37,7 @@ export default class ConfigListView extends Component {
               case "LOOKUP":
                 return (
                   <DropdownView
-                    notifyDirty={this.notifyDirty}
+                    notifyDirty={this.props.notifyDirty}
                     key={item.id}
                     item={item}
                   />
@@ -54,14 +45,14 @@ export default class ConfigListView extends Component {
               default:
                 return (
                   <InputView
-                    notifyDirty={this.notifyDirty}
+                    notifyDirty={this.props.notifyDirty}
                     key={item.id}
                     item={item}
                   />
                 );
             }
           })}
-      </Paper>
+      </div>
     );
   }
 }

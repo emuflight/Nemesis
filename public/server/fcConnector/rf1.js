@@ -59,6 +59,7 @@ const sendCommand = (device, command, waitMs = 200) => {
 const updateIMUF = (codeviceName, binName, notify, cb, ecb) => {
   ecb && ecb("not implemented");
 };
+const saveEEPROM = (codeviceName, binName, notify, cb, ecb) => {};
 
 const setValue = (device, name, newVal) => {
   return sendCommand(device, `set ${name}=${newVal}`);
@@ -100,5 +101,6 @@ module.exports = {
   updateIMUF: updateIMUF,
   getConfig: getConfig,
   getTelemetry: getTelemetry,
-  setValue: setValue
+  setValue: setValue,
+  saveEEPROM: saveEEPROM
 };

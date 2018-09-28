@@ -45,17 +45,17 @@ export default class PidsView extends ProfileView {
           <DropdownView
             notifyDirty={(isDirty, state, payload) => {
               this.updatePidValues(payload);
-              this.notifyDirty(isDirty, state, payload);
+              this.props.notifyDirty(isDirty, state, payload);
             }}
             item={this.props.fcConfig.gyro_sync_denom}
           />
           <DropdownView
             ref="pidProcessList"
-            notifyDirty={this.notifyDirty}
+            notifyDirty={this.props.notifyDirty}
             item={this.props.fcConfig.pid_process_denom}
           />
           <DropdownView
-            notifyDirty={this.notifyDirty}
+            notifyDirty={this.props.notifyDirty}
             item={this.props.fcConfig.buttered_pids}
           />
         </Paper>
@@ -66,22 +66,10 @@ export default class PidsView extends ProfileView {
         >
           <div style={{ margin: "0 auto", width: "800px" }}>
             <ConfigListView
-              notifyDirty={this.notifyDirty}
+              notifyDirty={this.props.notifyDirty}
               items={this.props.items}
             />
           </div>
-        </Paper>
-        <Paper
-          theme={theme}
-          elevation={3}
-          style={{ margin: "10px", padding: "10px" }}
-        >
-          {!this.props.fcConfig.imuf && (
-            <DropdownView
-              notifyDirty={this.notifyDirty}
-              item={this.props.fcConfig.dterm_lowpass_hz_type}
-            />
-          )}
         </Paper>
         {!this.props.fcConfig.imuf && (
           <Paper
@@ -89,18 +77,30 @@ export default class PidsView extends ProfileView {
             elevation={3}
             style={{ margin: "10px", padding: "10px" }}
           >
+            <DropdownView
+              notifyDirty={this.props.notifyDirty}
+              item={this.props.fcConfig.dterm_lowpass_hz_type}
+            />
+          </Paper>
+        )}
+        {!this.props.fcConfig.imuf && (
+          <Paper
+            theme={theme}
+            elevation={3}
+            style={{ margin: "10px", padding: "10px" }}
+          >
             <InputView
-              notifyDirty={this.notifyDirty}
+              notifyDirty={this.props.notifyDirty}
               key={this.props.fcConfig.dterm_lowpass_hz.id}
               item={this.props.fcConfig.dterm_lowpass_hz}
             />
             <InputView
-              notifyDirty={this.notifyDirty}
+              notifyDirty={this.props.notifyDirty}
               key={this.props.fcConfig.dterm_notch_hz.id}
               item={this.props.fcConfig.dterm_notch_hz}
             />
             <InputView
-              notifyDirty={this.notifyDirty}
+              notifyDirty={this.props.notifyDirty}
               key={this.props.fcConfig.dterm_notch_cutoff.id}
               item={this.props.fcConfig.dterm_notch_cutoff}
             />
@@ -115,24 +115,24 @@ export default class PidsView extends ProfileView {
           <DropdownView
             notifyDirty={(isDirty, state, payload) => {
               this.handleTpaChange(payload);
-              this.notifyDirty(isDirty, state, payload);
+              this.props.notifyDirty(isDirty, state, payload);
             }}
             item={this.props.fcConfig.tpa_type}
           />
 
           {this.state.showTpaCurves ? (
             <TpaCurveView
-              notifyDirty={this.notifyDirty}
+              notifyDirty={this.props.notifyDirty}
               item={this.props.fcConfig.tpa_curves}
             />
           ) : (
             <div>
               <InputView
-                notifyDirty={this.notifyDirty}
+                notifyDirty={this.props.notifyDirty}
                 item={this.props.fcConfig.tpa_breakpoint}
               />
               <InputView
-                notifyDirty={this.notifyDirty}
+                notifyDirty={this.props.notifyDirty}
                 item={this.props.fcConfig.tpa_rate}
               />
             </div>

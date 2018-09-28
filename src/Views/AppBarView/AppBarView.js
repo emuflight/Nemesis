@@ -10,7 +10,6 @@ import { withStyles } from "@material-ui/core/styles";
 import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import InfoBarView from "../InfoBarView";
-import FCConnector from "../../utilities/FCConnector";
 
 const styles = theme => ({
   root: {
@@ -73,11 +72,9 @@ const styles = theme => ({
 });
 
 class AppBarView extends Component {
-  state = {};
-
-  handleSaveClick = () => {
-    FCConnector.saveConfig();
-  };
+  shouldComponentUpdate() {
+    return true;
+  }
 
   render() {
     const { classes } = this.props;
@@ -101,18 +98,19 @@ class AppBarView extends Component {
               {this.props.title}
             </Typography>
             <InfoBarView
+              fcConfig={this.props.fcConfig}
               notifyDirty={(isDirty, item, newValue) =>
                 this.props.notifyDirty(isDirty, item, newValue)
               }
-              fcConfig={this.props.fcConfig}
               isDirty={this.props.isDirty}
             />
             <div className={classes.grow} />
             <Button
-              color="primary"
+              color="secondary"
+              variant="raised"
               style={{ marginLeft: "10px" }}
               disabled={!this.props.isDirty}
-              onClick={() => this.handleSaveClick()}
+              onClick={() => this.props.onSave()}
             >
               Save
             </Button>

@@ -63,8 +63,26 @@ app.get("/set/:name/:value", (req, res) => {
     if (connectedDevice) {
       fcConnector
         .setValue(connectedDevice, name, value)
-        .then(() => res.sendStatus(202))
+        .then(ret => res.status(200).send(ret))
         .catch(error => res.status(400).send(error));
+    } else {
+      res.sendStatus(404);
+    }
+  });
+});
+app.get("/save/eeprom", (req, res) => {
+  devices.list((err, ports) => {
+    if (err) return res.status(400).send(err);
+    let connectedDevice = ports[0];
+    if (connectedDevice) {
+      fcConnector
+        .saveEEPROM(connectedDevice)
+        .then(res => {
+          res.status(202).send(res);
+        })
+        .catch(err => {
+          res.status(400).send(err);
+        });
     } else {
       res.sendStatus(404);
     }

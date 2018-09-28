@@ -34,7 +34,7 @@ const sendCommand = (device, command, waitMs = 200) => {
       ret += data;
       timeout && clearTimeout(timeout);
       timeout = setTimeout(() => {
-        port.close();
+        port.isOpen && port.close();
         resolve(ret);
         ret = "";
       }, waitMs);
@@ -54,12 +54,7 @@ const sendCommand = (device, command, waitMs = 200) => {
         }
       });
     };
-    if (os.platform() === "win32") {
-      //windows is stupid slow
-      setTimeout(openSerial, 200);
-    } else {
-      openSerial();
-    }
+    setTimeout(() => openSerial(), 100);
   });
 };
 
@@ -126,6 +121,10 @@ const setValue = (device, name, newVal) => {
   return sendCommand(device, `set ${name}=${newVal}`);
 };
 
+const saveEEPROM = device => {
+  return sendCommand(device, `msp 250`);
+};
+
 const getTelemetry = device => {
   return sendCommand(device, `msp 102`, 50).then(buffer => {
     try {
@@ -160,5 +159,6 @@ module.exports = {
   updateIMUF: updateIMUF,
   getConfig: getConfig,
   getTelemetry: getTelemetry,
-  setValue: setValue
+  setValue: setValue,
+  saveEEPROM: saveEEPROM
 };

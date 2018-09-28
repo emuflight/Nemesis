@@ -16,6 +16,7 @@ import FiltersView from "./FiltersView/FiltersView";
 import PidsView from "./PidView/PidView";
 import RatesView from "./RatesView/RatesView";
 import AppBarView from "./AppBarView/AppBarView";
+import FCConnector from "../utilities/FCConnector";
 
 const skipprops = [
   "pid_profile",
@@ -69,11 +70,19 @@ export default class Connected extends Component {
   handleSearch = () => {
     //TODO: filter config values based on text.
   };
+  handleSave = () => {
+    FCConnector.saveConfig().then(() => {
+      this.setState({ isDirty: false });
+    });
+  };
 
   handleMenuItemClick = event => {
     let newRoute = this.routes.find(
       route => route.key === event.target.textContent
     );
+    if (this.state.isDirty) {
+      this.handleSave();
+    }
     this.setState({
       drawerOpen: false,
       currentRoute: newRoute
@@ -217,10 +226,13 @@ export default class Connected extends Component {
           position="absolute"
           handleDrawerToggle={this.handleDrawerToggle}
           handleSearch={this.handleSearch}
+          onSave={this.handleSave}
+          notifyDirty={(isDirty, item, newValue) =>
+            this.notifyDirty(isDirty, item, newValue)
+          }
           title={this.state.currentRoute.title}
           fcConfig={this.fcConfig}
-          notifyDirty={this.notifyDirty}
-          isDirty={this.isDirty}
+          isDirty={this.state.isDirty}
         />
         <Drawer
           open={this.state.drawerOpen}

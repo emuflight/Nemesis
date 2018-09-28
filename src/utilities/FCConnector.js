@@ -33,7 +33,7 @@ export default new class FCConnector {
   setValue(name, newValue) {
     return fetch(`${this.serviceUrl}/set/${name}/${newValue}`).then(
       response => {
-        return response.json();
+        return response.arrayBuffer();
       }
     );
   }
@@ -57,6 +57,10 @@ export default new class FCConnector {
   goToDFU(target) {
     this.currentTarget = target;
     return fetch(`${this.serviceUrl}/dfu`);
+  }
+
+  saveEEPROM() {
+    return fetch(`${this.serviceUrl}/save/eeprom`);
   }
 
   startTelemetry() {
