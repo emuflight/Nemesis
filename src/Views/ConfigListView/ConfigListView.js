@@ -37,6 +37,7 @@ export default class ConfigListView extends Component {
               case "LOOKUP":
                 return (
                   <DropdownView
+                    style={{ width: 80, margin: 8 }}
                     notifyDirty={this.props.notifyDirty}
                     key={item.id}
                     item={item}
@@ -45,6 +46,7 @@ export default class ConfigListView extends Component {
               default:
                 return (
                   <InputView
+                    style={{ width: 80, margin: 8 }}
                     notifyDirty={this.props.notifyDirty}
                     key={item.id}
                     item={item}

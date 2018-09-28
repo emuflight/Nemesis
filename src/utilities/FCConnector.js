@@ -59,6 +59,13 @@ export default new class FCConnector {
     return fetch(`${this.serviceUrl}/dfu`);
   }
 
+  getAssistant(type) {
+    //TODO: make this derived from config
+    let fw = "bxf";
+    return fetch(`${this.serviceUrl}/assistant/${fw}/${type}`).then(resp =>
+      resp.json()
+    );
+  }
   saveEEPROM() {
     return fetch(`${this.serviceUrl}/save/eeprom`);
   }

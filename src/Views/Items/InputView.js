@@ -34,9 +34,9 @@ export default class InputView extends Component {
   render() {
     return (
       <TextField
-        key={this.state.id}
+        key={this.props.item.id}
         disabled={this.state.isDirty}
-        helperText={this.state.id}
+        label={this.props.item.id}
         value={this.state.current}
         onBlur={() => this.updateValue()}
         onChange={event => {

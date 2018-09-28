@@ -1,0 +1,25 @@
+[
+  {
+    "id": "reciever",
+    "options": [
+      {
+        "image": "assets/frsky.png",
+        "title": "FrSky",
+        "headline": "FrSky",
+        "command": "set serialrx_provider=SBUS"
+      },
+      {
+        "image": "assets/crossfire.png",
+        "title": "Crossfire",
+        "headline": "Crossfire",
+        "command": "set serialrx_provider=CRSF\n"
+      },
+      {
+        "image": "assets/spektrum.png",
+        "title": "Spektrum",
+        "headline": "Spektrum",
+        "command": "set serialrx_provider=SBUS\n"
+      }
+    ]
+  }
+]

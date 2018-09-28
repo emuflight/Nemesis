@@ -166,6 +166,12 @@ app.get("/telem/stop", (req, res) => {
   res.sendStatus(202);
 });
 
+app.get("/assistant/:fw/:id", (req, res) => {
+  let assistantData = require(`./config/assistant/${req.params.fw.toLowerCase() ||
+    "bxf"}/${req.params.id.toLowerCase()}.json`);
+  res.json(assistantData);
+});
+
 app.listen(9001, () => console.log("usb interface listening on port 9001!"));
 
 module.exports = {

@@ -1,0 +1,75 @@
+[
+  {
+    "id": "VTX control",
+    "options": [
+      {
+        "image": "./dfu.gif",
+        "title": "TBS",
+        "headline": "Unify Pro",
+        "command": "serial ${0} 2048 115200 57600 0 115200",
+        "commandOptions": [
+          {
+            "title": "Uart 2",
+            "value": "1"
+          },
+          {
+            "title": "Uart 3",
+            "value": "2"
+          },
+          {
+            "title": "Uart 5",
+            "value": "4"
+          }
+        ]
+      },
+      {
+        "image": "./dfu.gif",
+        "title": "ImmersionRC Tramp",
+        "headline": "ImmersionRC Tramp",
+        "command": "serial ${0} 8192 115200 57600 0 115200",
+        "commandOptions": [
+          {
+            "title": "Uart 2",
+            "value": "1"
+          },
+          {
+            "title": "Uart 3",
+            "value": "2"
+          },
+          {
+            "title": "Uart 5",
+            "value": "4"
+          }
+        ]
+      },
+      {
+        "image": "./dfu.gif",
+        "title": "AKK/Legacy Smart Audio",
+        "headline": "AKK/Legacy Smart Audio",
+        "command": "serial ${0} 2048 115200 57600 0 115200\n",
+        "commandOptions": [
+          {
+            "title": "Uart 2",
+            "value": "1"
+          },
+          {
+            "title": "Uart 3",
+            "value": "2"
+          },
+          {
+            "title": "Uart 5",
+            "value": "4"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "channel",
+    "options": [{}]
+  },
+  {
+    "id": "power",
+    "options": [{}]
+  }
+]

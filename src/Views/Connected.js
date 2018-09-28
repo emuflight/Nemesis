@@ -5,6 +5,7 @@ import Paper from "@material-ui/core/Paper";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import Badge from "@material-ui/core/Badge";
+import AccessibleForward from "@material-ui/icons/AccessibleForward";
 import theme from "../Themes/Dark";
 import VersionInfoView from "./VersionInfoView";
 import AuxChannelView from "./AuxChannelView/AuxChannelView";
@@ -17,6 +18,7 @@ import PidsView from "./PidView/PidView";
 import RatesView from "./RatesView/RatesView";
 import AppBarView from "./AppBarView/AppBarView";
 import FCConnector from "../utilities/FCConnector";
+import AssistantView from "./Assistants/AssistantView";
 
 const skipprops = [
   "pid_profile",
@@ -97,6 +99,13 @@ export default class Connected extends Component {
     updateObj[item.id] = newValue;
     this.setState(updateObj);
   };
+
+  openAssistant(routeName) {
+    this.setState({ openAssistant: true, assistantType: routeName });
+  }
+  closeAssistant() {
+    this.setState({ openAssistant: false, assistantType: "" });
+  }
   render() {
     let contents;
     if (this.props.device.hid) {
@@ -248,15 +257,16 @@ export default class Connected extends Component {
             imuf={this.fcConfig.imuf}
           />
           <Divider />
-          {this.routes.map(route => {
-            return (
-              <MenuItem
-                id={route.key}
-                key={route.key}
-                onClick={this.handleMenuItemClick}
-              >
-                <List style={{ display: "flex" }}>
-                  <div style={{ flex: 1 }}>{route.title}</div>
+          <List>
+            {this.routes.map(route => {
+              return (
+                <MenuItem style={{ width: 100 }} id={route.key} key={route.key}>
+                  <div
+                    style={{ flexGrow: 1 }}
+                    onClick={this.handleMenuItemClick}
+                  >
+                    {route.title}
+                  </div>
                   {route.incompeteItems && (
                     <Badge
                       style={{ top: "12px" }}
@@ -264,13 +274,25 @@ export default class Connected extends Component {
                       secondary={true}
                     />
                   )}
-                </List>
-              </MenuItem>
-            );
-          })}
+                  {route.assistant && (
+                    <AccessibleForward
+                      onClick={() => this.openAssistant(route.key)}
+                    />
+                  )}
+                </MenuItem>
+              );
+            })}
+          </List>
         </Drawer>
         {contents}
         <CliView />
+        {this.state.openAssistant && (
+          <AssistantView
+            open={this.state.openAssistant}
+            onClose={() => this.closeAssistant()}
+            type={this.state.assistantType}
+          />
+        )}
       </Paper>
     );
   }

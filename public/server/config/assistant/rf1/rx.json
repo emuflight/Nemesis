@@ -1,0 +1,25 @@
+[
+  {
+    "id": "reciever",
+    "options": [
+      {
+        "image": "assets/frsky.png",
+        "title": "FrSky",
+        "headline": "FrSky",
+        "command": "set telem_spek=0\nset telem_sport=14"
+      },
+      {
+        "image": "assets/crossfire.png",
+        "title": "Crossfire",
+        "headline": "Crossfire",
+        "command": "crsf_b2"
+      },
+      {
+        "image": "assets/spektrum.png",
+        "title": "Spektrum",
+        "headline": "Spektrum",
+        "command": "set telem_spek=1\nset telem_sport=0"
+      }
+    ]
+  }
+]

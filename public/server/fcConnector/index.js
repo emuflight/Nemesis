@@ -141,7 +141,8 @@ const applyUIConfig = (device, config, uiConfig) => {
   config.routes = uiConfig.routes.map(route => {
     return {
       key: route,
-      title: route
+      title: route,
+      assistant: route === "RX" || route === "VTX"
     };
   });
   let versionParts = config.version.split("|");
