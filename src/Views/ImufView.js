@@ -1,12 +1,15 @@
 import DfuView from "./DfuView";
 import FCConnector from "../utilities/FCConnector";
 
+const IMUFMessage = `\n\n**********<h1>YOU ARE IN IMU-F UPDATE MODE.\nDO NOT UNPLUG YOUR DEVICE UNTIL UPDATE IS COMPLETE OR YOU'RE GONNA HAVE A BAD TIME.</h1><img id="pbjt" src="assets/teehee.png" height="90" width="90"/><br/>**********\n\n`;
+
 export default class ImufView extends DfuView {
   constructor(props) {
     super(props);
     this.title = "IMU-F Updater";
     this.flText = "Select a version to flash IMU-F";
     this.btnLabel = "Update";
+    this.cliNotice = IMUFMessage;
     this.state = {
       currentTarget: "IMU-F",
       current: "IMU-F",

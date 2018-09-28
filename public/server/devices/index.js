@@ -67,6 +67,8 @@ module.exports = {
     )}`;
 
     let dfuProcess = child_process.spawn(command, [
+      "--device",
+      ",0483:df11",
       "-a",
       "0",
       "-s",

@@ -9,7 +9,7 @@ import HelperSelect from "./Items/HelperSelect";
 import theme from "../Themes/Dark";
 import Typography from "@material-ui/core/Typography";
 
-const DFUMessage = `\n\n**********<h1>YOU ARE IN DFU MODE.\nDO NOT UNPLUG YOUR DEVICE UNTIL FLASHING IS COMPLETE OR YOU'RE GONNA HAVE A BAD TIME.</h1><img id="pbjt" src="./dfu.gif" height="90" width="90"/><br/>**********\n\n`;
+const DFUMessage = `\n\n**********<h1>YOU ARE IN DFU MODE.\nDO NOT UNPLUG YOUR DEVICE UNTIL FLASHING IS COMPLETE OR YOU'RE GONNA HAVE A BAD TIME.</h1><img id="pbjt" src="assets/dfu.gif" height="90" width="90"/><br/>#flyhelio\n**********\n\n`;
 
 export default class DfuView extends Component {
   constructor(props) {
@@ -17,7 +17,7 @@ export default class DfuView extends Component {
     this.targetTitle = "Select a target";
     this.title = "Select a version";
     this.btnLabel = "FLASH";
-    this.dfuModeLabel = DFUMessage;
+    this.cliNotice = DFUMessage;
     this.state = {
       allowUpload: true,
       selectedFile: undefined,
@@ -50,7 +50,7 @@ export default class DfuView extends Component {
             // let pct = parseInt(notification.progress.slice(idxprct - 3, idxprct), 10);
             // document.getElementById('pbjt').style.transform = `translateX(${pct})`;
             this.refs.cliView.replaceLast(
-              this.dfuModeLabel + notification.progress
+              this.cliNotice + notification.progress
             );
           } else {
             isProgressStarted = haspercent;
@@ -257,7 +257,7 @@ export default class DfuView extends Component {
             <ReactMarkdown source={this.state.note} classNames={theme} />
           </Typography>
         </Paper>
-        <CliView disabled={true} startText={this.dfuModeLabel} ref="cliView" />
+        <CliView disabled={true} startText={this.cliNotice} ref="cliView" />
       </Paper>
     );
   }

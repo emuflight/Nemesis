@@ -203,7 +203,7 @@ module.exports = {
           return telemData;
         });
       }
-    }, 100);
+    }, 60);
   },
   stopTelemetry() {
     clearInterval(telemetryInterval);

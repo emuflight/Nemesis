@@ -70,12 +70,12 @@ export default class TelemetryView extends Component {
           onClose={this.handleClose}
         >
           <List>
-            <MenuItem>{"Gyro Roll: " + this.state.telemetry.gyro.x}</MenuItem>
-            <MenuItem>{"Gyro Pitch: " + this.state.telemetry.gyro.y}</MenuItem>
-            <MenuItem>{"Gyro Yaw: " + this.state.telemetry.gyro.z}</MenuItem>
             <MenuItem>{"Acc Roll: " + this.state.telemetry.acc.x}</MenuItem>
             <MenuItem>{"Acc Pitch: " + this.state.telemetry.acc.y}</MenuItem>
             <MenuItem>{"Acc Yaw: " + this.state.telemetry.acc.z}</MenuItem>
+            <MenuItem>{"Gyro Roll: " + this.state.telemetry.gyro.x}</MenuItem>
+            <MenuItem>{"Gyro Pitch: " + this.state.telemetry.gyro.y}</MenuItem>
+            <MenuItem>{"Gyro Yaw: " + this.state.telemetry.gyro.z}</MenuItem>
           </List>
         </Popover>
       </div>
