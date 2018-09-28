@@ -30,7 +30,7 @@ class App extends Component {
         this.setState({
           connecting: false,
           connected: false
-        })
+        });
       }
     });
   }
@@ -56,10 +56,12 @@ class App extends Component {
         FCConnector.currentTarget = "";
         return device.config;
       })
-      .catch(() => this.setState({ 
-        connecting: false,
-        connected: false
-      }));
+      .catch(() =>
+        this.setState({
+          connecting: false,
+          connected: false
+        })
+      );
   };
 
   componentDidMount() {
