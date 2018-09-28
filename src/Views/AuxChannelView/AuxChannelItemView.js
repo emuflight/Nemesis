@@ -11,7 +11,6 @@ export default class AuxChannelItemView extends Component {
   constructor(props) {
     super(props);
     this.state = props.item;
-    this.notifyDirty = props.notifyDirty;
     this.modes = auxModeList;
     this.channels = new Array(14).fill(undefined).map((k, i) => {
       if (i === 13) {
@@ -37,6 +36,7 @@ export default class AuxChannelItemView extends Component {
 
     FCConnector.sendCommand(this.command).then(() => {
       this.setState({ isDirty: false });
+      this.props.notifyDirty(true, this.state, this.command);
     });
   }
   render() {

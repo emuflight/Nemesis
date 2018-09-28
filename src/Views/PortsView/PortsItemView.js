@@ -7,12 +7,11 @@ import HelperSelect from "../Items/HelperSelect";
 export default class PortsItemView extends Component {
   constructor(props) {
     super(props);
-    this.notifyDirty = props.notifyDirty;
     this.portModes = uiPorts.modes;
     this.portLabels = uiPorts.ports;
   }
   updateValue(payload) {
-    this.notifyDirty(true, this.props.item, payload);
+    this.props.notifyDirty(true, this.props.item, payload);
     FCConnector.sendCommand(
       `serial ${this.props.item.id} ${payload} ${this.props.item.mspBaud} ${
         this.props.item.gpsBaud

@@ -15,7 +15,7 @@ export default class RatesView extends ProfileView {
           style={{ margin: "10px", padding: "10px" }}
         >
           <DropdownView
-            notifyDirty={this.notifyDirty}
+            notifyDirty={this.props.notifyDirty}
             item={this.props.fcConfig.rates_type}
           />
         </Paper>
@@ -25,15 +25,15 @@ export default class RatesView extends ProfileView {
           style={{ margin: "10px", padding: "10px" }}
         >
           <InputView
-            notifyDirty={this.notifyDirty}
+            notifyDirty={this.props.notifyDirty}
             item={this.props.fcConfig.roll_rc_rate}
           />
           <InputView
-            notifyDirty={this.notifyDirty}
+            notifyDirty={this.props.notifyDirty}
             item={this.props.fcConfig.pitch_rc_rate}
           />
           <InputView
-            notifyDirty={this.notifyDirty}
+            notifyDirty={this.props.notifyDirty}
             item={this.props.fcConfig.yaw_rc_rate}
           />
         </Paper>
@@ -43,15 +43,15 @@ export default class RatesView extends ProfileView {
           style={{ margin: "10px", padding: "10px" }}
         >
           <InputView
-            notifyDirty={this.notifyDirty}
+            notifyDirty={this.props.notifyDirty}
             item={this.props.fcConfig.roll_srate}
           />
           <InputView
-            notifyDirty={this.notifyDirty}
+            notifyDirty={this.props.notifyDirty}
             item={this.props.fcConfig.pitch_srate}
           />
           <InputView
-            notifyDirty={this.notifyDirty}
+            notifyDirty={this.props.notifyDirty}
             item={this.props.fcConfig.yaw_srate}
           />
         </Paper>
@@ -61,15 +61,15 @@ export default class RatesView extends ProfileView {
           style={{ margin: "10px", padding: "10px" }}
         >
           <InputView
-            notifyDirty={this.notifyDirty}
+            notifyDirty={this.props.notifyDirty}
             item={this.props.fcConfig.roll_expo}
           />
           <InputView
-            notifyDirty={this.notifyDirty}
+            notifyDirty={this.props.notifyDirty}
             item={this.props.fcConfig.pitch_expo}
           />
           <InputView
-            notifyDirty={this.notifyDirty}
+            notifyDirty={this.props.notifyDirty}
             item={this.props.fcConfig.yaw_expo}
           />
         </Paper>
@@ -79,7 +79,7 @@ export default class RatesView extends ProfileView {
           style={{ margin: "10px", padding: "10px" }}
         >
           <InputView
-            notifyDirty={this.notifyDirty}
+            notifyDirty={this.props.notifyDirty}
             item={this.props.fcConfig.thr_expo}
           />
         </Paper>

@@ -5,8 +5,9 @@ import FCConnector from "../../utilities/FCConnector";
 export default class InputView extends Component {
   constructor(props) {
     super(props);
-    this.state = props.item;
-    this.notifyDirty = props.notifyDirty;
+    this.state = {
+      current: props.item.current
+    };
   }
 
   sanitizeInput = value => {
@@ -20,13 +21,14 @@ export default class InputView extends Component {
   };
 
   updateValue() {
-    let isDirty =
-      this.state.current !== this.state.newValue && !!this.state.current;
-    this.notifyDirty(isDirty, this.state, this.state.newValue);
-    this.setState({ current: this.state.newValue, isDirty: isDirty });
-    FCConnector.setValue(this.state.id, this.state.newValue).then(() => {
-      this.setState({ isDirty: false });
-    });
+    let isDirty = this.state.current !== this.props.item.current;
+    if (isDirty) {
+      this.props.notifyDirty(isDirty, this.state, this.state.current);
+      this.setState({ isDirty: true });
+      FCConnector.setValue(this.props.item.id, this.state.current).then(() => {
+        this.setState({ isDirty: false });
+      });
+    }
   }
 
   render() {
@@ -37,8 +39,8 @@ export default class InputView extends Component {
         helperText={this.state.id}
         value={this.state.current}
         onBlur={() => this.updateValue()}
-        onChange={(event, newValue) => {
-          this.setState({ newValue });
+        onChange={event => {
+          this.setState({ current: event.target.value });
         }}
         type="number"
       />

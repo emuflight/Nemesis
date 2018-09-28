@@ -7,7 +7,6 @@ import theme from "../../Themes/Dark";
 export default class PortsView extends Component {
   constructor(props) {
     super(props);
-    this.notifyDirty = props.notifyDirty;
     this.state = {
       rxProvider: {
         id: "serialrx_provider",
@@ -22,7 +21,7 @@ export default class PortsView extends Component {
     let ports = this.state.ports;
     ports[index].mode = newVal;
     this.setState(ports);
-    this.notifyDirty(dirty, stateObj, newVal);
+    this.props.notifyDirty(dirty, stateObj, newVal);
   };
 
   render() {
@@ -44,7 +43,7 @@ export default class PortsView extends Component {
               />
               {port.mode === "64" && (
                 <DropdownView
-                  notifyDirty={this.notifyDirty}
+                  notifyDirty={this.props.notifyDirty}
                   item={this.state.rxProvider}
                 />
               )}

@@ -7,13 +7,12 @@ import Switch from "@material-ui/core/Switch";
 export default class FeatureItemView extends Component {
   constructor(props) {
     super(props);
-    this.notifyDirty = props.notifyDirty;
     this.state = {
       checked: this.props.item.current
     };
   }
   handleToggle = payload => {
-    this.notifyDirty(true, this.props.item, payload);
+    this.props.notifyDirty(true, this.props.item, payload);
     this.setState({ checked: payload });
     FCConnector.sendCommand(
       `feature ${payload ? "" : "-"}${this.props.item.id}`

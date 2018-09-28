@@ -7,11 +7,9 @@ import theme from "../../Themes/Dark";
 export default class FeaturesView extends Component {
   constructor(props) {
     super(props);
-    this.notifyDirty = props.notifyDirty;
     this.state = {
       features: props.features
     };
-    this.notifyDirty = props.notifyDirty;
   }
 
   render() {
@@ -25,7 +23,7 @@ export default class FeaturesView extends Component {
           {this.state.features.map(feature => {
             return (
               <FeatureItemView
-                notifyDirty={this.notifyDirty}
+                notifyDirty={this.props.notifyDirty}
                 key={feature.id}
                 item={feature}
               />

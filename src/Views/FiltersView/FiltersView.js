@@ -15,15 +15,15 @@ export default class FiltersView extends ConfigListView {
           style={{ margin: "10px", padding: "10px" }}
         >
           <DropdownView
-            notifyDirty={this.notifyDirty}
+            notifyDirty={this.props.notifyDirty}
             item={this.props.fcConfig.gyro_hardware_lpf}
           />
           <DropdownView
-            notifyDirty={this.notifyDirty}
+            notifyDirty={this.props.notifyDirty}
             item={this.props.fcConfig.gyro_lowpass_type}
           />
           <InputView
-            notifyDirty={this.notifyDirty}
+            notifyDirty={this.props.notifyDirty}
             item={this.props.fcConfig.gyro_lowpass_hz}
           />
         </Paper>
@@ -35,15 +35,15 @@ export default class FiltersView extends ConfigListView {
               style={{ margin: "10px", padding: "10px" }}
             >
               <InputView
-                notifyDirty={this.notifyDirty}
+                notifyDirty={this.props.notifyDirty}
                 item={this.props.fcConfig.imuf_roll_q}
               />
               <InputView
-                notifyDirty={this.notifyDirty}
+                notifyDirty={this.props.notifyDirty}
                 item={this.props.fcConfig.imuf_pitch_q}
               />
               <InputView
-                notifyDirty={this.notifyDirty}
+                notifyDirty={this.props.notifyDirty}
                 item={this.props.fcConfig.imuf_yaw_q}
               />
             </Paper>
@@ -53,15 +53,15 @@ export default class FiltersView extends ConfigListView {
               style={{ margin: "10px", padding: "10px" }}
             >
               <InputView
-                notifyDirty={this.notifyDirty}
+                notifyDirty={this.props.notifyDirty}
                 item={this.props.fcConfig.imuf_roll_lpf_cutoff_hz}
               />
               <InputView
-                notifyDirty={this.notifyDirty}
+                notifyDirty={this.props.notifyDirty}
                 item={this.props.fcConfig.imuf_pitch_lpf_cutoff_hz}
               />
               <InputView
-                notifyDirty={this.notifyDirty}
+                notifyDirty={this.props.notifyDirty}
                 item={this.props.fcConfig.imuf_yaw_lpf_cutoff_hz}
               />
             </Paper>
@@ -71,7 +71,7 @@ export default class FiltersView extends ConfigListView {
               style={{ margin: "10px", padding: "10px" }}
             >
               <InputView
-                notifyDirty={this.notifyDirty}
+                notifyDirty={this.props.notifyDirty}
                 item={this.props.fcConfig.imuf_w}
               />
             </Paper>
@@ -84,11 +84,11 @@ export default class FiltersView extends ConfigListView {
               style={{ margin: "10px", padding: "10px" }}
             >
               <InputView
-                notifyDirty={this.notifyDirty}
+                notifyDirty={this.props.notifyDirty}
                 item={this.props.fcConfig.gyro_notch1_hz}
               />
               <InputView
-                notifyDirty={this.notifyDirty}
+                notifyDirty={this.props.notifyDirty}
                 item={this.props.fcConfig.gyro_notch1_cutoff}
               />
             </Paper>
@@ -98,11 +98,11 @@ export default class FiltersView extends ConfigListView {
               style={{ margin: "10px", padding: "10px" }}
             >
               <InputView
-                notifyDirty={this.notifyDirty}
+                notifyDirty={this.props.notifyDirty}
                 item={this.props.fcConfig.gyro_notch2_hz}
               />
               <InputView
-                notifyDirty={this.notifyDirty}
+                notifyDirty={this.props.notifyDirty}
                 item={this.props.fcConfig.gyro_notch2_cutoff}
               />
             </Paper>

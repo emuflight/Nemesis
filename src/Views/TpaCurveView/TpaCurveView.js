@@ -29,13 +29,12 @@ export default class TpaCurveView extends Component {
       ki: formatCurveItems(props.item.ki),
       kd: formatCurveItems(props.item.kd)
     };
-    this.notifyDirty = props.notifyDirty;
   }
 
-  updateValue(k, i, state) {
+  updateValue(k, i, val) {
     let updateObj = {};
     updateObj[k] = this.state[k];
-    updateObj[k][i].current = state.inputVal;
+    updateObj[k][i].current = val;
     let middle = updateObj[k][i];
     let left = updateObj[k][i - 1];
     let right = updateObj[k][i + 1];
@@ -48,7 +47,7 @@ export default class TpaCurveView extends Component {
     this.setState(updateObj);
     return FCConnector.sendCommand(
       `tpacurve ${k} ${this.state[k].map(item => item.current).join("=")}`
-    );
+    ).then(() => this.props.notifyDirty(true, this.state, val));
   }
   render() {
     return (
@@ -81,8 +80,7 @@ export default class TpaCurveView extends Component {
                   return (
                     <TpaCurveItemView
                       key={`kp${i}`}
-                      updateCurve={state => this.updateValue("kp", i, state)}
-                      notifyDirty={this.notifyDirty}
+                      updateCurve={value => this.updateValue("kp", i, value)}
                       item={item}
                     />
                   );
@@ -96,8 +94,7 @@ export default class TpaCurveView extends Component {
                   return (
                     <TpaCurveItemView
                       key={`ki${i}`}
-                      updateCurve={state => this.updateValue("ki", i, state)}
-                      notifyDirty={this.notifyDirty}
+                      updateCurve={value => this.updateValue("ki", i, value)}
                       item={item}
                     />
                   );
@@ -111,8 +108,7 @@ export default class TpaCurveView extends Component {
                   return (
                     <TpaCurveItemView
                       key={`kd${i}`}
-                      updateCurve={state => this.updateValue("kd", i, state)}
-                      notifyDirty={this.notifyDirty}
+                      updateCurve={value => this.updateValue("kd", i, value)}
                       item={item}
                     />
                   );

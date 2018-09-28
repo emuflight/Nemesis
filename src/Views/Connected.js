@@ -81,7 +81,8 @@ export default class Connected extends Component {
       route => route.key === event.target.textContent
     );
     if (this.state.isDirty) {
-      this.handleSave();
+      // this.handleSave();
+      //TODO: save EEPROM
     }
     this.setState({
       drawerOpen: false,

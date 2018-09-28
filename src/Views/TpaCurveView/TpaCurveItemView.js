@@ -3,8 +3,6 @@ import SliderView from "../Items/SliderView";
 export default class TpaCurveItemView extends SliderView {
   constructor(props) {
     super(props);
-    this.notifyDirty = props.notifyDirty;
-    this.updateCurve = props.updateCurve;
     this.parser = parseInt;
     this.state = {
       isDirty: false,
@@ -12,8 +10,9 @@ export default class TpaCurveItemView extends SliderView {
     };
   }
   updateValue(newVal) {
-    this.props.item.current = newVal;
-    this.setState({ isDirty: true, inputVal: newVal });
-    this.updateCurve(this.state).then(() => this.setState({ isDirty: false }));
+    this.setState({ isDirty: true });
+    this.props
+      .updateCurve(newVal)
+      .then(() => this.setState({ isDirty: false }));
   }
 }
