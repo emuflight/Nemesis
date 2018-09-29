@@ -316,7 +316,195 @@
     ],
     "ADVANCED": ["advanced"]
   },
-  "elements": {},
+  "elements": {
+    "mixer_type": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "0",
+          "label": "NORMAL"
+        },
+        {
+          "value": "1",
+          "label": "REVERSED"
+        }
+      ]
+    },
+    "yaw_kp1": {
+      "mode": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "y"
+    },
+    "roll_kp1": {
+      "mode": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "y"
+    },
+    "pitch_kp1": {
+      "mode": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "y"
+    },
+    "yaw_ki1": {
+      "mode": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "y"
+    },
+    "roll_ki1": {
+      "mode": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "y"
+    },
+    "pitch_ki1": {
+      "mode": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "y"
+    },
+    "yaw_kd1": {
+      "mode": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "y"
+    },
+    "roll_kd1": {
+      "mode": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "y"
+    },
+    "pitch_kd1": {
+      "mode": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "y"
+    },
+    "yaw_kp2": {
+      "mode": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "y"
+    },
+    "roll_kp2": {
+      "mode": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "y"
+    },
+    "pitch_kp2": {
+      "mode": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "y"
+    },
+    "yaw_ki2": {
+      "mode": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "y"
+    },
+    "roll_ki2": {
+      "mode": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "y"
+    },
+    "pitch_ki2": {
+      "mode": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "y"
+    },
+    "yaw_kd2": {
+      "mode": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "y"
+    },
+    "roll_kd2": {
+      "mode": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "y"
+    },
+    "pitch_kd2": {
+      "mode": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "y"
+    },
+    "yaw_kp3": {
+      "mode": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "y"
+    },
+    "roll_kp3": {
+      "mode": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "y"
+    },
+    "pitch_kp3": {
+      "mode": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "y"
+    },
+    "yaw_ki3": {
+      "mode": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "y"
+    },
+    "roll_ki3": {
+      "mode": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "y"
+    },
+    "pitch_ki3": {
+      "mode": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "y"
+    },
+    "yaw_kd3": {
+      "mode": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "y"
+    },
+    "roll_kd3": {
+      "mode": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "y"
+    },
+    "pitch_kd3": {
+      "mode": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "y"
+    },
+    "pname1": {
+      "type": "string",
+      "classes": "pname1"
+    },
+    "pname2": {
+      "type": "string",
+      "classes": "pname2"
+    },
+    "pname3": {
+      "type": "string",
+      "classes": "pname3"
+    }
+  },
   "keymap": {
     "yaw_kd_rap": "dterm_lowpass_hz",
     "dterm_lowpass_type": "dterm_lowpass_hz_type",

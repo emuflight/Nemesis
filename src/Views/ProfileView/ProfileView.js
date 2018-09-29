@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ConfigListView from "../ConfigListView/ConfigListView";
-import DropdownView from "../Items/DropdownView";
+import HelperSelect from "../Items/HelperSelect";
 import Paper from "@material-ui/core/Paper";
 import theme from "../../Themes/Dark";
 
@@ -8,9 +8,7 @@ export default class ProfileView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: props.id,
-      current: props.active,
-      values: props.profileList
+      isBxF: props.fcConfig.isBxF
     };
   }
 
@@ -32,12 +30,13 @@ export default class ProfileView extends Component {
           elevation={3}
           style={{ margin: "10px", padding: "10px" }}
         >
-          <DropdownView
-            ref="profSelector"
-            style={{ display: "block" }}
-            notifyDirty={this.props.notifyDirty}
-            key={this.state.id}
-            item={this.state}
+          <HelperSelect
+            id={this.props.id}
+            className={this.props.id}
+            label={this.props.id}
+            value={this.props.active}
+            onChange={event => this.props.changeProfile(event.target.value)}
+            items={this.props.profileList}
           />
         </Paper>
         {this.getContent()}

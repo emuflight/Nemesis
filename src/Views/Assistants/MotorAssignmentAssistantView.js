@@ -35,14 +35,17 @@ export default class MotorAssignmentAssistantView extends PickerAssistantView {
             padding: 30
           }}
         >
-          <div>
+          <div style={{ display: "flex" }}>
             <Typography variant="headline">{`Motor mapping`}</Typography>
-            <div />
+            <div style={{ flexGrow: 1 }} />
             <Button
+              variant="raised"
+              color="secondary"
               disabled={!this.state.remapped}
               onClick={() =>
                 FCConnector.saveConfig().then(() => {
                   this.setState({ remapped: false });
+                  this.props.onFinish();
                 })
               }
             >

@@ -16,7 +16,14 @@ class App extends Component {
     };
 
     FCConnector.startDetect(device => {
-      if (device.connected) {
+      if (device.progress || device.telemetry) {
+        return;
+      }
+      if (device.rebooting) {
+        this.setState({
+          rebooting: true
+        });
+      } else if (device.connected) {
         this.getFcConfig();
       } else if (!device.progress) {
         let stateObj = {
@@ -86,6 +93,8 @@ class App extends Component {
       return (
         <MuiThemeProvider theme={theme}>
           <Connected
+            rebooting={this.state.rebooting}
+            refreshConfig={this.getFcConfig}
             goToImuf={this.goToImuf}
             connectinId={this.state.id}
             device={this.state.deviceInfo}

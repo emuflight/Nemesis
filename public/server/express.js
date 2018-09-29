@@ -37,6 +37,22 @@ app.get("/device", (req, res) => {
     }
   });
 });
+app.get("/profile/:type/:index", (req, res) => {
+  devices.list((err, ports) => {
+    if (err) return res.status(400).send(err);
+    let connectedDevice = ports[0],
+      type = req.params.type,
+      index = req.params.index;
+    if (connectedDevice) {
+      fcConnector
+        .setProfile(connectedDevice, type, index)
+        .then(deviceConfig => res.json(deviceConfig))
+        .catch(error => res.status(426).send(error));
+    } else {
+      res.sendStatus(404);
+    }
+  });
+});
 
 app.get("/send/:command", (req, res) => {
   devices.list((err, ports) => {

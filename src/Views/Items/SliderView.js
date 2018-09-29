@@ -19,7 +19,7 @@ export default class SliderView extends Component {
   updateValue(newVal) {
     this.setState({ isDirty: true });
     FCConnector.setValue(this.props.item.id, newVal).then(() => {
-      this.props.item.current = newVal;
+      this.props.item.current = this.parser(newVal);
       this.props.notifyDirty(true, this.state, newVal);
       this.setState({ isDirty: false, inputVal: newVal });
     });
@@ -29,7 +29,7 @@ export default class SliderView extends Component {
   }
   render() {
     return (
-      <div style={{ flex: "1" }}>
+      <div className="slider-control" style={{ flex: "1" }}>
         <div style={{ display: "flex", flexDirection: "column", width: 0 }}>
           <Typography>{this.props.item.id}</Typography>
           <Slider
@@ -42,8 +42,8 @@ export default class SliderView extends Component {
             vertical={this.props.item.axis === "y"}
             reverse
             onChange={(event, inputVal) => {
-              this.setState({ inputVal });
-              this.props.item.current = inputVal;
+              this.setState({ inputVal: this.parser(inputVal) });
+              this.props.item.current = this.parser(inputVal);
             }}
             onDragEnd={() => {
               this.updateValue(this.state.inputVal);
@@ -55,7 +55,7 @@ export default class SliderView extends Component {
             name={this.props.item.id}
             style={{ width: 40 }}
             type="number"
-            value={this.state.inputVal}
+            value={this.parser(this.state.inputVal)}
             onBlur={() => {
               this.updateValue(this.state.inputVal);
             }}

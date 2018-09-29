@@ -5,6 +5,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Input from "@material-ui/core/Input";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import { withStyles } from "@material-ui/core/styles";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -80,7 +81,7 @@ class AppBarView extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <AppBar position="static">
+        <AppBar style={{ paddingTop: 10 }} position="fixed">
           <Toolbar>
             <IconButton
               className={classes.menuButton}
@@ -104,6 +105,13 @@ class AppBarView extends Component {
               }
               isDirty={this.props.isDirty}
             />
+            {this.props.rebooting && (
+              <CircularProgress
+                style={{ margin: 10 }}
+                color="secondary"
+                thickness={7}
+              />
+            )}
             <div className={classes.grow} />
             <Button
               color="secondary"

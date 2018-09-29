@@ -30,6 +30,10 @@ export default new class FCConnector {
     });
   }
 
+  changeProfile(profileName, index) {
+    return fetch(`${this.serviceUrl}/profile/${profileName}/${index}`);
+  }
+
   setValue(name, newValue) {
     return fetch(`${this.serviceUrl}/set/${name}/${newValue}`).then(
       response => {

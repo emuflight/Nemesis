@@ -27,6 +27,7 @@ export default class MotorItemView extends Component {
             <Select
               value={this.state.motorIndex}
               onChange={event => {
+                this.setState({ motorIndex: event.target.value });
                 this.props.remapMotor(
                   event.target.value,
                   this.state.motorIndex

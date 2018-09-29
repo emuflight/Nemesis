@@ -7,53 +7,76 @@ export default class ConfigListView extends Component {
   render() {
     return (
       <div
+        className="config-list-view"
         style={{
           margin: "10px",
-          padding: "10px",
-          display: "flex",
-          flexWrap: "wrap"
+          padding: "10px"
         }}
       >
-        {this.props.items &&
-          this.props.items.map(item => {
-            switch (item.mode) {
-              case "slider":
+        <div
+          style={{
+            display: "grid",
+            marginBottom: 20,
+            gridTemplateColumns: "repeat(9, 1fr)"
+          }}
+        >
+          {this.props.items &&
+            this.props.items
+              .filter(item => item.mode === "slider")
+              .map(item => {
                 return (
                   <SliderView
+                    className={item.id}
                     notifyDirty={this.props.notifyDirty}
                     key={item.id}
                     item={item}
                     inputVal={item.current}
                   />
                 );
-              // case "ARRAY":
-              //   return (
-              //     <ConfigListView
-              //       notifyDirty={this.props.notifyDirty}
-              //       key={i}
-              //       items={item.values}
-              //     />
-              //   );
-              case "LOOKUP":
+              })}
+        </div>
+        <div
+          style={{
+            display: "grid",
+            marginBottom: 20,
+            gridTemplateColumns: "repeat(3, 1fr)"
+          }}
+        >
+          {this.props.items &&
+            this.props.items
+              .filter(item => item.mode === "LOOKUP")
+              .map(item => {
                 return (
                   <DropdownView
-                    style={{ width: 80, margin: 8 }}
+                    className={item.id}
                     notifyDirty={this.props.notifyDirty}
                     key={item.id}
                     item={item}
                   />
                 );
-              default:
+              })}
+        </div>
+        <div
+          style={{
+            display: "grid",
+            marginBottom: 20,
+            gridTemplateColumns: "repeat(3, 1fr)"
+          }}
+        >
+          {this.props.items &&
+            this.props.items
+              .filter(item => item.mode === "DIRECT")
+              .map(item => {
                 return (
                   <InputView
-                    style={{ width: 80, margin: 8 }}
+                    className={item.id}
                     notifyDirty={this.props.notifyDirty}
                     key={item.id}
                     item={item}
                   />
                 );
-            }
-          })}
+              })}
+        </div>
       </div>
     );
   }

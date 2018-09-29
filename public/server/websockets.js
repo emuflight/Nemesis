@@ -15,6 +15,7 @@ wsServer = new WebSocketServer({
   httpServer: server
 });
 
+let connectedDevice;
 const clients = [];
 
 // WebSocket server
@@ -37,7 +38,8 @@ wsServer.on("request", request => {
     connection.sendUTF(
       JSON.stringify({
         dfu: false,
-        connected: false
+        connected: false,
+        rebooting: !!connectedDevice.rebooting
       })
     );
   });
@@ -63,9 +65,16 @@ const notifyTelem = telemetryData => {
   clients.forEach(client => client.sendUTF(JSON.stringify(telemetryData)));
 };
 
+const deviceRebooting = deviceInfo => {
+  if (connectedDevice) {
+    connectedDevice.rebooting = deviceInfo;
+  }
+};
+
 module.exports = {
   wsServer: wsServer,
   clients: clients,
   notifyProgress: notifyProgress,
-  notifyTelem: notifyTelem
+  notifyTelem: notifyTelem,
+  deviceRebooting: deviceRebooting
 };

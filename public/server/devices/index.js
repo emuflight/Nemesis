@@ -83,6 +83,11 @@ module.exports = {
     });
     dfuProcess.stderr.on("data", data => {
       output = data.toString("utf8");
+      if (platform === "darwin") {
+        output += `\n<h3>If you do not have libusb installed, please install it:</h3>
+        <p><a href="http://dfu-util.sourceforge.net">here: or<a/></p>
+        <p>'brew install libusb'</p>\n`;
+      }
       console.log(output);
       notify(output);
     });

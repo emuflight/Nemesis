@@ -34,6 +34,7 @@ export default class InputView extends Component {
   render() {
     return (
       <TextField
+        classes={{ root: this.props.item.id }}
         key={this.props.item.id}
         disabled={this.state.isDirty}
         label={this.props.item.id}
@@ -42,7 +43,7 @@ export default class InputView extends Component {
         onChange={event => {
           this.setState({ current: event.target.value });
         }}
-        type="number"
+        type={this.props.item.type || "number"}
       />
     );
   }

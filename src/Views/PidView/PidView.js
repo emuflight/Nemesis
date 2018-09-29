@@ -6,6 +6,7 @@ import ConfigListView from "../ConfigListView/ConfigListView";
 import TpaCurveView from "../TpaCurveView/TpaCurveView";
 import Paper from "@material-ui/core/Paper";
 import theme from "../../Themes/Dark";
+import "./PidView.css";
 
 export default class PidsView extends ProfileView {
   updatePidValues = newValue => {
@@ -28,37 +29,44 @@ export default class PidsView extends ProfileView {
     });
   };
   componentDidMount = () => {
-    this.updatePidValues(this.props.fcConfig.gyro_sync_denom.current);
-    this.handleTpaChange(this.props.fcConfig.tpa_type.current);
+    if (this.state.isBxF) {
+      this.updatePidValues(this.props.fcConfig.gyro_sync_denom.current);
+      this.handleTpaChange(this.props.fcConfig.tpa_type.current);
+    }
   };
   handleTpaChange = newVal => {
     this.setState({ showTpaCurves: newVal === "RACEFLIGHT" });
   };
   getContent() {
     return (
-      <div style={{ display: "flex", flexDirection: "column" }}>
-        <Paper
-          theme={theme}
-          elevation={3}
-          style={{ margin: "10px", padding: "10px" }}
-        >
-          <DropdownView
-            notifyDirty={(isDirty, state, payload) => {
-              this.updatePidValues(payload);
-              this.props.notifyDirty(isDirty, state, payload);
-            }}
-            item={this.props.fcConfig.gyro_sync_denom}
-          />
-          <DropdownView
-            ref="pidProcessList"
-            notifyDirty={this.props.notifyDirty}
-            item={this.props.fcConfig.pid_process_denom}
-          />
-          <DropdownView
-            notifyDirty={this.props.notifyDirty}
-            item={this.props.fcConfig.buttered_pids}
-          />
-        </Paper>
+      <div
+        className="pid-view"
+        style={{ display: "flex", flexDirection: "column" }}
+      >
+        {this.state.isBxF && (
+          <Paper
+            theme={theme}
+            elevation={3}
+            style={{ margin: "10px", padding: "10px" }}
+          >
+            <DropdownView
+              notifyDirty={(isDirty, state, payload) => {
+                this.updatePidValues(payload);
+                this.props.notifyDirty(isDirty, state, payload);
+              }}
+              item={this.props.fcConfig.gyro_sync_denom}
+            />
+            <DropdownView
+              ref="pidProcessList"
+              notifyDirty={this.props.notifyDirty}
+              item={this.props.fcConfig.pid_process_denom}
+            />
+            <DropdownView
+              notifyDirty={this.props.notifyDirty}
+              item={this.props.fcConfig.buttered_pids}
+            />
+          </Paper>
+        )}
         <Paper
           theme={theme}
           elevation={3}
@@ -107,37 +115,39 @@ export default class PidsView extends ProfileView {
           </Paper>
         )}
 
-        <Paper
-          theme={theme}
-          elevation={3}
-          style={{ margin: "10px", padding: "10px" }}
-        >
-          <DropdownView
-            notifyDirty={(isDirty, state, payload) => {
-              this.handleTpaChange(payload);
-              this.props.notifyDirty(isDirty, state, payload);
-            }}
-            item={this.props.fcConfig.tpa_type}
-          />
-
-          {this.state.showTpaCurves ? (
-            <TpaCurveView
-              notifyDirty={this.props.notifyDirty}
-              item={this.props.fcConfig.tpa_curves}
+        {this.state.isBxF && (
+          <Paper
+            theme={theme}
+            elevation={3}
+            style={{ margin: "10px", padding: "10px" }}
+          >
+            <DropdownView
+              notifyDirty={(isDirty, state, payload) => {
+                this.handleTpaChange(payload);
+                this.props.notifyDirty(isDirty, state, payload);
+              }}
+              item={this.props.fcConfig.tpa_type}
             />
-          ) : (
-            <div>
-              <InputView
+
+            {this.state.showTpaCurves ? (
+              <TpaCurveView
                 notifyDirty={this.props.notifyDirty}
-                item={this.props.fcConfig.tpa_breakpoint}
+                item={this.props.fcConfig.tpa_curves}
               />
-              <InputView
-                notifyDirty={this.props.notifyDirty}
-                item={this.props.fcConfig.tpa_rate}
-              />
-            </div>
-          )}
-        </Paper>
+            ) : (
+              <div>
+                <InputView
+                  notifyDirty={this.props.notifyDirty}
+                  item={this.props.fcConfig.tpa_breakpoint}
+                />
+                <InputView
+                  notifyDirty={this.props.notifyDirty}
+                  item={this.props.fcConfig.tpa_rate}
+                />
+              </div>
+            )}
+          </Paper>
+        )}
       </div>
     );
   }

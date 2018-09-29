@@ -18,11 +18,11 @@ const createMockObj = (id, val) => {
   return {
     id: id,
     current: 0,
-    mode: "DIRECT",
+    mode: "LOOKUP",
     values: [
-      { name: id + 0, value: 0 },
-      { name: id + 1, value: 1 },
-      { name: id + 2, value: 2 }
+      { label: id + 0, value: 0 },
+      { label: id + 1, value: 1 },
+      { label: id + 2, value: 2 }
     ]
   };
 };
@@ -46,6 +46,7 @@ const formatConfig = (conf, uiConf) => {
       });
     }
     conf[key].id = key;
+    conf[key].mode = conf[key].mode || "DIRECT";
     uiConf.routes.forEach(r => {
       if (!conf[key].route && uiConf.groups[r].indexOf(key) > -1) {
         conf[key].route = r;
@@ -56,30 +57,43 @@ const formatConfig = (conf, uiConf) => {
 const applyUIConfig = (device, config, uiConfig) => {
   formatConfig(config, uiConfig);
 
-  if (config.pid_profile) {
-    config.pidProfileList = config.pid_profile.values.map((v, k) => {
-      formatConfig(v, uiConfig);
-      return {
-        label: `Profile ${k + 1}`,
-        value: k
-      };
-    });
-  } else {
-    config.pid_profile = createMockObj("pid_profile");
-  }
-  config.currentPidProfile = parseInt(config.pid_profile.current, 10);
-
-  if (config.rate_profile) {
-    config.rateProfileList = config.rate_profile.values.map((v, k) => {
-      formatConfig(v, uiConfig);
-      return {
-        label: `Profile ${k + 1}`,
-        value: k
-      };
-    });
-  } else {
+  if (!config.isBxF) {
     config.rate_profile = createMockObj("rate_profile");
+    config.pid_profile = createMockObj("pid_profile");
+    const globalKeys = ["bit_reverse_esc_", "mout"];
+    Object.keys(config).forEach(key => {
+      if (globalKeys.indexOf(key.slice(0, key.length - 1)) > -1) {
+        return;
+      } else if (key.endsWith("1")) {
+        config.pid_profile.values[0][key] = config[key];
+        config.rate_profile.values[0][key] = config[key];
+        delete config[key];
+      } else if (key.endsWith("2")) {
+        config.pid_profile.values[1][key] = config[key];
+        config.rate_profile.values[1][key] = config[key];
+        delete config[key];
+      } else if (key.endsWith("3")) {
+        config.pid_profile.values[2][key] = config[key];
+        config.rate_profile.values[2][key] = config[key];
+        delete config[key];
+      }
+    });
   }
+  config.pidProfileList = config.pid_profile.values.map((v, k) => {
+    formatConfig(v, uiConfig);
+    return {
+      label: `Profile ${k + 1}`,
+      value: k
+    };
+  });
+  config.currentPidProfile = parseInt(config.pid_profile.current, 10);
+  config.rateProfileList = config.rate_profile.values.map((v, k) => {
+    formatConfig(v, uiConfig);
+    return {
+      label: `Profile ${k + 1}`,
+      value: k
+    };
+  });
   config.currentRateProfile = parseInt(config.rate_profile.current, 10);
   if (config.modes) {
     config.modes.values = config.modes.values.map((mode, i) => {
@@ -111,6 +125,19 @@ const applyUIConfig = (device, config, uiConfig) => {
       };
     });
   }
+  if (config.ports) {
+    config.ports.values = config.ports.values.map(port => {
+      let parts = port.split("|");
+      return {
+        id: parts[0],
+        mode: parts[1],
+        mspBaud: parts[2],
+        gpsBaud: parts[3],
+        telemBaud: parts[4],
+        bblBaud: parts[5]
+      };
+    });
+  }
   if (config.features) {
     config.features.values = config.features.values.map(feature => {
       let current = true,
@@ -125,21 +152,6 @@ const applyUIConfig = (device, config, uiConfig) => {
       };
     });
   }
-
-  if (config.ports) {
-    config.ports.values.map(port => {
-      let parts = port.split("|");
-      return {
-        id: parts[0],
-        mode: parts[1],
-        mspBaud: parts[2],
-        gpsBaud: parts[3],
-        telemBaud: parts[4],
-        bblBaud: parts[5]
-      };
-    });
-  }
-
   config.routes = uiConfig.routes.map(route => {
     return {
       key: route,
@@ -172,6 +184,7 @@ module.exports = {
         if (config.incompatible) {
           return Object.assign({ error: config.version }, deviceInfo, config);
         } else {
+          config.isBxF = true;
           return applyUIConfig(deviceInfo, config, BxfUiConfig);
         }
       });
@@ -182,6 +195,15 @@ module.exports = {
       return rf1Connector.setValue(deviceInfo, key, value);
     } else {
       return bxfConnector.setValue(deviceInfo, key, value);
+    }
+  },
+  setProfile(deviceInfo, type, index) {
+    if (deviceInfo.hid) {
+      return Promise.resolve();
+      // return rf1Connector.setValue(deviceInfo, key, value);
+    } else {
+      let profileName = type === "pid" ? "profile" : "rateprofile";
+      return bxfConnector.sendCommand(deviceInfo, `${profileName} ${index}`);
     }
   },
   remapMotor(deviceInfo, to, from) {
@@ -199,6 +221,9 @@ module.exports = {
     }
   },
   sendCommand(deviceInfo, command) {
+    if (command.endsWith("save")) {
+      websockets.rebooting = deviceInfo;
+    }
     if (deviceInfo.hid) {
       return rf1Connector.sendCommand(deviceInfo, command);
     } else {

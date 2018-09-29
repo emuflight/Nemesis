@@ -15,7 +15,11 @@ class HelperSelect extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <FormControl style={this.props.style} className={classes.formControl}>
+      <FormControl
+        classes={{ root: this.props.id }}
+        style={this.props.style}
+        className={classes.formControl}
+      >
         <InputLabel shrink htmlFor={`${this.props.name}-label-placeholder`}>
           {this.props.label}
         </InputLabel>

@@ -1,12 +1,22 @@
 import React from "react";
 import ProfileView from "../ProfileView/ProfileView";
+import ConfigListView from "../ConfigListView/ConfigListView";
 import InputView from "../Items/InputView";
 import DropdownView from "../Items/DropdownView";
 import Paper from "@material-ui/core/Paper";
 import theme from "../../Themes/Dark";
+import "./RatesView.css";
 
 export default class RatesView extends ProfileView {
   getContent() {
+    if (!this.state.isBxF) {
+      return (
+        <ConfigListView
+          notifyDirty={this.props.notifyDirty}
+          items={this.props.items}
+        />
+      );
+    }
     return (
       <div style={{ display: "flex", flexDirection: "column" }}>
         <Paper
