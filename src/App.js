@@ -49,7 +49,6 @@ class App extends Component {
           id: device.comName,
           deviceInfo: device,
           currentConfig: device.config,
-          connecting: false,
           connected: !device.incompatible,
           incompatible: device.incompatible
         });

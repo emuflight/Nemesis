@@ -135,6 +135,12 @@ const setValue = (device, name, newVal) => {
   return sendCommand(device, `set ${name}=${newVal}`);
 };
 
+const remapMotor = (device, to, from) => {
+  return sendCommand(device, `set ${to}=${from}`);
+};
+const spinTestMotor = (device, motor, startStop) => {
+  return sendCommand(device, `set ${motor}=${startStop}`);
+};
 const saveEEPROM = device => {
   return sendCommand(device, `msp 250`);
 };
@@ -177,5 +183,7 @@ module.exports = {
   getConfig: getConfig,
   getTelemetry: getTelemetry,
   setValue: setValue,
+  remapMotor: remapMotor,
+  spinTestMotor: spinTestMotor,
   saveEEPROM: saveEEPROM
 };

@@ -12,6 +12,8 @@ const skipprops = [
   "ports",
   "tpa_curves"
 ];
+
+const assistants = ["RX", "VTX", "MOTORS", "MIXER"];
 const createMockObj = (id, val) => {
   return {
     id: id,
@@ -142,7 +144,7 @@ const applyUIConfig = (device, config, uiConfig) => {
     return {
       key: route,
       title: route,
-      assistant: route === "RX" || route === "VTX"
+      assistant: assistants.indexOf(route) > -1
     };
   });
   let versionParts = config.version.split("|");
@@ -180,6 +182,20 @@ module.exports = {
       return rf1Connector.setValue(deviceInfo, key, value);
     } else {
       return bxfConnector.setValue(deviceInfo, key, value);
+    }
+  },
+  remapMotor(deviceInfo, to, from) {
+    if (deviceInfo.hid) {
+      return rf1Connector.remapMotor(deviceInfo, to, from);
+    } else {
+      return bxfConnector.remapMotor(deviceInfo, to, from);
+    }
+  },
+  spinTestMotor(deviceInfo, motor, startStop) {
+    if (deviceInfo.hid) {
+      return rf1Connector.remapMotor(deviceInfo, motor, startStop);
+    } else {
+      return bxfConnector.remapMotor(deviceInfo, motor, startStop);
     }
   },
   sendCommand(deviceInfo, command) {

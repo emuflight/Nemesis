@@ -11,31 +11,39 @@ import { Button } from "@material-ui/core";
 
 export default class PickerAssistantView extends Component {
   state = {
-    saving: false,
-    completed: 0
+    progress: 0
   };
 
   handleCommands(type) {
+    this.userChoice = type;
     this.setState({
       saving: true,
-      completed: 0,
+      progress: 0,
       currentMessage: "Saving...",
       currentResponse: ""
     });
     FCConnector.sendBulkCommands(type.commands.slice(0), progress => {
+      let percent = (progress / type.commands.length) * 100;
       this.setState({
-        completed: Math.floor((progress / type.commands.length) * 100)
+        progress: Math.floor(percent),
+        saved: percent >= 100
       });
     }).then(() => {
       if (type.verify) {
+        this.setState({ verifying: true });
         const verifySetting = () => {
           FCConnector.sendCliCommand(type.verify.command).then(resp => {
-            if (resp.toLowerCase().indexOf(type.verify.error) > -1) {
+            if (this.state.cancel) {
+              this.setState({
+                currentMessage: "Cancelled!",
+                currentResponse: ""
+              });
+            } else if (resp.toLowerCase().indexOf(type.verify.error) > -1) {
               this.setState({ error: resp });
             } else if (resp.indexOf(type.verify.until) > -1) {
               this.setState({
                 saving: false,
-                completed: true,
+                verifying: false,
                 currentMessage: resp
               });
             } else {
@@ -43,11 +51,16 @@ export default class PickerAssistantView extends Component {
                 currentMessage: "Verifying... :  ",
                 currentResponse: resp
               });
-              verifySetting();
+              type.verify.until && verifySetting();
             }
           });
         };
         verifySetting();
+      } else {
+        this.setState({
+          saving: false,
+          completed: true
+        });
       }
     });
   }
@@ -87,7 +100,7 @@ export default class PickerAssistantView extends Component {
                       }
                     >
                       <CardMedia
-                        style={{ height: 100 }}
+                        style={{ height: type.size || 140 }}
                         image={type.image}
                         title={type.title}
                       />
@@ -106,34 +119,42 @@ export default class PickerAssistantView extends Component {
               })}
           </List>
         </div>
-        {this.state.saving && (
-          <div style={{ height: 60, display: "flex", flexDirection: "column" }}>
-            <div style={{ display: "flex", flex: 1, padding: 10 }}>
-              <Typography variant="subheading">
-                {this.state.currentMessage}
-                <span style={{ fontFamily: "monospace" }}>
-                  {this.state.currentResponse}
-                </span>
-              </Typography>
-              <div style={{ flexGrow: 1 }} />
-              {!this.state.saving &&
-                this.state.completed &&
-                !this.state.error && (
-                  <Button
-                    onClick={() => this.props.onFinish()}
-                    variant="raised"
-                    color="primary"
-                  >
-                    Next
-                  </Button>
-                )}
-            </div>
-            <LinearProgress
-              variant="determinate"
-              value={this.state.completed}
-            />
+        <div style={{ height: 60, display: "flex", flexDirection: "column" }}>
+          <div style={{ display: "flex", flex: 1, padding: 10 }}>
+            <Typography variant="subheading">
+              {this.state.currentMessage}
+              <span style={{ fontFamily: "monospace" }}>
+                {this.state.currentResponse}
+              </span>
+            </Typography>
+            <div style={{ flexGrow: 1 }} />
+            {this.state.verifying && (
+              <Button
+                onClick={() =>
+                  this.state.cancel
+                    ? this.props.onCancel()
+                    : this.setState({ cancel: true })
+                }
+                variant="raised"
+                color="secondary"
+              >
+                {this.state.cancel ? "Dismiss" : "Cancel"}
+              </Button>
+            )}
+            {!this.state.saving &&
+              this.state.completed === true &&
+              !this.state.error && (
+                <Button
+                  onClick={() => this.props.onFinish(this.userChoice)}
+                  variant="raised"
+                  color="primary"
+                >
+                  Next
+                </Button>
+              )}
           </div>
-        )}
+          <LinearProgress variant="determinate" value={this.state.progress} />
+        </div>
       </div>
     );
   }

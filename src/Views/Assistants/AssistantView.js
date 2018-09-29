@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Modal from "@material-ui/core/Modal";
 import PickerAssistantView from "./PickerAssistantView";
+import MotorAssignmentAssistantView from "./MotorAssignmentAssistantView";
 import FCConnector from "../../utilities/FCConnector";
 import Paper from "@material-ui/core/Paper";
 import theme from "../../Themes/Dark";
@@ -9,26 +10,38 @@ export default class AssistantView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentStep: { items: [] }
+      steps: [{ id: undefined }],
+      currentStep: 0
     };
   }
+  assistantMap = {
+    "motor assignments": MotorAssignmentAssistantView
+  };
   componentDidMount() {
     return FCConnector.getAssistant(this.props.type, this.props.fw).then(
       assistant => {
         this.setState({
           steps: assistant,
-          currentStep: assistant[0],
+          currentStep: 0,
+          endStep: assistant.length - 1,
           open: true
         });
       }
     );
   }
-  handleNext() {
-    if (!this.state.next) {
+  cancel() {
+    this.props.onClose();
+  }
+  handleNext(lastChoice) {
+    if (this.state.currentStep >= this.state.endStep) {
       this.props.onClose();
+    } else {
+      this.setState({ lastChoice, currentStep: this.state.currentStep + 1 });
     }
   }
   render() {
+    const step = this.state.steps[this.state.currentStep];
+    const CustomAssistant = this.assistantMap[step.id] || PickerAssistantView;
     return (
       <Modal
         aria-labelledby="simple-modal-title"
@@ -45,16 +58,22 @@ export default class AssistantView extends Component {
             right: 50,
             bottom: 50,
             left: 50,
-            display: "flex"
+            display: "flex",
+            justifyItems: "center",
+            alignItems: "center"
           }}
         >
-          <PickerAssistantView
-            title={this.state.currentStep.id}
-            style={{ flex: 1, display: "flex" }}
-            type={this.props.type}
-            items={this.state.currentStep.options}
-            onFinish={() => this.handleNext()}
-          />
+          {
+            <CustomAssistant
+              title={step.id}
+              style={{ flex: 1, display: "flex" }}
+              type={this.props.type}
+              items={step.options}
+              lastChoice={this.state.lastChoice}
+              onFinish={lastChoice => this.handleNext(lastChoice)}
+              onCancel={() => this.cancel()}
+            />
+          }
         </Paper>
       </Modal>
     );

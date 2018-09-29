@@ -76,6 +76,12 @@ export default new class FCConnector {
   saveConfig() {
     return this.sendCommand("save");
   }
+  remapMotor(to, from) {
+    return fetch(`${this.serviceUrl}/remap/${to}/${from}`);
+  }
+  spinTestMotor(motor, value) {
+    return fetch(`${this.serviceUrl}/spintest/${motor}/${value}`);
+  }
 
   goToDFU(target) {
     this.currentTarget = target;

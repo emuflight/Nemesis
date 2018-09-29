@@ -63,6 +63,18 @@ const setValue = (device, name, newVal) => {
   return sendCommand(device, `set ${name}=${newVal}`);
 };
 
+const remapMotor = (device, to, from) => {
+  return sendCommand(device, `set mout${from}=${to}`);
+};
+
+const spinTestMotor = (device, motor, startStop) => {
+  if (startStop == 0) {
+    return sendCommand(device, `idlestop`);
+  } else {
+    return sendCommand(device, `Idle ${motor}`);
+  }
+};
+
 const getTelemetry = (device, cb, ecb) => {
   return sendCommand(device, "telem", 20).then(telemString => {
     let obj = {};
@@ -100,5 +112,7 @@ module.exports = {
   getConfig: getConfig,
   getTelemetry: getTelemetry,
   setValue: setValue,
+  remapMotor: remapMotor,
+  spinTestMotor: spinTestMotor,
   saveEEPROM: saveEEPROM
 };

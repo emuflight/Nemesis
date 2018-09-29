@@ -70,6 +70,38 @@ app.get("/set/:name/:value", (req, res) => {
     }
   });
 });
+app.get("/remap/:to/:from", (req, res) => {
+  devices.list((err, ports) => {
+    if (err) return res.status(400).send(err);
+    let connectedDevice = ports[0],
+      to = req.params.to,
+      from = req.params.from;
+    if (connectedDevice) {
+      fcConnector
+        .remapMotor(connectedDevice, to, from)
+        .then(ret => res.status(200).send(ret))
+        .catch(error => res.status(400).send(error));
+    } else {
+      res.sendStatus(404);
+    }
+  });
+});
+app.get("/spintest/:motor/:value", (req, res) => {
+  devices.list((err, ports) => {
+    if (err) return res.status(400).send(err);
+    let connectedDevice = ports[0],
+      motor = req.params.motor,
+      value = req.params.value;
+    if (connectedDevice) {
+      fcConnector
+        .spinTestMotor(connectedDevice, motor, value)
+        .then(ret => res.status(200).send(ret))
+        .catch(error => res.status(400).send(error));
+    } else {
+      res.sendStatus(404);
+    }
+  });
+});
 app.get("/save/eeprom", (req, res) => {
   devices.list((err, ports) => {
     if (err) return res.status(400).send(err);
