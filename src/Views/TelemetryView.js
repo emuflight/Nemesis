@@ -33,17 +33,19 @@ export default class TelemetryView extends Component {
   get type() {
     return "gyro";
   }
-  handleClick = event => {
-    FCConnector.webSockets.addEventListener("message", message => {
-      try {
-        let telemetry = JSON.parse(message.data);
-        if (telemetry.type === "gyro") {
-          this.setState({ telemetry });
-        }
-      } catch (ex) {
-        console.warn("unable to parse telemetry", ex);
+  handleGyroData = message => {
+    try {
+      let telemetry = JSON.parse(message.data);
+      if (telemetry.type === "gyro") {
+        this.setState({ telemetry });
       }
-    });
+    } catch (ex) {
+      console.warn("unable to parse telemetry", ex);
+    }
+  };
+
+  handleClick = event => {
+    FCConnector.webSockets.addEventListener("message", this.handleGyroData);
     event.preventDefault();
     FCConnector.startTelemetry(this.type);
     this.setState({
@@ -53,6 +55,7 @@ export default class TelemetryView extends Component {
   };
 
   handleClose = () => {
+    FCConnector.webSockets.removeEventListener("message", this.handleGyroData);
     FCConnector.stopTelemetry();
     this.setState({
       open: false
