@@ -35,6 +35,7 @@ wsServer.on("request", request => {
 
   // Detect remove
   usb.on(`detach`, device => {
+    console.log("DETATCHED!!!");
     connection.sendUTF(
       JSON.stringify({
         dfu: false,
@@ -47,7 +48,9 @@ wsServer.on("request", request => {
   // all messages from users here.
   connection.on("message", message => {});
 
-  connection.on("close", connection => {});
+  connection.on("close", connection => {
+    clearInterval(wsServer.telemetryInterval);
+  });
 });
 
 const notifyProgress = data => {
@@ -71,6 +74,7 @@ const deviceRebooting = deviceInfo => {
   }
 };
 
+wsServer.telemetryInterval;
 module.exports = {
   wsServer: wsServer,
   clients: clients,

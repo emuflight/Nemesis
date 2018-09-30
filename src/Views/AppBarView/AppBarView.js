@@ -106,11 +106,14 @@ class AppBarView extends Component {
               isDirty={this.props.isDirty}
             />
             {this.props.rebooting && (
-              <CircularProgress
-                style={{ margin: 10 }}
-                color="secondary"
-                thickness={7}
-              />
+              <div style={{ display: "flex" }}>
+                <CircularProgress
+                  style={{ margin: 10 }}
+                  color="secondary"
+                  thickness={7}
+                />
+                <Typography style={{ flexGrow: 1 }}>Rebooting...</Typography>
+              </div>
             )}
             <div className={classes.grow} />
             <Button

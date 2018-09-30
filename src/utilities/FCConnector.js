@@ -101,8 +101,8 @@ export default new class FCConnector {
     return fetch(`${this.serviceUrl}/save/eeprom`);
   }
 
-  startTelemetry() {
-    return fetch(`${this.serviceUrl}/telem/start`);
+  startTelemetry(type = "gyro") {
+    return fetch(`${this.serviceUrl}/telem/${type}/start`);
   }
 
   stopTelemetry() {

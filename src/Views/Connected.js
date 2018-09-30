@@ -20,6 +20,7 @@ import AppBarView from "./AppBarView/AppBarView";
 import FCConnector from "../utilities/FCConnector";
 import AssistantView from "./Assistants/AssistantView";
 import ProfileView from "./ProfileView/ProfileView";
+import RXView from "./RXView/RXView";
 
 const skipprops = [
   "pid_profile",
@@ -94,7 +95,7 @@ export default class Connected extends Component {
 
   notifyDirty = (isDirty, item, newValue) => {
     if (isDirty) {
-      this.props.refreshConfig();
+      this.setState({ isDirty: isDirty });
     }
   };
 
@@ -116,9 +117,10 @@ export default class Connected extends Component {
         );
         contents = (
           <PidsView
-            fcConfig={this.state.fcConfig}
+            fcConfig={mergedProfile}
             changeProfile={newProfile => {
               FCConnector.changeProfile("pid", newProfile).then(() => {
+                this.props.fcConfig.currentPidProfile = newProfile;
                 this.setState({ pid_profile: newProfile });
               });
             }}
@@ -141,9 +143,10 @@ export default class Connected extends Component {
         );
         contents = (
           <RatesView
-            fcConfig={this.state.fcConfig}
+            fcConfig={mergedProfile}
             changeProfile={newProfile => {
               FCConnector.changeProfile("rate", newProfile).then(() => {
+                this.props.fcConfig.currentRateProfile = newProfile;
                 this.setState({ rate_profile: newProfile });
               });
             }}
@@ -162,6 +165,19 @@ export default class Connected extends Component {
         contents = (
           <AuxChannelView
             modes={this.state.fcConfig.modes.values}
+            notifyDirty={(isDirty, item, newValue) =>
+              this.notifyDirty(isDirty, item, newValue)
+            }
+          />
+        );
+        break;
+      case "RX":
+        contents = (
+          <RXView
+            items={getRouteItems(
+              this.state.currentRoute.key,
+              this.state.fcConfig
+            )}
             notifyDirty={(isDirty, item, newValue) =>
               this.notifyDirty(isDirty, item, newValue)
             }

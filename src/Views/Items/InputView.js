@@ -23,9 +23,9 @@ export default class InputView extends Component {
   updateValue() {
     let isDirty = this.state.current !== this.props.item.current;
     if (isDirty) {
-      this.props.notifyDirty(isDirty, this.state, this.state.current);
       this.setState({ isDirty: true });
       FCConnector.setValue(this.props.item.id, this.state.current).then(() => {
+        this.props.notifyDirty(true, this.state, this.state.current);
         this.setState({ isDirty: false });
       });
     }
@@ -38,9 +38,10 @@ export default class InputView extends Component {
         key={this.props.item.id}
         disabled={this.state.isDirty}
         label={this.props.item.id}
-        value={this.state.current}
+        value={this.props.item.current}
         onBlur={() => this.updateValue()}
         onChange={event => {
+          this.props.item.current = event.target.value;
           this.setState({ current: event.target.value });
         }}
         type={this.props.item.type || "number"}

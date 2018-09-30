@@ -47,7 +47,7 @@ class App extends Component {
   };
 
   getFcConfig = () => {
-    this.setState({ connecting: true });
+    this.setState({ connecting: true, rebooting: false });
     return FCConnector.tryGetConfig()
       .then(device => {
         this.setState({

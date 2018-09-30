@@ -199,12 +199,12 @@ app.get("/dfu", (req, res) => {
   });
 });
 
-app.get("/telem/start", (req, res) => {
+app.get("/telem/:type/start", (req, res) => {
   devices.list((err, ports) => {
     if (err) return res.status(400).send(err);
     let connectedDevice = ports[0];
     if (connectedDevice) {
-      fcConnector.startTelemetry(connectedDevice);
+      fcConnector.startTelemetry(connectedDevice, req.params.type);
       res.sendStatus(202);
     }
   });

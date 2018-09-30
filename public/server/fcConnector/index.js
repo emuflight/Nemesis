@@ -172,7 +172,6 @@ const applyUIConfig = (device, config, uiConfig) => {
   return device;
 };
 
-let telemetryInterval;
 module.exports = {
   getConfig(deviceInfo) {
     if (deviceInfo.hid) {
@@ -222,7 +221,7 @@ module.exports = {
   },
   sendCommand(deviceInfo, command) {
     if (command.endsWith("save")) {
-      websockets.rebooting = deviceInfo;
+      websockets.deviceRebooting(deviceInfo);
     }
     if (deviceInfo.hid) {
       return rf1Connector.sendCommand(deviceInfo, command);
@@ -231,23 +230,23 @@ module.exports = {
     }
   },
 
-  startTelemetry(deviceInfo) {
-    telemetryInterval = setInterval(() => {
+  startTelemetry(deviceInfo, type) {
+    websockets.wsServer.telemetryInterval = setInterval(() => {
       if (deviceInfo.hid) {
-        return rf1Connector.getTelemetry(deviceInfo).then(telemData => {
+        return rf1Connector.getTelemetry(deviceInfo, type).then(telemData => {
           websockets.notifyTelem(telemData);
           return telemData;
         });
       } else {
-        return bxfConnector.getTelemetry(deviceInfo).then(telemData => {
+        return bxfConnector.getTelemetry(deviceInfo, type).then(telemData => {
           websockets.notifyTelem(telemData);
           return telemData;
         });
       }
-    }, 60);
+    }, 100);
   },
   stopTelemetry() {
-    clearInterval(telemetryInterval);
+    clearInterval(websockets.wsServer.telemetryInterval);
   },
   rebootDFU(deviceInfo) {
     if (deviceInfo.hid) {

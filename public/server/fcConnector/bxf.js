@@ -62,32 +62,47 @@ const getConfig = device => {
   });
 };
 
+const commandQueue = [];
+
+const runQueue = () => {
+  let next = commandQueue.pop();
+  if (!next) return;
+  setupConnection(next.device).then(port => {
+    console.log(
+      `sending command: ${next.command} on port ${next.device.comName}`
+    );
+    port.write(`${next.command}\n`, err => {
+      if (err) {
+        console.log("WRITE ERROR: ", err);
+        err && next.reject(err);
+      }
+    });
+    let currentRecBuffer = "";
+    let runningCommand = setInterval(() => {
+      let more = port.read();
+      if (more) {
+        if (next.encode) {
+          let msg = more.toString(next.encode);
+          currentRecBuffer += msg;
+        } else {
+          currentRecBuffer = more;
+        }
+      } else {
+        runningCommand && clearInterval(runningCommand);
+        runningCommand = null;
+        next.resolve(currentRecBuffer);
+        runQueue();
+      }
+    }, next.waitMs);
+  });
+};
+
 const sendCommand = (device, command, waitMs = 200, encode = "utf8") => {
   return new Promise((resolve, reject) => {
-    setupConnection(device).then(port => {
-      console.log(`sending command: ${command} on port ${device.comName}`);
-      port.write(`${command}\n`, err => {
-        if (err) {
-          console.log("WRITE ERROR: ", err);
-          err && reject(err);
-        }
-      });
-      let currentRecBuffer = "";
-      let timeout = setInterval(() => {
-        let more = port.read();
-        if (more) {
-          if (encode) {
-            let msg = more.toString(encode);
-            currentRecBuffer += msg;
-          } else {
-            currentRecBuffer = more;
-          }
-        } else {
-          timeout && clearInterval(timeout);
-          resolve(currentRecBuffer);
-        }
-      }, waitMs);
-    });
+    commandQueue.push({ device, command, waitMs, encode, resolve, reject });
+    if (commandQueue.length == 1) {
+      runQueue();
+    }
   });
 };
 
@@ -146,35 +161,53 @@ const saveEEPROM = device => {
 };
 
 let lastTelem;
-const getTelemetry = device => {
-  return sendCommand(device, `msp 102`, 30, false).then(telem => {
-    if (telem) {
-      try {
-        let data = new DataView(new Uint8Array(telem).buffer, 13);
-        lastTelem = {
-          telemetry: true,
-          acc: {
-            x: data.getInt16(0, 1) / 512,
-            y: data.getInt16(2, 1) / 512,
-            z: data.getInt16(4, 1) / 512
-          },
-          gyro: {
-            x: data.getInt16(6, 1) * (4 / 16.4),
-            y: data.getInt16(8, 1) * (4 / 16.4),
-            z: data.getInt16(10, 1) * (4 / 16.4)
-          },
-          mag: {
-            x: data.getInt16(12, 1) / 1090,
-            y: data.getInt16(14, 1) / 1090,
-            z: data.getInt16(16, 1) / 1090
+const getTelemetry = (device, type) => {
+  switch (type) {
+    case "gyro": {
+      return sendCommand(device, `msp 102`, 30, false).then(telem => {
+        if (telem) {
+          try {
+            let data = new DataView(new Uint8Array(telem).buffer, 11);
+            lastTelem = {
+              telemetry: true,
+              acc: {
+                x: data.getInt16(0, 1) / 512,
+                y: data.getInt16(2, 1) / 512,
+                z: data.getInt16(4, 1) / 512
+              },
+              gyro: {
+                x: data.getInt16(6, 1) * (4 / 16.4),
+                y: data.getInt16(8, 1) * (4 / 16.4),
+                z: data.getInt16(10, 1) * (4 / 16.4)
+              },
+              mag: {
+                x: data.getInt16(12, 1) / 1090,
+                y: data.getInt16(14, 1) / 1090,
+                z: data.getInt16(16, 1) / 1090
+              }
+            };
+          } catch (ex) {
+            console.log(ex);
           }
-        };
-      } catch (ex) {
-        console.log(ex);
-      }
+        }
+        return lastTelem;
+      });
     }
-    return Promise.resolve(lastTelem);
-  });
+    default:
+    case "rx": {
+      return sendCommand(device, `msp 105`, 30, false).then(rcData => {
+        let data = new DataView(new Uint8Array(rcData).buffer, 11);
+        let channels = [];
+        for (var i = 0; i < 8; i++) {
+          channels[i] = data.getUint16(i * 2, 1);
+        }
+        return {
+          telemetry: true,
+          channels
+        };
+      });
+    }
+  }
 };
 
 module.exports = {
