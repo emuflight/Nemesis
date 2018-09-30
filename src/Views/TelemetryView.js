@@ -10,7 +10,24 @@ export default class TelemetryView extends Component {
     super(props);
 
     this.state = {
-      open: false
+      open: false,
+      telemetry: {
+        gyro: {
+          x: 0,
+          y: 0,
+          z: 0
+        },
+        acc: {
+          x: 0,
+          y: 0,
+          z: 0
+        },
+        mag: {
+          x: 0,
+          y: 0,
+          z: 0
+        }
+      }
     };
   }
   get type() {
@@ -20,7 +37,7 @@ export default class TelemetryView extends Component {
     FCConnector.webSockets.addEventListener("message", message => {
       try {
         let telemetry = JSON.parse(message.data);
-        if (telemetry.telemetry) {
+        if (telemetry.type == "gyro") {
           this.setState({ telemetry });
         }
       } catch (ex) {

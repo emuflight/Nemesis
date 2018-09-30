@@ -169,7 +169,7 @@ const getTelemetry = (device, type) => {
           try {
             let data = new DataView(new Uint8Array(telem).buffer, 11);
             lastTelem = {
-              telemetry: true,
+              type: "gyro",
               acc: {
                 x: data.getInt16(0, 1) / 512,
                 y: data.getInt16(2, 1) / 512,
@@ -202,7 +202,7 @@ const getTelemetry = (device, type) => {
           channels[i] = data.getUint16(i * 2, 1);
         }
         return {
-          telemetry: true,
+          type: "rx",
           channels
         };
       });

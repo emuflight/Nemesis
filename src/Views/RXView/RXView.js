@@ -18,7 +18,7 @@ export default class RXView extends Component {
     FCConnector.webSockets.addEventListener("message", message => {
       try {
         let telemetry = JSON.parse(message.data);
-        if (telemetry.telemetry) {
+        if (telemetry.type === "rx") {
           this.setState({ telemetry: telemetry.channels });
         }
       } catch (ex) {

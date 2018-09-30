@@ -231,6 +231,7 @@ module.exports = {
   },
 
   startTelemetry(deviceInfo, type) {
+    clearInterval(websockets.wsServer.telemetryInterval);
     websockets.wsServer.telemetryInterval = setInterval(() => {
       if (deviceInfo.hid) {
         return rf1Connector.getTelemetry(deviceInfo, type).then(telemData => {
