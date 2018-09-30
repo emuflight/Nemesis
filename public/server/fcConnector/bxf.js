@@ -160,6 +160,29 @@ const saveEEPROM = device => {
   return sendCommand(device, `msp 250`);
 };
 
+const storage = (device, command) => {
+  switch (command) {
+    case "erase":
+      return sendCommand(device, "msp 72");
+    case "info":
+      //MSP_DATAFLASH_SUMMARY
+      return sendCommand(device, "msp 70", 50, false).then(storageInfo => {
+        let data = new DataView(new Uint8Array(storageInfo).buffer, 11);
+        var flags = data.getUint8(0);
+        return {
+          ready: (flags & 1) != 0,
+          supported: (flags & 2) != 0,
+          sectors: data.getUint32(1, 1),
+          totalSize: data.getUint32(5, 1),
+          usedSize: data.getUint32(9, 1)
+        };
+      });
+    case "download":
+    default:
+      return sendCommand(device, "msc");
+  }
+};
+
 let lastTelem;
 const getTelemetry = (device, type) => {
   switch (type) {
@@ -218,5 +241,6 @@ module.exports = {
   setValue: setValue,
   remapMotor: remapMotor,
   spinTestMotor: spinTestMotor,
+  storage: storage,
   saveEEPROM: saveEEPROM
 };

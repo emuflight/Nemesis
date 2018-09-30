@@ -66,6 +66,9 @@ const setValue = (device, name, newVal) => {
 const remapMotor = (device, to, from) => {
   return sendCommand(device, `set mout${from}=${to}`);
 };
+const storage = (device, command) => {
+  return sendCommand(device, "flashmsd");
+};
 
 const spinTestMotor = (device, motor, startStop) => {
   if (startStop == 0) {
@@ -114,5 +117,6 @@ module.exports = {
   setValue: setValue,
   remapMotor: remapMotor,
   spinTestMotor: spinTestMotor,
+  storage: storage,
   saveEEPROM: saveEEPROM
 };

@@ -219,6 +219,19 @@ app.get("/assistant/:fw/:id", (req, res) => {
   res.json(assistantData);
 });
 
+app.get("/storage/:command", (req, res) => {
+  devices.list((err, ports) => {
+    if (err) return res.status(400).send(err);
+    let connectedDevice = ports[0];
+    if (connectedDevice) {
+      fcConnector
+        .storage(connectedDevice, req.params.command)
+        .then(data => res.json(data))
+        .catch(err => res.status(400).send(err));
+    }
+  });
+});
+
 app.listen(9001, () => console.log("usb interface listening on port 9001!"));
 
 module.exports = {

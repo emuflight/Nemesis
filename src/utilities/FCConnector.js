@@ -105,6 +105,12 @@ export default new class FCConnector {
     return fetch(`${this.serviceUrl}/telem/${type}/start`);
   }
 
+  storage(command = "info") {
+    return fetch(`${this.serviceUrl}/storage/${command}`).then(res =>
+      res.json()
+    );
+  }
+
   stopTelemetry() {
     return fetch(`${this.serviceUrl}/telem/stop`);
   }

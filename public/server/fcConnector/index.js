@@ -256,6 +256,13 @@ module.exports = {
       return bxfConnector.sendCommand(deviceInfo, "bl");
     }
   },
+  storage(deviceInfo, command) {
+    if (deviceInfo.hid) {
+      return rf1Connector.storage(deviceInfo, command);
+    } else {
+      return bxfConnector.storage(deviceInfo, command);
+    }
+  },
   saveEEPROM(deviceInfo) {
     if (deviceInfo.hid) {
       return rf1Connector.saveEEPROM(deviceInfo);

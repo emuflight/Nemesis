@@ -20,6 +20,7 @@ import AppBarView from "./AppBarView/AppBarView";
 import FCConnector from "../utilities/FCConnector";
 import AssistantView from "./Assistants/AssistantView";
 import ProfileView from "./ProfileView/ProfileView";
+import BlackboxView from "./BlackboxView/BlackboxView";
 import RXView from "./RXView/RXView";
 
 const skipprops = [
@@ -189,6 +190,19 @@ export default class Connected extends Component {
           <PortsView
             rxProvider={this.state.fcConfig.serialrx_provider}
             ports={this.state.fcConfig.ports.values}
+            notifyDirty={(isDirty, item, newValue) =>
+              this.notifyDirty(isDirty, item, newValue)
+            }
+          />
+        );
+        break;
+      case "BLACKBOX":
+        contents = (
+          <BlackboxView
+            items={getRouteItems(
+              this.state.currentRoute.key,
+              this.state.fcConfig
+            )}
             notifyDirty={(isDirty, item, newValue) =>
               this.notifyDirty(isDirty, item, newValue)
             }
