@@ -7,6 +7,7 @@
     "MODES",
     "RX",
     "FEATURES",
+    "GPS",
     "VTX",
     "OSD",
     "PORTS",
@@ -15,7 +16,29 @@
   ],
   "groups": {
     "MODES": ["modes"],
-
+    "GPS": [
+      "gps_provider",
+      "gps_sbas_mode",
+      "gps_auto_config",
+      "gps_auto_baud",
+      "gps_ublox_use_galileo",
+      "gps_rescue_angle",
+      "gps_rescue_initial_alt",
+      "gps_rescue_descent_dist",
+      "gps_rescue_ground_speed",
+      "gps_rescue_throttle_p",
+      "gps_rescue_throttle_i",
+      "gps_rescue_throttle_d",
+      "gps_rescue_velocity_p",
+      "gps_rescue_velocity_i",
+      "gps_rescue_velocity_d",
+      "gps_rescue_yaw_p",
+      "gps_rescue_throttle_min",
+      "gps_rescue_throttle_max",
+      "gps_rescue_throttle_hover",
+      "gps_rescue_sanity_checks",
+      "gps_rescue_min_sats"
+    ],
     "PID": [
       "p_pitch",
       "i_pitch",

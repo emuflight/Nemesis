@@ -37,7 +37,7 @@ export default class TelemetryView extends Component {
     FCConnector.webSockets.addEventListener("message", message => {
       try {
         let telemetry = JSON.parse(message.data);
-        if (telemetry.type == "gyro") {
+        if (telemetry.type === "gyro") {
           this.setState({ telemetry });
         }
       } catch (ex) {
