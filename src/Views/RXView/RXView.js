@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import Button from "@material-ui/core/Button";
-import FCConnector from "../../utilities/FCConnector";
 import ConfigListView from "../ConfigListView/ConfigListView";
 import Paper from "@material-ui/core/Paper";
 import theme from "../../Themes/Dark";
 import RXTelemView from "./RXTelemView";
+import ChannelMapView from "./ChannelMapView";
 
 export default class RXView extends Component {
   constructor(props) {
@@ -12,24 +12,6 @@ export default class RXView extends Component {
     this.state = {
       showRXTelem: false
     };
-  }
-
-  componentDidMount() {
-    FCConnector.webSockets.addEventListener("message", message => {
-      try {
-        let telemetry = JSON.parse(message.data);
-        if (telemetry.type === "rx") {
-          this.setState({ telemetry: telemetry.channels });
-        }
-      } catch (ex) {
-        console.warn("unable to parse telemetry", ex);
-      }
-    });
-    FCConnector.startTelemetry("rx");
-  }
-
-  componentWillUnmount() {
-    FCConnector.stopTelemetry();
   }
   render() {
     return (
@@ -39,7 +21,7 @@ export default class RXView extends Component {
           elevation={3}
           style={{ margin: "10px", padding: "10px" }}
         >
-          <div>
+          <div style={{ display: "flex" }}>
             <Button
               onClick={() =>
                 this.setState({ showRXTelem: !this.state.showRXTelem })
@@ -47,6 +29,11 @@ export default class RXView extends Component {
               variant="raised"
               color="primary"
             >{`${this.state.showRXTelem ? "Hide" : "Show"} RX Data`}</Button>
+            <div style={{ flexGrow: 1 }} />
+            <ChannelMapView
+              openAssistant={this.props.openAssistant}
+              notifyDirty={this.props.notifyDirty}
+            />
           </div>
           {this.state.showRXTelem && <RXTelemView />}
         </Paper>

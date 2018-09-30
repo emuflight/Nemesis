@@ -179,6 +179,7 @@ export default class Connected extends Component {
               this.state.currentRoute.key,
               this.state.fcConfig
             )}
+            openAssistant={name => this.openAssistant(name)}
             notifyDirty={(isDirty, item, newValue) =>
               this.notifyDirty(isDirty, item, newValue)
             }
