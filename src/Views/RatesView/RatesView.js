@@ -4,7 +4,6 @@ import ConfigListView from "../ConfigListView/ConfigListView";
 import InputView from "../Items/InputView";
 import DropdownView from "../Items/DropdownView";
 import Paper from "@material-ui/core/Paper";
-import theme from "../../Themes/Dark";
 import "./RatesView.css";
 
 export default class RatesView extends ProfileView {
@@ -20,7 +19,7 @@ export default class RatesView extends ProfileView {
     return (
       <div style={{ display: "flex", flexDirection: "column" }}>
         <Paper
-          theme={theme}
+          theme={this.state.theme}
           elevation={3}
           style={{ margin: "10px", padding: "10px" }}
         >
@@ -30,7 +29,7 @@ export default class RatesView extends ProfileView {
           />
         </Paper>
         <Paper
-          theme={theme}
+          theme={this.state.theme}
           elevation={3}
           style={{ margin: "10px", padding: "10px" }}
         >
@@ -48,7 +47,7 @@ export default class RatesView extends ProfileView {
           />
         </Paper>
         <Paper
-          theme={theme}
+          theme={this.state.theme}
           elevation={3}
           style={{ margin: "10px", padding: "10px" }}
         >
@@ -66,7 +65,7 @@ export default class RatesView extends ProfileView {
           />
         </Paper>
         <Paper
-          theme={theme}
+          theme={this.state.theme}
           elevation={3}
           style={{ margin: "10px", padding: "10px" }}
         >
@@ -84,7 +83,7 @@ export default class RatesView extends ProfileView {
           />
         </Paper>
         <Paper
-          theme={theme}
+          theme={this.state.theme}
           elevation={3}
           style={{ margin: "10px", padding: "10px" }}
         >

@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import ConfigListView from "../ConfigListView/ConfigListView";
 import HelperSelect from "../Items/HelperSelect";
 import Paper from "@material-ui/core/Paper";
-import theme from "../../Themes/Dark";
 
 export default class ProfileView extends Component {
   constructor(props) {
@@ -26,7 +25,7 @@ export default class ProfileView extends Component {
     return (
       <div>
         <Paper
-          theme={theme}
+          theme={this.state.theme}
           elevation={3}
           style={{ margin: "10px", padding: "10px" }}
         >

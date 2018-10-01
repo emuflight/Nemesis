@@ -6,7 +6,6 @@ import FCConnector from "../utilities/FCConnector";
 import CliView from "./CliView/CliView";
 import ReactMarkdown from "react-markdown";
 import HelperSelect from "./Items/HelperSelect";
-import theme from "../Themes/Dark";
 import Typography from "@material-ui/core/Typography";
 
 const DFUMessage = `\n\n**********<h1>YOU ARE IN DFU MODE.\nDO NOT UNPLUG YOUR DEVICE UNTIL FLASHING IS COMPLETE OR YOU'RE GONNA HAVE A BAD TIME.</h1><img id="pbjt" src="assets/dfu.gif" height="90" width="90"/><br/>#flyhelio\n**********\n\n`;
@@ -19,6 +18,7 @@ export default class DfuView extends Component {
     this.btnLabel = "FLASH";
     this.cliNotice = DFUMessage;
     this.state = {
+      theme: props.theme,
       allowUpload: true,
       selectedFile: undefined,
       current: "",
@@ -249,12 +249,15 @@ export default class DfuView extends Component {
           {this.btnLabel}
         </Button>
         <Paper
-          theme={theme}
+          theme={this.state.theme}
           elevation={3}
           style={{ margin: "10px", padding: "10px" }}
         >
           <Typography>
-            <ReactMarkdown source={this.state.note} classNames={theme} />
+            <ReactMarkdown
+              source={this.state.note}
+              classNames={this.state.theme}
+            />
           </Typography>
         </Paper>
         <CliView disabled={true} startText={this.cliNotice} ref="cliView" />

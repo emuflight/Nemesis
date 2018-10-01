@@ -6,7 +6,6 @@ import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import Badge from "@material-ui/core/Badge";
 import AccessibleForward from "@material-ui/icons/AccessibleForward";
-import theme from "../Themes/Dark";
 import VersionInfoView from "./VersionInfoView";
 import AuxChannelView from "./AuxChannelView/AuxChannelView";
 import ConfigListView from "./ConfigListView/ConfigListView";
@@ -58,6 +57,7 @@ export default class Connected extends Component {
     super(props);
     this.routes = props.fcConfig.routes;
     this.state = {
+      theme: props.theme,
       isBxF: props.fcConfig.isBxF,
       fcConfig: props.fcConfig,
       pid_profile: props.fcConfig.currentPidProfile,
@@ -287,7 +287,7 @@ export default class Connected extends Component {
 
     return (
       <Paper
-        theme={theme}
+        theme={this.state.theme}
         elevation={3}
         style={{
           display: "flex",
@@ -356,6 +356,7 @@ export default class Connected extends Component {
         <CliView />
         {this.state.openAssistant && (
           <AssistantView
+            theme={this.state.theme}
             fw={
               this.state.fcConfig.version.fw.indexOf("B") > -1 ? "bxf" : "rf1"
             }

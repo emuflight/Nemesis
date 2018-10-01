@@ -4,7 +4,7 @@ import Disconnected from "./Views/Disconnected";
 import ImufView from "./Views/ImufView";
 import DfuView from "./Views/DfuView";
 import FCConnector from "./utilities/FCConnector";
-import theme from "./Themes/Dark";
+import themes from "./Themes/Dark";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 
 class App extends Component {
@@ -12,7 +12,8 @@ class App extends Component {
     super(props);
     this.state = {
       deviceInfo: {},
-      connected: false
+      connected: false,
+      theme: themes.dark
     };
 
     FCConnector.startDetect(device => {
@@ -57,7 +58,8 @@ class App extends Component {
           deviceInfo: device,
           currentConfig: device.config,
           connected: !device.incompatible,
-          incompatible: device.incompatible
+          incompatible: device.incompatible,
+          theme: device.config ? themes[device.config.version.fw] : themes.dark
         });
         FCConnector.currentTarget = "";
         return device.config;
@@ -79,20 +81,21 @@ class App extends Component {
   render() {
     if (this.state.imuf) {
       return (
-        <MuiThemeProvider theme={theme}>
+        <MuiThemeProvider theme={themes.dark}>
           <ImufView goBack={() => this.setState({ imuf: false })} />
         </MuiThemeProvider>
       );
     } else if (this.state.dfu) {
       return (
-        <MuiThemeProvider theme={theme}>
+        <MuiThemeProvider theme={themes.dark}>
           <DfuView target={FCConnector.currentTarget} />
         </MuiThemeProvider>
       );
     } else if (this.state.connected) {
       return (
-        <MuiThemeProvider theme={theme}>
+        <MuiThemeProvider theme={this.state.theme}>
           <Connected
+            theme={this.state.theme}
             rebooting={this.state.rebooting}
             refreshConfig={this.getFcConfig}
             goToImuf={this.goToImuf}
@@ -104,7 +107,7 @@ class App extends Component {
       );
     } else {
       return (
-        <MuiThemeProvider theme={theme}>
+        <MuiThemeProvider theme={themes.dark}>
           <Disconnected
             connecting={this.state.connecting}
             device={this.state.deviceInfo}

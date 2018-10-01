@@ -3,9 +3,14 @@ import DropdownView from "../Items/DropdownView";
 import SliderView from "../Items/SliderView";
 import InputView from "../Items/InputView";
 import Paper from "@material-ui/core/Paper";
-import theme from "../../Themes/Dark";
 
 export default class ConfigListView extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      theme: props.theme
+    };
+  }
   render() {
     let inputs =
       (this.props.items &&
@@ -31,7 +36,7 @@ export default class ConfigListView extends Component {
       >
         {!!sliders.length && (
           <Paper
-            theme={theme}
+            theme={this.state.theme}
             elevation={3}
             style={{
               display: "grid",
@@ -55,7 +60,7 @@ export default class ConfigListView extends Component {
         )}
         {!!dropdowns.length && (
           <Paper
-            theme={theme}
+            theme={this.state.theme}
             elevation={3}
             style={{
               display: "grid",
@@ -79,7 +84,7 @@ export default class ConfigListView extends Component {
 
         {!!inputs.length && (
           <Paper
-            theme={theme}
+            theme={this.state.theme}
             elevation={3}
             style={{
               display: "grid",

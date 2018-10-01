@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import FeatureItemView from "./FeatureItemView";
 import Paper from "@material-ui/core/Paper";
-import theme from "../../Themes/Dark";
 
 export default class FeaturesView extends Component {
   constructor(props) {
@@ -14,7 +13,7 @@ export default class FeaturesView extends Component {
   render() {
     return (
       <Paper
-        theme={theme}
+        theme={this.state.theme}
         elevation={3}
         style={{ margin: "10px", padding: "10px" }}
       >

@@ -3,14 +3,13 @@ import InputView from "../Items/InputView";
 import DropdownView from "../Items/DropdownView";
 import ConfigListView from "../ConfigListView/ConfigListView";
 import Paper from "@material-ui/core/Paper";
-import theme from "../../Themes/Dark";
 
 export default class FiltersView extends ConfigListView {
   render() {
     return (
       <div style={{ display: "flex", flexDirection: "column" }}>
         <Paper
-          theme={theme}
+          theme={this.state.theme}
           elevation={3}
           style={{ margin: "10px", padding: "10px" }}
         >
@@ -30,7 +29,7 @@ export default class FiltersView extends ConfigListView {
         {this.props.fcConfig.imuf ? (
           <div>
             <Paper
-              theme={theme}
+              theme={this.state.theme}
               elevation={3}
               style={{ margin: "10px", padding: "10px" }}
             >
@@ -48,7 +47,7 @@ export default class FiltersView extends ConfigListView {
               />
             </Paper>
             <Paper
-              theme={theme}
+              theme={this.state.theme}
               elevation={3}
               style={{ margin: "10px", padding: "10px" }}
             >
@@ -66,7 +65,7 @@ export default class FiltersView extends ConfigListView {
               />
             </Paper>
             <Paper
-              theme={theme}
+              theme={this.state.theme}
               elevation={3}
               style={{ margin: "10px", padding: "10px" }}
             >
@@ -79,7 +78,7 @@ export default class FiltersView extends ConfigListView {
         ) : (
           <div>
             <Paper
-              theme={theme}
+              theme={this.state.theme}
               elevation={3}
               style={{ margin: "10px", padding: "10px" }}
             >
@@ -93,7 +92,7 @@ export default class FiltersView extends ConfigListView {
               />
             </Paper>
             <Paper
-              theme={theme}
+              theme={this.state.theme}
               elevation={3}
               style={{ margin: "10px", padding: "10px" }}
             >

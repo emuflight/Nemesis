@@ -4,7 +4,6 @@ import "./OSDView.css";
 import Paper from "@material-ui/core/Paper";
 import List from "@material-ui/core/List";
 import Switch from "@material-ui/core/Switch";
-import theme from "../../Themes/Dark";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Typography from "@material-ui/core/Typography";
@@ -36,6 +35,7 @@ export default class OSDView extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      theme: props.theme,
       elementsAvailable: props.items.filter(item => {
         return item.id.startsWith("osd_") && item.mode === "DIRECT";
       }),
@@ -101,7 +101,7 @@ export default class OSDView extends Component {
     let maxRows = this.state.videoMode === "NTSC" ? 13 : 18;
     return (
       <Paper
-        theme={theme}
+        theme={this.state.theme}
         elevation={3}
         style={{ margin: "0 auto", padding: "10px", display: "flex" }}
       >
@@ -150,7 +150,7 @@ export default class OSDView extends Component {
               </div>
             )}
             <Paper
-              theme={theme}
+              theme={this.state.theme}
               elevation={3}
               style={{ margin: "10px", padding: "10px" }}
             >
@@ -211,7 +211,7 @@ export default class OSDView extends Component {
           </div>
         </div>
         <Paper
-          theme={theme}
+          theme={this.state.theme}
           elevation={3}
           style={{
             margin: "10px",

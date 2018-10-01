@@ -10,9 +10,15 @@ import FCConnector from "../../utilities/FCConnector";
 import { Button } from "@material-ui/core";
 
 export default class PickerAssistantView extends Component {
-  state = {
-    progress: 0
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      theme: props.theme,
+      steps: [{ id: undefined }],
+      currentStep: 0,
+      progress: 0
+    };
+  }
 
   handleCommands(type) {
     this.userChoice = type;

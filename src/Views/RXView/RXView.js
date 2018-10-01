@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Button from "@material-ui/core/Button";
 import ConfigListView from "../ConfigListView/ConfigListView";
 import Paper from "@material-ui/core/Paper";
-import theme from "../../Themes/Dark";
 import RXTelemView from "./RXTelemView";
 import ChannelMapView from "./ChannelMapView";
 
@@ -10,6 +9,7 @@ export default class RXView extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      theme: props.theme,
       showRXTelem: false
     };
   }
@@ -17,7 +17,7 @@ export default class RXView extends Component {
     return (
       <div>
         <Paper
-          theme={theme}
+          theme={this.state.theme}
           elevation={3}
           style={{ margin: "10px", padding: "10px" }}
         >
@@ -38,7 +38,7 @@ export default class RXView extends Component {
           {this.state.showRXTelem && <RXTelemView />}
         </Paper>
         <Paper
-          theme={theme}
+          theme={this.state.theme}
           elevation={3}
           style={{ margin: "10px", padding: "10px" }}
         >

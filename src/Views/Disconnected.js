@@ -6,15 +6,20 @@ import Avatar from "@material-ui/core/Avatar";
 import Paper from "@material-ui/core/Paper";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import CliView from "./CliView/CliView";
-import theme from "../Themes/Dark";
 
 export default class Disconnected extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      theme: props.theme
+    };
+  }
   render() {
     let device = this.props.device;
     let openCli = device && device.error;
     return (
       <Paper
-        theme={theme}
+        theme={this.state.theme}
         elevation={3}
         style={{
           display: "flex",

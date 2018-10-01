@@ -5,7 +5,6 @@ import InputView from "../Items/InputView";
 import ConfigListView from "../ConfigListView/ConfigListView";
 import TpaCurveView from "../TpaCurveView/TpaCurveView";
 import Paper from "@material-ui/core/Paper";
-import theme from "../../Themes/Dark";
 import "./PidView.css";
 
 export default class PidsView extends ProfileView {
@@ -45,7 +44,7 @@ export default class PidsView extends ProfileView {
       >
         {this.state.isBxF && (
           <Paper
-            theme={theme}
+            theme={this.state.theme}
             elevation={3}
             style={{ margin: "10px", padding: "10px" }}
           >
@@ -68,7 +67,7 @@ export default class PidsView extends ProfileView {
           </Paper>
         )}
         <Paper
-          theme={theme}
+          theme={this.state.theme}
           elevation={3}
           style={{ margin: "10px", padding: "10px" }}
         >
@@ -81,7 +80,7 @@ export default class PidsView extends ProfileView {
         </Paper>
         {!this.props.fcConfig.imuf && (
           <Paper
-            theme={theme}
+            theme={this.state.theme}
             elevation={3}
             style={{ margin: "10px", padding: "10px" }}
           >
@@ -93,7 +92,7 @@ export default class PidsView extends ProfileView {
         )}
         {!this.props.fcConfig.imuf && (
           <Paper
-            theme={theme}
+            theme={this.state.theme}
             elevation={3}
             style={{ margin: "10px", padding: "10px" }}
           >
@@ -117,7 +116,7 @@ export default class PidsView extends ProfileView {
 
         {this.state.isBxF && (
           <Paper
-            theme={theme}
+            theme={this.state.theme}
             elevation={3}
             style={{ margin: "10px", padding: "10px" }}
           >

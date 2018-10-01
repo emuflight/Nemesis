@@ -4,13 +4,13 @@ import ConfigListView from "../ConfigListView/ConfigListView";
 import Paper from "@material-ui/core/Paper";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Typography from "@material-ui/core/Typography";
-import theme from "../../Themes/Dark";
 import { Button } from "@material-ui/core";
 
 export default class BlackBoxView extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      theme: props.theme,
       storageInfo: {
         totalSize: 1,
         usedSize: 0
@@ -30,7 +30,7 @@ export default class BlackBoxView extends Component {
     return (
       <div>
         <Paper
-          theme={theme}
+          theme={this.state.theme}
           elevation={3}
           style={{ margin: "10px", padding: "10px" }}
         >
@@ -68,7 +68,7 @@ export default class BlackBoxView extends Component {
           </div>
         </Paper>
         <Paper
-          theme={theme}
+          theme={this.state.theme}
           elevation={3}
           style={{ margin: "10px", padding: "10px" }}
         >

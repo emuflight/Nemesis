@@ -4,12 +4,12 @@ import PickerAssistantView from "./PickerAssistantView";
 import MotorAssignmentAssistantView from "./MotorAssignmentAssistantView";
 import FCConnector from "../../utilities/FCConnector";
 import Paper from "@material-ui/core/Paper";
-import theme from "../../Themes/Dark";
 
 export default class AssistantView extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      theme: props.theme,
       steps: [{ id: undefined }],
       currentStep: 0
     };
@@ -50,7 +50,7 @@ export default class AssistantView extends Component {
         onClose={this.props.onClose}
       >
         <Paper
-          theme={theme}
+          theme={this.state.theme}
           elevation={3}
           style={{
             position: "absolute",

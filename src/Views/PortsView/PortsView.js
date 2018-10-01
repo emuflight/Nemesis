@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import PortsItemView from "./PortsItemView";
 import DropdownView from "../Items/DropdownView";
 import Paper from "@material-ui/core/Paper";
-import theme from "../../Themes/Dark";
 
 export default class PortsView extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      theme: props.theme,
       rxProvider: {
         id: "serialrx_provider",
         current: props.rxProvider.current,
@@ -31,7 +31,7 @@ export default class PortsView extends Component {
           return (
             <Paper
               key={port.id}
-              theme={theme}
+              theme={this.state.theme}
               elevation={3}
               style={{ margin: "10px", padding: "10px", display: "flex" }}
             >

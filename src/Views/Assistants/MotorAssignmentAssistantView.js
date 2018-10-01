@@ -7,10 +7,17 @@ import Typography from "@material-ui/core/Typography";
 import FCConnector from "../../utilities/FCConnector";
 
 export default class MotorAssignmentAssistantView extends PickerAssistantView {
-  state = {
-    progress: 0,
-    acceptedRisk: false
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      theme: props.theme,
+      steps: [{ id: undefined }],
+      currentStep: 0,
+      progress: 0,
+      acceptedRisk: false
+    };
+  }
+
   remapMotor = (to, from) => {
     this.setState({ remapping: true });
     FCConnector.remapMotor(to, from).then(() => {
