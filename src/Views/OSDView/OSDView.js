@@ -57,7 +57,7 @@ export default class OSDView extends Component {
       <Paper
         theme={theme}
         elevation={3}
-        style={{ margin: "10px", padding: "10px", display: "flex" }}
+        style={{ margin: "0 auto", padding: "10px", display: "flex" }}
       >
         <div>
           <div
