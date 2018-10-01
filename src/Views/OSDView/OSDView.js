@@ -68,7 +68,8 @@ export default class OSDView extends Component {
     });
   }
 
-  handleUploadProgress = () => {
+  handleUploadProgress = mesage => {
+    console.log(mesage.progress);
     let newProgress = this.state.uploadProgress + 1;
     this.setState({
       uploadProgress: newProgress,
@@ -77,14 +78,16 @@ export default class OSDView extends Component {
   };
 
   componentDidMount() {
-    FCConnector.webSockets.addEventListener("message", () =>
-      this.handleUploadProgress()
+    FCConnector.webSockets.addEventListener(
+      "message",
+      this.handleUploadProgress
     );
   }
 
   componentWillUnmount() {
-    FCConnector.webSockets.removeEventListener("message", () =>
-      this.handleUploadProgress()
+    FCConnector.webSockets.removeEventListener(
+      "message",
+      this.handleUploadProgress
     );
   }
 

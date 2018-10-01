@@ -252,15 +252,15 @@ module.exports = {
             for (let i = 1; i < 256; i++) {
               let index = i * 64;
               let chunk = data
-                .slice(index, index + 64)
+                .slice(index, index + 54)
                 .map(byte => parseInt(byte, 2));
               chunk.unshift(i);
-              let hexStr = Array.from(chunk, function(byte) {
-                return ("0" + (byte & 0xff).toString(16)).slice(-2);
-              }).join("");
+              let hexStr = chunk
+                .map(byte => `0${(byte & 0xff).toString(16)}`.slice(-2))
+                .join("");
               bxfConnector
-                .sendCommand(deviceInfo, `msp 87 ${hexStr}`)
-                .then(() => websockets.notifyProgress("."));
+                .sendCommand(deviceInfo, `msp 87${hexStr}`)
+                .then(resp => websockets.notifyProgress(resp));
             }
           }
         }
