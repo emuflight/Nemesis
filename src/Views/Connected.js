@@ -353,7 +353,7 @@ export default class Connected extends Component {
           </List>
         </Drawer>
         {contents}
-        <CliView />
+        <CliView theme={this.state.theme} />
         {this.state.openAssistant && (
           <AssistantView
             theme={this.state.theme}

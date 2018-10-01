@@ -71,7 +71,7 @@ export default class CliView extends Component {
                 position: "fixed",
                 bottom: "20px",
                 right: "20px",
-                color: "rgb(0, 151, 167)"
+                color: this.props.theme.palette.primary[500]
               }}
               onClick={() => this.toggleCli(true)}
             />
