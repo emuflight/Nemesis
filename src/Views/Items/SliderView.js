@@ -53,7 +53,7 @@ export default class SliderView extends Component {
         <div>
           <TextField
             name={this.props.item.id}
-            style={{ width: 40 }}
+            style={{ width: 50 }}
             type="number"
             value={this.parser(this.state.inputVal)}
             onBlur={() => {

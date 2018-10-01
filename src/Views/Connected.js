@@ -21,6 +21,7 @@ import AssistantView from "./Assistants/AssistantView";
 import ProfileView from "./ProfileView/ProfileView";
 import BlackboxView from "./BlackboxView/BlackboxView";
 import RXView from "./RXView/RXView";
+import MotorsView from "./MotorsView/MotorsView";
 import OSDView from "./OSDView/OSDView";
 import { FormattedMessage } from "react-intl";
 
@@ -166,6 +167,20 @@ export default class Connected extends Component {
         contents = (
           <AuxChannelView
             modes={this.state.fcConfig.modes.values}
+            notifyDirty={(isDirty, item, newValue) =>
+              this.notifyDirty(isDirty, item, newValue)
+            }
+          />
+        );
+        break;
+      case "MOTORS":
+        contents = (
+          <MotorsView
+            items={getRouteItems(
+              this.state.currentRoute.key,
+              this.state.fcConfig
+            )}
+            openAssistant={name => this.openAssistant(name)}
             notifyDirty={(isDirty, item, newValue) =>
               this.notifyDirty(isDirty, item, newValue)
             }
