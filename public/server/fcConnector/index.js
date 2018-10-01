@@ -30,6 +30,9 @@ const createMockObj = (id, val) => {
 const formatConfig = (conf, uiConf) => {
   Object.keys(conf).forEach(key => {
     if (skipprops.indexOf(key) > -1) return;
+    if (conf[key].mode === "BITMASK") {
+      conf[key].values = ["OFF", "ON"];
+    }
     //check the keymap for old values and set them to the new one.
     if (uiConf.keymap[key]) {
       conf[uiConf.keymap[key]] = conf[key];

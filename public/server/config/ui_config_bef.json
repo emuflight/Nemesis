@@ -154,10 +154,7 @@
       "vtx_low_power_disarm",
       "vtx_freq",
       "vtx_pit_mode_freq",
-      "vtx_halfduplex",
-      "vcd_video_system",
-      "vcd_h_offset",
-      "vcd_v_offset"
+      "vtx_halfduplex"
     ],
     "OSD": [
       "osd_units",
@@ -222,7 +219,10 @@
       "osd_stat_bb_no",
       "osd_stat_rtc_date_time",
       "osd_stat_tim_1",
-      "osd_stat_tim_2"
+      "osd_stat_tim_2",
+      "vcd_video_system",
+      "vcd_h_offset",
+      "vcd_v_offset"
     ],
     "PORTS": ["ports"],
     "BLACKBOX": [

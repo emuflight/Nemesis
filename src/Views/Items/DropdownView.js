@@ -11,7 +11,7 @@ export default class DropdownView extends Component {
   render() {
     return (
       <HelperSelect
-        style={this.props.item.style}
+        style={this.props.item && this.props.item.style}
         id={this.state.id}
         className={this.state.id}
         key={this.state.id}

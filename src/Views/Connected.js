@@ -22,6 +22,7 @@ import AssistantView from "./Assistants/AssistantView";
 import ProfileView from "./ProfileView/ProfileView";
 import BlackboxView from "./BlackboxView/BlackboxView";
 import RXView from "./RXView/RXView";
+import OSDView from "./OSDView/OSDView";
 
 const skipprops = [
   "pid_profile",
@@ -194,6 +195,20 @@ export default class Connected extends Component {
             notifyDirty={(isDirty, item, newValue) =>
               this.notifyDirty(isDirty, item, newValue)
             }
+          />
+        );
+        break;
+      case "OSD":
+        contents = (
+          <OSDView
+            fcConfig={this.state.fcConfig}
+            notifyDirty={(isDirty, item, newValue) =>
+              this.notifyDirty(isDirty, item, newValue)
+            }
+            items={getRouteItems(
+              this.state.currentRoute.key,
+              this.state.fcConfig
+            )}
           />
         );
         break;

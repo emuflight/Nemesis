@@ -13,7 +13,9 @@ export default class ConfigListView extends Component {
       [];
     let dropdowns =
       (this.props.items &&
-        this.props.items.filter(item => item.mode === "LOOKUP")) ||
+        this.props.items.filter(
+          item => item.mode === "LOOKUP" || item.mode === "BITMASK"
+        )) ||
       [];
     let sliders =
       (this.props.items &&
