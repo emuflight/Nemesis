@@ -260,7 +260,7 @@ module.exports = {
                 .map(byte => `0${(byte & 0xff).toString(16)}`.slice(-2))
                 .join("");
               bxfConnector
-                .sendCommand(deviceInfo, `msp 87 ${hexStr}`, 30)
+                .sendCommand(deviceInfo, `msp 87 ${hexStr}`, 50)
                 .then(resp => {
                   sentPackets++;
                   websockets.notifyProgress(resp);
