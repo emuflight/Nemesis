@@ -8,11 +8,14 @@ import theme from "../../Themes/Dark";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import LinearProgress from "@material-ui/core/LinearProgress";
 import ConfigListView from "../ConfigListView/ConfigListView";
 import FCConnector from "../../utilities/FCConnector";
+import HelperSelect from "../Items/HelperSelect";
 
 const visibilityFlag = 0x0800;
-
+const normalise = value => (value * 100) / 256;
 const checkOSDVal = val => {
   //TODO: this is wrong because the stupid timer flags use other bits and show up as checked even when they aren't
   let intVal = parseInt(val, 10) & visibilityFlag;
@@ -36,14 +39,53 @@ export default class OSDView extends Component {
       elementsAvailable: props.items.filter(item => {
         return item.id.startsWith("osd_") && item.mode === "DIRECT";
       }),
-      videoMode: props.fcConfig.vcd_video_system.current
+      videoMode: props.fcConfig.vcd_video_system.current,
+      uploadingFont: false,
+      uploadProgress: 0,
+      selectedFont: "butterflight"
     };
+
+    this.fontList = [
+      { label: "Bold", value: "bold" },
+      { label: "Butterflight", value: "butterflight" },
+      { label: "Cleanflight", value: "cleanflight" },
+      { label: "Default", value: "default" },
+      { label: "Digital", value: "digital" },
+      { label: "Extra Large", value: "extra_large" },
+      { label: "Large", value: "large" }
+    ];
   }
   setOSDElement(gridElement) {
     let newPos = xyPosToOSD(gridElement.x, gridElement.y);
     FCConnector.setValue(gridElement.i, newPos).then(() => {
       this.props.notifyDirty(true, gridElement, newPos);
     });
+  }
+  handleUpload() {
+    this.setState({ uploadingFont: true });
+    FCConnector.uploadFont(this.state.selectedFont).then(() => {
+      this.setState({ uploadProgress: 1 });
+    });
+  }
+
+  handleUploadProgress = () => {
+    let newProgress = this.state.uploadProgress + 1;
+    this.setState({
+      uploadProgress: newProgress,
+      uploadingFont: !(newProgress >= 256)
+    });
+  };
+
+  componentDidMount() {
+    FCConnector.webSockets.addEventListener("message", () =>
+      this.handleUploadProgress()
+    );
+  }
+
+  componentWillUnmount() {
+    FCConnector.webSockets.removeEventListener("message", () =>
+      this.handleUploadProgress()
+    );
   }
 
   render() {
@@ -61,6 +103,36 @@ export default class OSDView extends Component {
         style={{ margin: "0 auto", padding: "10px", display: "flex" }}
       >
         <div>
+          <div
+            style={{
+              display: "flex",
+              justifyItems: "center",
+              alignItems: "center"
+            }}
+          >
+            <HelperSelect
+              name="Font Selector"
+              label="Font Selector"
+              value={this.state.selectedFont}
+              onChange={(event, elem) => {
+                this.setState({ selectedFont: elem.key });
+              }}
+              items={this.fontList}
+            />
+            <Button
+              variant="raised"
+              color="primary"
+              disabled={this.state.uploadingFont}
+              onClick={() => this.handleUpload()}
+            >
+              Upload Font
+            </Button>
+            <LinearProgress
+              style={{ height: 20, flex: 1, marginLeft: 10 }}
+              variant="determinate"
+              value={normalise(this.state.uploadProgress)}
+            />
+          </div>
           <div
             style={{
               margin: "10px",

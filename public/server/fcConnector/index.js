@@ -3,6 +3,7 @@ const rf1Connector = require("./rf1");
 const websockets = require("../websockets");
 const BxfUiConfig = require("../config/ui_config_bef.json");
 const rf1UiConfig = require("../config/ui_config_rf1.json");
+const request = require("request").defaults({ encoding: "utf8" });
 
 const skipprops = [
   "pid_profile",
@@ -232,7 +233,40 @@ module.exports = {
       return bxfConnector.sendCommand(deviceInfo, command);
     }
   },
-
+  uploadFont(deviceInfo, name = "butterflight") {
+    return new Promise((resolve, reject) => {
+      if (deviceInfo.hid) return resolve("not supported");
+      request(
+        {
+          url: `https://raw.githubusercontent.com/ButterFlight/butterflight-configurator/master/resources/osd/${name}.mcm`,
+          headers: {
+            "User-Agent": "request"
+          }
+        },
+        (error, response, body) => {
+          if (response.statusCode >= 400) {
+            reject({ error: body });
+          } else {
+            resolve();
+            let data = body.split("\n");
+            for (let i = 1; i < 256; i++) {
+              let index = i * 64;
+              let chunk = data
+                .slice(index, index + 64)
+                .map(byte => parseInt(byte, 2));
+              chunk.unshift(i);
+              let hexStr = Array.from(chunk, function(byte) {
+                return ("0" + (byte & 0xff).toString(16)).slice(-2);
+              }).join("");
+              bxfConnector
+                .sendCommand(deviceInfo, `msp 87 ${hexStr}`)
+                .then(() => websockets.notifyProgress("."));
+            }
+          }
+        }
+      );
+    });
+  },
   startTelemetry(deviceInfo, type) {
     clearInterval(websockets.wsServer.telemetryInterval);
     websockets.wsServer.telemetryInterval = setInterval(() => {

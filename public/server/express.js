@@ -232,6 +232,19 @@ app.get("/storage/:command", (req, res) => {
   });
 });
 
+app.get("/font/:name", (req, res) => {
+  devices.list((err, ports) => {
+    if (err) return res.status(404).send(err);
+    let connectedDevice = ports[0];
+    if (connectedDevice) {
+      fcConnector
+        .uploadFont(connectedDevice)
+        .then(() => res.sendStatus(200))
+        .catch(err => res.status(400).send(err));
+    }
+  });
+});
+
 app.listen(9001, () => console.log("usb interface listening on port 9001!"));
 
 module.exports = {

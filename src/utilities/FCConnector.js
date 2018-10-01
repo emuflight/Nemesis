@@ -115,6 +115,10 @@ export default new class FCConnector {
     return fetch(`${this.serviceUrl}/telem/stop`);
   }
 
+  uploadFont(name = "butterflight") {
+    return fetch(`${this.serviceUrl}/font/${name}`);
+  }
+
   flashDFU(binUrl) {
     return fetch(`${this.serviceUrl}/flash/${encodeURIComponent(binUrl)}`).then(
       response => {
