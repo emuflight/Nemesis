@@ -252,7 +252,7 @@ module.exports = {
             for (let i = 1; i < 256; i++) {
               let index = i * 64;
               let chunk = data
-                .slice(index, index + 54)
+                .slice(index, index + 64)
                 .map(byte => parseInt(byte, 2));
               chunk.unshift(i);
               let hexStr = chunk
