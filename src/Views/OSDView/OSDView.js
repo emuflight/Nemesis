@@ -17,7 +17,6 @@ const checkOSDVal = val => {
   //TODO: this is wrong because the stupid timer flags use other bits and show up as checked even when they aren't
   let intVal = parseInt(val, 10) & visibilityFlag;
   // console.log((intVal >>> 0).toString(2));
-  console.log((intVal >>> 0).toString(2));
   let isChecked = intVal > 0;
   return isChecked;
 };
@@ -36,7 +35,8 @@ export default class OSDView extends Component {
     this.state = {
       elementsAvailable: props.items.filter(item => {
         return item.id.startsWith("osd_") && item.mode === "DIRECT";
-      })
+      }),
+      videoMode: props.fcConfig.vcd_video_system.current
     };
   }
   setOSDElement(gridElement) {
@@ -53,6 +53,7 @@ export default class OSDView extends Component {
     let nonElementSettings = this.props.items.filter(item => {
       return item.mode !== "DIRECT";
     });
+    let maxRows = this.state.videoMode === "NTSC" ? 13 : 18;
     return (
       <Paper
         theme={theme}
@@ -85,7 +86,7 @@ export default class OSDView extends Component {
                   backgroundRepeat: "none",
                   backgroundSize: "cover",
                   margin: "0 auto",
-                  height: 340,
+                  height: maxRows * 26,
                   width: 550,
                   overflow: "hidden"
                 }}
@@ -93,7 +94,7 @@ export default class OSDView extends Component {
                 onDragStop={(layout, oldItem, newItem) => {
                   this.setOSDElement(newItem);
                 }}
-                maxRows={13}
+                maxRows={maxRows}
                 autoSize={false}
                 cols={30}
                 compactType={null}
@@ -123,7 +124,12 @@ export default class OSDView extends Component {
             </Paper>
             <div>
               <ConfigListView
-                notifyDirty={this.props.notifyDirty}
+                notifyDirty={(isDirty, item, val) => {
+                  if (item.id === "vcd_video_system") {
+                    this.setState({ videoMode: val });
+                  }
+                  this.props.notifyDirty(isDirty, item, val);
+                }}
                 items={nonElementSettings}
               />
             </div>
