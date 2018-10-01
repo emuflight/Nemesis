@@ -63,10 +63,10 @@ const getConfig = device => {
 };
 
 const commandQueue = [];
-
-const runQueue = () => {
-  let next = commandQueue.pop();
+let currentCommand;
+const runQueue = next => {
   if (!next) return;
+  currentCommand = next;
   setupConnection(next.device).then(port => {
     console.log(
       `sending command: ${next.command} on port ${next.device.comName}`
@@ -78,7 +78,7 @@ const runQueue = () => {
       }
     });
     let currentRecBuffer = "";
-    let runningCommand = setInterval(() => {
+    let interval = setInterval(() => {
       let more = port.read();
       if (more) {
         if (next.encode) {
@@ -88,10 +88,10 @@ const runQueue = () => {
           currentRecBuffer = more;
         }
       } else {
-        runningCommand && clearInterval(runningCommand);
-        runningCommand = null;
+        interval && clearInterval(interval);
         next.resolve(currentRecBuffer);
-        runQueue();
+        currentCommand = null;
+        runQueue(commandQueue.pop());
       }
     }, next.waitMs);
   });
@@ -99,9 +99,9 @@ const runQueue = () => {
 
 const sendCommand = (device, command, waitMs = 200, encode = "utf8") => {
   return new Promise((resolve, reject) => {
-    commandQueue.push({ device, command, waitMs, encode, resolve, reject });
-    if (commandQueue.length == 1) {
-      runQueue();
+    commandQueue.unshift({ device, command, waitMs, encode, resolve, reject });
+    if (!currentCommand) {
+      runQueue(commandQueue.pop());
     }
   });
 };

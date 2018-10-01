@@ -54,7 +54,7 @@ export default class CliView extends Component {
       e.stopPropagation();
       e.target.value = "";
       this.setState({ disabled: true });
-      let commands = this.state.command.split(/\r|\n/gim);
+      let commands = this.state.command.split(/\r|\n/gim).filter(com => com);
       FCConnector.sendBulkCommands(commands).then(resp => {
         this.appendCliBuffer(resp);
         this.setState({ disabled: false });

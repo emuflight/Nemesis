@@ -248,6 +248,7 @@ module.exports = {
             reject({ error: body });
           } else {
             resolve();
+            let sentPackets = 0;
             let data = body.split("\n");
             for (let i = 1; i < 256; i++) {
               let index = i * 64;
@@ -259,8 +260,15 @@ module.exports = {
                 .map(byte => `0${(byte & 0xff).toString(16)}`.slice(-2))
                 .join("");
               bxfConnector
-                .sendCommand(deviceInfo, `msp 87${hexStr}`)
-                .then(resp => websockets.notifyProgress(resp));
+                .sendCommand(deviceInfo, `msp 87 ${hexStr}`, 30)
+                .then(resp => {
+                  sentPackets++;
+                  websockets.notifyProgress(resp);
+                  if (sentPackets === 255) {
+                    websockets.deviceRebooting(deviceInfo);
+                    bxfConnector.sendCommand(deviceInfo, `save`);
+                  }
+                });
             }
           }
         }

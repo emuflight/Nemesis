@@ -28,13 +28,16 @@ export default class PickerAssistantView extends Component {
       currentMessage: "Saving...",
       currentResponse: ""
     });
-    FCConnector.sendBulkCommands(type.commands.slice(0), progress => {
-      let percent = (progress / type.commands.length) * 100;
-      this.setState({
-        progress: Math.floor(percent),
-        saved: percent >= 100
-      });
-    }).then(() => {
+    FCConnector.sendBulkCommands(
+      type.commands.slice(0).filter(com => com),
+      progress => {
+        let percent = (progress / type.commands.length) * 100;
+        this.setState({
+          progress: Math.floor(percent),
+          saved: percent >= 100
+        });
+      }
+    ).then(() => {
       if (type.verify) {
         this.setState({ verifying: true });
         const verifySetting = () => {

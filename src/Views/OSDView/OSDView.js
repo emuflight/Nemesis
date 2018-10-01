@@ -69,7 +69,7 @@ export default class OSDView extends Component {
   }
 
   handleUploadProgress = mesage => {
-    console.log(mesage.progress);
+    console.log(JSON.parse(mesage.data));
     let newProgress = this.state.uploadProgress + 1;
     this.setState({
       uploadProgress: newProgress,
