@@ -161,9 +161,8 @@ const saveEEPROM = device => {
 };
 
 const getMotors = device => {
-  return sendCommand(device, "msp 104", 30, false).then(storageInfo => {
-    console.log(storageInfo);
-    let data = new DataView(new Uint8Array(storageInfo).buffer, 11);
+  return sendCommand(device, "msp 104", 30, false).then(motorData => {
+    let data = new DataView(new Uint8Array(motorData).buffer, 11);
 
     let motorInfo = [];
     try {
@@ -171,7 +170,6 @@ const getMotors = device => {
         motorInfo.push(data.getUint16(i * 2, 1));
       }
     } catch (ex) {
-      console.log(motorInfo);
       console.log(ex);
     }
     return motorInfo;
