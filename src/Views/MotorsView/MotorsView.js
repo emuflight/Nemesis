@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Button from "@material-ui/core/Button";
 import ConfigListView from "../ConfigListView/ConfigListView";
 import Paper from "@material-ui/core/Paper";
-import theme from "../../Themes/Dark";
 import MotorsSlidersView from "./MotorsSlidersView";
 
 export default class MotorsView extends Component {
@@ -17,7 +16,7 @@ export default class MotorsView extends Component {
     return (
       <div>
         <Paper
-          theme={theme}
+          theme={this.state.theme}
           elevation={3}
           style={{ margin: "10px", padding: "10px" }}
         >
@@ -38,7 +37,7 @@ export default class MotorsView extends Component {
           {this.state.showMotorSliders && <MotorsSlidersView />}
         </Paper>
         <Paper
-          theme={theme}
+          theme={this.state.theme}
           elevation={3}
           style={{ margin: "10px", padding: "10px" }}
         >
