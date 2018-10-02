@@ -5,7 +5,14 @@ import MotorItemView from "./MotorItemView";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import FCConnector from "../../utilities/FCConnector";
+import { FormattedMessage } from "react-intl";
 
+const motorLayout = [
+  { position: "absolute", top: 0, left: 0 },
+  { position: "absolute", top: 0, right: 0 },
+  { position: "absolute", bottom: 0, right: 0 },
+  { position: "absolute", bottom: 0, left: 0 }
+];
 export default class MotorAssignmentAssistantView extends PickerAssistantView {
   constructor(props) {
     super(props);
@@ -13,16 +20,21 @@ export default class MotorAssignmentAssistantView extends PickerAssistantView {
       theme: props.theme,
       steps: [{ id: undefined }],
       currentStep: 0,
-      progress: 0
+      progress: 0,
+      spinning: 0
     };
   }
 
   remapMotor = (to, from) => {
-    this.setState({ remapping: true });
-    FCConnector.remapMotor(to, from).then(() => {
-      this.setState({ remapping: false });
-      this.setState({ remapped: true });
-    });
+    if (!this.state.remapping) {
+      this.setState({ remapping: true });
+      FCConnector.spinTestMotor(from, 1000).then(() => {
+        this.setState({ spinning: 0 });
+        FCConnector.remapMotor(to, from).then(() => {
+          this.setState({ remapping: false, remapped: true });
+        });
+      });
+    }
   };
   render() {
     return (
@@ -49,7 +61,7 @@ export default class MotorAssignmentAssistantView extends PickerAssistantView {
                 })
               }
             >
-              Save
+              <FormattedMessage id="common.save" />
             </Button>
           </div>
           <div
@@ -69,43 +81,26 @@ export default class MotorAssignmentAssistantView extends PickerAssistantView {
                 backgroundRepeat: "no-repeat"
               }}
             >
-              <MotorItemView
-                style={{ position: "absolute", bottom: 0, right: 0 }}
-                label={"Motor 1"}
-                motorIndex={1}
-                remapMotor={this.remapMotor}
-                spinTest={value => {
-                  FCConnector.spinTestMotor(1, value);
-                }}
-              />
-
-              <MotorItemView
-                style={{ position: "absolute", top: 0, right: 0 }}
-                label={"Motor 2"}
-                motorIndex={2}
-                remapMotor={this.remapMotor}
-                spinTest={value => {
-                  FCConnector.spinTestMotor(2, value);
-                }}
-              />
-              <MotorItemView
-                style={{ position: "absolute", bottom: 0, left: 0 }}
-                label={"Motor 3"}
-                motorIndex={3}
-                remapMotor={this.remapMotor}
-                spinTest={value => {
-                  FCConnector.spinTestMotor(3, value);
-                }}
-              />
-              <MotorItemView
-                style={{ position: "absolute", top: 0, left: 0 }}
-                label={"Motor 4"}
-                motorIndex={4}
-                remapMotor={this.remapMotor}
-                spinTest={value => {
-                  FCConnector.spinTestMotor(4, value);
-                }}
-              />
+              {this.props.fcConfig &&
+                this.props.fcConfig.motor_order.map((num, i) => {
+                  return (
+                    <MotorItemView
+                      style={motorLayout[i]}
+                      label={`Motor ${num}`}
+                      motorIndex={num}
+                      spinning={!!this.state.spinning}
+                      remapping={this.state.remapping}
+                      remapMotor={m => {
+                        this.remapMotor(this.state.spinning, m);
+                      }}
+                      spinTest={value => {
+                        console.log(value);
+                        this.setState({ spinning: value });
+                        FCConnector.spinTestMotor(value, 1060);
+                      }}
+                    />
+                  );
+                })}
             </div>
           </div>
         </div>

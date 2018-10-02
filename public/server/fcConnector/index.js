@@ -156,6 +156,18 @@ const applyUIConfig = (device, config, uiConfig) => {
       };
     });
   }
+  if (config.pitch_map) {
+    let mapping = {};
+    mapping[config.throttle_map.current] = "T";
+    mapping[config.roll_map.current] = "A";
+    mapping[config.pitch_map.current] = "E";
+    mapping[config.yaw_map.current] = "R";
+    config.channel_map = `${mapping["0"]}${mapping["1"]}${mapping["2"]}${
+      mapping["3"]
+    }1234`;
+  }
+  config.rx_scale = uiConfig.rx_scale;
+  config.motor_order = uiConfig.motor_order;
   config.routes = uiConfig.routes.map(route => {
     return {
       key: route,
@@ -216,11 +228,28 @@ module.exports = {
       return bxfConnector.remapMotor(deviceInfo, to, from);
     }
   },
+
   getMotors(deviceInfo) {
     if (deviceInfo.hid) {
       return rf1Connector.getMotors(deviceInfo);
     } else {
       return bxfConnector.getMotors(deviceInfo);
+    }
+  },
+
+  getChannelMap(deviceInfo) {
+    if (deviceInfo.hid) {
+      return rf1Connector.getChannelMap(deviceInfo);
+    } else {
+      return bxfConnector.getChannelMap(deviceInfo);
+    }
+  },
+
+  setChannelMap(deviceInfo, newMap) {
+    if (deviceInfo.hid) {
+      return rf1Connector.setChannelMap(deviceInfo, newMap);
+    } else {
+      return bxfConnector.setChannelMap(deviceInfo, newMap);
     }
   },
   spinTestMotor(deviceInfo, motor, startStop) {

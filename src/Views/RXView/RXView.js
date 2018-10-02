@@ -31,11 +31,14 @@ export default class RXView extends Component {
             >{`${this.state.showRXTelem ? "Hide" : "Show"} RX Data`}</Button>
             <div style={{ flexGrow: 1 }} />
             <ChannelMapView
+              mapping={this.props.fcConfig.channel_map}
               openAssistant={this.props.openAssistant}
               notifyDirty={this.props.notifyDirty}
             />
           </div>
-          {this.state.showRXTelem && <RXTelemView />}
+          {this.state.showRXTelem && (
+            <RXTelemView scale={this.props.fcConfig.rx_scale} />
+          )}
         </Paper>
         <Paper
           theme={this.state.theme}

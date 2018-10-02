@@ -466,5 +466,7 @@
     "gyro_lpf": "gyro_hardware_lpf",
     "dterm_lowpass_type": "dterm_lowpass_hz_type",
     "dterm_lowpass": "dterm_lowpass_hz"
-  }
+  },
+  "motor_order": [4, 2, 1, 3],
+  "rx_scale": 3000
 }

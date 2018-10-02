@@ -28,8 +28,10 @@ export default class MotorsSlidersView extends Component {
       });
     });
   }
+  componentWillUnmount() {
+    this.state.motors.forEach((motor, i) => FCConnector.spinTestMotor(i, 1000));
+  }
   updateValue(motorID, value) {
-    console.log(motorID, value);
     return FCConnector.spinTestMotor(motorID, value); //.then(() => this.props.notifyDirty(true, this.state, value));
   }
   render() {

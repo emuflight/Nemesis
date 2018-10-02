@@ -89,7 +89,14 @@ export default new class FCConnector {
   spinTestMotor(motor, value) {
     return fetch(`${this.serviceUrl}/spintest/${motor}/${value}`);
   }
-
+  getChannelMap() {
+    return fetch(`${this.serviceUrl}/channelmap`).then(response =>
+      response.json()
+    );
+  }
+  setChannelMap(newMap) {
+    return fetch(`${this.serviceUrl}/channelmap/${newMap}`);
+  }
   goToDFU(target) {
     this.currentTarget = target;
     return fetch(`${this.serviceUrl}/dfu`);
@@ -105,9 +112,20 @@ export default new class FCConnector {
   }
 
   startTelemetry(type = "gyro") {
-    return fetch(`${this.serviceUrl}/telem/${type}/start`);
+    this.lastTelemetry = type;
+    return fetch(`${this.serviceUrl}/telem/${this.lastTelemetry}/start`);
   }
-
+  pauseTelemetry() {
+    this.paused = true;
+    this.stopTelemetry();
+  }
+  resumeTelemetry() {
+    if (this.paused) {
+      this.paused = false;
+      return fetch(`${this.serviceUrl}/telem/${this.lastTelemetry}/start`);
+    }
+    return Promise.reject("not paused");
+  }
   storage(command = "info") {
     return fetch(`${this.serviceUrl}/storage/${command}`).then(res =>
       res.json()

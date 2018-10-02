@@ -42,6 +42,7 @@ export default class PickerAssistantView extends Component {
         this.setState({ verifying: true });
         const verifySetting = () => {
           FCConnector.sendCliCommand(type.verify.command).then(resp => {
+            console.log(resp);
             if (this.state.cancel) {
               this.setState({
                 currentMessage: "Cancelled!",
@@ -49,11 +50,12 @@ export default class PickerAssistantView extends Component {
               });
             } else if (resp.toLowerCase().indexOf(type.verify.error) > -1) {
               this.setState({ error: resp });
-            } else if (resp.indexOf(type.verify.until) > -1) {
+            } else if (resp.toLowerCase().indexOf(type.verify.until) > -1) {
               this.setState({
                 saving: false,
                 verifying: false,
-                currentMessage: resp
+                currentResponse: resp,
+                completed: true
               });
             } else {
               this.setState({

@@ -1,9 +1,12 @@
 {
   "common.update": "Update",
+  "common.save": "Save",
   "common.flash": "FLASH",
   "common.go-back": "Go Back",
   "common.rebooting": "Rebooting...",
   "common.version-info": "Version Info",
+  "motor.item.spin-motor": "Spin motor {index}",
+  "motor.item.this-one": "I'm spinning",
   "PID": "PIDS",
   "RATES": "CONTROL RATES",
   "FILTERS": "GYRO FILTERS",

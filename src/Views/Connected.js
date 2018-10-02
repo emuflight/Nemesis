@@ -194,6 +194,7 @@ export default class Connected extends Component {
               this.state.currentRoute.key,
               this.state.fcConfig
             )}
+            fcConfig={this.state.fcConfig}
             openAssistant={name => this.openAssistant(name)}
             notifyDirty={(isDirty, item, newValue) =>
               this.notifyDirty(isDirty, item, newValue)
@@ -370,6 +371,7 @@ export default class Connected extends Component {
         <CliView theme={this.state.theme} />
         {this.state.openAssistant && (
           <AssistantView
+            fcConfig={this.state.fcConfig}
             theme={this.state.theme}
             fw={
               this.state.fcConfig.version.fw.indexOf("B") > -1 ? "bxf" : "rf1"

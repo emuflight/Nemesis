@@ -24,6 +24,17 @@ const theme = createMuiTheme({
     secondary: grey
   },
   overrides: {
+    MuiLinearProgress: {
+      bar: {
+        transition: "transform 0.1s linear"
+      },
+      bar1Determinate: {
+        transition: "transform 0.1s linear"
+      },
+      bar2Determinate: {
+        transition: "transform 0.1s linear"
+      }
+    },
     MuiInput: {
       root: {
         // color: grey[900]

@@ -245,6 +245,31 @@ app.get("/motors", (req, res) => {
   });
 });
 
+app.get("/channelmap", (req, res) => {
+  devices.list((err, ports) => {
+    if (err) return res.status(400).send(err);
+    let connectedDevice = ports[0];
+    if (connectedDevice) {
+      fcConnector
+        .getChannelMap(connectedDevice)
+        .then(data => res.json(data))
+        .catch(err => res.status(400).send(err));
+    }
+  });
+});
+app.get("/channelmap/:newmap", (req, res) => {
+  devices.list((err, ports) => {
+    if (err) return res.status(400).send(err);
+    let connectedDevice = ports[0];
+    if (connectedDevice) {
+      fcConnector
+        .setChannelMap(connectedDevice, req.params.newmap)
+        .then(data => res.json(data))
+        .catch(err => res.status(400).send(err));
+    }
+  });
+});
+
 app.get("/font/:name", (req, res) => {
   devices.list((err, ports) => {
     if (err) return res.status(404).send(err);

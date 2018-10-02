@@ -65,6 +65,7 @@ export default class AssistantView extends Component {
         >
           {
             <CustomAssistant
+              fcConfig={this.props.fcConfig}
               title={step.id}
               style={{ flex: 1, display: "flex" }}
               type={this.props.type}

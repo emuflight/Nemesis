@@ -17,5 +17,8 @@
         "commands": ["set yaw_motors_reversed=ON"]
       }
     ]
+  },
+  {
+    "id": "motor assignments"
   }
 ]

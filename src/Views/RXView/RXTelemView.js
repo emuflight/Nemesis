@@ -4,11 +4,18 @@ import FCConnector from "../../utilities/FCConnector";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Typography from "@material-ui/core/Typography";
 
-const normalise = value => ((value - 0) * 100) / (3000 - 0);
 export default class RXTelemView extends Component {
-  state = {
-    channels: []
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      channels: [],
+      scale: this.props.scale
+    };
+  }
+
+  normalize(value) {
+    return (value * 100) / this.state.scale;
+  }
   handleRXData = message => {
     try {
       let telemetry = JSON.parse(message.data);
@@ -52,7 +59,7 @@ export default class RXTelemView extends Component {
                 <LinearProgress
                   variant="determinate"
                   style={{ height: 20, margin: 10 }}
-                  value={normalise(v)}
+                  value={this.normalize(v)}
                 />
               </div>
             );

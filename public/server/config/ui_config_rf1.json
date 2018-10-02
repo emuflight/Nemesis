@@ -3,7 +3,7 @@
     "PID",
     "RATES",
     "FILTERS",
-    "MIXER",
+    "MOTORS",
     "RX",
     "LEDS",
     "TELEMETRY",
@@ -195,7 +195,7 @@
       "z_vector_quick3",
       "z_vector_rap3"
     ],
-    "MIXER": [
+    "MOTORS": [
       "mixer_type",
       "famx",
       "mixer_style",
@@ -509,5 +509,7 @@
     "yaw_kd_rap": "dterm_lowpass_hz",
     "dterm_lowpass_type": "dterm_lowpass_hz_type",
     "dterm_lowpass": "dterm_lowpass_hz"
-  }
+  },
+  "motor_order": [1, 2, 3, 4],
+  "rx_scale": 2000
 }

@@ -43,6 +43,7 @@ wsServer.on("request", request => {
         rebooting: !!connectedDevice.rebooting
       })
     );
+    connectedDevice.rebooting = false;
   });
   // This is the most important callback for us, we'll handle
   // all messages from users here.

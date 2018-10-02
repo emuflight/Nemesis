@@ -8,24 +8,28 @@ export default class ChannelMapView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      mapping: "",
+      mapping: props.mapping,
       isDirty: true
     };
   }
 
   componentDidMount() {
-    FCConnector.sendCliCommand("map").then(mapping => {
-      mapping = mapping.replace(/map|\s+|#|\n/gim, "");
-      this.originalMapping = mapping;
-      this.setState({ mapping, isDirty: false });
-    });
+    if (!this.state.mapping) {
+      FCConnector.getChannelMap().then(mapping => {
+        mapping = mapping.replace(/map|\s+|#|\n/gim, "");
+        this.originalMapping = mapping;
+        this.setState({ mapping, isDirty: false });
+      });
+    } else {
+      this.setState({ isDirty: false });
+    }
   }
   handleUpdate() {
     let isDirty = this.originalMapping !== this.state.mapping;
     if (isDirty) {
       this.props.notifyDirty(true, this.state, this.state.mapping);
       this.setState({ isDirty: true });
-      FCConnector.sendCliCommand(`map ${this.state.mapping}`).then(res => {
+      FCConnector.setChannelMap(`map ${this.state.mapping}`).then(res => {
         this.setState({ isDirty: false });
       });
     }

@@ -23,6 +23,11 @@ export default class CliView extends Component {
       command: "",
       open: openState
     });
+    if (openState) {
+      FCConnector.pauseTelemetry();
+    } else {
+      FCConnector.resumeTelemetry();
+    }
   }
   replaceLast(update) {
     this.setState({
@@ -30,11 +35,13 @@ export default class CliView extends Component {
       cliBuffer: this.prevCli + update
     });
     this.refs.cliScroll.scrollTop = this.refs.cliScroll.scrollHeight;
+    this.refs.cliInput.focus();
   }
   appendCliBuffer(resp) {
     this.prevCli = this.state.cliBuffer;
     this.setState({ disabled: false, cliBuffer: this.prevCli + resp });
     this.refs.cliScroll.scrollTop = this.refs.cliScroll.scrollHeight;
+    this.refs.cliInput.focus();
   }
   handleKeyDown = e => {
     if (e.keyCode === 38) {
@@ -122,7 +129,7 @@ export default class CliView extends Component {
               />
             </div>
             <TextField
-              ref="cliInput"
+              inputRef={input => (this.refs.cliInput = input)}
               name="cli-input"
               variant="outlined"
               style={{ marginBottom: 10 }}

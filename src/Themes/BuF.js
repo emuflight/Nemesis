@@ -26,6 +26,17 @@ const theme = createMuiTheme({
     secondary: red
   },
   overrides: {
+    MuiLinearProgress: {
+      bar: {
+        transition: "transform 0.1s linear"
+      },
+      bar1Determinate: {
+        transition: "transform 0.1s linear"
+      },
+      bar2Determinate: {
+        transition: "transform 0.1s linear"
+      }
+    },
     MuiSwitch: {
       colorSecondary: {
         "&$checked": {

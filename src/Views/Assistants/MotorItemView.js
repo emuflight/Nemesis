@@ -5,15 +5,13 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Typography from "@material-ui/core/Typography";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
+import { FormattedMessage } from "react-intl";
 
 export default class MotorItemView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      motorIndex: props.motorIndex,
-      remapping: false
+      motorIndex: props.motorIndex
     };
   }
   render() {
@@ -24,32 +22,34 @@ export default class MotorItemView extends Component {
             <Typography gutterBottom variant="headline" component="h3">
               {this.props.label}
             </Typography>
-            <Select
-              value={this.state.motorIndex}
-              onChange={event => {
-                this.setState({ motorIndex: event.target.value });
-                this.props.remapMotor(
-                  event.target.value,
-                  this.state.motorIndex
-                );
-              }}
-            >
-              <MenuItem value={1}>Motor 1</MenuItem>
-              <MenuItem value={2}>Motor 2</MenuItem>
-              <MenuItem value={3}>Motor 3</MenuItem>
-              <MenuItem value={4}>Motor 4</MenuItem>
-            </Select>
           </CardContent>
           <CardActions>
-            <Button
-              size="small"
-              color="secondary"
-              disabled={this.state.remapping}
-              onMouseDown={() => this.props.spinTest(5)}
-              onMouseUp={() => this.props.spinTest(0)}
-            >
-              Spin it
-            </Button>
+            {this.props.spinning ? (
+              <Button
+                size="small"
+                variant="raised"
+                color="secondary"
+                disabled={this.props.remapping}
+                onClick={() => {
+                  this.props.remapMotor(this.state.motorIndex);
+                }}
+              >
+                <FormattedMessage id="motor.item.this-one" />
+              </Button>
+            ) : (
+              <Button
+                size="small"
+                variant="raised"
+                color="primary"
+                disabled={this.props.remapping}
+                onClick={() => this.props.spinTest(this.state.motorIndex)}
+              >
+                <FormattedMessage
+                  id="motor.item.spin-motor"
+                  values={{ index: this.state.motorIndex }}
+                />
+              </Button>
+            )}
           </CardActions>
         </CardActionArea>
       </Card>

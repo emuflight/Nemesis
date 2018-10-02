@@ -35,7 +35,9 @@ const sendCommand = (device, command, waitMs = 200) => {
     let ret = "";
     let timeout;
     connectedDevice.on("data", data => {
-      ret += data.toString("utf8");
+      if (data) {
+        ret += data.toString("utf8");
+      }
       if (ret.indexOf("\n\0") === -1) {
         connectedDevice.write(strToBytes("more\n"));
       }
@@ -60,59 +62,124 @@ const updateIMUF = (codeviceName, binName, notify, cb, ecb) => {
 const saveEEPROM = (codeviceName, binName, notify, cb, ecb) => {};
 
 const setValue = (device, name, newVal) => {
-  return sendCommand(device, `set ${name}=${newVal}`);
+  return sendCommand(device, `set ${name}=${newVal}`, 20);
 };
 
 const getMotors = device => {
   //???? TODO: find out what this is.
-  return Promise.resolve([59395, 59395, 59395, 59395]);
+  return Promise.resolve([1, 1, 1, 1, 1, 0]);
   return sendCommand(device, `dump mixer`);
 };
 
 const remapMotor = (device, to, from) => {
-  return sendCommand(device, `set mout${from}=${to}`);
+  let motorTo = `set mout${from}=${parseInt(to) - 1}`;
+  let motorFrom = `set mout${to}=${parseInt(from) - 1}`;
+  return sendCommand(device, motorTo, 40).then(resp => {
+    return sendCommand(device, motorFrom, 40).then(resp => {
+      return resp;
+    });
+  });
 };
 const storage = (device, command) => {
   return sendCommand(device, "flashmsd");
 };
 
 const spinTestMotor = (device, motor, startStop) => {
-  if (startStop == 0) {
-    return sendCommand(device, `idlestop`);
+  if (parseInt(startStop) < 1004) {
+    return sendCommand(device, `idlestop`, 10);
   } else {
-    return sendCommand(device, `Idle ${motor}`);
+    return sendCommand(device, `Idle ${parseInt(motor) - 1}`, 10);
   }
 };
-
-const getTelemetry = (device, cb, ecb) => {
-  return sendCommand(device, "telem", 20).then(telemString => {
-    let obj = {};
-    telemString.split("\n#tm ").forEach(part => {
-      let vals = part.split("=");
-      obj[vals[0].replace("#tm ", "")] = parseFloat(vals[1]);
+const getChannelMap = device => {
+  return sendCommand(device, `dump rccf`);
+};
+const setChannelMap = (device, newmap) => {
+  let parts = newmap.split("");
+  let allResponse = "";
+  return setValue(
+    device,
+    "throttle_map",
+    parseInt(parts[newmap.indexOf("T") + 4], 10) - 1
+  ).then(t => {
+    allResponse += t;
+    return setValue(
+      device,
+      "roll_map",
+      parseInt(parts[newmap.indexOf("A") + 4], 10) - 1
+    ).then(a => {
+      allResponse += a;
+      return setValue(
+        device,
+        "pitch_map",
+        parseInt(parts[newmap.indexOf("E") + 4], 10) - 1
+      ).then(e => {
+        allResponse += e;
+        return setValue(
+          device,
+          "yaw_map",
+          parseInt(parts[newmap.indexOf("R") + 4], 10) - 1
+        ).then(r => {
+          allResponse += r;
+          return allResponse;
+        });
+      });
     });
-    return {
-      pitch: obj.pitch,
-      roll: obj.roll,
-      heading: obj.heading,
-      acc: {
-        x: obj.ax,
-        y: obj.ay,
-        z: obj.az
-      },
-      gyro: {
-        x: obj.gx,
-        y: obj.gy,
-        z: obj.gz
-      },
-      q: {
-        x: obj.qx,
-        y: obj.qy,
-        z: obj.qz,
-        w: obj.qw
-      }
-    };
   });
+};
+
+const getTelemetry = (device, type) => {
+  switch (type) {
+    case "rx":
+      return sendCommand(device, "rcrxdata", 20).then(telemString => {
+        let channels = [];
+
+        telemString.split("\n#rb ").forEach(part => {
+          let pairs = part.split("=");
+          let vals = pairs[1].split(":");
+          channels[parseInt(pairs[0].replace("#rb ", "")) - 1] = parseInt(
+            vals[0],
+            10
+          );
+        });
+        return {
+          type: type,
+          channels
+        };
+      });
+      break;
+    default:
+    case "gyro":
+      return sendCommand(device, "telem", 20).then(telemString => {
+        let obj = {};
+        telemString.split("\n#tm ").forEach(part => {
+          let vals = part.split("=");
+          obj[vals[0].replace("#tm ", "")] = parseFloat(vals[1]);
+        });
+        return {
+          type: type,
+          pitch: obj.pitch,
+          roll: obj.roll,
+          heading: obj.heading,
+          acc: {
+            x: obj.ax,
+            y: obj.ay,
+            z: obj.az
+          },
+          gyro: {
+            x: obj.gx,
+            y: obj.gy,
+            z: obj.gz
+          },
+          q: {
+            x: obj.qx,
+            y: obj.qy,
+            z: obj.qz,
+            w: obj.qw
+          }
+        };
+      });
+  }
 };
 
 module.exports = {
@@ -125,5 +192,7 @@ module.exports = {
   spinTestMotor: spinTestMotor,
   storage: storage,
   getMotors: getMotors,
+  getChannelMap: getChannelMap,
+  setChannelMap: setChannelMap,
   saveEEPROM: saveEEPROM
 };
