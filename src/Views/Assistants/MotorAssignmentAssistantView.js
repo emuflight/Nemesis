@@ -1,6 +1,6 @@
 import React from "react";
 import PickerAssistantView from "./PickerAssistantView";
-import PropsReminderView from "./PropsReminderView";
+import SafetyView from "../SafetyView/SafetyView";
 import MotorItemView from "./MotorItemView";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
@@ -13,8 +13,7 @@ export default class MotorAssignmentAssistantView extends PickerAssistantView {
       theme: props.theme,
       steps: [{ id: undefined }],
       currentStep: 0,
-      progress: 0,
-      acceptedRisk: false
+      progress: 0
     };
   }
 
@@ -26,14 +25,8 @@ export default class MotorAssignmentAssistantView extends PickerAssistantView {
     });
   };
   render() {
-    if (!this.state.acceptedRisk) {
-      return (
-        <PropsReminderView
-          acceptedRisk={() => this.setState({ acceptedRisk: true })}
-        />
-      );
-    } else {
-      return (
+    return (
+      <SafetyView>
         <div
           style={{
             flex: 1,
@@ -116,7 +109,7 @@ export default class MotorAssignmentAssistantView extends PickerAssistantView {
             </div>
           </div>
         </div>
-      );
-    }
+      </SafetyView>
+    );
   }
 }

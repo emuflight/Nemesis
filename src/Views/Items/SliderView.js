@@ -44,6 +44,7 @@ export default class SliderView extends Component {
             onChange={(event, inputVal) => {
               this.setState({ inputVal: this.parser(inputVal) });
               this.props.item.current = this.parser(inputVal);
+              this.props.onChange && this.props.onChange(event, inputVal);
             }}
             onDragEnd={() => {
               this.updateValue(this.state.inputVal);
@@ -55,6 +56,7 @@ export default class SliderView extends Component {
             name={this.props.item.id}
             style={{ width: 50 }}
             type="number"
+            disabled={this.props.inputDisabled}
             value={this.parser(this.state.inputVal)}
             onBlur={() => {
               this.updateValue(this.state.inputVal);

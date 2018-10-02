@@ -154,10 +154,28 @@ const remapMotor = (device, to, from) => {
   return sendCommand(device, `set ${to}=${from}`);
 };
 const spinTestMotor = (device, motor, startStop) => {
-  return sendCommand(device, `set ${motor}=${startStop}`);
+  return sendCommand(device, `motor ${motor} ${startStop}`, 10);
 };
 const saveEEPROM = device => {
   return sendCommand(device, `msp 250`);
+};
+
+const getMotors = device => {
+  return sendCommand(device, "msp 104", 30, false).then(storageInfo => {
+    console.log(storageInfo);
+    let data = new DataView(new Uint8Array(storageInfo).buffer, 11);
+
+    let motorInfo = [];
+    try {
+      for (var i = 0; i < 10; i++) {
+        motorInfo.push(data.getUint16(i * 2, 1));
+      }
+    } catch (ex) {
+      console.log(motorInfo);
+      console.log(ex);
+    }
+    return motorInfo;
+  });
 };
 
 const storage = (device, command) => {
@@ -242,5 +260,6 @@ module.exports = {
   remapMotor: remapMotor,
   spinTestMotor: spinTestMotor,
   storage: storage,
+  getMotors: getMotors,
   saveEEPROM: saveEEPROM
 };

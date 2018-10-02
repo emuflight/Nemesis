@@ -216,11 +216,18 @@ module.exports = {
       return bxfConnector.remapMotor(deviceInfo, to, from);
     }
   },
+  getMotors(deviceInfo) {
+    if (deviceInfo.hid) {
+      return rf1Connector.getMotors(deviceInfo);
+    } else {
+      return bxfConnector.getMotors(deviceInfo);
+    }
+  },
   spinTestMotor(deviceInfo, motor, startStop) {
     if (deviceInfo.hid) {
-      return rf1Connector.remapMotor(deviceInfo, motor, startStop);
+      return rf1Connector.spinTestMotor(deviceInfo, motor, startStop);
     } else {
-      return bxfConnector.remapMotor(deviceInfo, motor, startStop);
+      return bxfConnector.spinTestMotor(deviceInfo, motor, startStop);
     }
   },
   sendCommand(deviceInfo, command) {

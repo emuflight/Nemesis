@@ -6,8 +6,9 @@ import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
+import { FormattedMessage } from "react-intl";
 
-export default class PropsReminderView extends Component {
+export default class SafetyView extends Component {
   constructor(props) {
     super(props);
     let interval = setInterval(
@@ -22,10 +23,13 @@ export default class PropsReminderView extends Component {
   }
   state = {
     acceptedRisk: false,
-    secondsRemaining: 6
+    secondsRemaining: 3
   };
 
   render() {
+    if (this.state.acceptedRisk) {
+      return this.props.children;
+    }
     return (
       <div
         style={{
@@ -43,7 +47,7 @@ export default class PropsReminderView extends Component {
             />
             <CardContent>
               <Typography variant="headline">
-                Please remove the propellers from your quad before proceeding!
+                <FormattedMessage id="safety.remove-props" />
               </Typography>
               <Typography variant="headline">
                 {this.state.secondsRemaining > 0
@@ -58,9 +62,9 @@ export default class PropsReminderView extends Component {
                 color="secondary"
                 variant="raised"
                 disabled={this.state.secondsRemaining > 0}
-                onClick={() => this.props.acceptedRisk()}
+                onClick={() => this.setState({ acceptedRisk: true })}
               >
-                I ACCEPT
+                <FormattedMessage id="safety.accepts-risk" />
               </Button>
             </CardActions>
           </CardActionArea>

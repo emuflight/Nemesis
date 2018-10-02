@@ -63,6 +63,12 @@ const setValue = (device, name, newVal) => {
   return sendCommand(device, `set ${name}=${newVal}`);
 };
 
+const getMotors = device => {
+  //???? TODO: find out what this is.
+  return Promise.resolve([59395, 59395, 59395, 59395]);
+  return sendCommand(device, `dump mixer`);
+};
+
 const remapMotor = (device, to, from) => {
   return sendCommand(device, `set mout${from}=${to}`);
 };
@@ -118,5 +124,6 @@ module.exports = {
   remapMotor: remapMotor,
   spinTestMotor: spinTestMotor,
   storage: storage,
+  getMotors: getMotors,
   saveEEPROM: saveEEPROM
 };

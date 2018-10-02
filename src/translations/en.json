@@ -17,6 +17,8 @@
   "PORTS": "PERIPHERALS",
   "BLACKBOX": "BLACKBOX LOGGING",
   "ADVANCED": "ADVANCED",
+  "safety.remove-props": "Please remove the propellers from your quad before proceeding!",
+  "safety.accepts-risk": "I ACCEPT",
   "disconnected.title": "Pegasus multi-firmware UI",
   "disconnected.headline": "Please connect a compatible FC",
   "disconnected.autodetect": "We will automatically detect it...",

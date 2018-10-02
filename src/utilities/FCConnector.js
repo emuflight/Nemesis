@@ -80,6 +80,9 @@ export default new class FCConnector {
   saveConfig() {
     return this.sendCommand("save");
   }
+  getMotors() {
+    return fetch(`${this.serviceUrl}/motors`).then(response => response.json());
+  }
   remapMotor(to, from) {
     return fetch(`${this.serviceUrl}/remap/${to}/${from}`);
   }
