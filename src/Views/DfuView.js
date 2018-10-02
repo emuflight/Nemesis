@@ -7,16 +7,15 @@ import CliView from "./CliView/CliView";
 import ReactMarkdown from "react-markdown";
 import HelperSelect from "./Items/HelperSelect";
 import Typography from "@material-ui/core/Typography";
-
-const DFUMessage = `\n\n**********<h1>YOU ARE IN DFU MODE.\nDO NOT UNPLUG YOUR DEVICE UNTIL FLASHING IS COMPLETE OR YOU'RE GONNA HAVE A BAD TIME.</h1><img id="pbjt" src="assets/dfu.gif" height="90" width="90"/><br/>#flyhelio\n**********\n\n`;
+import { FormattedMessage, FormattedHTMLMessage } from "react-intl";
 
 export default class DfuView extends Component {
   constructor(props) {
     super(props);
-    this.targetTitle = "Select a target";
-    this.title = "Select a version";
-    this.btnLabel = "FLASH";
-    this.cliNotice = DFUMessage;
+    this.targetTitle = <FormattedMessage id="dfu.target.title" />;
+    this.title = <FormattedMessage id="dfu.select.version" />;
+    this.btnLabel = <FormattedMessage id="common.flash" />;
+    this.cliNotice = <FormattedHTMLMessage id="dfu.flash.message" />;
     this.state = {
       theme: props.theme,
       allowUpload: true,
@@ -167,7 +166,7 @@ export default class DfuView extends Component {
           <div style={{ flexGrow: 1 }} />
           {this.props.goBack && (
             <Button color="primary" onClick={this.props.goBack}>
-              Go Back
+              <FormattedMessage id="common.go-back" />
             </Button>
           )}
         </div>

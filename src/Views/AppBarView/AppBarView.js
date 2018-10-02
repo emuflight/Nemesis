@@ -11,6 +11,7 @@ import { withStyles } from "@material-ui/core/styles";
 import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import InfoBarView from "../InfoBarView";
+import { FormattedMessage } from "react-intl";
 
 const styles = theme => ({
   root: {
@@ -112,7 +113,9 @@ class AppBarView extends Component {
                   color="secondary"
                   thickness={7}
                 />
-                <Typography style={{ flexGrow: 1 }}>Rebooting...</Typography>
+                <Typography style={{ flexGrow: 1 }}>
+                  <FormattedMessage id="common.rebooting" />
+                </Typography>
               </div>
             )}
             <div className={classes.grow} />

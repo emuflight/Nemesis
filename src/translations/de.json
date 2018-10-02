@@ -1,0 +1,7 @@
+{
+  "disconnected.title": "Pegasus multi-firmware UI",
+  "disconnected.headline": "Please connect a compatible FC",
+  "disconnected.autodetect": "We will automatically detect it...",
+  "disconnected.incompatible": "Incompatible device, there be dragons ahead...",
+  "disconnected.cli.incompatible": "**********<h1>YOU ARE IN CLI MODE.\nTHIS FIRMWARE IS NOT OFFICIALLY SUPPORTED.\nPLEASE REBOOT INTO DFU AND FLASH A SUPPORTED VERSION.</h1>**********\n{error}"
+}

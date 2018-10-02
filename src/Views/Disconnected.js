@@ -6,6 +6,7 @@ import Avatar from "@material-ui/core/Avatar";
 import Paper from "@material-ui/core/Paper";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import CliView from "./CliView/CliView";
+import { FormattedMessage, FormattedHTMLMessage } from "react-intl";
 
 export default class Disconnected extends React.Component {
   constructor(props) {
@@ -40,15 +41,19 @@ export default class Disconnected extends React.Component {
               onClick={() => localStorage.clear()}
             />
             <Typography style={{ marginBottom: 12 }} color="textSecondary">
-              Pegasus multi-firmware UI
+              <FormattedMessage id="disconnected.title" />
             </Typography>
             <Typography variant="headline" component="h2">
-              Please connect a compatible FC
+              <FormattedMessage id="disconnected.headline" />
             </Typography>
             <Typography component="p">
-              {!openCli
-                ? "We will automatically detect it..."
-                : "Incompatible device, there be dragons ahead..."}
+              <FormattedMessage
+                id={
+                  !openCli
+                    ? "disconnected.autodetect"
+                    : "disconnected.incompatible"
+                }
+              />
               <br />
             </Typography>
           </CardContent>
@@ -67,9 +72,12 @@ export default class Disconnected extends React.Component {
             {openCli && (
               <CliView
                 open={!!openCli}
-                startText={`**********<h1>YOU ARE IN CLI MODE.\nTHIS FIRMWARE IS NOT OFFICIALLY SUPPORTED.\nPLEASE REBOOT INTO DFU AND FLASH A SUPPORTED VERSION.</h1>**********\n${
-                  device.error
-                }`}
+                startText={
+                  <FormattedHTMLMessage
+                    id="disconnected.cli.incompatible"
+                    values={{ error: device.error }}
+                  />
+                }
                 stayOpen={!!openCli}
                 ref="cliView"
               />

@@ -4,6 +4,7 @@ import List from "@material-ui/core/List";
 import FCConnector from "../utilities/FCConnector";
 import TelemetryView from "./TelemetryView";
 import TextField from "@material-ui/core/TextField";
+import { FormattedMessage } from "react-intl";
 
 // const calculatePercentComplete = fcConfig => {};
 export default class InfoBarView extends Component {
@@ -44,7 +45,7 @@ export default class InfoBarView extends Component {
       >
         <div style={{ display: "flex", flex: "1", marginBottom: "10px" }}>
           <h4 style={{ position: "relative", margin: "0 10px", top: "15px" }}>
-            Connected to:
+            <FormattedMessage id="info.connected-to" />
           </h4>
           <TextField
             id="craft_name"

@@ -5,6 +5,7 @@ import Popover from "@material-ui/core/Popover";
 import Button from "@material-ui/core/Button";
 import Launch from "@material-ui/icons/Launch";
 import FCConnector from "../utilities/FCConnector";
+import { FormattedMessage } from "react-intl";
 
 export default class VersionInfoView extends Component {
   constructor(props) {
@@ -32,7 +33,9 @@ export default class VersionInfoView extends Component {
   render() {
     return (
       <MenuItem style={{ display: "flex" }}>
-        <Button onClick={this.handleClick}>Version Info</Button>
+        <Button onClick={this.handleClick}>
+          <FormattedMessage id="common.version-info" />
+        </Button>
         <Popover
           open={this.state.open}
           anchorEl={this.state.anchorEl}
@@ -40,18 +43,38 @@ export default class VersionInfoView extends Component {
           onClose={() => this.setState({ open: false })}
         >
           <List>
-            <MenuItem>{"Firmware: " + this.state.fw}</MenuItem>
-            <MenuItem>{"Target: " + this.state.target}</MenuItem>
+            <MenuItem>
+              {
+                <FormattedMessage
+                  id="info.firmware"
+                  values={{ value: this.state.fw }}
+                />
+              }
+            </MenuItem>
+            <MenuItem>
+              {
+                <FormattedMessage
+                  id="info.target"
+                  values={{ value: this.state.target }}
+                />
+              }
+            </MenuItem>
             <MenuItem style={{ display: "flex" }}>
               <div style={{ flexGrow: 1 }}>
-                {"Version: " + this.state.version}
+                <FormattedMessage
+                  id="info.version"
+                  values={{ value: this.state.version }}
+                />
               </div>
               <Launch onClick={() => FCConnector.goToDFU(this.state.target)} />
             </MenuItem>
             {this.state.imuf && (
               <MenuItem style={{ display: "flex" }}>
                 <div style={{ flexGrow: 1 }}>
-                  {"IMU-F Version: " + this.state.imuf}
+                  <FormattedMessage
+                    id="info.imuf"
+                    values={{ value: this.state.imuf }}
+                  />
                 </div>
                 <Launch onClick={() => this.goToImuf()} />
               </MenuItem>

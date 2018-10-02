@@ -22,6 +22,7 @@ import ProfileView from "./ProfileView/ProfileView";
 import BlackboxView from "./BlackboxView/BlackboxView";
 import RXView from "./RXView/RXView";
 import OSDView from "./OSDView/OSDView";
+import { FormattedMessage } from "react-intl";
 
 const skipprops = [
   "pid_profile",
@@ -325,15 +326,15 @@ export default class Connected extends Component {
             imuf={this.state.fcConfig.imuf}
           />
           <Divider />
-          <List>
+          <List style={{ display: "block" }}>
             {this.routes.map(route => {
               return (
-                <MenuItem style={{ width: 100 }} id={route.key} key={route.key}>
+                <MenuItem id={route.key} key={route.key}>
                   <div
                     style={{ flexGrow: 1 }}
                     onClick={this.handleMenuItemClick}
                   >
-                    {route.title}
+                    <FormattedMessage id={route.title} />
                   </div>
                   {route.incompeteItems && (
                     <Badge

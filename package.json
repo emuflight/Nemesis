@@ -35,6 +35,7 @@
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-grid-layout": "^0.16.6",
+    "react-intl": "^2.7.0",
     "react-markdown": "^3.6.0",
     "react-scripts": "1.1.5",
     "serialport": "^7.0.2",

@@ -4,6 +4,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import List from "@material-ui/core/List";
 import Button from "@material-ui/core/Button";
 import FCConnector from "../utilities/FCConnector";
+import { FormattedMessage } from "react-intl";
 
 export default class TelemetryView extends Component {
   constructor(props) {
@@ -75,14 +76,54 @@ export default class TelemetryView extends Component {
         >
           {this.state.telemetry && (
             <List>
-              <MenuItem>{"Acc Roll: " + this.state.telemetry.acc.x}</MenuItem>
-              <MenuItem>{"Acc Pitch: " + this.state.telemetry.acc.y}</MenuItem>
-              <MenuItem>{"Acc Yaw: " + this.state.telemetry.acc.z}</MenuItem>
-              <MenuItem>{"Gyro Roll: " + this.state.telemetry.gyro.x}</MenuItem>
               <MenuItem>
-                {"Gyro Pitch: " + this.state.telemetry.gyro.y}
+                {
+                  <FormattedMessage
+                    id="telemetry.acc.roll"
+                    values={{ value: this.state.telemetry.acc.x }}
+                  />
+                }
               </MenuItem>
-              <MenuItem>{"Gyro Yaw: " + this.state.telemetry.gyro.z}</MenuItem>
+              <MenuItem>
+                {
+                  <FormattedMessage
+                    id="telemetry.acc.pitch"
+                    values={{ value: this.state.telemetry.acc.y }}
+                  />
+                }
+              </MenuItem>
+              <MenuItem>
+                {
+                  <FormattedMessage
+                    id="telemetry.acc.yaw"
+                    values={{ value: this.state.telemetry.acc.z }}
+                  />
+                }
+              </MenuItem>
+              <MenuItem>
+                {
+                  <FormattedMessage
+                    id="telemetry.gyro.yaw"
+                    values={{ value: this.state.telemetry.gyro.x }}
+                  />
+                }
+              </MenuItem>
+              <MenuItem>
+                {
+                  <FormattedMessage
+                    id="telemetry.gyro.yaw"
+                    values={{ value: this.state.telemetry.gyro.y }}
+                  />
+                }
+              </MenuItem>
+              <MenuItem>
+                {
+                  <FormattedMessage
+                    id="telemetry.gyro.yaw"
+                    values={{ value: this.state.telemetry.gyro.z }}
+                  />
+                }
+              </MenuItem>
             </List>
           )}
         </Popover>
