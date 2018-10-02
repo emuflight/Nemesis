@@ -250,17 +250,16 @@ module.exports = {
             resolve();
             let sentPackets = 0;
             let data = body.split("\n");
-            for (let i = 1; i < 256; i++) {
+            data.shift();
+            for (let i = 0; i < 256; i++) {
               let index = i * 64;
               let chunk = data
                 .slice(index, index + 54)
                 .map(byte => parseInt(byte, 2));
               chunk.unshift(i);
-              let hexStr = chunk
-                .map(byte => `0${(byte & 0xff).toString(16)}`.slice(-2))
-                .join("");
+              let hexStr = Buffer.from(chunk).toString("hex");
               bxfConnector
-                .sendCommand(deviceInfo, `msp 87 ${hexStr}`, 50)
+                .sendCommand(deviceInfo, `msp 87 ${hexStr}`, 40)
                 .then(resp => {
                   sentPackets++;
                   websockets.notifyProgress(resp);

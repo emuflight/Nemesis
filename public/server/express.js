@@ -238,7 +238,7 @@ app.get("/font/:name", (req, res) => {
     let connectedDevice = ports[0];
     if (connectedDevice) {
       fcConnector
-        .uploadFont(connectedDevice)
+        .uploadFont(connectedDevice, req.params.name)
         .then(() => res.sendStatus(200))
         .catch(err => res.status(400).send(err));
     }

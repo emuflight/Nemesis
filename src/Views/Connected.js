@@ -82,10 +82,8 @@ export default class Connected extends Component {
     });
   };
 
-  handleMenuItemClick = event => {
-    let newRoute = this.routes.find(
-      route => route.key === event.target.textContent
-    );
+  handleMenuItemClick = key => {
+    let newRoute = this.routes.find(route => route.key === key);
     if (this.state.isDirty) {
       // this.handleSave();
       //TODO: save EEPROM
@@ -332,9 +330,9 @@ export default class Connected extends Component {
                 <MenuItem id={route.key} key={route.key}>
                   <div
                     style={{ flexGrow: 1 }}
-                    onClick={this.handleMenuItemClick}
+                    onClick={() => this.handleMenuItemClick(route.key)}
                   >
-                    <FormattedMessage id={route.title} />
+                    <FormattedMessage id={route.key} />
                   </div>
                   {route.incompeteItems && (
                     <Badge
