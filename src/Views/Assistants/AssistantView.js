@@ -5,6 +5,9 @@ import MotorAssignmentAssistantView from "./MotorAssignmentAssistantView";
 import GyroOrientationView from "./GyroOrientationView";
 import FCConnector from "../../utilities/FCConnector";
 import Paper from "@material-ui/core/Paper";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { FormattedMessage } from "react-intl";
+import Typography from "@material-ui/core/Typography";
 
 export default class AssistantView extends Component {
   constructor(props) {
@@ -64,12 +67,35 @@ export default class AssistantView extends Component {
             bottom: 50,
             left: 50,
             display: "flex",
+            flexDirection: "column",
             justifyItems: "center",
             alignItems: "center"
           }}
         >
+          <div style={{ display: "flex", height: 50 }}>
+            <div style={{ flexGrow: 1 }} />
+            {this.props.rebooting && (
+              <div style={{ display: "flex" }}>
+                <CircularProgress
+                  style={{
+                    margin: 10,
+                    justifyContent: "center",
+                    alignContent: "center",
+                    justifyItems: "center",
+                    alignItems: "center"
+                  }}
+                  color="secondary"
+                  thickness={7}
+                />
+                <Typography style={{ flexGrow: 1 }}>
+                  <FormattedMessage id="common.saving" />
+                </Typography>
+              </div>
+            )}
+          </div>
           {
             <CustomAssistant
+              rebooting={this.props.rebooting}
               handleSave={this.props.handleSave}
               fcConfig={this.props.fcConfig}
               title={step.id}

@@ -125,11 +125,11 @@ const getModes = device => {
   });
 };
 
-const remapMotor = (device, to, from) => {
-  let motorTo = `set mout${from}=${parseInt(to) - 1}`;
-  let motorFrom = `set mout${to}=${parseInt(from) - 1}`;
-  return sendCommand(device, motorTo, 40).then(resp => {
-    return sendCommand(device, motorFrom, 40).then(resp => {
+const remapMotor = (device, from, to) => {
+  let commandFrom = `set mout${from}=${parseInt(to) - 1}`;
+  let commandto = `set mout${to}=${parseInt(from) - 1}`;
+  return sendCommand(device, commandFrom, 40).then(resp => {
+    return sendCommand(device, commandto, 40).then(resp => {
       return resp;
     });
   });

@@ -86,7 +86,7 @@ app.get("/set/:name/:value", (req, res) => {
     }
   });
 });
-app.get("/remap/:to/:from", (req, res) => {
+app.get("/remap/:from/:to", (req, res) => {
   devices.list((err, ports) => {
     if (err) return res.status(400).send(err);
     let connectedDevice = ports[0],
@@ -94,7 +94,7 @@ app.get("/remap/:to/:from", (req, res) => {
       from = req.params.from;
     if (connectedDevice) {
       fcConnector
-        .remapMotor(connectedDevice, to, from)
+        .remapMotor(connectedDevice, from, to)
         .then(ret => res.status(200).send(ret))
         .catch(error => res.status(400).send(error));
     } else {

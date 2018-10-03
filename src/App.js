@@ -22,7 +22,7 @@ class App extends Component {
       }
       if (device.connected) {
         this.getFcConfig();
-      } else if (!this.state.rebooting) {
+      } else if (!this.rebooting) {
         this.setState({
           connecting: false,
           imuf: false,
@@ -39,6 +39,7 @@ class App extends Component {
   };
 
   getFcConfig = () => {
+    this.rebooting = false;
     this.setState({ connecting: true, rebooting: false });
     return FCConnector.tryGetConfig()
       .then(device => {
@@ -57,7 +58,9 @@ class App extends Component {
             currentConfig: device.config,
             connected: !device.incompatible,
             incompatible: device.incompatible,
-            theme: device.config ? themes[device.config.version.fw] : themes.dark
+            theme: device.config
+              ? themes[device.config.version.fw]
+              : themes.dark
           });
           FCConnector.currentTarget = "";
           return device.config;
@@ -72,9 +75,9 @@ class App extends Component {
   };
 
   handleSave = () => {
-    return FCConnector.saveConfig().then(() => {
-      this.setState({ rebooting: !!this.state.currentConfig.reboot_on_save });
-    });
+    this.rebooting = this.state.currentConfig.reboot_on_save;
+    this.setState({rebooting: this.state.currentConfig.reboot_on_save});
+    return FCConnector.saveConfig();
   };
 
   componentDidMount() {

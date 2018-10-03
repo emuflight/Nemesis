@@ -109,7 +109,13 @@ class AppBarView extends Component {
             {this.props.rebooting && (
               <div style={{ display: "flex" }}>
                 <CircularProgress
-                  style={{ margin: 10 }}
+                  style={{
+                    margin: 10,
+                    justifyContent: "center",
+                    alignContent: "center",
+                    justifyItems: "center",
+                    alignItems: "center"
+                  }}
                   color="secondary"
                   thickness={7}
                 />

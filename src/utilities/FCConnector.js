@@ -83,11 +83,15 @@ export default new class FCConnector {
   getMotors() {
     return fetch(`${this.serviceUrl}/motors`).then(response => response.json());
   }
-  remapMotor(to, from) {
-    return fetch(`${this.serviceUrl}/remap/${to}/${from}`);
+  remapMotor(from, to) {
+    return fetch(`${this.serviceUrl}/remap/${from}/${to}`).then(resp => {
+      return resp.text();
+    });
   }
   spinTestMotor(motor, value) {
-    return fetch(`${this.serviceUrl}/spintest/${motor}/${value}`);
+    return fetch(`${this.serviceUrl}/spintest/${motor}/${value}`).then(resp => {
+      return resp.text();
+    });
   }
   getChannelMap() {
     return fetch(`${this.serviceUrl}/channelmap`).then(response =>

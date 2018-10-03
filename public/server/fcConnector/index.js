@@ -225,11 +225,11 @@ module.exports = {
       return bxfConnector.sendCommand(deviceInfo, `${profileName} ${index}`);
     }
   },
-  remapMotor(deviceInfo, to, from) {
+  remapMotor(deviceInfo, from, to) {
     if (deviceInfo.hid) {
-      return rf1Connector.remapMotor(deviceInfo, to, from);
+      return rf1Connector.remapMotor(deviceInfo, from, to);
     } else {
-      return bxfConnector.remapMotor(deviceInfo, to, from);
+      return bxfConnector.remapMotor(deviceInfo, from, to);
     }
   },
 

@@ -152,7 +152,7 @@ const setValue = (device, name, newVal) => {
   return sendCommand(device, `set ${name}=${newVal}`);
 };
 
-const remapMotor = (device, to, from) => {
+const remapMotor = (device, from, to) => {
   return sendCommand(device, `resource`, 40).then(resources => {
     let mapping = resources
       .split("\nresource ")
@@ -161,21 +161,22 @@ const remapMotor = (device, to, from) => {
         let resourceParts = motorResource.split(" ");
         return resourceParts[2];
       });
+    console.log(mapping);
     let resourceTo = mapping[parseInt(to) - 1];
     let resourceFrom = mapping[parseInt(from) - 1];
     return sendCommand(device, `resource MOTOR ${from} ${resourceTo}`, 20).then(
       () => {
-        return sendCommand(
-          device,
-          `resource MOTOR ${to} ${resourceFrom}`,
-          20
-        ).then(() => {});
+        return sendCommand(device, `resource MOTOR ${to} ${resourceFrom}`, 20);
       }
     );
   });
 };
 const spinTestMotor = (device, motor, startStop) => {
-  return sendCommand(device, `motor ${motor} ${startStop}`, 10);
+  return sendCommand(
+    device,
+    `motor ${parseInt(motor, 10) - 1} ${startStop}`,
+    10
+  );
 };
 const saveEEPROM = device => {
   return sendCommand(device, `msp 250`);

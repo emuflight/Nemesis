@@ -4,6 +4,7 @@
   "common.flash": "FLASH",
   "common.go-back": "Go Back",
   "common.rebooting": "Rebooting...",
+  "common.saving": "Saving...",
   "common.version-info": "Version Info",
   "assistant.gyro.orientation": "Orientation Assistant",
   "motor.item.spin-motor": "Spin motor {index}",
