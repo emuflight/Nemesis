@@ -42,6 +42,7 @@ wsServer.on("request", request => {
         connected: false
       })
     );
+    clearInterval(wsServer.telemetryInterval);
   });
   // This is the most important callback for us, we'll handle
   // all messages from users here.

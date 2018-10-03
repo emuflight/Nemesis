@@ -42,18 +42,26 @@ class App extends Component {
     this.setState({ connecting: true, rebooting: false });
     return FCConnector.tryGetConfig()
       .then(device => {
-        this.setState({
-          connecting: false,
-          dfu: device.dfu,
-          id: device.comName,
-          deviceInfo: device,
-          currentConfig: device.config,
-          connected: !device.incompatible,
-          incompatible: device.incompatible,
-          theme: device.config ? themes[device.config.version.fw] : themes.dark
-        });
-        FCConnector.currentTarget = "";
-        return device.config;
+        if (!device.config) {
+          this.setState({
+            connected: false,
+            incompatible: true,
+            deviceInfo: device
+          });
+        } else {
+          this.setState({
+            connecting: false,
+            dfu: device.dfu,
+            id: device.comName,
+            deviceInfo: device,
+            currentConfig: device.config,
+            connected: !device.incompatible,
+            incompatible: device.incompatible,
+            theme: device.config ? themes[device.config.version.fw] : themes.dark
+          });
+          FCConnector.currentTarget = "";
+          return device.config;
+        }
       })
       .catch(() =>
         this.setState({

@@ -14,7 +14,7 @@ export default class FeatureItemView extends Component {
   handleToggle = payload => {
     this.props.notifyDirty(true, this.props.item, payload);
     this.setState({ checked: payload });
-    FCConnector.sendCommand(
+    FCConnector.sendCliCommand(
       `feature ${payload ? "" : "-"}${this.props.item.id}`
     );
   };
