@@ -705,6 +705,192 @@
           "label": "OMG WTF"
         }
       ]
+    },
+    "stick_curve1": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "0",
+          "label": "NO_EXPO"
+        },
+        {
+          "value": "2",
+          "label": "TARANIS_EXPO"
+        },
+        {
+          "value": "3",
+          "label": "FAST_EXPO"
+        },
+        {
+          "value": "4",
+          "label": "ACRO_PLUS"
+        },
+        {
+          "value": "5",
+          "label": "KISS_EXPO"
+        },
+        {
+          "value": "6",
+          "label": "KISS_EXPO2"
+        },
+        {
+          "value": "7",
+          "label": "BxF"
+        },
+        {
+          "value": "5",
+          "label": "KISS_EXPO2"
+        }
+      ]
+    },
+    "stick_curve2": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "0",
+          "label": "NO_EXPO"
+        },
+        {
+          "value": "2",
+          "label": "TARANIS_EXPO"
+        },
+        {
+          "value": "3",
+          "label": "FAST_EXPO"
+        },
+        {
+          "value": "4",
+          "label": "ACRO_PLUS"
+        },
+        {
+          "value": "5",
+          "label": "KISS_EXPO"
+        },
+        {
+          "value": "6",
+          "label": "KISS_EXPO2"
+        },
+        {
+          "value": "7",
+          "label": "BxF"
+        },
+        {
+          "value": "5",
+          "label": "KISS_EXPO2"
+        }
+      ]
+    },
+    "stick_curve3": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "0",
+          "label": "NO_EXPO"
+        },
+        {
+          "value": "2",
+          "label": "TARANIS_EXPO"
+        },
+        {
+          "value": "3",
+          "label": "FAST_EXPO"
+        },
+        {
+          "value": "4",
+          "label": "ACRO_PLUS"
+        },
+        {
+          "value": "5",
+          "label": "KISS_EXPO"
+        },
+        {
+          "value": "6",
+          "label": "KISS_EXPO2"
+        },
+        {
+          "value": "7",
+          "label": "BxF"
+        },
+        {
+          "value": "5",
+          "label": "KISS_EXPO2"
+        }
+      ]
+    },
+    "rc_smoothing1": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "0.000",
+          "label": "OFF"
+        },
+        {
+          "value": "1.000",
+          "label": "LOW"
+        },
+        {
+          "value": "2.000",
+          "label": "MED"
+        },
+        {
+          "value": "3.000",
+          "label": "HIGH"
+        },
+        {
+          "value": "4.000",
+          "label": "BABY'S ASS"
+        }
+      ]
+    },
+    "rc_smoothing2": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "0.000",
+          "label": "OFF"
+        },
+        {
+          "value": "1.000",
+          "label": "LOW"
+        },
+        {
+          "value": "2.000",
+          "label": "MED"
+        },
+        {
+          "value": "3.000",
+          "label": "HIGH"
+        },
+        {
+          "value": "4.000",
+          "label": "BABY'S ASS"
+        }
+      ]
+    },
+    "rc_smoothing3": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "0.000",
+          "label": "OFF"
+        },
+        {
+          "value": "1.000",
+          "label": "LOW"
+        },
+        {
+          "value": "2.000",
+          "label": "MED"
+        },
+        {
+          "value": "3.000",
+          "label": "HIGH"
+        },
+        {
+          "value": "4.000",
+          "label": "BABY'S ASS"
+        }
+      ]
     }
   },
   "keymap": {

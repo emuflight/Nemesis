@@ -90,7 +90,9 @@ const setMode = (device, modeVals) => {
   valParts = modeVals.split("|");
   return sendCommand(
     device,
-    `modes ${valParts[1]}=${valParts[2] + 5}=${valParts[3]}=${valParts[4]}`,
+    `modes ${valParts[1]}=${parseInt(valParts[2]) + 5}=${valParts[3]}=${
+      valParts[4]
+    }`,
     20
   );
 };
@@ -133,7 +135,30 @@ const remapMotor = (device, to, from) => {
   });
 };
 const storage = (device, command) => {
-  return sendCommand(device, "flashmsd");
+  switch (command) {
+    case "erase":
+      return sendCommand(device, "eraseallflash");
+    case "info":
+      return sendCommand(device, "dlflstatusdump").then(storageInfo => {
+        let data = storageInfo.split("#fl ");
+        data.shift();
+        let vals = data.map(v => {
+          return parseInt(v.split("=")[1]);
+        });
+        console.log(storageInfo);
+        console.log(data);
+        return {
+          ready: true,
+          supported: true,
+          sectors: 0,
+          totalSize: vals[1],
+          usedSize: vals[0]
+        };
+      });
+    case "download":
+    default:
+      return sendCommand(device, "flashmsd");
+  }
 };
 
 const spinTestMotor = (device, motor, startStop) => {
@@ -196,6 +221,8 @@ const getTelemetry = (device, type) => {
         });
         return {
           type: type,
+          min: 0,
+          max: 2000,
           channels
         };
       });

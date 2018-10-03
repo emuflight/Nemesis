@@ -275,6 +275,8 @@ const getTelemetry = (device, type) => {
         }
         return {
           type: "rx",
+          min: 900,
+          max: 2100,
           channels
         };
       });

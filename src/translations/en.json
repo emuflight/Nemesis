@@ -57,5 +57,6 @@
   "info.target": "Target: {value}",
   "info.version": "Version: {value}",
   "info.imuf": "IMU-F Version: {value}",
-  "info.connected-to": "Connected to:"
+  "info.connected-to": "Connected to:",
+  "aux.item.save": "Save Mode"
 }

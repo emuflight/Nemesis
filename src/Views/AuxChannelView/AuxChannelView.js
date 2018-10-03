@@ -21,7 +21,12 @@ export default class AuxChannelView extends Component {
             value: i
           };
         }
-      })
+      }),
+      telemetry: {
+        channels: [],
+        min: props.auxScale.min,
+        max: props.auxScale.max
+      }
     };
   }
 
@@ -63,9 +68,9 @@ export default class AuxChannelView extends Component {
                 style={{ margin: "10px", padding: "10px" }}
               >
                 <AuxChannelItemView
-                  telemetry={
-                    this.state.telemetry && this.state.telemetry.channels[i]
-                  }
+                  telemetry={this.state.telemetry.channels.slice(4)}
+                  telemetryMin={this.state.telemetry.min}
+                  telemetryMax={this.state.telemetry.max}
                   scale={this.props.auxScale}
                   channels={this.state.channels}
                   auxModeList={this.props.auxModeList}

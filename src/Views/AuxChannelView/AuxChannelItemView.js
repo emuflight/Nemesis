@@ -5,6 +5,7 @@ import FCConnector from "../../utilities/FCConnector";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
+import { FormattedMessage } from "react-intl";
 
 export default class AuxChannelItemView extends Component {
   constructor(props) {
@@ -20,7 +21,14 @@ export default class AuxChannelItemView extends Component {
     });
   }
   render() {
-    let sliderLeft = (this.props.telemetry * 100) / this.props.scale.max;
+    let sliderLeft = 0;
+    if (this.state.channel > -1 && this.props.telemetry) {
+      sliderLeft =
+        ((this.props.telemetry[this.state.channel] - this.props.telemetryMin) *
+          100) /
+        (this.props.telemetryMax - this.props.telemetryMin);
+    }
+
     return (
       <div style={{ display: "flex", flexDirection: "column" }}>
         <Typography>
@@ -57,8 +65,9 @@ export default class AuxChannelItemView extends Component {
                 name="aux_save"
                 onClick={() => this.updateValue()}
                 color="primary"
+                variant="raised"
               >
-                Save Mode
+                <FormattedMessage id="aux.item.save" />
               </Button>
             </div>
           )}
