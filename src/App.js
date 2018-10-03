@@ -45,6 +45,7 @@ class App extends Component {
       .then(device => {
         if (!device.config) {
           this.setState({
+            dfu: device.dfu,
             connected: false,
             incompatible: true,
             deviceInfo: device
