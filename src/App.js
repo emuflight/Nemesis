@@ -24,7 +24,7 @@ class App extends Component {
         this.getFcConfig();
       } else if (!this.state.rebooting) {
         this.setState({
-          connecting: false, 
+          connecting: false,
           imuf: false,
           connected: false,
           dfu: false,
@@ -39,7 +39,7 @@ class App extends Component {
   };
 
   getFcConfig = () => {
-    this.setState({ connecting: true, rebooting: false});
+    this.setState({ connecting: true, rebooting: false });
     return FCConnector.tryGetConfig()
       .then(device => {
         this.setState({
@@ -64,11 +64,10 @@ class App extends Component {
   };
 
   handleSave = () => {
-    return FCConnector.saveConfig().then(()=>{
-      this.setState({ rebooting: true});
+    return FCConnector.saveConfig().then(() => {
+      this.setState({ rebooting: !!this.state.currentConfig.reboot_on_save });
     });
   };
-
 
   componentDidMount() {
     if (!this.state.connecting) {

@@ -169,6 +169,7 @@ const applyUIConfig = (device, config, uiConfig) => {
   }
   config.rx_scale = uiConfig.rx_scale;
   config.motor_order = uiConfig.motor_order;
+  config.reboot_on_save = uiConfig.reboot_on_save;
   config.routes = uiConfig.routes.map(route => {
     return {
       key: route,

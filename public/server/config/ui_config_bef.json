@@ -474,6 +474,7 @@
     "max": 2100,
     "step": 100
   },
+  "reboot_on_save": true,
   "aux_channel_modes": [
     {
       "value": -1,
