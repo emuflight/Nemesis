@@ -9,18 +9,22 @@ import Typography from "@material-ui/core/Typography";
 import { FormattedMessage } from "react-intl";
 
 export default class SafetyView extends Component {
-  constructor(props) {
-    super(props);
-    let interval = setInterval(
+  componentDidMount() {
+    this.interval = setInterval(
       function() {
         this.setState({ secondsRemaining: this.state.secondsRemaining - 1 });
         if (this.state.secondsRemaining <= 0) {
-          clearInterval(interval);
+          clearInterval(this.interval);
         }
       }.bind(this),
       1000
     );
   }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
   state = {
     acceptedRisk: false,
     secondsRemaining: 3

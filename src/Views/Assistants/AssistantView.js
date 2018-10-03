@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Modal from "@material-ui/core/Modal";
 import PickerAssistantView from "./PickerAssistantView";
 import MotorAssignmentAssistantView from "./MotorAssignmentAssistantView";
+import CalibrateMotorsView from "./CalibrateMotorsView";
 import GyroOrientationView from "./GyroOrientationView";
 import FCConnector from "../../utilities/FCConnector";
 import Paper from "@material-ui/core/Paper";
@@ -20,6 +21,7 @@ export default class AssistantView extends Component {
   }
   assistantMap = {
     "assistant.motors.mapping": MotorAssignmentAssistantView,
+    "assistant.motors.calibration": CalibrateMotorsView,
     "assistant.gyro.orientation": GyroOrientationView
   };
   componentDidMount() {

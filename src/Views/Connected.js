@@ -5,7 +5,6 @@ import Paper from "@material-ui/core/Paper";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import Badge from "@material-ui/core/Badge";
-import Assistant from "@material-ui/icons/Assistant";
 import VersionInfoView from "./VersionInfoView";
 import AuxChannelView from "./AuxChannelView/AuxChannelView";
 import ConfigListView from "./ConfigListView/ConfigListView";
@@ -359,12 +358,6 @@ export default class Connected extends Component {
                       style={{ top: "12px" }}
                       badgeContent={route.incompeteItems}
                       secondary={true}
-                    />
-                  )}
-                  {route.assistant && (
-                    <Assistant
-                      style={{ marginLeft: 10 }}
-                      onClick={() => this.openAssistant(route.key)}
                     />
                   )}
                 </MenuItem>

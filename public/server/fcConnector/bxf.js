@@ -268,6 +268,20 @@ const getTelemetry = (device, type) => {
         return lastTelem;
       });
     }
+    case "vbat": {
+      return sendCommand(device, `msp 130`, 30, false).then(vbatData => {
+        let data = new DataView(new Uint8Array(vbatData).buffer, 12);
+        console.log(data);
+        return {
+          type: "vbat",
+          cells: data.getUint8(0),
+          cap: data.getUint16(1, 1),
+          volts: data.getUint8(3) / 10.0,
+          mah: data.getUint16(4, 1),
+          amps: data.getUint16(6, 1) / 100
+        };
+      });
+    }
     default:
     case "rx": {
       return sendCommand(device, `msp 105`, 30, false).then(rcData => {

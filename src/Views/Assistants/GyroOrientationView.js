@@ -109,7 +109,7 @@ export default class GyroOrientationView extends Component {
 
   componentDidMount() {
     FCConnector.webSockets.addEventListener("message", this.handleGyroData);
-    FCConnector.startTelemetry(this.type);
+    FCConnector.startTelemetry("gyro");
   }
 
   componentWillUnmount = () => {

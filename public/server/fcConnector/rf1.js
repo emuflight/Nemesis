@@ -207,6 +207,7 @@ const setChannelMap = (device, newmap) => {
 
 const getTelemetry = (device, type) => {
   switch (type) {
+    default:
     case "rx":
       return sendCommand(device, "rcrxdata", 20).then(telemString => {
         let channels = [];
@@ -226,8 +227,19 @@ const getTelemetry = (device, type) => {
           channels
         };
       });
-      break;
-    default:
+    case "vbat": {
+      return sendCommand(device, ``, 30).then(vbatData => {
+        // let data = new DataView(new Uint8Array(vbatData).buffer, 11);
+        return {
+          type: "vbat",
+          cells: 0,
+          cap: 0,
+          volts: 0,
+          mah: 0,
+          amps: 0
+        };
+      });
+    }
     case "gyro":
       return sendCommand(device, "telem", 20).then(telemString => {
         let obj = {};

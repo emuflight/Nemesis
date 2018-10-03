@@ -4,6 +4,7 @@ import ConfigListView from "../ConfigListView/ConfigListView";
 import Paper from "@material-ui/core/Paper";
 import RXTelemView from "./RXTelemView";
 import ChannelMapView from "./ChannelMapView";
+import { FormattedMessage } from "react-intl";
 
 export default class RXView extends Component {
   constructor(props) {
@@ -28,7 +29,20 @@ export default class RXView extends Component {
               }
               variant="raised"
               color="primary"
-            >{`${this.state.showRXTelem ? "Hide" : "Show"} RX Data`}</Button>
+            >
+              <FormattedMessage
+                id="rx.show-data"
+                values={{ hideShow: this.state.showRXTelem ? "Hide" : "Show" }}
+              />
+            </Button>
+            <Button
+              style={{ marginLeft: 20 }}
+              color="secondary"
+              variant="raised"
+              onClick={() => this.props.openAssistant("rx")}
+            >
+              <FormattedMessage id="assistant.rx" />
+            </Button>
             <div style={{ flexGrow: 1 }} />
             <ChannelMapView
               mapping={this.props.fcConfig.channel_map}

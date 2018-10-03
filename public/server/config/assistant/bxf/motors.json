@@ -5,7 +5,9 @@
       {
         "image": "assets/props.png",
         "style": {
-          "height": 320
+          "height": 320,
+          "width": 280,
+          "backgroundSize": "contain"
         },
         "title": "Normal",
         "headline": "Normal",
@@ -14,13 +16,18 @@
       {
         "image": "assets/props-reversed.png",
         "style": {
-          "height": 320
+          "height": 320,
+          "width": 280,
+          "backgroundSize": "contain"
         },
         "title": "Reversed",
         "headline": "Reversed",
         "commands": ["set yaw_motors_reversed=ON"]
       }
     ]
+  },
+  {
+    "id": "assistant.motors.calibration"
   },
   {
     "id": "assistant.motors.mapping"

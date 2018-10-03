@@ -1,9 +1,10 @@
 import React from "react";
 import PickerAssistantView from "./PickerAssistantView";
-import SafetyView from "../SafetyView/SafetyView";
 import MotorItemView from "./MotorItemView";
 import Typography from "@material-ui/core/Typography";
 import FCConnector from "../../utilities/FCConnector";
+import { Button } from "@material-ui/core";
+import { FormattedMessage } from "react-intl";
 
 const motorLayout = [
   { position: "absolute", top: 0, left: 0 },
@@ -45,61 +46,68 @@ export default class MotorAssignmentAssistantView extends PickerAssistantView {
   }
   render() {
     return (
-      <SafetyView>
+      <div
+        style={{
+          flex: 1,
+          display: "flex",
+          flexDirection: "column",
+          padding: 30
+        }}
+      >
+        <div style={{ display: "flex" }}>
+          <Typography variant="headline">
+            <FormattedMessage id="assistant.motors.mapping" />
+          </Typography>
+          <div style={{ flexGrow: 1 }} />
+          <Button
+            color="secondary"
+            variant="raised"
+            onClick={() => this.props.onFinish()}
+          >
+            <FormattedMessage id="common.finished" />
+          </Button>
+        </div>
         <div
           style={{
-            flex: 1,
-            display: "flex",
-            flexDirection: "column",
-            padding: 30
+            padding: 40,
+            flex: 1
           }}
         >
-          <div style={{ display: "flex" }}>
-            <Typography variant="headline">{`Motor mapping`}</Typography>
-            <div style={{ flexGrow: 1 }} />
-          </div>
           <div
             style={{
-              padding: 40,
-              flex: 1
+              width: 550,
+              height: 450,
+              margin: "0 auto",
+              position: "relative",
+              backgroundImage: `url("${this.props.lastChoice.image}")`,
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat"
             }}
           >
-            <div
-              style={{
-                width: 550,
-                height: 450,
-                margin: "0 auto",
-                position: "relative",
-                backgroundImage: `url("${this.props.lastChoice.image}")`,
-                backgroundPosition: "center",
-                backgroundRepeat: "no-repeat"
-              }}
-            >
-              {this.props.fcConfig &&
-                this.props.fcConfig.motor_order.map((num, i) => {
-                  return (
-                    <MotorItemView
-                      style={motorLayout[i]}
-                      label={`Motor ${num}`}
-                      motorIndex={num}
-                      spinning={!!this.state.spinning}
-                      remapping={this.state.saving}
-                      remapMotor={fromMotorIndex => {
-                        this.remapMotor(fromMotorIndex, this.state.spinning);
-                      }}
-                      spinTest={motorIndex => {
-                        console.log(motorIndex);
-                        FCConnector.spinTestMotor(motorIndex, 1060).then(() => {
-                          this.setState({ spinning: motorIndex });
-                        });
-                      }}
-                    />
-                  );
-                })}
-            </div>
+            {this.props.fcConfig &&
+              this.props.fcConfig.motor_order.map((num, i) => {
+                return (
+                  <MotorItemView
+                    style={motorLayout[i]}
+                    label={`Motor ${num}`}
+                    motorIndex={num}
+                    spinning={!!this.state.spinning}
+                    remapping={this.state.saving}
+                    remapMotor={fromMotorIndex => {
+                      this.remapMotor(fromMotorIndex, this.state.spinning);
+                    }}
+                    spinTest={motorIndex => {
+                      console.log(motorIndex);
+                      FCConnector.spinTestMotor(motorIndex, 1060).then(() => {
+                        this.setState({ spinning: motorIndex });
+                      });
+                    }}
+                  />
+                );
+              })}
           </div>
         </div>
-      </SafetyView>
+      </div>
     );
   }
 }

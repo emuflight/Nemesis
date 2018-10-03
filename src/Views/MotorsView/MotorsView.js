@@ -41,6 +41,14 @@ export default class MotorsView extends Component {
             >
               <FormattedMessage id="assistant.gyro.orientation" />
             </Button>
+            <Button
+              style={{ marginLeft: 20 }}
+              color="secondary"
+              variant="raised"
+              onClick={() => this.props.openAssistant("motors")}
+            >
+              <FormattedMessage id="assistant.motors" />
+            </Button>
             <div style={{ flexGrow: 1 }} />
           </div>
           {this.state.showMotorSliders && <MotorsSlidersView />}
