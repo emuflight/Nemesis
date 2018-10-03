@@ -1,18 +1,22 @@
 [
   {
-    "id": "motor direction",
-    "description": "You will need to verify the motor direction in BLHeli Suite!!!",
+    "id": "assistant.motors.direction",
+    "headline": "You will need to verify the motor direction in BLHeli Suite!!!",
     "options": [
       {
         "image": "assets/props.png",
-        "size": 320,
+        "style": {
+          "height": 320
+        },
         "title": "Normal",
         "headline": "Normal",
         "commands": ["set mixer_type=0", "save"]
       },
       {
         "image": "assets/props-reversed.png",
-        "size": 320,
+        "style": {
+          "height": 320
+        },
         "title": "Reversed",
         "headline": "Reversed",
         "commands": ["set mixer_type=1", "save"]
@@ -20,6 +24,6 @@
     ]
   },
   {
-    "id": "motor assignments"
+    "id": "assistant.motors.mapping"
   }
 ]

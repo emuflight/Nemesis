@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import FCConnector from "../../utilities/FCConnector";
 import TextField from "@material-ui/core/TextField";
-import AccessibleForward from "@material-ui/icons/AccessibleForward";
+import Assistant from "@material-ui/icons/Assistant";
 import { MenuItem } from "@material-ui/core";
 
 export default class ChannelMapView extends Component {
@@ -46,7 +46,7 @@ export default class ChannelMapView extends Component {
             this.setState({ mapping: event.target.value });
           }}
         />
-        <AccessibleForward onClick={() => this.props.openAssistant("map")} />
+        <Assistant onClick={() => this.props.openAssistant("map")} />
       </MenuItem>
     );
   }

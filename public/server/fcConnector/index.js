@@ -14,7 +14,8 @@ const skipprops = [
   "tpa_curves"
 ];
 
-const assistants = ["RX", "VTX", "MOTORS", "MIXER"];
+//TODO: do this dynamically;
+const assistants = ["RX", "VTX", "MOTORS", "GYRO"];
 const createMockObj = (id, val) => {
   return {
     id: id,

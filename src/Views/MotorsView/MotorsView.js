@@ -3,7 +3,7 @@ import Button from "@material-ui/core/Button";
 import ConfigListView from "../ConfigListView/ConfigListView";
 import Paper from "@material-ui/core/Paper";
 import MotorsSlidersView from "./MotorsSlidersView";
-import SafetyView from "../SafetyView/SafetyView";
+import { FormattedMessage } from "react-intl";
 
 export default class MotorsView extends Component {
   constructor(props) {
@@ -15,7 +15,7 @@ export default class MotorsView extends Component {
 
   render() {
     return (
-      <SafetyView>
+      <div>
         <Paper
           theme={this.state.theme}
           elevation={3}
@@ -33,6 +33,14 @@ export default class MotorsView extends Component {
             >{`${
               this.state.showMotorSliders ? "Hide" : "Show"
             } Motor Sliders`}</Button>
+            <Button
+              style={{ marginLeft: 20 }}
+              color="secondary"
+              variant="raised"
+              onClick={() => this.props.openAssistant("GYRO")}
+            >
+              <FormattedMessage id="assistant.gyro.orientation" />
+            </Button>
             <div style={{ flexGrow: 1 }} />
           </div>
           {this.state.showMotorSliders && <MotorsSlidersView />}
@@ -47,7 +55,7 @@ export default class MotorsView extends Component {
             items={this.props.items}
           />
         </Paper>
-      </SafetyView>
+      </div>
     );
   }
 }

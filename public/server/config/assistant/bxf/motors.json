@@ -1,17 +1,21 @@
 [
   {
-    "id": "motor direction",
+    "id": "assistant.motors.direction",
     "options": [
       {
         "image": "assets/props.png",
-        "size": 320,
+        "style": {
+          "height": 320
+        },
         "title": "Normal",
         "headline": "Normal",
         "commands": ["set yaw_motors_reversed=OFF"]
       },
       {
         "image": "assets/props-reversed.png",
-        "size": 320,
+        "style": {
+          "height": 320
+        },
         "title": "Reversed",
         "headline": "Reversed",
         "commands": ["set yaw_motors_reversed=ON"]
@@ -19,6 +23,6 @@
     ]
   },
   {
-    "id": "motor assignments"
+    "id": "assistant.motors.mapping"
   }
 ]

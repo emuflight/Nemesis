@@ -5,7 +5,7 @@ import Paper from "@material-ui/core/Paper";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import Badge from "@material-ui/core/Badge";
-import AccessibleForward from "@material-ui/icons/AccessibleForward";
+import Assistant from "@material-ui/icons/Assistant";
 import VersionInfoView from "./VersionInfoView";
 import AuxChannelView from "./AuxChannelView/AuxChannelView";
 import ConfigListView from "./ConfigListView/ConfigListView";
@@ -358,7 +358,8 @@ export default class Connected extends Component {
                     />
                   )}
                   {route.assistant && (
-                    <AccessibleForward
+                    <Assistant
+                      style={{ marginLeft: 10 }}
                       onClick={() => this.openAssistant(route.key)}
                     />
                   )}

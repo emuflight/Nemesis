@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Modal from "@material-ui/core/Modal";
 import PickerAssistantView from "./PickerAssistantView";
 import MotorAssignmentAssistantView from "./MotorAssignmentAssistantView";
+import GyroOrientationView from "./GyroOrientationView";
 import FCConnector from "../../utilities/FCConnector";
 import Paper from "@material-ui/core/Paper";
 
@@ -15,7 +16,8 @@ export default class AssistantView extends Component {
     };
   }
   assistantMap = {
-    "motor assignments": MotorAssignmentAssistantView
+    "assistant.motors.mapping": MotorAssignmentAssistantView,
+    "assistant.gyro.orientation": GyroOrientationView
   };
   componentDidMount() {
     return FCConnector.getAssistant(this.props.type, this.props.fw).then(
@@ -41,6 +43,9 @@ export default class AssistantView extends Component {
   }
   render() {
     const step = this.state.steps[this.state.currentStep];
+    if (!step.id) {
+      return "";
+    }
     const CustomAssistant = this.assistantMap[step.id] || PickerAssistantView;
     return (
       <Modal

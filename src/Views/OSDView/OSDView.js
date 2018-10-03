@@ -39,7 +39,9 @@ export default class OSDView extends Component {
       elementsAvailable: props.items.filter(item => {
         return item.id.startsWith("osd_") && item.mode === "DIRECT";
       }),
-      videoMode: props.fcConfig.vcd_video_system.current,
+      videoMode:
+        props.fcConfig.vcd_video_system &&
+        props.fcConfig.vcd_video_system.current,
       uploadingFont: false,
       uploadProgress: 0,
       selectedFont: "butterflight"

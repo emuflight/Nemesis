@@ -1,0 +1,43 @@
+[
+  {
+    "id": "assistant.gyro.lay-flat",
+    "options": [
+      {
+        "image": "assets/props.png",
+        "style": {
+          "transform": "rotate3d(-4,3,3, 96deg)",
+          "backgroundSize": "contain",
+          "border": "outset 10px",
+          "height": 240
+        },
+        "title": "lay quad flat",
+        "headline": "Lay your quad flat. Then, click the image.",
+        "commands": ["wiz cala"],
+        "verify": {
+          "success": "calibrate1finished",
+          "error": "calibrationfailed"
+        }
+      }
+    ]
+  },
+  {
+    "id": "assistant.gyro.on-nose",
+    "options": [
+      {
+        "image": "assets/props.png",
+        "style": {
+          "transform": "rotate3d(2, 0, -3, 180deg)",
+          "backgroundSize": "contain",
+          "height": 240
+        },
+        "title": "on-nose",
+        "headline": "Position your quad as shown. then, click the image.",
+        "commands": ["wiz calb"],
+        "verify": {
+          "success": "calibrate2finished",
+          "error": "calibrationfailed"
+        }
+      }
+    ]
+  }
+]

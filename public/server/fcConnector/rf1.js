@@ -28,31 +28,46 @@ const getConfig = device => {
   });
 };
 
-// let connectedDevice;
+const commandQueue = [];
+let currentCommand;
+const runQueue = next => {
+  if (!next) return;
+  currentCommand = next;
+  let connectedDevice = new HID.HID(next.device.path);
+  let ret = "";
+  let timeout;
+  connectedDevice.on("data", data => {
+    if (data) {
+      ret += data.toString("utf8");
+    }
+    if (ret.indexOf("\n\0") === -1) {
+      connectedDevice.write(strToBytes("more\n"));
+    }
+    timeout && clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      connectedDevice.close();
+      next.resolve(
+        ret.slice(0, ret.indexOf("\n\0") + 1).replace(/\u0001/gim, "")
+      );
+      currentCommand = null;
+      runQueue(commandQueue.pop());
+    }, next.waitMs);
+  });
+  connectedDevice.on("error", error => {
+    connectedDevice.close();
+    console.log("HID ERROR:", error);
+    next.reject(error);
+    currentCommand = null;
+    runQueue(commandQueue.pop());
+  });
+  connectedDevice.write(strToBytes(`${next.command}\n`));
+};
 const sendCommand = (device, command, waitMs = 200) => {
   return new Promise((resolve, reject) => {
-    let connectedDevice = new HID.HID(device.path);
-    let ret = "";
-    let timeout;
-    connectedDevice.on("data", data => {
-      if (data) {
-        ret += data.toString("utf8");
-      }
-      if (ret.indexOf("\n\0") === -1) {
-        connectedDevice.write(strToBytes("more\n"));
-      }
-      timeout && clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        connectedDevice.close();
-        resolve(ret.slice(0, ret.indexOf("\n\0") + 1).replace(/\u0001/gim, ""));
-      }, waitMs);
-    });
-    connectedDevice.on("error", error => {
-      connectedDevice.close();
-      console.log("HID ERROR:", error);
-      resolve(error);
-    });
-    connectedDevice.write(strToBytes(`${command}\n`));
+    commandQueue.unshift({ device, command, waitMs, resolve, reject });
+    if (!currentCommand) {
+      runQueue(commandQueue.pop());
+    }
   });
 };
 

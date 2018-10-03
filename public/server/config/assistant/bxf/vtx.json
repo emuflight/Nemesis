@@ -1,6 +1,6 @@
 [
   {
-    "id": "VTX control",
+    "id": "assistant.vtx",
     "options": [
       {
         "image": "./dfu.gif",

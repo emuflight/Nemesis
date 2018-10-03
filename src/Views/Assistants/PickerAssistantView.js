@@ -8,6 +8,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import FCConnector from "../../utilities/FCConnector";
 import { Button } from "@material-ui/core";
+import { FormattedMessage } from "react-intl";
 
 export default class PickerAssistantView extends Component {
   constructor(props) {
@@ -37,36 +38,52 @@ export default class PickerAssistantView extends Component {
           saved: percent >= 100
         });
       }
-    ).then(() => {
+    ).then(reponse => {
       if (type.verify) {
-        this.setState({ verifying: true });
-        const verifySetting = () => {
-          FCConnector.sendCliCommand(type.verify.command).then(resp => {
-            console.log(resp);
-            if (this.state.cancel) {
-              this.setState({
-                currentMessage: "Cancelled!",
-                currentResponse: ""
-              });
-            } else if (resp.toLowerCase().indexOf(type.verify.error) > -1) {
-              this.setState({ error: resp });
-            } else if (resp.toLowerCase().indexOf(type.verify.until) > -1) {
-              this.setState({
-                saving: false,
-                verifying: false,
-                currentResponse: resp,
-                completed: true
-              });
-            } else {
-              this.setState({
-                currentMessage: "Verifying... :  ",
-                currentResponse: resp
-              });
-              type.verify.until && verifySetting();
-            }
-          });
-        };
-        verifySetting();
+        if (type.verify.success) {
+          if (reponse.toLowerCase().indexOf(type.verify.success) > -1) {
+            this.setState({
+              saving: false,
+              completed: true
+            });
+          } else {
+            this.setState({
+              saving: false,
+              completed: false,
+              currentMessage: "Failed... :  ",
+              currentResponse: reponse
+            });
+          }
+        } else if (type.verify.command) {
+          this.setState({ verifying: true });
+          const verifySetting = () => {
+            FCConnector.sendCliCommand(type.verify.command).then(resp => {
+              console.log(resp);
+              if (this.state.cancel) {
+                this.setState({
+                  currentMessage: "Cancelled!",
+                  currentResponse: ""
+                });
+              } else if (resp.toLowerCase().indexOf(type.verify.error) > -1) {
+                this.setState({ error: resp });
+              } else if (resp.toLowerCase().indexOf(type.verify.until) > -1) {
+                this.setState({
+                  saving: false,
+                  verifying: false,
+                  currentResponse: resp,
+                  completed: true
+                });
+              } else {
+                this.setState({
+                  currentMessage: "Verifying... :  ",
+                  currentResponse: resp
+                });
+                type.verify.until && verifySetting();
+              }
+            });
+          };
+          verifySetting();
+        }
       } else {
         this.setState({
           saving: false,
@@ -86,9 +103,9 @@ export default class PickerAssistantView extends Component {
           padding: 30
         }}
       >
-        <Typography variant="headline">{`Select your ${
-          this.props.title
-        }`}</Typography>
+        <Typography variant="headline">
+          <FormattedMessage id={this.props.title} />
+        </Typography>
         <div style={{ flex: 1 }}>
           <List
             style={{
@@ -106,12 +123,16 @@ export default class PickerAssistantView extends Component {
                   <Card style={{ flex: 1 }} key={type.title}>
                     <CardActionArea
                       style={{ width: "100%" }}
-                      onClick={() =>
-                        !this.state.saving && this.handleCommands(type)
-                      }
+                      onClick={() => {
+                        if (this.props.onSelect) {
+                          this.props.onSelect(type);
+                        } else if (!this.state.saving) {
+                          this.handleCommands(type);
+                        }
+                      }}
                     >
                       <CardMedia
-                        style={{ height: type.size || 140 }}
+                        style={type.style}
                         image={type.image}
                         title={type.title}
                       />
@@ -156,7 +177,10 @@ export default class PickerAssistantView extends Component {
               this.state.completed === true &&
               !this.state.error && (
                 <Button
-                  onClick={() => this.props.onFinish(this.userChoice)}
+                  onClick={() => {
+                    this.setState({ completed: false });
+                    this.props.onFinish(this.userChoice);
+                  }}
                   variant="raised"
                   color="primary"
                 >

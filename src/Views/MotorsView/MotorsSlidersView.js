@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import MotorSliderItemView from "./MotorSliderItemView";
+import SafetyView from "../SafetyView/SafetyView";
 import FCConnector from "../../utilities/FCConnector";
 
 export default class MotorsSlidersView extends Component {
@@ -36,7 +37,7 @@ export default class MotorsSlidersView extends Component {
   }
   render() {
     return (
-      <div>
+      <SafetyView>
         <div style={{ display: "flex" }}>
           {this.state.motors.map((item, i) => {
             return (
@@ -50,7 +51,7 @@ export default class MotorsSlidersView extends Component {
             );
           })}
         </div>
-      </div>
+      </SafetyView>
     );
   }
 }

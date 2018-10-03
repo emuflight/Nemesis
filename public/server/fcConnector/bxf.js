@@ -75,6 +75,8 @@ const runQueue = next => {
       if (err) {
         console.log("WRITE ERROR: ", err);
         err && next.reject(err);
+        currentCommand = null;
+        runQueue(commandQueue.pop());
       }
     });
     let currentRecBuffer = "";

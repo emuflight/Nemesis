@@ -1,21 +1,32 @@
 [
   {
-    "id": "reciever",
+    "id": "assistant.rx",
     "options": [
       {
         "image": "assets/frsky.png",
+        "style": {
+          "height": 240,
+          "backgroundSize": "contain"
+        },
         "title": "FrSky",
         "headline": "FrSky",
         "commands": ["set serialrx_provider=SBUS"]
       },
       {
-        "image": "assets/crossfire.png",
-        "title": "Crossfire",
-        "headline": "Crossfire",
+        "image": "assets/tbs.jpg",
+        "style": {
+          "height": 240
+        },
+        "title": "TBS Crossfire",
+        "headline": "TBS Crossfire",
         "commands": ["set serialrx_provider=CRSF\n"]
       },
       {
         "image": "assets/spektrum.png",
+        "style": {
+          "height": 240,
+          "backgroundSize": "contain"
+        },
         "title": "Spektrum",
         "headline": "Spektrum",
         "commands": ["set serialrx_provider=SBUS\n"]
