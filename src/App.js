@@ -76,7 +76,7 @@ class App extends Component {
 
   handleSave = () => {
     this.rebooting = this.state.currentConfig.reboot_on_save;
-    this.setState({rebooting: this.state.currentConfig.reboot_on_save});
+    this.setState({ rebooting: this.state.currentConfig.reboot_on_save });
     return FCConnector.saveConfig();
   };
 
