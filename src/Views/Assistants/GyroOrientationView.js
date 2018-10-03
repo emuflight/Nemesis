@@ -142,7 +142,7 @@ export default class GyroOrientationView extends Component {
               color="secondary"
               variant="raised"
               onClick={() => {
-                FCConnector.saveConfig().then(() => {
+                this.props.handleSave.then(() => {
                   this.props.onFinish();
                 });
               }}

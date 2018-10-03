@@ -278,9 +278,6 @@ module.exports = {
     }
   },
   sendCommand(deviceInfo, command) {
-    if (command.endsWith("save")) {
-      websockets.deviceRebooting(deviceInfo);
-    }
     if (deviceInfo.hid) {
       return rf1Connector.sendCommand(deviceInfo, command);
     } else {
@@ -318,7 +315,6 @@ module.exports = {
                   sentPackets++;
                   websockets.notifyProgress(resp);
                   if (sentPackets === 255) {
-                    websockets.deviceRebooting(deviceInfo);
                     bxfConnector.sendCommand(deviceInfo, `save`);
                   }
                 });

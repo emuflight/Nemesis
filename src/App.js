@@ -20,24 +20,15 @@ class App extends Component {
       if (device.progress || device.telemetry) {
         return;
       }
-      if (device.rebooting) {
-        this.setState({
-          rebooting: true
-        });
-      } else if (device.connected) {
+      if (device.connected) {
         this.getFcConfig();
-      } else if (!device.progress) {
-        let stateObj = {
+      } else if (!this.state.rebooting) {
+        this.setState({
+          connecting: false, 
           imuf: false,
           connected: false,
           dfu: false,
           deviceInfo: undefined
-        };
-        this.setState(stateObj);
-      } else {
-        this.setState({
-          connecting: false,
-          connected: false
         });
       }
     });
@@ -48,7 +39,7 @@ class App extends Component {
   };
 
   getFcConfig = () => {
-    this.setState({ connecting: true, rebooting: false });
+    this.setState({ connecting: true, rebooting: false});
     return FCConnector.tryGetConfig()
       .then(device => {
         this.setState({
@@ -71,6 +62,13 @@ class App extends Component {
         })
       );
   };
+
+  handleSave = () => {
+    return FCConnector.saveConfig().then(()=>{
+      this.setState({ rebooting: true});
+    });
+  };
+
 
   componentDidMount() {
     if (!this.state.connecting) {
@@ -95,8 +93,9 @@ class App extends Component {
       return (
         <MuiThemeProvider theme={this.state.theme}>
           <Connected
-            theme={this.state.theme}
             rebooting={this.state.rebooting}
+            handleSave={this.handleSave}
+            theme={this.state.theme}
             refreshConfig={this.getFcConfig}
             goToImuf={this.goToImuf}
             connectinId={this.state.id}

@@ -70,6 +70,7 @@ export default class AssistantView extends Component {
         >
           {
             <CustomAssistant
+              handleSave={this.props.handleSave}
               fcConfig={this.props.fcConfig}
               title={step.id}
               style={{ flex: 1, display: "flex" }}

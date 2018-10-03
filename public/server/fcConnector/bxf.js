@@ -192,7 +192,7 @@ const getModes = device => {
   // return sendCommand(device, `map`);
 };
 const setMode = (device, modeVals) => {
-  return sendCommand(device, `aux ${modeVals.replace("|", " ")}`, 20);
+  return sendCommand(device, `aux ${modeVals.split("|").join(" ")}`, 20);
 };
 
 const getMotors = device => {

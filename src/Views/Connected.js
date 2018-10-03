@@ -78,7 +78,7 @@ export default class Connected extends Component {
     //TODO: filter config values based on text.
   };
   handleSave = () => {
-    FCConnector.saveConfig().then(() => {
+    return this.props.handleSave().then(() => {
       this.setState({ isDirty: false });
     });
   };
@@ -377,6 +377,7 @@ export default class Connected extends Component {
         {this.state.openAssistant && (
           <AssistantView
             fcConfig={this.state.fcConfig}
+            handleSave={this.handleSave}
             theme={this.state.theme}
             fw={
               this.state.fcConfig.version.fw.indexOf("B") > -1 ? "bxf" : "rf1"

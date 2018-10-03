@@ -55,7 +55,7 @@ export default class MotorAssignmentAssistantView extends PickerAssistantView {
               color="secondary"
               disabled={!this.state.remapped}
               onClick={() =>
-                FCConnector.saveConfig().then(() => {
+                this.props.handleSave().then(() => {
                   this.setState({ remapped: false });
                   this.props.onFinish();
                 })

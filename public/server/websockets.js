@@ -39,11 +39,9 @@ wsServer.on("request", request => {
     connection.sendUTF(
       JSON.stringify({
         dfu: false,
-        connected: false,
-        rebooting: !!connectedDevice.rebooting
+        connected: false
       })
     );
-    connectedDevice.rebooting = false;
   });
   // This is the most important callback for us, we'll handle
   // all messages from users here.
@@ -69,17 +67,10 @@ const notifyTelem = telemetryData => {
   clients.forEach(client => client.sendUTF(JSON.stringify(telemetryData)));
 };
 
-const deviceRebooting = deviceInfo => {
-  if (connectedDevice) {
-    connectedDevice.rebooting = deviceInfo;
-  }
-};
-
 wsServer.telemetryInterval;
 module.exports = {
   wsServer: wsServer,
   clients: clients,
   notifyProgress: notifyProgress,
-  notifyTelem: notifyTelem,
-  deviceRebooting: deviceRebooting
+  notifyTelem: notifyTelem
 };
