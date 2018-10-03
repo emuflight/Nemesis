@@ -98,7 +98,7 @@ export default class MotorAssignmentAssistantView extends PickerAssistantView {
                     }}
                     spinTest={motorIndex => {
                       console.log(motorIndex);
-                      FCConnector.spinTestMotor(motorIndex, 1060).then(() => {
+                      FCConnector.spinTestMotor(motorIndex, 1100).then(() => {
                         this.setState({ spinning: motorIndex });
                       });
                     }}
