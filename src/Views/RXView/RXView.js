@@ -31,7 +31,7 @@ export default class RXView extends Component {
               color="primary"
             >
               <FormattedMessage
-                id="rx.show-data"
+                id="rx.hide-show"
                 values={{ hideShow: this.state.showRXTelem ? "Hide" : "Show" }}
               />
             </Button>

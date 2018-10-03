@@ -19,7 +19,7 @@
         },
         "title": "TBS Crossfire",
         "headline": "TBS Crossfire",
-        "commands": ["set serialrx_provider=CRSF\n"]
+        "commands": ["set serialrx_provider=CRSF"]
       },
       {
         "image": "assets/spektrum.png",
@@ -29,7 +29,7 @@
         },
         "title": "Spektrum",
         "headline": "Spektrum",
-        "commands": ["set serialrx_provider=SBUS\n"]
+        "commands": ["set serialrx_provider=SBUS"]
       }
     ]
   }
