@@ -110,6 +110,19 @@ export default new class FCConnector {
   saveEEPROM() {
     return fetch(`${this.serviceUrl}/save/eeprom`);
   }
+  getModes() {
+    return fetch(`${this.serviceUrl}/modes`).then(resp => {
+      return resp.json();
+    });
+  }
+  setMode(state) {
+    let modeVals = `${state.id}|${state.mode}|${state.channel}|${
+      state.range[0]
+    }|${state.range[1]}|0`;
+    return fetch(`${this.serviceUrl}/modes/${modeVals}`).then(resp => {
+      return resp.text();
+    });
+  }
 
   startTelemetry(type = "gyro") {
     this.lastTelemetry = type;

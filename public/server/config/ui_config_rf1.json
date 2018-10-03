@@ -5,9 +5,9 @@
     "FILTERS",
     "MOTORS",
     "RX",
+    "MODES",
     "LEDS",
     "TELEMETRY",
-    "GYRO",
     "OSD",
     "BLACKBOX",
     "ADVANCED"
@@ -15,6 +15,7 @@
   "groups": {
     "OSD": ["osd"],
     "BLACKBOX": ["blackbox"],
+    "MODES": ["modes"],
     "PID": [
       "yaw_wc1",
       "roll_wc1",
@@ -200,27 +201,12 @@
       "famx",
       "mixer_style",
       "esc_protocol",
-      "bit_reverse_esc_1",
-      "bit_reverse_esc_2",
-      "bit_reverse_esc_3",
-      "bit_reverse_esc_4",
-      "bit_reverse_esc_5",
-      "bit_reverse_esc_6",
-      "bit_reverse_esc_7",
-      "bit_reverse_esc_8",
-      "esc_frequency",
       "idle_percent",
       "idle_percent_inv",
-      "spin_rec_str",
       "quopa_style",
-      "mout1",
-      "mout2",
-      "mout3",
-      "mout4",
-      "mout5",
-      "mout6",
-      "mout7",
-      "mout8"
+      "man_gy_roll_angle",
+      "man_gy_pitch_angle",
+      "man_gy_yaw_angle"
     ],
     "LEDS": [
       "led_count",
@@ -245,17 +231,6 @@
       "vbat_cutoff",
       "bat_size",
       "crsf_otx_cur_hack"
-    ],
-    "GYRO": [
-      "gyro_rotation",
-      "board_calibrated",
-      "man_gy_roll_angle",
-      "man_gy_pitch_angle",
-      "man_gy_yaw_angle",
-      "imuf_filter_mode",
-      "rf_loop_ctrl",
-      "drunk",
-      "skunk"
     ],
     "RX": [
       "rx_protocol",
@@ -503,6 +478,233 @@
     "pname3": {
       "type": "string",
       "classes": "pname3"
+    },
+    "tpa_kp_curve_type1": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "0",
+          "label": "OLD"
+        },
+        {
+          "value": "1",
+          "label": "NEW"
+        }
+      ]
+    },
+    "tpa_ki_curve_type1": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "0",
+          "label": "OLD"
+        },
+        {
+          "value": "1",
+          "label": "NEW"
+        }
+      ]
+    },
+    "tpa_kd_curve_type1": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "0",
+          "label": "OLD"
+        },
+        {
+          "value": "1",
+          "label": "NEW"
+        }
+      ]
+    },
+    "tpa_kp_curve_type2": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "0",
+          "label": "OLD"
+        },
+        {
+          "value": "1",
+          "label": "NEW"
+        }
+      ]
+    },
+    "tpa_ki_curve_type2": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "0",
+          "label": "OLD"
+        },
+        {
+          "value": "1",
+          "label": "NEW"
+        }
+      ]
+    },
+    "tpa_kd_curve_type2": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "0",
+          "label": "OLD"
+        },
+        {
+          "value": "1",
+          "label": "NEW"
+        }
+      ]
+    },
+    "tpa_kp_curve_type3": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "0",
+          "label": "OLD"
+        },
+        {
+          "value": "1",
+          "label": "NEW"
+        }
+      ]
+    },
+    "tpa_ki_curve_type3": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "0",
+          "label": "OLD"
+        },
+        {
+          "value": "1",
+          "label": "NEW"
+        }
+      ]
+    },
+    "tpa_kd_curve_type3": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "0",
+          "label": "OLD"
+        },
+        {
+          "value": "1",
+          "label": "NEW"
+        }
+      ]
+    },
+    "quopa_style": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "0",
+          "label": "ALL"
+        },
+        {
+          "value": "1",
+          "label": "LIMIT"
+        }
+      ]
+    },
+    "famx": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "0.900",
+          "label": "LOW"
+        },
+        {
+          "value": "1.000",
+          "label": "MED"
+        },
+        {
+          "value": "1.100",
+          "label": "HIGH"
+        }
+      ]
+    },
+    "mixer_style": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "0",
+          "label": "NORMAL"
+        },
+        {
+          "value": "1",
+          "label": "RACE"
+        }
+      ]
+    },
+    "esc_protocol": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "0",
+          "label": "MULTISHOT"
+        },
+        {
+          "value": "6",
+          "label": "DSHOT600"
+        },
+        {
+          "value": "7",
+          "label": "ESC_DSHOT1200"
+        }
+      ]
+    },
+    "idle_percent": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "3.000",
+          "label": "LOW"
+        },
+        {
+          "value": "6.000",
+          "label": "MED"
+        },
+        {
+          "value": "9.000",
+          "label": "HIGH"
+        },
+        {
+          "value": "12.00",
+          "label": "WTF"
+        },
+        {
+          "value": "15.00",
+          "label": "OMG WTF"
+        }
+      ]
+    },
+    "idle_percent_inv": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "4.000",
+          "label": "LOW"
+        },
+        {
+          "value": "6.000",
+          "label": "MED"
+        },
+        {
+          "value": "8.000",
+          "label": "HIGH"
+        },
+        {
+          "value": "10.00",
+          "label": "WTF"
+        },
+        {
+          "value": "12.00",
+          "label": "OMG WTF"
+        }
+      ]
     }
   },
   "keymap": {
@@ -511,5 +713,72 @@
     "dterm_lowpass": "dterm_lowpass_hz"
   },
   "motor_order": [1, 2, 3, 4],
-  "rx_scale": 2000
+  "rx_scale": 2000,
+  "aux_scale": {
+    "min": 0,
+    "max": 100,
+    "step": 10
+  },
+  "aux_channel_modes": [
+    {
+      "value": "OFF",
+      "label": "OFF"
+    },
+    {
+      "value": "ARMED",
+      "label": "ARMED"
+    },
+    {
+      "value": "LEVEL",
+      "label": "LEVEL"
+    },
+    {
+      "value": "ACROLEVEL",
+      "label": "ACROLEVEL"
+    },
+    {
+      "value": "FAILSAFE",
+      "label": "FAILSAFE"
+    },
+    {
+      "value": "LOGGING",
+      "label": "LOGGING"
+    },
+    {
+      "value": "BUZZER",
+      "label": "BUZZER"
+    },
+    {
+      "value": "LEDMODE",
+      "label": "LEDMODE"
+    },
+    {
+      "value": "LEDCOLOR",
+      "label": "LEDCOLOR"
+    },
+    {
+      "value": "DIRECT",
+      "label": "DIRECT"
+    },
+    {
+      "value": "VTXON",
+      "label": "VTXON"
+    },
+    {
+      "value": "BRAINDRAIN",
+      "label": "BRAINDRAIN"
+    },
+    {
+      "value": "PROFILE2",
+      "label": "PROFILE2"
+    },
+    {
+      "value": "PROFILE3",
+      "label": "PROFILE3"
+    },
+    {
+      "value": "QUOPA",
+      "label": "QUOPA"
+    }
+  ]
 }

@@ -86,6 +86,43 @@ const getMotors = device => {
   return sendCommand(device, `dump mixer`);
 };
 
+const setMode = (device, modeVals) => {
+  valParts = modeVals.split("|");
+  return sendCommand(
+    device,
+    `modes ${valParts[1]}=${valParts[2] + 5}=${valParts[3]}=${valParts[4]}`,
+    20
+  );
+};
+
+const getModes = device => {
+  return sendCommand(device, "modes list", 20).then(response => {
+    let split = response.split("\nmodes ");
+    split.shift();
+    let modes = split.map((mode, i) => {
+      let parts = mode.split("=");
+      let modeName = parts[0],
+        channel = parseInt(parts[1]),
+        start = parseInt(parts[2]),
+        end = parseInt(parts[3]);
+      if (channel + start + end === 0) {
+        channel = -1;
+      }
+      if (channel > 4) {
+        channel = channel - 5;
+      }
+      return {
+        id: i,
+        auxId: i,
+        mode: modeName,
+        channel: channel,
+        range: [start, end]
+      };
+    });
+    return modes;
+  });
+};
+
 const remapMotor = (device, to, from) => {
   let motorTo = `set mout${from}=${parseInt(to) - 1}`;
   let motorFrom = `set mout${to}=${parseInt(from) - 1}`;
@@ -209,5 +246,7 @@ module.exports = {
   getMotors: getMotors,
   getChannelMap: getChannelMap,
   setChannelMap: setChannelMap,
+  getModes: getModes,
+  setMode: setMode,
   saveEEPROM: saveEEPROM
 };

@@ -186,6 +186,12 @@ const getChannelMap = device => {
 const setChannelMap = (device, newmap) => {
   return sendCommand(device, `map ${newmap}`);
 };
+const getModes = device => {
+  // return sendCommand(device, `map`);
+};
+const setMode = (device, modeVals) => {
+  return sendCommand(device, `aux ${modeVals.replace("|", " ")}`, 20);
+};
 
 const getMotors = device => {
   return sendCommand(device, "msp 104", 30, false).then(motorData => {
@@ -288,5 +294,7 @@ module.exports = {
   getMotors: getMotors,
   getChannelMap: getChannelMap,
   setChannelMap: setChannelMap,
+  getModes: getModes,
+  setMode: setMode,
   saveEEPROM: saveEEPROM
 };

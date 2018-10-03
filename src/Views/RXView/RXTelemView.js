@@ -39,7 +39,7 @@ export default class RXTelemView extends Component {
     return (
       <List>
         {this.state.channels &&
-          this.state.channels.map((v, i) => {
+          this.state.channels.map((channel, i) => {
             return (
               <div key={i} style={{ position: "relative" }}>
                 <Typography
@@ -53,13 +53,13 @@ export default class RXTelemView extends Component {
                     textAlign: "center"
                   }}
                 >
-                  {v}
+                  {channel}
                 </Typography>
                 <Typography variant="caption">Channel {i + 1}:</Typography>
                 <LinearProgress
                   variant="determinate"
                   style={{ height: 20, margin: 10 }}
-                  value={this.normalize(v)}
+                  value={this.normalize(channel)}
                 />
               </div>
             );

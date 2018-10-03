@@ -118,6 +118,34 @@ app.get("/spintest/:motor/:value", (req, res) => {
     }
   });
 });
+app.get("/modes", (req, res) => {
+  devices.list((err, ports) => {
+    if (err) return res.status(400).send(err);
+    let connectedDevice = ports[0];
+    if (connectedDevice) {
+      fcConnector
+        .getModes(connectedDevice)
+        .then(ret => res.status(200).send(ret))
+        .catch(error => res.status(400).send(error));
+    } else {
+      res.sendStatus(404);
+    }
+  });
+});
+app.get("/modes/:modeVals", (req, res) => {
+  devices.list((err, ports) => {
+    if (err) return res.status(400).send(err);
+    let connectedDevice = ports[0];
+    if (connectedDevice) {
+      fcConnector
+        .setMode(connectedDevice, req.params.modeVals)
+        .then(ret => res.status(200).send(ret))
+        .catch(error => res.status(400).send(error));
+    } else {
+      res.sendStatus(404);
+    }
+  });
+});
 app.get("/save/eeprom", (req, res) => {
   devices.list((err, ports) => {
     if (err) return res.status(400).send(err);

@@ -176,6 +176,8 @@ const applyUIConfig = (device, config, uiConfig) => {
       assistant: assistants.indexOf(route) > -1
     };
   });
+  config.aux_channel_modes = uiConfig.aux_channel_modes;
+  config.aux_scale = uiConfig.aux_scale;
   let versionParts = config.version.split("|");
   config.version = {
     fw: versionParts[0],
@@ -235,6 +237,21 @@ module.exports = {
       return rf1Connector.getMotors(deviceInfo);
     } else {
       return bxfConnector.getMotors(deviceInfo);
+    }
+  },
+
+  getModes(deviceInfo) {
+    if (deviceInfo.hid) {
+      return rf1Connector.getModes(deviceInfo);
+    } else {
+      return bxfConnector.getModes(deviceInfo);
+    }
+  },
+  setMode(deviceInfo, modeVals) {
+    if (deviceInfo.hid) {
+      return rf1Connector.setMode(deviceInfo, modeVals);
+    } else {
+      return bxfConnector.setMode(deviceInfo, modeVals);
     }
   },
 

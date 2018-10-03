@@ -166,7 +166,11 @@ export default class Connected extends Component {
       case "MODES":
         contents = (
           <AuxChannelView
-            modes={this.state.fcConfig.modes.values}
+            auxScale={this.state.fcConfig.aux_scale}
+            auxModeList={this.state.fcConfig.aux_channel_modes}
+            modes={
+              this.state.fcConfig.modes && this.state.fcConfig.modes.values
+            }
             notifyDirty={(isDirty, item, newValue) =>
               this.notifyDirty(isDirty, item, newValue)
             }

@@ -4,6 +4,10 @@
     "options": [
       {
         "image": "assets/frsky.png",
+        "style": {
+          "height": 240,
+          "backgroundSize": "contain"
+        },
         "title": "FrSky",
         "headline": "FrSky",
         "commands": ["set telem_spek=0", "set telem_sport=14", "save"],
@@ -14,7 +18,10 @@
         }
       },
       {
-        "image": "assets/crossfire.png",
+        "image": "assets/tbs.jpg",
+        "style": {
+          "height": 240
+        },
         "title": "Crossfire",
         "headline": "Crossfire",
         "commands": ["crsf_b2", "save"],
@@ -26,6 +33,10 @@
       },
       {
         "image": "assets/spektrum.png",
+        "style": {
+          "height": 240,
+          "backgroundSize": "contain"
+        },
         "title": "Spektrum",
         "headline": "Spektrum",
         "commands": ["set telem_spek=1", "set telem_sport=0", "save"],
@@ -36,5 +47,8 @@
         }
       }
     ]
+  },
+  {
+    "id": "assistant.rx.calibrate"
   }
 ]

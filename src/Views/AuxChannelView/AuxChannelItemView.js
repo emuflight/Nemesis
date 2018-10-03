@@ -1,45 +1,26 @@
-import auxModeList from "./aux_mode_list.json";
-
 import React, { Component } from "react";
 import { Slider } from "material-ui-slider";
 import HelperSelect from "../Items/HelperSelect";
 import FCConnector from "../../utilities/FCConnector";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
 
 export default class AuxChannelItemView extends Component {
   constructor(props) {
     super(props);
     this.state = props.item;
-    this.modes = auxModeList;
-    this.channels = new Array(14).fill(undefined).map((k, i) => {
-      if (i === 13) {
-        return {
-          label: "NONE",
-          value: -1
-        };
-      } else {
-        return {
-          label: `AUX ${i + 1}`,
-          value: i
-        };
-      }
-    });
   }
-  get command() {
-    return `aux ${this.state.id} ${this.state.mode} ${this.state.channel} ${
-      this.state.range[0]
-    } ${this.state.range[1]} 0`;
-  }
+
   updateValue() {
     this.setState({ isDirty: true });
-
-    FCConnector.sendCommand(this.command).then(() => {
+    FCConnector.setMode(this.state).then(() => {
       this.setState({ isDirty: false });
-      this.props.notifyDirty(true, this.state, this.command);
+      this.props.notifyDirty(true, this.state);
     });
   }
   render() {
+    let sliderLeft = (this.props.telemetry * 100) / this.props.scale.max;
     return (
       <div style={{ display: "flex", flexDirection: "column" }}>
         <Typography>
@@ -50,19 +31,19 @@ export default class AuxChannelItemView extends Component {
             name={"mode " + this.state.id}
             label={"Mode"}
             value={this.state.mode}
-            onChange={(event, key, payload) => {
-              this.setState({ mode: payload, isDirty: true });
+            onChange={event => {
+              this.setState({ mode: event.target.value, isDirty: true });
             }}
-            items={this.modes}
+            items={this.props.auxModeList}
           />
           <HelperSelect
             name={"aux " + this.state.id}
             label={"Aux Channel"}
             value={this.state.channel}
-            onChange={(event, key, payload) => {
-              this.setState({ channel: payload, isDirty: true });
+            onChange={event => {
+              this.setState({ channel: event.target.value, isDirty: true });
             }}
-            items={this.channels}
+            items={this.props.channels}
           />
           {this.state.isDirty && (
             <div
@@ -82,23 +63,41 @@ export default class AuxChannelItemView extends Component {
             </div>
           )}
         </div>
+        <div
+          style={{
+            position: "relative",
+            height: 7,
+            margin: "0 25px"
+          }}
+        >
+          <ArrowDropDown
+            style={{
+              position: "absolute",
+              left: `${sliderLeft}%`
+            }}
+            color="secondary"
+            fontSize="large"
+          />
+        </div>
         <div style={{ display: "flex" }}>
           <Typography style={{ margin: "20px", fontFamily: "inherit" }}>
-            900
+            {this.props.scale.min}
           </Typography>
           <Slider
             style={{ flex: "1" }}
             className={"aux" + this.state.id}
             value={this.state.range}
-            min={900}
-            max={2100}
-            scaleLength={100}
+            min={this.props.scale.min}
+            max={this.props.scale.max}
+            scaleLength={this.props.scale.step}
             range={true}
             onChange={range => {
               this.setState({ range, isDirty: true });
             }}
           />
-          <Typography style={{ margin: "20px" }}>2100</Typography>
+          <Typography style={{ margin: "20px" }}>
+            {this.props.scale.max}
+          </Typography>
         </div>
       </div>
     );
