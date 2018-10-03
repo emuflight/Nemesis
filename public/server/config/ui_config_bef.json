@@ -470,8 +470,8 @@
   "motor_order": [4, 2, 1, 3],
   "rx_scale": 3000,
   "aux_scale": {
-    "min": 900,
-    "max": 2100,
+    "min": 800,
+    "max": 2200,
     "step": 100
   },
   "aux_channel_modes": [

@@ -181,7 +181,9 @@ const saveEEPROM = device => {
   return sendCommand(device, `msp 250`);
 };
 const getChannelMap = device => {
-  return sendCommand(device, `map`);
+  return sendCommand(device, `map`, 30).then(mapping => {
+    return mapping.replace(/map|\s+|#|\n/gim, "");
+  });
 };
 const setChannelMap = (device, newmap) => {
   return sendCommand(device, `map ${newmap}`);
@@ -268,17 +270,24 @@ const getTelemetry = (device, type) => {
     default:
     case "rx": {
       return sendCommand(device, `msp 105`, 30, false).then(rcData => {
-        let data = new DataView(new Uint8Array(rcData).buffer, 11);
         let channels = [];
-        for (var i = 0; i < 8; i++) {
-          channels[i] = data.getUint16(i * 2, 1);
+        try {
+          let data = new DataView(new Uint8Array(rcData).buffer, 12);
+          let active = (data.byteLength - 4) / 2;
+          for (var i = 0; i < active; i++) {
+            channels[i] = data.getUint16(i * 2, 1);
+          }
+        } catch (ex) {
+          console.log(ex);
+          return lastTelem;
         }
-        return {
+        lastTelem = {
           type: "rx",
-          min: 900,
-          max: 2100,
+          min: 800,
+          max: 2200,
           channels
         };
+        return lastTelem;
       });
     }
   }

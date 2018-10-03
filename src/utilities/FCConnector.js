@@ -91,7 +91,7 @@ export default new class FCConnector {
   }
   getChannelMap() {
     return fetch(`${this.serviceUrl}/channelmap`).then(response =>
-      response.json()
+      response.text()
     );
   }
   setChannelMap(newMap) {

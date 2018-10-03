@@ -280,7 +280,7 @@ app.get("/channelmap", (req, res) => {
     if (connectedDevice) {
       fcConnector
         .getChannelMap(connectedDevice)
-        .then(data => res.json(data))
+        .then(data => res.status(200).send(data))
         .catch(err => res.status(400).send(err));
     }
   });

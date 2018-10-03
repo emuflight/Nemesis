@@ -20,6 +20,7 @@ export default class RXTelemView extends Component {
     try {
       let telemetry = JSON.parse(message.data);
       if (telemetry.type === "rx") {
+        console.log(telemetry);
         this.setState({ channels: telemetry.channels });
       }
     } catch (ex) {
