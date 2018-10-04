@@ -51,7 +51,7 @@
   "scripts": {
     "install": "electron-rebuild -w serialport,usb,node-hid,node-sass -f",
     "preship": "yarn build && yarn build-css",
-    "ship": "build --win --ia32 -p always -c electron-builder.yml",
+    "ship": "build --win --ia32 --x64 -p always -c electron-builder.yml",
     "build-css": "node-sass-chokidar src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
     "start": "react-scripts start",
@@ -63,7 +63,7 @@
     "electron-dev": "concurrently \"yarn watch-css\" \"export BROWSER=none && yarn start\" \"wait-on http://localhost:3000 && electron .\"",
     "electron-dev-win": "concurrently \"yarn watch-css\" \"set BROWSER=none&&yarn start\" \"wait-on http://localhost:3000 && electron .\"",
     "electron-pack": "build --mac -c electron-builder.yml",
-    "electron-pack-win": "yarn build && build --win -c electron-builder.yml",
+    "electron-pack-win": "yarn build && build --win --ia32 --x64 -c electron-builder.yml",
     "electron-pack-lin": "yarn build && build -l -c electron-builder.yml",
     "preelectron-pack": "yarn build && yarn build-css"
   },
