@@ -201,7 +201,9 @@ export default class DfuView extends Component {
                 padding: "0 8px 0 0"
               }}
             >
-              <Typography>OR:</Typography>
+              <Typography>
+                <FormattedMessage id="common.or" />
+              </Typography>
             </div>
           )}
           {this.state.allowUpload && (

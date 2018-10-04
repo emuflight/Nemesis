@@ -3,6 +3,7 @@ import TpaCurveItemView from "./TpaCurveItemView";
 import FCConnector from "../../utilities/FCConnector";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import { FormattedMessage } from "react-intl";
 
 const formatCurveItems = array => {
   return array.map((item, i) => {
@@ -71,9 +72,19 @@ export default class TpaCurveView extends Component {
               flexDirection: "column"
             }}
           >
-            <Typography variant="headline">TPA Curves</Typography>
-            <div style={{ display: "flex", flexDirection: "column" }}>
-              <Typography>KP</Typography>
+            <Typography variant="headline">
+              <FormattedMessage id="pid.tpa.curves" />
+            </Typography>
+            <div
+              style={{
+                marginTop: 10,
+                display: "flex",
+                flexDirection: "column"
+              }}
+            >
+              <Typography>
+                <FormattedMessage id="pid.kp" />
+              </Typography>
 
               <div style={{ display: "flex" }}>
                 {this.state.kp.map((item, i) => {
@@ -87,8 +98,16 @@ export default class TpaCurveView extends Component {
                 })}
               </div>
             </div>
-            <div style={{ display: "flex", flexDirection: "column" }}>
-              <Typography>KI</Typography>
+            <div
+              style={{
+                marginTop: 10,
+                display: "flex",
+                flexDirection: "column"
+              }}
+            >
+              <Typography>
+                <FormattedMessage id="pid.ki" />
+              </Typography>
               <div style={{ display: "flex" }}>
                 {this.state.ki.map((item, i) => {
                   return (
@@ -101,8 +120,16 @@ export default class TpaCurveView extends Component {
                 })}
               </div>
             </div>
-            <div style={{ display: "flex", flexDirection: "column" }}>
-              <Typography>KD</Typography>
+            <div
+              style={{
+                marginTop: 10,
+                display: "flex",
+                flexDirection: "column"
+              }}
+            >
+              <Typography>
+                <FormattedMessage id="pid.kd" />
+              </Typography>
               <div style={{ display: "flex" }}>
                 {this.state.kd.map((item, i) => {
                   return (

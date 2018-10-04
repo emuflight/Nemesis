@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import TextField from "@material-ui/core/TextField";
 import FCConnector from "../../utilities/FCConnector";
+import { injectIntl, intlShape, FormattedMessage } from "react-intl";
 
-export default class InputView extends Component {
+const InputView = class extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -37,7 +38,12 @@ export default class InputView extends Component {
         classes={{ root: this.props.item.id }}
         key={this.props.item.id}
         disabled={this.state.isDirty}
-        label={this.props.item.id}
+        helperText={
+          this.props.intl.messages[`${this.props.id}.helper`] && (
+            <FormattedMessage id={`${this.props.id}.helper`} />
+          )
+        }
+        label={<FormattedMessage id={this.props.item.id} />}
         value={this.props.item.current}
         onBlur={() => this.updateValue()}
         onChange={event => {
@@ -48,4 +54,10 @@ export default class InputView extends Component {
       />
     );
   }
-}
+};
+
+InputView.propTypes = {
+  intl: intlShape.isRequired
+};
+
+export default injectIntl(InputView);

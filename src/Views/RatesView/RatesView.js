@@ -5,6 +5,8 @@ import InputView from "../Items/InputView";
 import DropdownView from "../Items/DropdownView";
 import Paper from "@material-ui/core/Paper";
 import "./RatesView.css";
+import { Typography } from "@material-ui/core";
+import { FormattedMessage } from "react-intl";
 
 export default class RatesView extends ProfileView {
   getContent() {
@@ -33,17 +35,20 @@ export default class RatesView extends ProfileView {
           elevation={3}
           style={{ margin: "10px", padding: "10px" }}
         >
+          <Typography>
+            <FormattedMessage id="common.roll" />
+          </Typography>
           <InputView
             notifyDirty={this.props.notifyDirty}
             item={this.props.fcConfig.roll_rc_rate}
           />
           <InputView
             notifyDirty={this.props.notifyDirty}
-            item={this.props.fcConfig.pitch_rc_rate}
+            item={this.props.fcConfig.roll_srate}
           />
           <InputView
             notifyDirty={this.props.notifyDirty}
-            item={this.props.fcConfig.yaw_rc_rate}
+            item={this.props.fcConfig.roll_expo}
           />
         </Paper>
         <Paper
@@ -51,17 +56,21 @@ export default class RatesView extends ProfileView {
           elevation={3}
           style={{ margin: "10px", padding: "10px" }}
         >
+          <Typography>
+            <FormattedMessage id="common.pitch" />
+          </Typography>
           <InputView
             notifyDirty={this.props.notifyDirty}
-            item={this.props.fcConfig.roll_srate}
+            item={this.props.fcConfig.pitch_rc_rate}
           />
           <InputView
             notifyDirty={this.props.notifyDirty}
             item={this.props.fcConfig.pitch_srate}
           />
+
           <InputView
             notifyDirty={this.props.notifyDirty}
-            item={this.props.fcConfig.yaw_srate}
+            item={this.props.fcConfig.pitch_expo}
           />
         </Paper>
         <Paper
@@ -69,13 +78,16 @@ export default class RatesView extends ProfileView {
           elevation={3}
           style={{ margin: "10px", padding: "10px" }}
         >
+          <Typography>
+            <FormattedMessage id="common.yaw" />
+          </Typography>
           <InputView
             notifyDirty={this.props.notifyDirty}
-            item={this.props.fcConfig.roll_expo}
+            item={this.props.fcConfig.yaw_rc_rate}
           />
           <InputView
             notifyDirty={this.props.notifyDirty}
-            item={this.props.fcConfig.pitch_expo}
+            item={this.props.fcConfig.yaw_srate}
           />
           <InputView
             notifyDirty={this.props.notifyDirty}

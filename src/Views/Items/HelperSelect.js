@@ -3,15 +3,11 @@ import { withStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
+import FormHelperText from "@material-ui/core/FormHelperText";
 import Select from "@material-ui/core/Select";
+import { injectIntl, intlShape, FormattedMessage } from "react-intl";
 
-class HelperSelect extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     value: props.value,
-  //   }
-  // }
+const HelperSelect = class extends Component {
   render() {
     const { classes } = this.props;
     return (
@@ -21,7 +17,7 @@ class HelperSelect extends Component {
         className={classes.formControl}
       >
         <InputLabel shrink htmlFor={`${this.props.name}-label-placeholder`}>
-          {this.props.label}
+          <FormattedMessage id={this.props.label} />
         </InputLabel>
         <Select
           value={this.props.value}
@@ -39,15 +35,24 @@ class HelperSelect extends Component {
             this.props.items.map(item => {
               return (
                 <MenuItem key={item.value} value={item.value}>
-                  {item.label}
+                  <FormattedMessage id={item.label} />
                 </MenuItem>
               );
             })}
         </Select>
+        {this.props.intl.messages[`${this.props.id}.helper`] && (
+          <FormHelperText>
+            <FormattedMessage id={`${this.props.id}.helper`} />
+          </FormHelperText>
+        )}
       </FormControl>
     );
   }
-}
+};
+
+HelperSelect.propTypes = {
+  intl: intlShape.isRequired
+};
 
 const styles = theme => ({
   root: {
@@ -63,4 +68,4 @@ const styles = theme => ({
   }
 });
 
-export default withStyles(styles)(HelperSelect);
+export default withStyles(styles)(injectIntl(HelperSelect));

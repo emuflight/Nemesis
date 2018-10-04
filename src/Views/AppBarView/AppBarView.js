@@ -132,7 +132,7 @@ class AppBarView extends Component {
               disabled={!this.props.isDirty}
               onClick={() => this.props.onSave()}
             >
-              Save
+              <FormattedMessage id="common.save" />
             </Button>
             {this.props.title === "ADVANCED" && (
               <div className={classes.search}>

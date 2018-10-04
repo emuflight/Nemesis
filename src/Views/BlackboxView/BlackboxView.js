@@ -5,6 +5,7 @@ import Paper from "@material-ui/core/Paper";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Typography from "@material-ui/core/Typography";
 import { Button } from "@material-ui/core";
+import { FormattedMessage } from "react-intl";
 
 export default class BlackBoxView extends Component {
   constructor(props) {
@@ -50,7 +51,10 @@ export default class BlackBoxView extends Component {
               {this.state.storageInfo.totalSize}
             </Typography>
             <Typography variant="caption">
-              Flash Used: {normalizedPercent}%
+              <FormattedMessage
+                id="blackbox.flash-used"
+                values={{ percent: normalizedPercent }}
+              />
             </Typography>
             <LinearProgress
               variant="determinate"
@@ -63,7 +67,7 @@ export default class BlackBoxView extends Component {
               variant="raised"
               color="secondary"
             >
-              Load as drive to download blackbox
+              <FormattedMessage id="blackbox.load-drive" />
             </Button>
           </div>
         </Paper>

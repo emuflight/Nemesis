@@ -3,6 +3,7 @@ import Slider from "@material-ui/lab/Slider";
 import TextField from "@material-ui/core/TextField";
 import FCConnector from "../../utilities/FCConnector";
 import Typography from "@material-ui/core/Typography";
+import { FormattedMessage } from "react-intl";
 
 export default class SliderView extends Component {
   constructor(props) {
@@ -31,7 +32,9 @@ export default class SliderView extends Component {
     return (
       <div className="slider-control" style={{ flex: "1" }}>
         <div style={{ display: "flex", flexDirection: "column", width: 0 }}>
-          <Typography>{this.props.item.id}</Typography>
+          <Typography style={{ whiteSpace: "nowrap" }}>
+            <FormattedMessage id={this.props.item.id} />
+          </Typography>
           <Slider
             style={{ height: 80 }}
             value={this.parser(this.props.item.current)}

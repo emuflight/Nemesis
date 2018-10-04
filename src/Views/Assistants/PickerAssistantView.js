@@ -26,7 +26,7 @@ export default class PickerAssistantView extends Component {
     this.setState({
       saving: true,
       progress: 0,
-      currentMessage: "Saving...",
+      currentMessage: <FormattedMessage id="common.saving" />,
       currentResponse: ""
     });
     FCConnector.sendBulkCommands(
@@ -50,7 +50,7 @@ export default class PickerAssistantView extends Component {
             this.setState({
               saving: false,
               completed: false,
-              currentMessage: "Failed... :  ",
+              currentMessage: <FormattedMessage id="common.failed" />,
               currentResponse: reponse
             });
           }
@@ -61,7 +61,7 @@ export default class PickerAssistantView extends Component {
               console.log(resp);
               if (this.state.cancel) {
                 this.setState({
-                  currentMessage: "Cancelled!",
+                  currentMessage: <FormattedMessage id="common.cancelled" />,
                   currentResponse: ""
                 });
               } else if (resp.toLowerCase().indexOf(type.verify.error) > -1) {
@@ -75,7 +75,7 @@ export default class PickerAssistantView extends Component {
                 });
               } else {
                 this.setState({
-                  currentMessage: "Verifying... :  ",
+                  currentMessage: <FormattedMessage id="common.verifying" />,
                   currentResponse: resp
                 });
                 type.verify.until && verifySetting();
@@ -184,7 +184,7 @@ export default class PickerAssistantView extends Component {
                   variant="raised"
                   color="primary"
                 >
-                  Next
+                  <FormattedMessage id="common.next" />
                 </Button>
               )}
           </div>

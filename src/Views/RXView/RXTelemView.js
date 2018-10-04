@@ -3,6 +3,7 @@ import List from "@material-ui/core/List";
 import FCConnector from "../../utilities/FCConnector";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Typography from "@material-ui/core/Typography";
+import { FormattedMessage } from "react-intl";
 
 export default class RXTelemView extends Component {
   constructor(props) {
@@ -56,7 +57,12 @@ export default class RXTelemView extends Component {
                 >
                   {channel}
                 </Typography>
-                <Typography variant="caption">Channel {i + 1}:</Typography>
+                <Typography variant="caption">
+                  <FormattedMessage
+                    id="rx.channel.number"
+                    values={{ number: i + 1 }}
+                  />
+                </Typography>
                 <LinearProgress
                   variant="determinate"
                   style={{ height: 20, margin: 10 }}

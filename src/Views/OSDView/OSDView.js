@@ -12,6 +12,7 @@ import LinearProgress from "@material-ui/core/LinearProgress";
 import ConfigListView from "../ConfigListView/ConfigListView";
 import FCConnector from "../../utilities/FCConnector";
 import HelperSelect from "../Items/HelperSelect";
+import { FormattedMessage } from "react-intl";
 
 const visibilityFlag = 0x0800;
 const normalise = value => (value * 100) / 256;
@@ -130,7 +131,7 @@ export default class OSDView extends Component {
               disabled={this.state.uploadingFont}
               onClick={() => this.handleUpload()}
             >
-              Upload Font
+              <FormattedMessage id="osd.upload" />
             </Button>
             <LinearProgress
               style={{ height: 20, flex: 1, marginLeft: 10 }}

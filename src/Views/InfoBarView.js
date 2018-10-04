@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import List from "@material-ui/core/List";
+import Typography from "@material-ui/core/Typography";
 import FCConnector from "../utilities/FCConnector";
 import TelemetryView from "./TelemetryView";
 import TextField from "@material-ui/core/TextField";
@@ -44,9 +45,16 @@ export default class InfoBarView extends Component {
         }}
       >
         <div style={{ display: "flex", flex: "1", marginBottom: "10px" }}>
-          <h4 style={{ position: "relative", margin: "0 10px", top: "15px" }}>
+          <Typography
+            style={{
+              position: "relative",
+              margin: "0 10px",
+              top: "15px",
+              whiteSpace: "nowrap"
+            }}
+          >
             <FormattedMessage id="info.connected-to" />
-          </h4>
+          </Typography>
           <TextField
             id="craft_name"
             style={{ color: "grey" }}
