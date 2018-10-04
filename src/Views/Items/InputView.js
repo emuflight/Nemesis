@@ -24,6 +24,7 @@ const InputView = class extends Component {
   updateValue() {
     let isDirty = this.state.current !== this.props.item.current;
     if (isDirty) {
+      this.props.item.current = this.state.current;
       this.setState({ isDirty: true });
       FCConnector.setValue(this.props.item.id, this.state.current).then(() => {
         this.props.notifyDirty(true, this.state, this.state.current);
@@ -33,8 +34,11 @@ const InputView = class extends Component {
   }
 
   render() {
+    const { inputRef, ...other } = this.props;
     return (
       <TextField
+        {...other}
+        ref={inputRef}
         classes={{ root: this.props.item.id }}
         key={this.props.item.id}
         disabled={this.state.isDirty}
@@ -44,10 +48,9 @@ const InputView = class extends Component {
           )
         }
         label={<FormattedMessage id={this.props.item.id} />}
-        value={this.props.item.current}
+        value={this.state.current}
         onBlur={() => this.updateValue()}
         onChange={event => {
-          this.props.item.current = event.target.value;
           this.setState({ current: event.target.value });
         }}
         type={this.props.item.type || "number"}

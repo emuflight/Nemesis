@@ -7,10 +7,11 @@ import "./RatesView.css";
 import { Typography, TextField } from "@material-ui/core";
 import { FormattedMessage } from "react-intl";
 import FloatView from "../Items/FloatView";
+import InputView from "../Items/InputView";
 
 export default class RatesView extends ProfileView {
-  maxDPS(rcRate, expo, superRate) {
-    let rcCommand = 1.0;
+  calcDps(input, rcRate, expo, superRate, deadband) {
+    let rcCommand = input - deadband;
     let clamp = (n, minn, maxn) => Math.max(Math.min(maxn, n), minn);
 
     let absRcCommand = Math.abs(rcCommand);
@@ -76,10 +77,12 @@ export default class RatesView extends ProfileView {
             disabled={true}
             label={<FormattedMessage id="rates.max-dps" />}
             value={Math.ceil(
-              this.maxDPS(
+              this.calcDps(
+                1.0,
                 parseFloat(this.props.fcConfig.roll_rc_rate.current) / 100,
                 parseFloat(this.props.fcConfig.roll_expo.current) / 100,
-                parseFloat(this.props.fcConfig.roll_srate.current) / 100
+                parseFloat(this.props.fcConfig.roll_srate.current) / 100,
+                parseInt(this.props.fcConfig.deadband.current, 10) / 100
               )
             )}
           />
@@ -108,10 +111,12 @@ export default class RatesView extends ProfileView {
             disabled={true}
             label={<FormattedMessage id="rates.max-dps" />}
             value={Math.ceil(
-              this.maxDPS(
+              this.calcDps(
+                1.0,
                 parseFloat(this.props.fcConfig.pitch_rc_rate.current) / 100,
                 parseFloat(this.props.fcConfig.pitch_expo.current) / 100,
-                parseFloat(this.props.fcConfig.pitch_srate.current) / 100
+                parseFloat(this.props.fcConfig.pitch_srate.current) / 100,
+                parseInt(this.props.fcConfig.deadband.current, 10) / 100
               )
             )}
           />
@@ -136,14 +141,17 @@ export default class RatesView extends ProfileView {
             notifyDirty={this.props.notifyDirty}
             item={this.props.fcConfig.yaw_expo}
           />
+
           <TextField
             disabled={true}
             label={<FormattedMessage id="rates.max-dps" />}
             value={Math.ceil(
-              this.maxDPS(
+              this.calcDps(
+                1.0,
                 parseFloat(this.props.fcConfig.yaw_rc_rate.current) / 100,
                 parseFloat(this.props.fcConfig.yaw_expo.current) / 100,
-                parseFloat(this.props.fcConfig.yaw_srate.current) / 100
+                parseFloat(this.props.fcConfig.yaw_srate.current) / 100,
+                parseInt(this.props.fcConfig.yaw_deadband.current, 10) / 100
               )
             )}
           />
@@ -156,6 +164,14 @@ export default class RatesView extends ProfileView {
           <FloatView
             notifyDirty={this.props.notifyDirty}
             item={this.props.fcConfig.thr_expo}
+          />
+          <InputView
+            notifyDirty={this.props.notifyDirty}
+            item={this.props.fcConfig.deadband}
+          />
+          <InputView
+            notifyDirty={this.props.notifyDirty}
+            item={this.props.fcConfig.yaw_deadband}
           />
         </Paper>
       </div>

@@ -1,13 +1,30 @@
 import React, { Component } from "react";
-import TextField from "@material-ui/core/TextField";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import Input from "@material-ui/core/Input";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import MaskedInput from "react-text-mask";
 import FCConnector from "../../utilities/FCConnector";
 import { injectIntl, intlShape, FormattedMessage } from "react-intl";
 
+function TextMaskCustom(props) {
+  const { inputRef, ...other } = props;
+
+  return (
+    <MaskedInput
+      {...other}
+      ref={inputRef}
+      mask={[/\d/, ".", /\d/, /\d/]}
+      keepCharPositions
+      guide={false}
+    />
+  );
+}
 const FloatView = class extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      current: props.item.current
+      current: props.item.current.padStart(3, "0")
     };
   }
 
@@ -22,11 +39,16 @@ const FloatView = class extends Component {
   };
 
   updateValue() {
-    let isDirty = this.state.current !== this.props.item.current;
+    let current = parseInt(this.state.current.replace(".", ""), 10);
+    let isDirty = parseInt(this.props.item.current, 10) !== current;
     if (isDirty) {
-      this.setState({ isDirty: true });
-      FCConnector.setValue(this.props.item.id, this.state.current).then(() => {
-        this.props.notifyDirty(true, this.state, this.state.current);
+      this.props.item.current = current;
+      this.setState({
+        isDirty: true,
+        current: current.toString().padStart(3, "0")
+      });
+      FCConnector.setValue(this.props.item.id, current).then(() => {
+        this.props.notifyDirty(true, this.state, current);
         this.setState({ isDirty: false });
       });
     }
@@ -34,27 +56,29 @@ const FloatView = class extends Component {
 
   render() {
     return (
-      <TextField
+      <FormControl
         classes={{ root: this.props.item.id }}
         key={this.props.item.id}
-        disabled={this.state.isDirty}
-        helperText={
-          this.props.intl.messages[`${this.props.id}.helper`] && (
+      >
+        <InputLabel htmlFor={this.props.item.id}>
+          <FormattedMessage id={this.props.item.id} />
+        </InputLabel>
+        <Input
+          id={this.props.item.id}
+          disabled={this.state.isDirty}
+          onChange={event => {
+            this.setState({ current: event.target.value });
+          }}
+          onBlur={() => this.updateValue()}
+          value={this.state.current}
+          inputComponent={TextMaskCustom}
+        />
+        {this.props.intl.messages[`${this.props.id}.helper`] && (
+          <FormHelperText>
             <FormattedMessage id={`${this.props.id}.helper`} />
-          )
-        }
-        label={<FormattedMessage id={this.props.item.id} />}
-        value={(parseInt(this.props.item.current, 10) / 100).toFixed(2)}
-        onBlur={() => this.updateValue()}
-        onChange={event => {
-          this.props.item.current = parseFloat(event.target.value) * 100;
-          this.setState({ current: this.props.item.current });
-        }}
-        inputProps={{
-          step: "0.01",
-          type: "number"
-        }}
-      />
+          </FormHelperText>
+        )}
+      </FormControl>
     );
   }
 };

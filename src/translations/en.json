@@ -126,5 +126,7 @@
   "yaw_rc_rate": "RC Rate",
   "roll_srate": "Super Rate",
   "pitch_srate": "Super Rate",
-  "yaw_srate": "Super Rate"
+  "yaw_srate": "Super Rate",
+  "deadband": "Deadband",
+  "yaw_deadband": "Yaw Deadband"
 }

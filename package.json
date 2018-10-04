@@ -38,6 +38,7 @@
     "react-intl": "^2.7.0",
     "react-markdown": "^3.6.0",
     "react-scripts": "1.1.5",
+    "react-text-mask": "^5.4.3",
     "serialport": "^7.0.2",
     "usb": "github:tessel/node-usb#2961e948d93bec0cdd1908c03e3f1f98dfd3fd44",
     "websocket": "^1.0.28"
