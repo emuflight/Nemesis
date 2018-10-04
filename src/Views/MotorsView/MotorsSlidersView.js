@@ -14,7 +14,7 @@ export default class MotorsSlidersView extends Component {
   componentDidMount() {
     FCConnector.getMotors().then(motorInfo => {
       let maxMotors = motorInfo.indexOf(0);
-      maxMotors = maxMotors > -1 ? maxMotors - 1 : 8;
+      maxMotors = maxMotors > -1 ? maxMotors : 8;
       this.setState({
         motors: motorInfo.slice(0, maxMotors).map((v, i) => {
           return {

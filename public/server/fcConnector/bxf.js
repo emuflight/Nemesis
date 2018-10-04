@@ -197,8 +197,8 @@ const setMode = (device, modeVals) => {
 };
 
 const getMotors = device => {
-  return sendCommand(device, "msp 104", 30, false).then(motorData => {
-    let data = new DataView(new Uint8Array(motorData).buffer, 11);
+  return sendCommand(device, "msp 104", 50, false).then(motorData => {
+    let data = new DataView(new Uint8Array(motorData).buffer, 12);
 
     let motorInfo = [];
     try {
@@ -219,7 +219,7 @@ const storage = (device, command) => {
     case "info":
       //MSP_DATAFLASH_SUMMARY
       return sendCommand(device, "msp 70", 50, false).then(storageInfo => {
-        let data = new DataView(new Uint8Array(storageInfo).buffer, 11);
+        let data = new DataView(new Uint8Array(storageInfo).buffer, 12);
         var flags = data.getUint8(0);
         return {
           ready: (flags & 1) != 0,
@@ -239,10 +239,10 @@ let lastTelem;
 const getTelemetry = (device, type) => {
   switch (type) {
     case "gyro": {
-      return sendCommand(device, `msp 102`, 30, false).then(telem => {
+      return sendCommand(device, `msp 102`, 50, false).then(telem => {
         if (telem) {
           try {
-            let data = new DataView(new Uint8Array(telem).buffer, 11);
+            let data = new DataView(new Uint8Array(telem).buffer, 12);
             lastTelem = {
               type: "gyro",
               acc: {
@@ -269,7 +269,7 @@ const getTelemetry = (device, type) => {
       });
     }
     case "vbat": {
-      return sendCommand(device, `msp 130`, 30, false).then(vbatData => {
+      return sendCommand(device, `msp 130`, 50, false).then(vbatData => {
         let data = new DataView(new Uint8Array(vbatData).buffer, 12);
         console.log(data);
         return {
@@ -284,7 +284,7 @@ const getTelemetry = (device, type) => {
     }
     default:
     case "rx": {
-      return sendCommand(device, `msp 105`, 30, false).then(rcData => {
+      return sendCommand(device, `msp 105`, 50, false).then(rcData => {
         let channels = [];
         try {
           let data = new DataView(new Uint8Array(rcData).buffer, 12);

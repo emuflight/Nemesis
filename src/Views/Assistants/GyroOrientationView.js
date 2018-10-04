@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import FCConnector from "../../utilities/FCConnector";
 import PickerAssistantView from "./PickerAssistantView";
-import { Button } from "@material-ui/core";
+import { Button, Typography } from "@material-ui/core";
 import { FormattedMessage } from "react-intl";
 
 export default class GyroOrientationView extends Component {
@@ -9,6 +9,7 @@ export default class GyroOrientationView extends Component {
     super(props);
     this.state = {
       telemetry: {},
+      ready: false,
       completed: false,
       calibratedFlat: false,
       inverted: false,
@@ -59,57 +60,85 @@ export default class GyroOrientationView extends Component {
     }
   };
 
+  setOrientation(orientation) {
+    return FCConnector.setValue("align_gyro", orientation).then(() => {
+      return FCConnector.setValue("align_acc", orientation);
+    });
+  }
+
   checkFlat(telemetry) {
-    if (
-      Math.abs(telemetry.acc.z) >
-      Math.abs(telemetry.acc.x) + Math.abs(telemetry.acc.y)
-    ) {
-      // is king
-      if (telemetry.acc.z < -0.8) {
-        //ACCZ negative
-        return this.setState({ inverted: true, calibratedFlat: true });
-      } else if (telemetry.acc.z > 0.8) {
-        //ACCZ positive
-        return this.setState({ inverted: false, calibratedFlat: true });
-      }
-    }
-    this.setState({ failedMessage: "Unable to calibrate flat" });
+    FCConnector.sendCliCommand("msp 205").then(() => {
+      this.setState({ calibratingAcc: true });
+      setTimeout(() => {
+        if (
+          Math.abs(telemetry.acc.z) >
+          Math.abs(telemetry.acc.x) + Math.abs(telemetry.acc.y)
+        ) {
+          // is king
+          if (telemetry.acc.z < -0.8) {
+            //ACCZ negative
+            return this.setState({
+              inverted: true,
+              calibratedFlat: true,
+              calibratingAcc: false
+            });
+          } else if (telemetry.acc.z > 0.8) {
+            //ACCZ positive
+            return this.setState({
+              inverted: false,
+              calibratedFlat: true,
+              calibratingAcc: false
+            });
+          }
+        }
+        this.setState({ failedMessage: "Unable to calibrate flat" });
+      }, 5000);
+    });
   }
 
   checkNose(telemetry) {
-    /**
-     *  DEFAULT, CW0, CW90, CW180, CW270, CW0FLIP, CW90FLIP, CW180FLIP, CW270FLIP, CW45, CW135, CW225, CW315, CW45FLIP, CW135FLIP, CW225FLIP, CW315FLIP
-     */
-    let rotation = "";
+    let orientation = "";
     if (telemetry.acc.x < -0.9) {
-      rotation = this.state.inverted ? "CW180FLIP" : "CW0"; //set proper rotation
+      orientation = this.state.inverted ? "CW180FLIP" : "CW0";
     } else if (telemetry.acc.y < -0.9) {
-      rotation = this.state.inverted ? "CW90FLIP" : "CW90"; //set proper rotation
+      orientation = this.state.inverted ? "CW90FLIP" : "CW90";
     } else if (telemetry.acc.x > 0.9) {
-      rotation = this.state.inverted ? "CW0FLIP" : "CW180"; //set proper rotation
+      orientation = this.state.inverted ? "CW0FLIP" : "CW180";
     } else if (telemetry.acc.y > 0.9) {
-      rotation = this.state.inverted ? "CW270FLIP" : "CW270"; //set proper rotation
+      orientation = this.state.inverted ? "CW270FLIP" : "CW270";
     } else if (telemetry.acc.x < -0.6 && telemetry.acc.y < -0.6) {
-      rotation = this.state.inverted ? "CW315FLIP" : "CW45"; //set proper rotation
+      orientation = this.state.inverted ? "CW315FLIP" : "CW45";
     } else if (telemetry.acc.x > 0.6 && telemetry.acc.y < -0.6) {
-      rotation = this.state.inverted ? "CW225FLIP" : "CW135"; //set proper rotation
+      orientation = this.state.inverted ? "CW225FLIP" : "CW135";
     } else if (telemetry.acc.x > 0.6 && telemetry.acc.y > 0.6) {
-      rotation = this.state.inverted ? "CW135FLIP" : "CW225"; //set proper rotation
+      orientation = this.state.inverted ? "CW135FLIP" : "CW225";
     } else if (telemetry.acc.x < -0.6 && telemetry.acc.y > 0.6) {
-      rotation = this.state.inverted ? "CW45FLIP" : "CW315"; //set proper rotation
+      orientation = this.state.inverted ? "CW45FLIP" : "CW315";
     } else {
       return this.setState({ failedMessage: "Unable to calibrate nose" });
     }
-    FCConnector.setValue("align_gyro", rotation).then(() => {
-      FCConnector.setValue("align_acc", rotation).then(() => {
-        this.setState({ completed: true });
+    return this.setOrientation(orientation).then(() => {
+      return this.props.handleSave().then(() => {
+        this.setState({ completed: true, orientation });
       });
     });
   }
 
   componentDidMount() {
-    FCConnector.webSockets.addEventListener("message", this.handleGyroData);
-    FCConnector.startTelemetry("gyro");
+    return this.setOrientation("CW0").then(() => {
+      return FCConnector.setValue("acc_hardware", "AUTO").then(() => {
+        return this.props.handleSave().then(() => {
+          setTimeout(() => {
+            FCConnector.webSockets.addEventListener(
+              "message",
+              this.handleGyroData
+            );
+            FCConnector.startTelemetry("gyro");
+            this.setState({ ready: true });
+          }, 5000);
+        });
+      });
+    });
   }
 
   componentWillUnmount = () => {
@@ -121,34 +150,46 @@ export default class GyroOrientationView extends Component {
     let step = this.state.calibratedFlat ? this.steps[1] : this.steps[0];
     return (
       <div style={{ display: "flex", flex: 1, flexDirection: "column" }}>
-        <div>{this.failedMessage}</div>
         <div style={{ flex: 1, margin: "0 auto" }}>
-          <PickerAssistantView
-            fcConfig={this.props.fcConfig}
-            title={step.id}
-            style={{ display: "flex" }}
-            type={"GYRO"}
-            items={step.options}
-            onSelect={() =>
-              this.state.calibratedFlat
-                ? this.checkNose(this.state.telemetry)
-                : this.checkFlat(this.state.telemetry)
-            }
-          />
-        </div>
-        <div>
+          {this.state.ready ? (
+            <PickerAssistantView
+              fcConfig={this.props.fcConfig}
+              title={step.id}
+              style={{ display: "flex" }}
+              type={"GYRO"}
+              items={step.options}
+              onSelect={() =>
+                this.state.calibratedFlat
+                  ? this.checkNose(this.state.telemetry)
+                  : this.checkFlat(this.state.telemetry)
+              }
+            />
+          ) : (
+            <Typography variant="headline">
+              <FormattedMessage id="assistant.gyro.reset" />
+            </Typography>
+          )}
+          {this.state.calibratingAcc && (
+            <Typography variant="headline">
+              <FormattedMessage id="assistant.gyro.calibrating-acc" />
+            </Typography>
+          )}
           {this.state.completed && (
-            <Button
-              color="secondary"
-              variant="raised"
-              onClick={() => {
-                this.props.handleSave.then(() => {
-                  this.props.onFinish();
-                });
-              }}
-            >
-              <FormattedMessage id="common.save" />
-            </Button>
+            <div>
+              <Typography variant="headline">
+                <FormattedMessage
+                  id="assistant.gyro.success"
+                  values={{ orientation: this.state.orientation }}
+                />
+              </Typography>
+              <Button
+                color="secondary"
+                variant="raised"
+                onClick={() => this.props.onFinish()}
+              >
+                <FormattedMessage id="common.save" />
+              </Button>
+            </div>
           )}
         </div>
       </div>
