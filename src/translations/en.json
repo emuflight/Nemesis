@@ -89,6 +89,7 @@
   "pid.kp": "Progressive",
   "pid.ki": "Integral",
   "pid.kd": "Derivative",
+  "rates.max-dps": "Max Degrees/Sec",
   "osd.upload": "Upload Font",
   "blackbox.flash-used": "Flash Used: {percent}%",
   "blackbox.load-drive": "Load as drive to download blackbox",
