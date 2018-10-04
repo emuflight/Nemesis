@@ -95,7 +95,7 @@
   "osd.upload": "Upload Font",
   "blackbox.flash-used": "Flash Used: {percent}%",
   "blackbox.load-drive": "Load as drive to download blackbox",
-  "aux.item.save": "Save Mode",
+  "aux.item.save": "Set Mode",
   "pid_profile": "Active Profile",
   "rate_profile": "Active Profile",
   "rates_type": "Rates Style",
