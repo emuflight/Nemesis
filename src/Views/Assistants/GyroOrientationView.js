@@ -13,6 +13,7 @@ export default class GyroOrientationView extends Component {
       completed: false,
       calibratedFlat: false,
       inverted: false,
+      checking: false,
       rotation: ""
     };
     this.steps = [
@@ -67,33 +68,32 @@ export default class GyroOrientationView extends Component {
   }
 
   checkFlat(telemetry) {
-    FCConnector.sendCliCommand("msp 205").then(() => {
+    if (!this.state.checking) {
       this.setState({ calibratingAcc: true });
-      setTimeout(() => {
-        if (
-          Math.abs(telemetry.acc.z) >
-          Math.abs(telemetry.acc.x) + Math.abs(telemetry.acc.y)
-        ) {
-          // is king
-          if (telemetry.acc.z < -0.8) {
-            //ACCZ negative
-            return this.setState({
-              inverted: true,
-              calibratedFlat: true,
-              calibratingAcc: false
-            });
-          } else if (telemetry.acc.z > 0.8) {
-            //ACCZ positive
-            return this.setState({
-              inverted: false,
-              calibratedFlat: true,
-              calibratingAcc: false
-            });
+      FCConnector.sendCliCommand("msp 205").then(() => {
+        setTimeout(() => {
+          if (
+            Math.abs(telemetry.acc.z) >
+            Math.abs(telemetry.acc.x) + Math.abs(telemetry.acc.y)
+          ) {
+            if (telemetry.acc.z < -0.8) {
+              return this.setState({
+                inverted: true,
+                calibratedFlat: true,
+                calibratingAcc: false
+              });
+            } else if (telemetry.acc.z > 0.8) {
+              return this.setState({
+                inverted: false,
+                calibratedFlat: true,
+                calibratingAcc: false
+              });
+            }
           }
-        }
-        this.setState({ failedMessage: "Unable to calibrate flat" });
-      }, 5000);
-    });
+          this.setState({ error: true });
+        }, 5000);
+      });
+    }
   }
 
   checkNose(telemetry) {
@@ -115,7 +115,7 @@ export default class GyroOrientationView extends Component {
     } else if (telemetry.acc.x < -0.6 && telemetry.acc.y > 0.6) {
       orientation = this.state.inverted ? "CW45FLIP" : "CW315";
     } else {
-      return this.setState({ failedMessage: "Unable to calibrate nose" });
+      return this.setState({ error: true });
     }
     return this.setOrientation(orientation).then(() => {
       return this.props.handleSave().then(() => {
@@ -167,6 +167,11 @@ export default class GyroOrientationView extends Component {
           ) : (
             <Typography variant="headline">
               <FormattedMessage id="assistant.gyro.reset" />
+            </Typography>
+          )}
+          {this.state.error && (
+            <Typography variant="headline">
+              <FormattedMessage id="assistant.gyro.unable-to-calibrate" />
             </Typography>
           )}
           {this.state.calibratingAcc && (
