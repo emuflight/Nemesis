@@ -14,7 +14,10 @@ export default class InfoBarView extends Component {
     this.handleDrawerToggle = props.handleDrawerToggle;
     this.state = {
       setupCompleted: -1,
-      craftName: props.fcConfig.craftName
+      craftName: props.fcConfig.craftName,
+      telemetry: {
+        cpu: 0
+      }
     };
   }
   updateCraftName = () => {
@@ -34,7 +37,23 @@ export default class InfoBarView extends Component {
     }
     return `${this.state.setupCompleted}% ${complete}`;
   }
-
+  handleStatus = message => {
+    try {
+      let telemetry = JSON.parse(message.data);
+      if (telemetry.type === "status") {
+        console.log(telemetry);
+        this.setState({ telemetry });
+      }
+    } catch (ex) {
+      console.warn("unable to parse telemetry", ex);
+    }
+  };
+  componentDidMount() {
+    FCConnector.webSockets.addEventListener("message", this.handleStatus);
+  }
+  componentWillUnmount() {
+    FCConnector.webSockets.removeEventListener("message", this.handleStatus);
+  }
   render() {
     return (
       <List
@@ -44,12 +63,19 @@ export default class InfoBarView extends Component {
           padding: "10px"
         }}
       >
-        <div style={{ display: "flex", flex: "1", marginBottom: "10px" }}>
+        <div
+          style={{
+            display: "flex",
+            flex: "1",
+            marginBottom: "10px",
+            justifyItems: "center",
+            alignItems: "center"
+          }}
+        >
           <Typography
             style={{
               position: "relative",
               margin: "0 10px",
-              top: "15px",
               whiteSpace: "nowrap"
             }}
           >
@@ -63,7 +89,16 @@ export default class InfoBarView extends Component {
             onBlur={() => this.updateCraftName()}
             onChange={event => this.setState({ craftName: event.target.value })}
           />
-          <TelemetryView style={{ flexGrow: 1 }} />
+          <TelemetryView
+            style={{ flexGrow: 1 }}
+            rebooting={this.props.rebooting}
+          />
+          <Typography>
+            <FormattedMessage
+              id="info.cpu-load"
+              values={{ percent: this.state.telemetry.cpu }}
+            />
+          </Typography>
           {this.state.setupCompleted > -1 && (
             <List
               style={{ cursor: "pointer" }}

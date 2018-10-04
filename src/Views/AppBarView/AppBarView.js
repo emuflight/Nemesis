@@ -101,6 +101,7 @@ class AppBarView extends Component {
             </Typography>
             <InfoBarView
               fcConfig={this.props.fcConfig}
+              rebooting={this.props.rebooting}
               notifyDirty={(isDirty, item, newValue) =>
                 this.props.notifyDirty(isDirty, item, newValue)
               }

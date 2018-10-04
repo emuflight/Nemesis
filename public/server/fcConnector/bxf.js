@@ -238,6 +238,22 @@ const storage = (device, command) => {
 let lastTelem;
 const getTelemetry = (device, type) => {
   switch (type) {
+    case "status": {
+      return sendCommand(device, `msp 150`, 50, false).then(telem => {
+        if (telem) {
+          try {
+            let data = new DataView(new Uint8Array(telem).buffer, 12);
+            lastTelem = {
+              type: "status",
+              cpu: data.getUint16(11, 1)
+            };
+          } catch (ex) {
+            console.log(ex);
+          }
+        }
+        return lastTelem;
+      });
+    }
     case "gyro": {
       return sendCommand(device, `msp 102`, 50, false).then(telem => {
         if (telem) {

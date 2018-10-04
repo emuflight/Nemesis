@@ -119,6 +119,7 @@ export default class Connected extends Component {
         contents = (
           <PidsView
             fcConfig={mergedProfile}
+            handleSave={this.handleSave}
             changeProfile={newProfile => {
               FCConnector.changeProfile("pid", newProfile).then(() => {
                 this.props.fcConfig.currentPidProfile = newProfile;

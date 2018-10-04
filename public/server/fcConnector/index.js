@@ -192,7 +192,7 @@ const applyUIConfig = (device, config, uiConfig) => {
   return device;
 };
 
-module.exports = {
+module.exports = new class FcConnector {
   getConfig(deviceInfo) {
     if (deviceInfo.hid) {
       return rf1Connector.getConfig(deviceInfo).then(config => {
@@ -204,18 +204,19 @@ module.exports = {
           return Object.assign({ error: config.version }, deviceInfo, config);
         } else {
           config.isBxF = true;
+          this.startTelemetry(deviceInfo, "status", 2000);
           return applyUIConfig(deviceInfo, config, BxfUiConfig);
         }
       });
     }
-  },
+  }
   setValue(deviceInfo, key, value) {
     if (deviceInfo.hid) {
       return rf1Connector.setValue(deviceInfo, key, value);
     } else {
       return bxfConnector.setValue(deviceInfo, key, value);
     }
-  },
+  }
   setProfile(deviceInfo, type, index) {
     if (deviceInfo.hid) {
       return Promise.resolve();
@@ -224,14 +225,14 @@ module.exports = {
       let profileName = type === "pid" ? "profile" : "rateprofile";
       return bxfConnector.sendCommand(deviceInfo, `${profileName} ${index}`);
     }
-  },
+  }
   remapMotor(deviceInfo, from, to) {
     if (deviceInfo.hid) {
       return rf1Connector.remapMotor(deviceInfo, from, to);
     } else {
       return bxfConnector.remapMotor(deviceInfo, from, to);
     }
-  },
+  }
 
   getMotors(deviceInfo) {
     if (deviceInfo.hid) {
@@ -239,7 +240,7 @@ module.exports = {
     } else {
       return bxfConnector.getMotors(deviceInfo);
     }
-  },
+  }
 
   getModes(deviceInfo) {
     if (deviceInfo.hid) {
@@ -247,14 +248,14 @@ module.exports = {
     } else {
       return bxfConnector.getModes(deviceInfo);
     }
-  },
+  }
   setMode(deviceInfo, modeVals) {
     if (deviceInfo.hid) {
       return rf1Connector.setMode(deviceInfo, modeVals);
     } else {
       return bxfConnector.setMode(deviceInfo, modeVals);
     }
-  },
+  }
 
   getChannelMap(deviceInfo) {
     if (deviceInfo.hid) {
@@ -262,7 +263,7 @@ module.exports = {
     } else {
       return bxfConnector.getChannelMap(deviceInfo);
     }
-  },
+  }
 
   setChannelMap(deviceInfo, newMap) {
     if (deviceInfo.hid) {
@@ -270,21 +271,21 @@ module.exports = {
     } else {
       return bxfConnector.setChannelMap(deviceInfo, newMap);
     }
-  },
+  }
   spinTestMotor(deviceInfo, motor, startStop) {
     if (deviceInfo.hid) {
       return rf1Connector.spinTestMotor(deviceInfo, motor, startStop);
     } else {
       return bxfConnector.spinTestMotor(deviceInfo, motor, startStop);
     }
-  },
+  }
   sendCommand(deviceInfo, command) {
     if (deviceInfo.hid) {
       return rf1Connector.sendCommand(deviceInfo, command);
     } else {
       return bxfConnector.sendCommand(deviceInfo, command);
     }
-  },
+  }
   uploadFont(deviceInfo, name = "butterflight") {
     return new Promise((resolve, reject) => {
       if (deviceInfo.hid) return resolve("not supported");
@@ -324,47 +325,49 @@ module.exports = {
         }
       );
     });
-  },
-  startTelemetry(deviceInfo, type) {
+  }
+  startTelemetry(deviceInfo, type, intervalMs = 100) {
     clearInterval(websockets.wsServer.telemetryInterval);
+    websockets.wsServer.telemetryType = type;
     websockets.wsServer.telemetryInterval = setInterval(() => {
       if (deviceInfo.hid) {
-        return rf1Connector.getTelemetry(deviceInfo, type).then(telemData => {
+        rf1Connector.getTelemetry(deviceInfo, type).then(telemData => {
           websockets.notifyTelem(telemData);
-          return telemData;
         });
       } else {
-        return bxfConnector.getTelemetry(deviceInfo, type).then(telemData => {
+        bxfConnector.getTelemetry(deviceInfo, type).then(telemData => {
           websockets.notifyTelem(telemData);
-          return telemData;
         });
       }
-    }, 100);
-  },
+    }, intervalMs);
+  }
   stopTelemetry() {
     clearInterval(websockets.wsServer.telemetryInterval);
-  },
+    if (websockets.wsServer.telemetryType !== "status") {
+      this.startTelemetry(deviceInfo, "status", 2000);
+    }
+  }
   rebootDFU(deviceInfo) {
     if (deviceInfo.hid) {
       return rf1Connector.sendCommand(deviceInfo, "rebootDFU");
     } else {
       return bxfConnector.sendCommand(deviceInfo, "bl");
     }
-  },
+  }
   storage(deviceInfo, command) {
     if (deviceInfo.hid) {
       return rf1Connector.storage(deviceInfo, command);
     } else {
       return bxfConnector.storage(deviceInfo, command);
     }
-  },
+  }
   saveEEPROM(deviceInfo) {
     if (deviceInfo.hid) {
       return rf1Connector.saveEEPROM(deviceInfo);
     } else {
       return bxfConnector.saveEEPROM(deviceInfo);
     }
-  },
+  }
   updateIMUF(deviceInfo, binUrl, cb, ecb) {
     if (deviceInfo.hid) {
       return rf1Connector.updateIMUF(
@@ -400,4 +403,4 @@ module.exports = {
       );
     }
   }
-};
+}();

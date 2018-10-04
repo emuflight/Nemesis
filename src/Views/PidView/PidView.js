@@ -5,7 +5,11 @@ import InputView from "../Items/InputView";
 import ConfigListView from "../ConfigListView/ConfigListView";
 import TpaCurveView from "../TpaCurveView/TpaCurveView";
 import Paper from "@material-ui/core/Paper";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Switch from "@material-ui/core/Switch";
 import "./PidView.css";
+import FCConnector from "../../utilities/FCConnector";
+import { FormattedMessage } from "react-intl";
 
 export default class PidsView extends ProfileView {
   updatePidValues = newValue => {
@@ -63,6 +67,37 @@ export default class PidsView extends ProfileView {
             <DropdownView
               notifyDirty={this.props.notifyDirty}
               item={this.props.fcConfig.buttered_pids}
+            />
+            <FormControlLabel
+              control={
+                <Switch
+                  id={this.props.fcConfig.acc_hardware.id}
+                  checked={this.props.fcConfig.acc_hardware.current !== "NONE"}
+                  onChange={(event, isInputChecked) => {
+                    this.props.fcConfig.acc_hardware.current = isInputChecked
+                      ? "AUTO"
+                      : "NONE";
+                    this.forceUpdate();
+                    FCConnector.setValue(
+                      "acc_hardware",
+                      this.props.fcConfig.acc_hardware.current
+                    ).then(() => {
+                      this.props.handleSave().then(() => {});
+                    });
+                  }}
+                />
+              }
+              label={
+                <FormattedMessage
+                  id="pid.acc.on-off"
+                  values={{
+                    state:
+                      this.props.fcConfig.acc_hardware.current !== "NONE"
+                        ? "ON"
+                        : "OFF"
+                  }}
+                />
+              }
             />
           </Paper>
         )}
