@@ -27,10 +27,9 @@ export default class PortsItemView extends Component {
         name={"mode " + this.props.item.id}
         label={this.portLabels[this.props.item.id]}
         value={this.props.item.mode}
-        onChange={(event, key, payload) => {
-          console.log(payload);
-          this.setState({ mode: payload, isDirty: true });
-          this.updateValue(payload);
+        onChange={event => {
+          this.setState({ mode: event.target.value, isDirty: true });
+          this.updateValue(event.target.value);
         }}
         disabled={this.props.item.id === "20" || this.props.item.isDirty}
         items={this.portModes}

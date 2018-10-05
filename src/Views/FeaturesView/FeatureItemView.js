@@ -3,6 +3,7 @@ import FCConnector from "../../utilities/FCConnector";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
+import { FormattedMessage } from "react-intl";
 
 export default class FeatureItemView extends Component {
   constructor(props) {
@@ -31,7 +32,7 @@ export default class FeatureItemView extends Component {
               }}
             />
           }
-          label={this.props.item.id}
+          label={<FormattedMessage id={this.props.item.id} />}
         />
       </FormGroup>
     );
