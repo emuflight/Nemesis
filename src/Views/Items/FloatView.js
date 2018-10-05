@@ -57,6 +57,7 @@ const FloatView = class extends Component {
   render() {
     return (
       <FormControl
+        style={{ width: 90 }}
         classes={{ root: this.props.item.id }}
         key={this.props.item.id}
       >

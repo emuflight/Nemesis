@@ -8,29 +8,43 @@ import { Typography, TextField } from "@material-ui/core";
 import { FormattedMessage } from "react-intl";
 import FloatView from "../Items/FloatView";
 import InputView from "../Items/InputView";
+import { AreaChart } from "react-easy-chart";
 
 export default class RatesView extends ProfileView {
-  calcDps(input, rcRate, expo, superRate, deadband) {
-    let rcCommand = input - deadband;
-    let clamp = (n, minn, maxn) => Math.max(Math.min(maxn, n), minn);
+  //these are the actual calculations from the functions applyBetaflightRates anf applyRaceflightRates
+  calcDps(input, rate, expo, superRate, deadband) {
+    let actualCommand = input - deadband;
+    if (expo) {
+      let expof = expo * 0.01;
+      actualCommand =
+        actualCommand * Math.pow(Math.abs(actualCommand), 3) * expof +
+        actualCommand * (1 - expof);
+    }
 
-    let absRcCommand = Math.abs(rcCommand);
-
+    let rcRate = rate * 0.01;
     if (rcRate > 2.0) {
-      rcRate = rcRate + 14.54 * (rcRate - 2.0);
+      rcRate += 14.54 * (rcRate - 2.0);
     }
-
-    if (expo !== 0) {
-      rcCommand =
-        rcCommand * Math.abs(rcCommand) ** 3 * expo + rcCommand * (1.0 - expo);
+    let angleRate = 200.0 * rcRate * actualCommand;
+    if (superRate) {
+      let rcSuperfactor =
+        1.0 /
+        Math.min(
+          Math.max(1.0 - Math.abs(actualCommand) * (superRate / 100.0), 0.01),
+          1.0
+        );
+      angleRate *= rcSuperfactor;
     }
-    let angleRate = 200.0 * rcRate * rcCommand;
-    if (superRate !== 0) {
-      let rcSuperFactor =
-        1.0 / clamp(1.0 - absRcCommand * superRate, 0.01, 1.0);
-      angleRate *= rcSuperFactor;
-    }
-    return angleRate;
+    return Math.ceil(angleRate);
+  }
+  calcDpsRf1(input, rcRate, expo, superRate, deadband) {
+    let actualCommand = input - deadband;
+    let rcCommand =
+      (1.0 + 0.01 * expo * (actualCommand * actualCommand - 1.0)) *
+      actualCommand;
+    let angleRate = 10.0 * rcRate * rcCommand;
+    angleRate = angleRate * (1 + Math.abs(actualCommand) * superRate * 0.01);
+    return Math.ceil(angleRate);
   }
   getContent() {
     if (!this.state.isBxF) {
@@ -41,125 +55,77 @@ export default class RatesView extends ProfileView {
         />
       );
     }
+    let bfRates = this.props.fcConfig.rates_type.current === "BETAFLIGHT";
+    let rateFunc = bfRates ? this.calcDps : this.calcDpsRf1;
+    const rates = {
+      roll: {
+        r: parseFloat(this.props.fcConfig.roll_rc_rate.current),
+        x: parseFloat(this.props.fcConfig.roll_expo.current),
+        s: parseFloat(this.props.fcConfig.roll_srate.current),
+        d: parseInt(this.props.fcConfig.deadband.current, 10) / 100
+      },
+      pitch: {
+        r: parseFloat(this.props.fcConfig.pitch_rc_rate.current),
+        x: parseFloat(this.props.fcConfig.pitch_expo.current),
+        s: parseFloat(this.props.fcConfig.pitch_srate.current),
+        d: parseInt(this.props.fcConfig.deadband.current, 10) / 100
+      },
+      yaw: {
+        r: parseFloat(this.props.fcConfig.yaw_rc_rate.current),
+        x: parseFloat(this.props.fcConfig.yaw_expo.current),
+        s: parseFloat(this.props.fcConfig.yaw_srate.current),
+        d: parseInt(this.props.fcConfig.yaw_deadband.current, 10) / 100
+      }
+    };
+    let xcurve = [];
+    let ycurve = [];
+    let zcurve = [];
+    new Array(100).fill(0).forEach((v, i) => {
+      let percent = i + 1;
+      let stickVal = percent * 0.01;
+      xcurve.push({
+        x: i,
+        y: rateFunc(
+          stickVal,
+          rates.roll.r,
+          rates.roll.x,
+          rates.roll.s,
+          rates.roll.d
+        )
+      });
+      ycurve.push({
+        x: i,
+        y: rateFunc(
+          stickVal,
+          rates.pitch.r,
+          rates.pitch.x,
+          rates.pitch.s,
+          rates.pitch.d
+        )
+      });
+      zcurve.push({
+        x: i,
+        y: rateFunc(
+          stickVal,
+          rates.yaw.r,
+          rates.yaw.x,
+          rates.yaw.s,
+          rates.yaw.d
+        )
+      });
+    });
     return (
-      <div style={{ display: "flex", flexDirection: "column" }}>
+      <div style={{ display: "flex", flex: 1, flexDirection: "column" }}>
         <Paper
           theme={this.state.theme}
           elevation={3}
-          style={{ margin: "10px", padding: "10px" }}
-        >
-          <DropdownView
-            notifyDirty={this.props.notifyDirty}
-            item={this.props.fcConfig.rates_type}
-          />
-        </Paper>
-        <Paper
-          theme={this.state.theme}
-          elevation={3}
-          style={{ margin: "10px", padding: "10px" }}
-        >
-          <Typography>
-            <FormattedMessage id="common.roll" />
-          </Typography>
-          <FloatView
-            notifyDirty={this.props.notifyDirty}
-            item={this.props.fcConfig.roll_rc_rate}
-          />
-          <FloatView
-            notifyDirty={this.props.notifyDirty}
-            item={this.props.fcConfig.roll_srate}
-          />
-          <FloatView
-            notifyDirty={this.props.notifyDirty}
-            item={this.props.fcConfig.roll_expo}
-          />
-          <TextField
-            disabled={true}
-            label={<FormattedMessage id="rates.max-dps" />}
-            value={Math.ceil(
-              this.calcDps(
-                1.0,
-                parseFloat(this.props.fcConfig.roll_rc_rate.current) / 100,
-                parseFloat(this.props.fcConfig.roll_expo.current) / 100,
-                parseFloat(this.props.fcConfig.roll_srate.current) / 100,
-                parseInt(this.props.fcConfig.deadband.current, 10) / 100
-              )
-            )}
-          />
-        </Paper>
-        <Paper
-          theme={this.state.theme}
-          elevation={3}
-          style={{ margin: "10px", padding: "10px" }}
-        >
-          <Typography>
-            <FormattedMessage id="common.pitch" />
-          </Typography>
-          <FloatView
-            notifyDirty={this.props.notifyDirty}
-            item={this.props.fcConfig.pitch_rc_rate}
-          />
-          <FloatView
-            notifyDirty={this.props.notifyDirty}
-            item={this.props.fcConfig.pitch_srate}
-          />
-          <FloatView
-            notifyDirty={this.props.notifyDirty}
-            item={this.props.fcConfig.pitch_expo}
-          />
-          <TextField
-            disabled={true}
-            label={<FormattedMessage id="rates.max-dps" />}
-            value={Math.ceil(
-              this.calcDps(
-                1.0,
-                parseFloat(this.props.fcConfig.pitch_rc_rate.current) / 100,
-                parseFloat(this.props.fcConfig.pitch_expo.current) / 100,
-                parseFloat(this.props.fcConfig.pitch_srate.current) / 100,
-                parseInt(this.props.fcConfig.deadband.current, 10) / 100
-              )
-            )}
-          />
-        </Paper>
-        <Paper
-          theme={this.state.theme}
-          elevation={3}
-          style={{ margin: "10px", padding: "10px" }}
-        >
-          <Typography>
-            <FormattedMessage id="common.yaw" />
-          </Typography>
-          <FloatView
-            notifyDirty={this.props.notifyDirty}
-            item={this.props.fcConfig.yaw_rc_rate}
-          />
-          <FloatView
-            notifyDirty={this.props.notifyDirty}
-            item={this.props.fcConfig.yaw_srate}
-          />
-          <FloatView
-            notifyDirty={this.props.notifyDirty}
-            item={this.props.fcConfig.yaw_expo}
-          />
-
-          <TextField
-            disabled={true}
-            label={<FormattedMessage id="rates.max-dps" />}
-            value={Math.ceil(
-              this.calcDps(
-                1.0,
-                parseFloat(this.props.fcConfig.yaw_rc_rate.current) / 100,
-                parseFloat(this.props.fcConfig.yaw_expo.current) / 100,
-                parseFloat(this.props.fcConfig.yaw_srate.current) / 100,
-                parseInt(this.props.fcConfig.yaw_deadband.current, 10) / 100
-              )
-            )}
-          />
-        </Paper>
-        <Paper
-          theme={this.state.theme}
-          elevation={3}
-          style={{ margin: "10px", padding: "10px" }}
+          style={{
+            margin: 10,
+            padding: 10,
+            display: "flex",
+            justifyItems: "center",
+            alignItems: "center"
+          }}
         >
           <FloatView
             notifyDirty={this.props.notifyDirty}
@@ -173,7 +139,113 @@ export default class RatesView extends ProfileView {
             notifyDirty={this.props.notifyDirty}
             item={this.props.fcConfig.yaw_deadband}
           />
+          <DropdownView
+            notifyDirty={(isDirty, state, val) => {
+              this.props.fcConfig.rates_type.current = val;
+              this.forceUpdate();
+              this.props.notifyDirty(isDirty, state, val);
+            }}
+            item={this.props.fcConfig.rates_type}
+          />
         </Paper>
+        <div style={{ display: "flex" }}>
+          <div style={{ display: "flex", flex: 1, flexDirection: "column" }}>
+            <Paper
+              theme={this.state.theme}
+              elevation={3}
+              style={{ margin: "10px", padding: "10px" }}
+            >
+              <Typography>
+                <FormattedMessage id="common.roll" />
+              </Typography>
+              <FloatView
+                notifyDirty={this.props.notifyDirty}
+                item={this.props.fcConfig.roll_rc_rate}
+              />
+              <FloatView
+                notifyDirty={this.props.notifyDirty}
+                item={this.props.fcConfig.roll_srate}
+              />
+              <FloatView
+                notifyDirty={this.props.notifyDirty}
+                item={this.props.fcConfig.roll_expo}
+              />
+              <TextField
+                style={{ width: 90 }}
+                disabled={true}
+                label={<FormattedMessage id="rates.max-dps" />}
+                value={xcurve[99].y}
+              />
+            </Paper>
+            <Paper
+              theme={this.state.theme}
+              elevation={3}
+              style={{ margin: "10px", padding: "10px" }}
+            >
+              <Typography>
+                <FormattedMessage id="common.pitch" />
+              </Typography>
+              <FloatView
+                notifyDirty={this.props.notifyDirty}
+                item={this.props.fcConfig.pitch_rc_rate}
+              />
+              <FloatView
+                notifyDirty={this.props.notifyDirty}
+                item={this.props.fcConfig.pitch_srate}
+              />
+              <FloatView
+                notifyDirty={this.props.notifyDirty}
+                item={this.props.fcConfig.pitch_expo}
+              />
+              <TextField
+                style={{ width: 90 }}
+                disabled={true}
+                label={<FormattedMessage id="rates.max-dps" />}
+                value={ycurve[99].y}
+              />
+            </Paper>
+            <Paper
+              theme={this.state.theme}
+              elevation={3}
+              style={{ margin: "10px", padding: "10px" }}
+            >
+              <Typography>
+                <FormattedMessage id="common.yaw" />
+              </Typography>
+              <FloatView
+                notifyDirty={this.props.notifyDirty}
+                item={this.props.fcConfig.yaw_rc_rate}
+              />
+              <FloatView
+                notifyDirty={this.props.notifyDirty}
+                item={this.props.fcConfig.yaw_srate}
+              />
+              <FloatView
+                notifyDirty={this.props.notifyDirty}
+                item={this.props.fcConfig.yaw_expo}
+              />
+
+              <TextField
+                style={{ width: 90 }}
+                disabled={true}
+                label={<FormattedMessage id="rates.max-dps" />}
+                value={zcurve[99].y}
+              />
+            </Paper>
+          </div>
+          <div>
+            <AreaChart
+              xType={"text"}
+              areaColors={["white", "blue", "green"]}
+              interpolate={"cardinal"}
+              axwsLabels={{ x: "DPS", y: "RC" }}
+              yAxisOrientRight
+              width={450}
+              height={350}
+              data={[xcurve, ycurve, zcurve]}
+            />
+          </div>
+        </div>
       </div>
     );
   }

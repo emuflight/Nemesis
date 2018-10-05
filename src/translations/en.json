@@ -91,14 +91,14 @@
   "pid.ki": "Integral",
   "pid.kd": "Derivative",
   "pid.acc.on-off": "Accelerometer {state}",
-  "rates.max-dps": "Max Degrees/Sec",
+  "rates.max-dps": "Max DPS",
   "osd.upload": "Upload Font",
   "blackbox.flash-used": "Flash Used: {percent}%",
   "blackbox.load-drive": "Load as drive to download blackbox",
   "aux.item.save": "Set Mode",
   "pid_profile": "Active Profile",
   "rate_profile": "Active Profile",
-  "rates_type": "Rates Style",
+  "rates_type": "Rate Style",
   "gyro_sync_denom": "Gyro Loop",
   "pid_process_denom": "PID Loop",
   "buttered_pids": "Buttered Pids",
@@ -130,5 +130,6 @@
   "pitch_srate": "Super Rate",
   "yaw_srate": "Super Rate",
   "deadband": "Deadband",
+  "BETAFLIGHT": "BUTTERFLIGHT",
   "yaw_deadband": "Yaw Deadband"
 }
