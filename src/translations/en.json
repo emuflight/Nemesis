@@ -131,5 +131,12 @@
   "yaw_srate": "Super Rate",
   "deadband": "Deadband",
   "BETAFLIGHT": "BUTTERFLIGHT",
-  "yaw_deadband": "Yaw Deadband"
+  "yaw_deadband": "Yaw Deadband",
+  "imuf_roll_q": "Roll Q (gyro trust)",
+  "imuf_pitch_q": "Pitch Q (gyro trust)",
+  "imuf_yaw_q": "Yaw Q (gyro trust)",
+  "imuf_w": "Sampling window",
+  "imuf_roll_lpf_cutoff_hz": "Roll lowpass freq (hz)",
+  "imuf_pitch_lpf_cutoff_hz": "Pitch lowpass freq (hz)",
+  "imuf_yaw_lpf_cutoff_hz": "Yaw lowpass freq (hz)"
 }

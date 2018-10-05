@@ -243,9 +243,18 @@ const getTelemetry = (device, type) => {
         if (telem) {
           try {
             let data = new DataView(new Uint8Array(telem).buffer, 12);
+            let modeFlasCount = data.getUint8(15);
+            let modeflags = [];
+            let offset = 16;
+            for (var i = 0; i < modeFlasCount; i++) {
+              modeflags.push(data.getUint8(offset++));
+            }
             lastTelem = {
               type: "status",
-              cpu: data.getUint16(11, 1)
+              cpu: data.getUint16(11, 1),
+              modeflags: modeflags,
+              flagCount: data.getUint8(offset++),
+              armingFlags: data.getUint32(offset, 1)
             };
           } catch (ex) {
             console.log(ex);
