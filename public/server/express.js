@@ -240,8 +240,14 @@ app.get("/telem/:type/start", (req, res) => {
   });
 });
 app.get("/telem/stop", (req, res) => {
-  fcConnector.stopTelemetry();
-  res.sendStatus(202);
+  devices.list((err, ports) => {
+    if (err) return res.status(400).send(err);
+    let connectedDevice = ports[0];
+    if (connectedDevice) {
+      fcConnector.stopTelemetry(connectedDevice);
+      res.sendStatus(200);
+    }
+  });
 });
 
 app.get("/assistant/:fw/:id", (req, res) => {

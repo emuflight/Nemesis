@@ -341,7 +341,7 @@ module.exports = new class FcConnector {
       }
     }, intervalMs);
   }
-  stopTelemetry() {
+  stopTelemetry(deviceInfo) {
     clearInterval(websockets.wsServer.telemetryInterval);
     if (websockets.wsServer.telemetryType !== "status") {
       this.startTelemetry(deviceInfo, "status", 2000);

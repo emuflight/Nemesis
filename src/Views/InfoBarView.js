@@ -49,10 +49,14 @@ export default class InfoBarView extends Component {
     }
   };
   componentDidMount() {
-    FCConnector.webSockets.addEventListener("message", this.handleStatus);
+    if (this.props.fcConfig.isBxF) {
+      FCConnector.webSockets.addEventListener("message", this.handleStatus);
+    }
   }
   componentWillUnmount() {
-    FCConnector.webSockets.removeEventListener("message", this.handleStatus);
+    if (this.props.fcConfig.isBxF) {
+      FCConnector.webSockets.removeEventListener("message", this.handleStatus);
+    }
   }
   render() {
     return (
@@ -93,12 +97,14 @@ export default class InfoBarView extends Component {
             style={{ flexGrow: 1 }}
             rebooting={this.props.rebooting}
           />
-          <Typography>
-            <FormattedMessage
-              id="info.cpu-load"
-              values={{ percent: this.state.telemetry.cpu }}
-            />
-          </Typography>
+          {this.props.fcConfig.isBxF && (
+            <Typography>
+              <FormattedMessage
+                id="info.cpu-load"
+                values={{ percent: this.state.telemetry.cpu }}
+              />
+            </Typography>
+          )}
           {this.state.setupCompleted > -1 && (
             <List
               style={{ cursor: "pointer" }}

@@ -169,7 +169,25 @@ const spinTestMotor = (device, motor, startStop) => {
   }
 };
 const getChannelMap = device => {
-  return sendCommand(device, `dump rccf`);
+  return sendCommand(device, `dump rccf`).then(response => {
+    let params = response.split("set ").reduce((reducer, line) => {
+      let parts = line.split("=");
+      reducer[parts[0]] = parts[1] && parts[1].replace("\n", "");
+      return reducer;
+    }, {});
+    let channels = [
+      parseInt(params.throttle_map, 10) + 1,
+      parseInt(params.roll_map, 10) + 1,
+      parseInt(params.pitch_map, 10) + 1,
+      parseInt(params.yaw_map, 10) + 1
+    ];
+    let map = {};
+    map[channels[0]] = "T";
+    map[channels[1]] = "A";
+    map[channels[2]] = "E";
+    map[channels[3]] = "R";
+    return `${map[1]}${map[2]}${map[3]}${map[4]}1234`;
+  });
 };
 const setChannelMap = (device, newmap) => {
   let parts = newmap.split("");
@@ -209,17 +227,18 @@ const getTelemetry = (device, type) => {
   switch (type) {
     default:
     case "rx":
-      return sendCommand(device, "rcrxdata", 20).then(telemString => {
+      return sendCommand(device, "rcrxdata", 40).then(telemString => {
         let channels = [];
-
-        telemString.split("\n#rb ").forEach(part => {
-          let pairs = part.split("=");
-          let vals = pairs[1].split(":");
-          channels[parseInt(pairs[0].replace("#rb ", "")) - 1] = parseInt(
-            vals[0],
-            10
-          );
-        });
+        if (telemString) {
+          telemString.split("\n#rb ").forEach(part => {
+            let pairs = part.split("=");
+            let vals = pairs[1].split(":");
+            channels[parseInt(pairs[0].replace("#rb ", "")) - 1] = parseInt(
+              vals[0],
+              10
+            );
+          });
+        }
         return {
           type: type,
           min: 0,
