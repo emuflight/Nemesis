@@ -82,7 +82,7 @@ const setValue = (device, name, newVal) => {
 
 const getMotors = device => {
   //???? TODO: find out what this is.
-  return Promise.resolve([1, 1, 1, 1, 1, 0]);
+  return Promise.resolve([1, 1, 1, 1, 0]);
   return sendCommand(device, `dump mixer`);
 };
 
@@ -165,7 +165,7 @@ const spinTestMotor = (device, motor, startStop) => {
   if (parseInt(startStop) < 1004) {
     return sendCommand(device, `idlestop`, 10);
   } else {
-    return sendCommand(device, `Idle ${parseInt(motor) - 1}`, 10);
+    return sendCommand(device, `Idle ${parseInt(motor)}`, 10);
   }
 };
 const getChannelMap = device => {

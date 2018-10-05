@@ -25,8 +25,7 @@ const messages = {
   es: messages_es,
   fr: messages_fr,
   it: messages_it,
-  ru: messages_ru,
-  
+  ru: messages_ru
 };
 const language = navigator.language.split(/[-_]/)[0]; // language without region code
 
@@ -44,10 +43,10 @@ ReactDOM.render(
 );
 registerServiceWorker();
 addLocaleData([
-  ...locale_en, 
-  ...locale_de, 
-  ...locale_es, 
-  ...locale_fr, 
-  ...locale_it, 
+  ...locale_en,
+  ...locale_de,
+  ...locale_es,
+  ...locale_fr,
+  ...locale_it,
   ...locale_ru
 ]);

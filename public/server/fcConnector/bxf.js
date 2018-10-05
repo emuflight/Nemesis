@@ -172,11 +172,7 @@ const remapMotor = (device, from, to) => {
   });
 };
 const spinTestMotor = (device, motor, startStop) => {
-  return sendCommand(
-    device,
-    `motor ${parseInt(motor, 10) - 1} ${startStop}`,
-    10
-  );
+  return sendCommand(device, `motor ${parseInt(motor, 10)} ${startStop}`, 10);
 };
 const saveEEPROM = device => {
   return sendCommand(device, `msp 250`);
