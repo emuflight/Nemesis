@@ -61,7 +61,10 @@
       "yaw_expo",
       "roll_srate",
       "pitch_srate",
-      "yaw_srate"
+      "yaw_srate",
+      "thr_mid",
+      "deadband",
+      "yaw_deadband"
     ],
     "FILTERS": [
       "gyro_hardware_lpf",
@@ -98,52 +101,33 @@
       "align_mag",
       "align_board_roll",
       "align_board_pitch",
-      "align_board_yaw"
+      "align_board_yaw",
+      "min_throttle",
+      "max_throttle",
+      "accxy_deadband",
+      "acc_unarmedcal"
     ],
     "RX": [
       "mid_rc",
-      "thr_mid",
       "min_check",
       "max_check",
       "rssi_channel",
       "rssi_scale",
-      "rssi_invert",
       "rc_interp",
       "rc_interp_ch",
       "rc_interp_int",
       "serialrx_provider",
       "serialrx_inverted",
-      "spektrum_sat_bind",
-      "spektrum_sat_bind_autoreset",
       "serialrx_halfduplex",
-      "rx_min_usec",
-      "rx_max_usec",
-      "min_throttle",
-      "max_throttle",
       "failsafe_delay",
       "failsafe_off_delay",
       "failsafe_throttle",
       "failsafe_kill_switch",
       "failsafe_throttle_low_delay",
       "failsafe_procedure",
-      "serial_update_rate_hz",
-      "accxy_deadband",
-      "accz_deadband",
-      "acc_unarmedcal",
       "tlm_switch",
       "tlm_inverted",
       "tlm_halfduplex",
-      "frsky_default_lat",
-      "frsky_default_long",
-      "frsky_gps_format",
-      "frsky_unit",
-      "frsky_vfas_precision",
-      "hott_alarm_int",
-      "pid_in_tlm",
-      "report_cell_voltage",
-      "ibus_sensor",
-      "deadband",
-      "yaw_deadband",
       "yaw_control_reversed"
     ],
     "FEATURES": ["features"],
@@ -153,8 +137,7 @@
       "vtx_power",
       "vtx_low_power_disarm",
       "vtx_freq",
-      "vtx_pit_mode_freq",
-      "vtx_halfduplex"
+      "vtx_pit_mode_freq"
     ],
     "OSD": [
       "osd_units",
@@ -458,6 +441,63 @@
         {
           "value": "8",
           "label": "CHANNEL-8"
+        }
+      ]
+    },
+    "rssi_channel": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "0",
+          "label": "NONE"
+        },
+        {
+          "value": "1",
+          "label": "AUX 1"
+        },
+        {
+          "value": "2",
+          "label": "AUX 2"
+        },
+        {
+          "value": "3",
+          "label": "AUX 3"
+        },
+        {
+          "value": "4",
+          "label": "AUX 4"
+        },
+        {
+          "value": "5",
+          "label": "AUX 5"
+        },
+        {
+          "value": "6",
+          "label": "AUX 6"
+        },
+        {
+          "value": "7",
+          "label": "AUX 7"
+        },
+        {
+          "value": "8",
+          "label": "AUX 8"
+        },
+        {
+          "value": "9",
+          "label": "AUX 9"
+        },
+        {
+          "value": "10",
+          "label": "AUX 10"
+        },
+        {
+          "value": "11",
+          "label": "AUX 11"
+        },
+        {
+          "value": "12",
+          "label": "AUX 12"
         }
       ]
     }

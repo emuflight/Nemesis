@@ -131,6 +131,10 @@ export default class RatesView extends ProfileView {
             notifyDirty={this.props.notifyDirty}
             item={this.props.fcConfig.thr_expo}
           />
+          <FloatView
+            notifyDirty={this.props.notifyDirty}
+            item={this.props.fcConfig.thr_mid}
+          />
           <InputView
             notifyDirty={this.props.notifyDirty}
             item={this.props.fcConfig.deadband}
