@@ -6,6 +6,7 @@ export default (type, Fc, Fs) => {
 
   var K = Math.tan((Math.PI * Fc) / Fs);
   switch (type) {
+    default:
     case "lowpass":
       norm = 1 / (1 + K / Q + K * K);
       a0 = K * K * norm;
@@ -44,7 +45,7 @@ export default (type, Fc, Fs) => {
     y = Math.max((y * 10) / Math.LN10, -120);
 
     magPlot.push({ x: idx, y });
-    if (idx == 0) minVal = maxVal = y;
+    if (idx === 0) minVal = maxVal = y;
     else if (y < minVal) minVal = y;
     else if (y > maxVal) maxVal = y;
   }

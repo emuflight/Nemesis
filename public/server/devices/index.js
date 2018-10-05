@@ -49,7 +49,8 @@ module.exports = {
     let filePath = `${path.join(__dirname, dfuPath, "temp.bin")}`;
     fs.writeFileSync(filePath, fileBuffer);
     var fileStats = fs.statSync(filePath);
-    notify(`File size on disk:${fileStats.size}`);
+    let fileSize = `File size on disk:${fileStats.size}`;
+    notify(fileSize);
 
     // let buffer = fs.readFileSync(filePath);
     let platform = os.platform();
@@ -88,7 +89,7 @@ module.exports = {
         <p><a href="http://dfu-util.sourceforge.net">here: or<a/></p>
         <p>'brew install libusb'</p>\n`;
       }
-      console.log(output);
+      console.error(output);
       notify(output);
     });
   }

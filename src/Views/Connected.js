@@ -129,7 +129,7 @@ export default class Connected extends Component {
             notifyDirty={(isDirty, item, newValue) =>
               this.notifyDirty(isDirty, item, newValue)
             }
-            id={"pid_profile"}
+            id="pid_profile"
             active={this.state.pid_profile}
             profileList={this.state.fcConfig.pidProfileList}
             items={getRouteItems(this.state.currentRoute.key, mergedProfile)}
@@ -272,7 +272,7 @@ export default class Connected extends Component {
           );
           contents = (
             <ProfileView
-              id={"filter_profile"}
+              id="filter_profile"
               active={this.state.pid_profile}
               profileList={this.state.fcConfig.pidProfileList}
               fcConfig={this.state.fcConfig}

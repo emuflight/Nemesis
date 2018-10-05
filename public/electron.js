@@ -1,7 +1,7 @@
 const { app, BrowserWindow, ipcMain, Menu } = require("electron");
 const path = require("path");
 const server = require("./server/express.js");
-
+ 
 // const { autoUpdater } = require("electron-updater");
 require("electron-context-menu")({
   prepend: (params, browserWindow) => [

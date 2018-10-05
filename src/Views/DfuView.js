@@ -7,15 +7,13 @@ import CliView from "./CliView/CliView";
 import ReactMarkdown from "react-markdown";
 import HelperSelect from "./Items/HelperSelect";
 import Typography from "@material-ui/core/Typography";
-import { FormattedMessage, FormattedHTMLMessage } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 export default class DfuView extends Component {
   constructor(props) {
     super(props);
-    this.targetTitle = <FormattedMessage id="dfu.target.title" />;
-    this.title = <FormattedMessage id="dfu.select.version" />;
-    this.btnLabel = <FormattedMessage id="common.flash" />;
-    this.cliNotice = <FormattedHTMLMessage id="dfu.flash.message" />;
+    this.cliNotice =
+      '\n\n**********<h1>YOU ARE IN DFU MODE.\nDO NOT UNPLUG YOUR DEVICE UNTIL FLASHING IS COMPLETE OR YOU\'RE GONNA HAVE A BAD TIME.</h1><img id="pbjt" src="assets/dfu.gif" height="90" width="90"/><br/>#flyhelio\n**********\n\n';
     this.state = {
       theme: props.theme,
       allowUpload: true,
@@ -161,7 +159,7 @@ export default class DfuView extends Component {
       >
         <div style={{ display: "flex" }}>
           <Typography paragraph variant="title">
-            {this.title}
+            <FormattedMessage id="dfu.select.version" />
           </Typography>
           <div style={{ flexGrow: 1 }} />
           {this.props.goBack && (
@@ -173,7 +171,7 @@ export default class DfuView extends Component {
         <div style={{ display: "flex" }}>
           <HelperSelect
             style={{ flex: 1 }}
-            label={this.targetTitle}
+            label="dfu.target.title"
             value={this.state.currentTarget}
             disabled={
               this.state.isFlashing ||
@@ -220,7 +218,7 @@ export default class DfuView extends Component {
         </div>
         {this.state.currentTarget && (
           <HelperSelect
-            label={this.flText}
+            label="dfu.select.version"
             value={this.state.current}
             disabled={this.state.isFlashing || !!this.state.selectedFile}
             onChange={event => {
@@ -247,7 +245,7 @@ export default class DfuView extends Component {
             (!this.state.current && !this.state.selectedFile)
           }
         >
-          {this.btnLabel}
+          <FormattedMessage id="common.flash" />
         </Button>
         <Paper
           theme={this.state.theme}

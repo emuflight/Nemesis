@@ -187,12 +187,14 @@ app.post("/flash", (req, res) => {
 });
 
 app.get("/flash/:binUrl", (req, res) => {
-  websockets.notifyProgress(`Fetching binary from ${req.params.binUrl}...\n`);
+  let mesage = `Fetching binary from ${req.params.binUrl}...\n`;
+  websockets.notifyProgress(mesage);
   firmware.load(req.params.binUrl, fileBuffer => {
     //if (parseInt(req.params.binSize, 10) !== fileBuffer.length) {
     //    websockets.notifyProgress(`Aborted DFU due to file-size mismatch after download...\nExpected: ${req.params.binSize} bytes\nActual: ${fileBuffer.length}bytes...\n`);
     //} else {
-    websockets.notifyProgress(`Fetched ${fileBuffer.length} bytes...\n`);
+    let fetched = `Fetched ${fileBuffer.length} bytes...\n`;
+    websockets.notifyProgress(fetched);
     //}
     if (fileBuffer.error) {
       res.status(404).send(fileBuffer.error);
@@ -311,7 +313,7 @@ app.get("/font/:name", (req, res) => {
   });
 });
 
-app.listen(9001, () => console.log("usb interface listening on port 9001!"));
+app.listen(9001, () => console.info("usb interface listening on port 9001!"));
 
 module.exports = {
   express,

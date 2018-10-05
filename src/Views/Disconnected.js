@@ -49,9 +49,9 @@ export default class Disconnected extends React.Component {
             <Typography component="p">
               <FormattedMessage
                 id={
-                  !openCli
-                    ? "disconnected.autodetect"
-                    : "disconnected.incompatible"
+                  openCli
+                    ? "disconnected.incompatible"
+                    : "disconnected.autodetect"
                 }
               />
               <br />
