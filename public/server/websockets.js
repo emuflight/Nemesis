@@ -2,6 +2,7 @@ const usb = require("usb");
 const WebSocketServer = require("websocket").server;
 const devices = require("./devices");
 const http = require("http");
+const STM32USB = require("./devices/STM32USB.json");
 
 const server = http.createServer((request, response) => {
   // process HTTP request. Since we're writing just WebSockets
@@ -24,25 +25,29 @@ wsServer.on("request", request => {
   clients.push(connection);
   // Detect add/insert
   usb.on(`attach`, device => {
-    devices.list((err, ports) => {
-      connectedDevice = ports[0];
-      if (connectedDevice) {
-        connectedDevice.connected = true;
-        connection.sendUTF(JSON.stringify(connectedDevice));
-      }
-    });
+    if (device.deviceDescriptor.idVendor === STM32USB.vendorId) {
+      devices.get((err, port) => {
+        connectedDevice = port;
+        if (connectedDevice) {
+          connectedDevice.connected = true;
+          connection.sendUTF(JSON.stringify(connectedDevice));
+        }
+      });
+    }
   });
 
   // Detect remove
   usb.on(`detach`, device => {
-    console.log("DETATCHED!!!");
-    connection.sendUTF(
-      JSON.stringify({
-        dfu: false,
-        connected: false
-      })
-    );
-    clearInterval(wsServer.telemetryInterval);
+    console.log(device);
+    if (device.deviceDescriptor.idVendor === STM32USB.vendorId) {
+      connection.sendUTF(
+        JSON.stringify({
+          dfu: false,
+          connected: false
+        })
+      );
+      clearInterval(wsServer.telemetryInterval);
+    }
   });
   // This is the most important callback for us, we'll handle
   // all messages from users here.

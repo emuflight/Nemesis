@@ -21,7 +21,7 @@ export default class MotorsView extends Component {
           elevation={3}
           style={{ margin: "10px", padding: "10px" }}
         >
-          <div style={{ display: "flex" }}>
+          <div style={{ display: "flex", margin: 10 }}>
             <Button
               onClick={() =>
                 this.setState({

@@ -38,14 +38,21 @@ export default class MotorsSlidersView extends Component {
   render() {
     return (
       <SafetyView>
-        <div style={{ display: "flex" }}>
+        <div
+          style={{
+            display: "flex",
+            flex: 1,
+            justifyItems: "center",
+            alignItems: "center"
+          }}
+        >
           {this.state.motors.map((item, i) => {
             return (
               <MotorSliderItemView
                 key={`motor ${i}`}
                 inputDisabled={true}
-                updateMotor={value => this.updateValue(i, value)}
-                onChange={(e, value) => this.updateValue(i, value)}
+                updateMotor={value => this.updateValue(i + 1, value)}
+                onChange={(e, value) => this.updateValue(i + 1, value)}
                 item={item}
               />
             );

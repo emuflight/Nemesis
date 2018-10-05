@@ -104,8 +104,7 @@
       "align_board_yaw",
       "min_throttle",
       "max_throttle",
-      "accxy_deadband",
-      "acc_unarmedcal"
+      "accxy_deadband"
     ],
     "RX": [
       "mid_rc",

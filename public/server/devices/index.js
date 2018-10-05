@@ -8,7 +8,7 @@ const os = require("os");
 const path = require("path");
 
 module.exports = {
-  list: cb => {
+  get: cb => {
     const devices = usb
       .getDeviceList()
       .filter(
@@ -34,10 +34,14 @@ module.exports = {
 
     SerialPort.list((err, ports) => {
       const list =
-        (devices.length && devices) ||
-        (hid.length && hid) ||
+        (devices.length && devices[0]) ||
+        (hid.length && hid[0]) ||
         (ports.length &&
-          ports.filter(port => port.vendorId === STM32USBInfo.octVendorId));
+          ports.find(
+            port =>
+              port.vendorId === STM32USBInfo.octVendorId &&
+              port.productId === STM32USBInfo.octPoductId
+          ));
       cb(err, list);
     });
   },

@@ -16,6 +16,7 @@ export default class CalibrateMotorsView extends Component {
           </div>
           <div style={{ flex: 1, display: "flex" }}>
             <CalibrateMotorsSteps
+              fcConfig={this.props.fcConfig}
               onFinish={this.props.onFinish}
               lastChoice={this.props.lastChoice}
             />

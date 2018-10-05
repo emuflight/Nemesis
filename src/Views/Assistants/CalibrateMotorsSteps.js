@@ -79,7 +79,13 @@ export default class CalibrateMotorsSteps extends Component {
           <Button
             color="secondary"
             variant="raised"
-            onClick={() => this.nextCommand("motor 255 2000")}
+            onClick={() => {
+              let command = "wiz mot1";
+              if (this.props.fcConfig.isBxf) {
+                command = "motor 255 2000";
+              }
+              this.nextCommand(command);
+            }}
           >
             <FormattedMessage id="common.next" />
           </Button>
@@ -95,7 +101,11 @@ export default class CalibrateMotorsSteps extends Component {
             color="secondary"
             variant="raised"
             onClick={() => {
-              this.nextCommand("motor 255 1000").then(() => {
+              let command = "wiz mot2";
+              if (this.props.fcConfig.isBxf) {
+                command = "motor 255 1000";
+              }
+              this.nextCommand(command).then(() => {
                 this.setState({ calibrated: true });
               });
             }}

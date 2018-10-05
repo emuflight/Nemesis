@@ -20,9 +20,8 @@ app.use(function(req, res, next) {
 });
 
 app.get("/device", (req, res) => {
-  devices.list((err, ports) => {
+  devices.get((err, connectedDevice) => {
     if (err) return res.status(400).send(err);
-    let connectedDevice = ports[0];
     if (connectedDevice) {
       if (connectedDevice.dfu) {
         res.json(connectedDevice);
@@ -38,10 +37,9 @@ app.get("/device", (req, res) => {
   });
 });
 app.get("/profile/:type/:index", (req, res) => {
-  devices.list((err, ports) => {
+  devices.get((err, connectedDevice) => {
     if (err) return res.status(400).send(err);
-    let connectedDevice = ports[0],
-      type = req.params.type,
+    let type = req.params.type,
       index = req.params.index;
     if (connectedDevice) {
       fcConnector
@@ -55,11 +53,9 @@ app.get("/profile/:type/:index", (req, res) => {
 });
 
 app.get("/send/:command", (req, res) => {
-  devices.list((err, ports) => {
+  devices.get((err, connectedDevice) => {
     if (err) return res.status(400).send(err);
-    let connectedDevice = ports[0],
-      command = req.params.command;
-
+    let command = req.params.command;
     if (connectedDevice) {
       fcConnector
         .sendCommand(connectedDevice, command)
@@ -71,10 +67,9 @@ app.get("/send/:command", (req, res) => {
   });
 });
 app.get("/set/:name/:value", (req, res) => {
-  devices.list((err, ports) => {
+  devices.get((err, connectedDevice) => {
     if (err) return res.status(400).send(err);
-    let connectedDevice = ports[0],
-      name = req.params.name,
+    let name = req.params.name,
       value = req.params.value;
     if (connectedDevice) {
       fcConnector
@@ -87,10 +82,9 @@ app.get("/set/:name/:value", (req, res) => {
   });
 });
 app.get("/remap/:from/:to", (req, res) => {
-  devices.list((err, ports) => {
+  devices.get((err, connectedDevice) => {
     if (err) return res.status(400).send(err);
-    let connectedDevice = ports[0],
-      to = req.params.to,
+    let to = req.params.to,
       from = req.params.from;
     if (connectedDevice) {
       fcConnector
@@ -103,10 +97,9 @@ app.get("/remap/:from/:to", (req, res) => {
   });
 });
 app.get("/spintest/:motor/:value", (req, res) => {
-  devices.list((err, ports) => {
+  devices.get((err, connectedDevice) => {
     if (err) return res.status(400).send(err);
-    let connectedDevice = ports[0],
-      motor = req.params.motor,
+    let motor = req.params.motor,
       value = req.params.value;
     if (connectedDevice) {
       fcConnector
@@ -119,9 +112,8 @@ app.get("/spintest/:motor/:value", (req, res) => {
   });
 });
 app.get("/modes", (req, res) => {
-  devices.list((err, ports) => {
+  devices.get((err, connectedDevice) => {
     if (err) return res.status(400).send(err);
-    let connectedDevice = ports[0];
     if (connectedDevice) {
       fcConnector
         .getModes(connectedDevice)
@@ -133,9 +125,8 @@ app.get("/modes", (req, res) => {
   });
 });
 app.get("/modes/:modeVals", (req, res) => {
-  devices.list((err, ports) => {
+  devices.get((err, connectedDevice) => {
     if (err) return res.status(400).send(err);
-    let connectedDevice = ports[0];
     if (connectedDevice) {
       fcConnector
         .setMode(connectedDevice, req.params.modeVals)
@@ -147,9 +138,8 @@ app.get("/modes/:modeVals", (req, res) => {
   });
 });
 app.get("/save/eeprom", (req, res) => {
-  devices.list((err, ports) => {
+  devices.get((err, connectedDevice) => {
     if (err) return res.status(400).send(err);
-    let connectedDevice = ports[0];
     if (connectedDevice) {
       fcConnector
         .saveEEPROM(connectedDevice)
@@ -206,9 +196,9 @@ app.get("/flash/:binUrl", (req, res) => {
 });
 
 app.get("/imuf/:binUrl", (req, res) => {
-  devices.list((err, ports) => {
+  devices.get((err, connectedDevice) => {
     if (err) return res.status(400).send(err);
-    let connectedDevice = ports[0];
+
     if (connectedDevice) {
       fcConnector.updateIMUF(connectedDevice, req.params.binUrl);
       res.sendStatus(202);
@@ -217,9 +207,9 @@ app.get("/imuf/:binUrl", (req, res) => {
 });
 
 app.get("/dfu", (req, res) => {
-  devices.list((err, ports) => {
+  devices.get((err, connectedDevice) => {
     if (err) return res.status(400).send(err);
-    let connectedDevice = ports[0];
+
     if (connectedDevice) {
       fcConnector
         .rebootDFU(connectedDevice)
@@ -230,9 +220,9 @@ app.get("/dfu", (req, res) => {
 });
 
 app.get("/telem/:type/start", (req, res) => {
-  devices.list((err, ports) => {
+  devices.get((err, connectedDevice) => {
     if (err) return res.status(400).send(err);
-    let connectedDevice = ports[0];
+
     if (connectedDevice) {
       fcConnector.startTelemetry(connectedDevice, req.params.type);
       res.sendStatus(202);
@@ -240,9 +230,9 @@ app.get("/telem/:type/start", (req, res) => {
   });
 });
 app.get("/telem/stop", (req, res) => {
-  devices.list((err, ports) => {
+  devices.get((err, connectedDevice) => {
     if (err) return res.status(400).send(err);
-    let connectedDevice = ports[0];
+
     if (connectedDevice) {
       fcConnector.stopTelemetry(connectedDevice);
       res.sendStatus(200);
@@ -256,9 +246,9 @@ app.get("/assistant/:fw/:id", (req, res) => {
 });
 
 app.get("/storage/:command", (req, res) => {
-  devices.list((err, ports) => {
+  devices.get((err, connectedDevice) => {
     if (err) return res.status(400).send(err);
-    let connectedDevice = ports[0];
+
     if (connectedDevice) {
       fcConnector
         .storage(connectedDevice, req.params.command)
@@ -269,9 +259,9 @@ app.get("/storage/:command", (req, res) => {
 });
 
 app.get("/motors", (req, res) => {
-  devices.list((err, ports) => {
+  devices.get((err, connectedDevice) => {
     if (err) return res.status(400).send(err);
-    let connectedDevice = ports[0];
+
     if (connectedDevice) {
       fcConnector
         .getMotors(connectedDevice)
@@ -282,9 +272,9 @@ app.get("/motors", (req, res) => {
 });
 
 app.get("/channelmap", (req, res) => {
-  devices.list((err, ports) => {
+  devices.get((err, connectedDevice) => {
     if (err) return res.status(400).send(err);
-    let connectedDevice = ports[0];
+
     if (connectedDevice) {
       fcConnector
         .getChannelMap(connectedDevice)
@@ -294,9 +284,9 @@ app.get("/channelmap", (req, res) => {
   });
 });
 app.get("/channelmap/:newmap", (req, res) => {
-  devices.list((err, ports) => {
+  devices.get((err, connectedDevice) => {
     if (err) return res.status(400).send(err);
-    let connectedDevice = ports[0];
+
     if (connectedDevice) {
       fcConnector
         .setChannelMap(connectedDevice, req.params.newmap)
@@ -307,9 +297,9 @@ app.get("/channelmap/:newmap", (req, res) => {
 });
 
 app.get("/font/:name", (req, res) => {
-  devices.list((err, ports) => {
+  devices.get((err, connectedDevice) => {
     if (err) return res.status(404).send(err);
-    let connectedDevice = ports[0];
+
     if (connectedDevice) {
       fcConnector
         .uploadFont(connectedDevice, req.params.name)

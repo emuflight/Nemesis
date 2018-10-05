@@ -83,7 +83,6 @@ const setValue = (device, name, newVal) => {
 const getMotors = device => {
   //???? TODO: find out what this is.
   return Promise.resolve([1, 1, 1, 1, 0]);
-  return sendCommand(device, `dump mixer`);
 };
 
 const setMode = (device, modeVals) => {
@@ -165,7 +164,7 @@ const spinTestMotor = (device, motor, startStop) => {
   if (parseInt(startStop) < 1004) {
     return sendCommand(device, `idlestop`, 10);
   } else {
-    return sendCommand(device, `Idle ${parseInt(motor)}`, 10);
+    return sendCommand(device, `Idle ${parseInt(motor) - 1}`, 10);
   }
 };
 const getChannelMap = device => {
@@ -247,15 +246,25 @@ const getTelemetry = (device, type) => {
         };
       });
     case "vbat": {
-      return sendCommand(device, ``, 30).then(vbatData => {
+      return sendCommand(device, `polladc`, 30).then(vbatData => {
+        let params = vbatData
+          .replace("#me ", "")
+          .split(", ")
+          .reduce((reducer, line) => {
+            let parts = line.split(": ");
+            reducer[parts[0]] = parts[1] && parts[1].replace("\n", "");
+            return reducer;
+          }, {});
+        let volts = parseInt(params.Voltage, 10) * 0.01;
         // let data = new DataView(new Uint8Array(vbatData).buffer, 11);
+        let cells = Math.max(volts / 3.7, volts / 4.2);
         return {
           type: "vbat",
-          cells: 0,
+          cells: cells,
           cap: 0,
-          volts: 0,
-          mah: 0,
-          amps: 0
+          volts: volts.toFixed(2),
+          mah: parseInt(params.mAh, 10),
+          amps: parseInt(params.Current, 10)
         };
       });
     }
