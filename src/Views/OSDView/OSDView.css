@@ -22,7 +22,7 @@
 
 .osd-icon {
   margin-right: 5px;
-  font-size: .8rem; }
+  font-size: 0.8rem; }
 
 .osd-icon-label, .ah_bar {
   color: whitesmoke;
@@ -32,17 +32,16 @@
   display: flex;
   justify-items: center;
   align-items: center;
-  z-index: 12;
   cursor: pointer; }
   .osd-icon-label.craft_name, .craft_name.ah_bar {
     text-transform: capitalize; }
   .osd-icon-label .osd-icon, .ah_bar .osd-icon {
     margin-right: 5px;
-    font-size: .9rem;
+    font-size: 0.9rem;
     position: relative;
     bottom: 2px; }
   .osd-icon-label .mah, .ah_bar .mah {
-    font-size: .4rem;
+    font-size: 0.4rem;
     text-align: center; }
   .osd-icon-label .compass-bar, .ah_bar .compass-bar {
     line-height: 10px; }
@@ -55,7 +54,8 @@
   align-items: center;
   position: relative;
   right: 7rem;
-  bottom: 2rem; }
+  bottom: 2rem;
+  cursor: pointer; }
   .ah_sidebar .ah_sidebar-left,
   .ah_sidebar .ah_sidebar-right {
     width: 0.8rem; }
@@ -70,7 +70,8 @@
   align-items: center;
   position: relative;
   top: 5rem;
-  right: 4rem; }
+  right: 4rem;
+  cursor: pointer; }
   .ah_bar .osd-icon {
     position: relative;
     top: 2px; }
