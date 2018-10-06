@@ -31,7 +31,7 @@ const language = navigator.language.split(/[-_]/)[0]; // language without region
 
 ReactDOM.render(
   <IntlProvider
-    locale={navigator.language}
+    locale={language}
     defaultLocale="en"
     messages={messages[language] || "en"}
   >
