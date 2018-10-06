@@ -1,3 +1,6 @@
-.pid-view .config-list-view:nth-child(3n)::after {
+.pid-view {
+  .config-list-view {
+    display: grid;
+  }
   flex-basis: 100%;
 }

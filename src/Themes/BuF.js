@@ -46,6 +46,33 @@ const theme = createMuiTheme({
           }
         }
       }
+    },
+    MuiPaper: {
+      root: {
+        margin: 10,
+        padding: 10
+      }
+    },
+    MuiAppBar: {
+      positionFixed: {
+        margin: 0
+      }
+    },
+    MuiDrawer: {
+      paperAnchorLeft: {
+        margin: 0
+      }
+    },
+    MuiSlider: {
+      root: {
+        padding: 0,
+        width: 100,
+        marginTop: 10,
+        height: 10
+      },
+      vertical: {
+        width: 0
+      }
     }
   }
 });

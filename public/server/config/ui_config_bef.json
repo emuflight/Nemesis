@@ -40,12 +40,15 @@
       "gps_rescue_min_sats"
     ],
     "PID": [
+      "f_pitch",
       "p_pitch",
       "i_pitch",
       "d_pitch",
+      "f_roll",
       "p_roll",
       "i_roll",
       "d_roll",
+      "f_yaw",
       "p_yaw",
       "i_yaw",
       "d_yaw"
@@ -214,59 +217,77 @@
     "ADVANCED": ["advanced"]
   },
   "elements": {
+    "f_roll": {
+      "mode": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "x"
+    },
     "p_roll": {
       "mode": "slider",
       "step": 1,
       "parse": "int",
-      "axis": "y"
+      "axis": "x"
     },
     "i_roll": {
       "mode": "slider",
       "step": 1,
       "parse": "int",
-      "axis": "y"
+      "axis": "x"
     },
     "d_roll": {
       "mode": "slider",
       "step": 1,
       "parse": "int",
-      "axis": "y"
+      "axis": "x"
+    },
+    "f_pitch": {
+      "mode": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "x"
     },
     "p_pitch": {
       "mode": "slider",
       "step": 1,
       "parse": "int",
-      "axis": "y"
+      "axis": "x"
     },
     "i_pitch": {
       "mode": "slider",
       "step": 1,
       "parse": "int",
-      "axis": "y"
+      "axis": "x"
     },
     "d_pitch": {
       "mode": "slider",
       "step": 1,
       "parse": "int",
-      "axis": "y"
+      "axis": "x"
+    },
+    "f_yaw": {
+      "mode": "slider",
+      "step": 1,
+      "parse": "int",
+      "axis": "x"
     },
     "p_yaw": {
       "mode": "slider",
       "step": 1,
       "parse": "int",
-      "axis": "y"
+      "axis": "x"
     },
     "i_yaw": {
       "mode": "slider",
       "step": 1,
       "parse": "int",
-      "axis": "y"
+      "axis": "x"
     },
     "d_yaw": {
       "mode": "slider",
       "step": 1,
       "parse": "int",
-      "axis": "y"
+      "axis": "x"
     },
     "gyro_sync_denom": {
       "mode": "LOOKUP",

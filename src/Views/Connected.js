@@ -23,6 +23,7 @@ import RXView from "./RXView/RXView";
 import MotorsView from "./MotorsView/MotorsView";
 import OSDView from "./OSDView/OSDView";
 import { FormattedMessage } from "react-intl";
+import "./Connected.css";
 
 const skipprops = [
   "pid_profile",
@@ -305,19 +306,7 @@ export default class Connected extends Component {
     }
 
     return (
-      <Paper
-        theme={this.state.theme}
-        elevation={3}
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          position: "relative",
-          flex: "1",
-          padding: "100px 10px 10px 10px",
-          minHeight: "100%",
-          boxSizing: "border-box"
-        }}
-      >
+      <Paper theme={this.state.theme} elevation={3} className="connected-root">
         <AppBarView
           rebooting={this.props.rebooting}
           position="absolute"

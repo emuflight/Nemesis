@@ -30,11 +30,7 @@ export default class BlackBoxView extends Component {
       (this.state.storageInfo.totalSize - 0);
     return (
       <div>
-        <Paper
-          theme={this.state.theme}
-          elevation={3}
-          style={{ margin: "10px", padding: "10px" }}
-        >
+        <Paper theme={this.state.theme} elevation={3}>
           <div style={{ position: "relative" }}>
             <Typography
               variant="caption"
@@ -71,11 +67,7 @@ export default class BlackBoxView extends Component {
             </Button>
           </div>
         </Paper>
-        <Paper
-          theme={this.state.theme}
-          elevation={3}
-          style={{ margin: "10px", padding: "10px" }}
-        >
+        <Paper theme={this.state.theme} elevation={3}>
           <ConfigListView
             notifyDirty={this.props.notifyDirty}
             items={this.props.items}

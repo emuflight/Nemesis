@@ -47,11 +47,7 @@ export default class PidsView extends ProfileView {
         style={{ display: "flex", flexDirection: "column" }}
       >
         {this.state.isBxF && (
-          <Paper
-            theme={this.state.theme}
-            elevation={3}
-            style={{ margin: "10px", padding: "10px" }}
-          >
+          <Paper theme={this.state.theme} elevation={3}>
             <DropdownView
               notifyDirty={(isDirty, state, payload) => {
                 this.updatePidValues(payload);

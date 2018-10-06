@@ -4,6 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import FCConnector from "../../utilities/FCConnector";
 import Typography from "@material-ui/core/Typography";
 import { FormattedMessage } from "react-intl";
+import "./SliderView.css";
 
 export default class SliderView extends Component {
   constructor(props) {
@@ -30,55 +31,45 @@ export default class SliderView extends Component {
   }
   render() {
     return (
-      <div
-        style={{
-          display: "flex",
-          justifyItems: "center",
-          alignItems: "center",
-          flexDirection: "column",
-          flex: "1"
-        }}
-      >
-        <div className="slider-control" style={{ flex: "1" }}>
-          <div style={{ display: "flex", flexDirection: "column", width: 0 }}>
-            <Typography style={{ whiteSpace: "nowrap" }}>
-              <FormattedMessage id={this.props.item.id} />
-            </Typography>
-            <Slider
-              style={{ height: 80 }}
-              value={this.parser(this.props.item.current)}
-              disabled={!!this.state.isDirty}
-              min={this.parser(this.props.item.min)}
-              max={this.parser(this.props.item.max)}
-              step={this.props.item.step}
-              vertical={this.props.item.axis === "y"}
-              reverse
-              onChange={(event, inputVal) => {
-                this.setState({ inputVal: this.parser(inputVal) });
-                this.props.item.current = this.parser(inputVal);
-                this.props.onChange && this.props.onChange(event, inputVal);
-              }}
-              onDragEnd={() => {
-                this.updateValue(this.state.inputVal);
-              }}
-            />
-          </div>
-          <div>
-            <TextField
-              name={this.props.item.id}
-              style={{ width: 50 }}
-              type="number"
-              disabled={this.props.inputDisabled}
-              value={this.parser(this.state.inputVal)}
-              onBlur={() => {
-                this.updateValue(this.state.inputVal);
-              }}
-              onChange={event => {
-                this.setState({ inputVal: this.parser(event.target.value) });
-              }}
-            />
-          </div>
+      <div className="slider-control">
+        <div className="slider-control-inner">
+          <Typography className="slider-control-label">
+            <FormattedMessage id={this.props.item.id} />
+          </Typography>
+          <Slider
+            value={this.parser(this.props.item.current)}
+            disabled={!!this.state.isDirty}
+            min={this.parser(this.props.item.min)}
+            max={this.parser(this.props.item.max)}
+            step={this.props.item.step}
+            vertical={this.props.item.axis === "y"}
+            onChange={(event, inputVal) => {
+              this.setState({ inputVal: this.parser(inputVal) });
+              this.props.item.current = this.parser(inputVal);
+              this.props.onChange && this.props.onChange(event, inputVal);
+            }}
+            onDragEnd={() => {
+              this.updateValue(this.state.inputVal);
+            }}
+          />
         </div>
+        <TextField
+          className="slider-control-input"
+          classes={{ padding: 0 }}
+          inputProps={{
+            className: "slider-control-input"
+          }}
+          name={this.props.item.id}
+          type="number"
+          disabled={this.props.inputDisabled}
+          value={this.parser(this.state.inputVal)}
+          onBlur={() => {
+            this.updateValue(this.state.inputVal);
+          }}
+          onChange={event => {
+            this.setState({ inputVal: this.parser(event.target.value) });
+          }}
+        />
       </div>
     );
   }

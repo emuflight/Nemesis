@@ -247,11 +247,7 @@ export default class DfuView extends Component {
         >
           <FormattedMessage id="common.flash" />
         </Button>
-        <Paper
-          theme={this.state.theme}
-          elevation={3}
-          style={{ margin: "10px", padding: "10px" }}
-        >
+        <Paper theme={this.state.theme} elevation={3}>
           <Typography>
             <ReactMarkdown
               source={this.state.note}

@@ -1,0 +1,20 @@
+.slider-control {
+  display: flex;
+  flex: 1;
+  width: 100px;
+  margin-right: 10px;
+  flex-direction: column; }
+
+.slider-control-inner {
+  display: flex;
+  flex: 1;
+  flex-direction: column; }
+
+.slider-control-input {
+  text-align: right;
+  display: flex;
+  flex: 1;
+  padding: 0 !important; }
+
+.slider-control-label {
+  white-space: nowrap; }

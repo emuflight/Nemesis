@@ -24,11 +24,7 @@ export default class ProfileView extends Component {
   render() {
     return (
       <div>
-        <Paper
-          theme={this.state.theme}
-          elevation={3}
-          style={{ margin: "10px", padding: "10px" }}
-        >
+        <Paper theme={this.state.theme} elevation={3}>
           <HelperSelect
             id={this.props.id}
             className={this.props.id}

@@ -120,8 +120,6 @@ export default class RatesView extends ProfileView {
           theme={this.state.theme}
           elevation={3}
           style={{
-            margin: 10,
-            padding: 10,
             display: "flex",
             justifyItems: "center",
             alignItems: "center"
@@ -154,11 +152,7 @@ export default class RatesView extends ProfileView {
         </Paper>
         <div style={{ display: "flex" }}>
           <div style={{ display: "flex", flex: 1, flexDirection: "column" }}>
-            <Paper
-              theme={this.state.theme}
-              elevation={3}
-              style={{ margin: "10px", padding: "10px" }}
-            >
+            <Paper theme={this.state.theme} elevation={3}>
               <Typography>
                 <FormattedMessage id="common.roll" />
               </Typography>
@@ -181,11 +175,7 @@ export default class RatesView extends ProfileView {
                 value={xcurve[99].y}
               />
             </Paper>
-            <Paper
-              theme={this.state.theme}
-              elevation={3}
-              style={{ margin: "10px", padding: "10px" }}
-            >
+            <Paper theme={this.state.theme} elevation={3}>
               <Typography>
                 <FormattedMessage id="common.pitch" />
               </Typography>
@@ -208,11 +198,7 @@ export default class RatesView extends ProfileView {
                 value={ycurve[99].y}
               />
             </Paper>
-            <Paper
-              theme={this.state.theme}
-              elevation={3}
-              style={{ margin: "10px", padding: "10px" }}
-            >
+            <Paper theme={this.state.theme} elevation={3}>
               <Typography>
                 <FormattedMessage id="common.yaw" />
               </Typography>

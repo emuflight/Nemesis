@@ -62,11 +62,7 @@ export default class AuxChannelView extends Component {
         {this.state.modes &&
           this.state.modes.map((mode, i) => {
             return (
-              <Paper
-                key={mode.id}
-                elevation={3}
-                style={{ margin: "10px", padding: "10px" }}
-              >
+              <Paper key={mode.id} elevation={3}>
                 <AuxChannelItemView
                   telemetry={this.state.telemetry.channels.slice(4)}
                   telemetryMin={this.state.telemetry.min}

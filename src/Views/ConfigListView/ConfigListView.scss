@@ -1,0 +1,17 @@
+.config-list-view {
+  margin: 10px;
+  padding: 10px;
+}
+.config-list-view-sliders {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin: 10px;
+  padding: 10px;
+}
+.config-list-view-dropdowns,
+.config-list-view-inputs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin: 10px;
+  padding: 10px;
+}

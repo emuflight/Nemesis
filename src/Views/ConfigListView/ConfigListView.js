@@ -3,6 +3,7 @@ import DropdownView from "../Items/DropdownView";
 import SliderView from "../Items/SliderView";
 import InputView from "../Items/InputView";
 import Paper from "@material-ui/core/Paper";
+import "./ConfigListView.css";
 
 export default class ConfigListView extends Component {
   constructor(props) {
@@ -27,23 +28,12 @@ export default class ConfigListView extends Component {
         this.props.items.filter(item => item.mode === "slider")) ||
       [];
     return (
-      <div
-        className="config-list-view"
-        style={{
-          margin: "10px",
-          padding: "10px"
-        }}
-      >
+      <div className="config-list-view">
         {!!sliders.length && (
           <Paper
             theme={this.state.theme}
             elevation={3}
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(9, 1fr)",
-              margin: "10px",
-              padding: "10px"
-            }}
+            className="config-list-view-sliders"
           >
             {sliders.map(item => {
               return (
@@ -62,12 +52,7 @@ export default class ConfigListView extends Component {
           <Paper
             theme={this.state.theme}
             elevation={3}
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(3, 1fr)",
-              margin: "10px",
-              padding: "10px"
-            }}
+            className="config-list-view-dropdowns"
           >
             {dropdowns.map(item => {
               return (
@@ -86,12 +71,7 @@ export default class ConfigListView extends Component {
           <Paper
             theme={this.state.theme}
             elevation={3}
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(3, 1fr)",
-              margin: "10px",
-              padding: "10px"
-            }}
+            className="config-list-view-inputs"
           >
             {inputs.map(item => {
               return (

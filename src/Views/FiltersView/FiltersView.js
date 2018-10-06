@@ -46,11 +46,7 @@ export default class FiltersView extends ConfigListView {
       <div style={{ display: "flex", flexDirection: "column" }}>
         {this.props.fcConfig.imuf ? (
           <div style={{ flex: 1 }}>
-            <Paper
-              theme={this.state.theme}
-              elevation={3}
-              style={{ margin: "10px", padding: "10px" }}
-            >
+            <Paper theme={this.state.theme} elevation={3}>
               <InputView
                 notifyDirty={this.props.notifyDirty}
                 item={this.props.fcConfig.imuf_roll_q}
@@ -67,7 +63,7 @@ export default class FiltersView extends ConfigListView {
             <Paper
               theme={this.state.theme}
               elevation={3}
-              style={{ margin: "10px", padding: "10px", display: "flex" }}
+              style={{ display: "flex" }}
             >
               <div style={{ display: "flex", flexDirection: "column" }}>
                 <InputView
@@ -109,11 +105,7 @@ export default class FiltersView extends ConfigListView {
                 />
               </div>
             </Paper>
-            <Paper
-              theme={this.state.theme}
-              elevation={3}
-              style={{ margin: "10px", padding: "10px" }}
-            >
+            <Paper theme={this.state.theme} elevation={3}>
               <InputView
                 notifyDirty={this.props.notifyDirty}
                 item={this.props.fcConfig.imuf_w}
@@ -125,7 +117,7 @@ export default class FiltersView extends ConfigListView {
             <Paper
               theme={this.state.theme}
               elevation={3}
-              style={{ margin: "10px", padding: "10px", display: "flex" }}
+              style={{ display: "flex" }}
             >
               <div style={{ display: "flex", flexDirection: "column" }}>
                 <DropdownView
@@ -154,11 +146,7 @@ export default class FiltersView extends ConfigListView {
                 />
               </div>
             </Paper>
-            <Paper
-              theme={this.state.theme}
-              elevation={3}
-              style={{ margin: "10px", padding: "10px" }}
-            >
+            <Paper theme={this.state.theme} elevation={3}>
               <InputView
                 notifyDirty={this.props.notifyDirty}
                 item={this.props.fcConfig.gyro_notch1_hz}
@@ -168,11 +156,7 @@ export default class FiltersView extends ConfigListView {
                 item={this.props.fcConfig.gyro_notch1_cutoff}
               />
             </Paper>
-            <Paper
-              theme={this.state.theme}
-              elevation={3}
-              style={{ margin: "10px", padding: "10px" }}
-            >
+            <Paper theme={this.state.theme} elevation={3}>
               <InputView
                 notifyDirty={this.props.notifyDirty}
                 item={this.props.fcConfig.gyro_notch2_hz}

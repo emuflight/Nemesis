@@ -12,11 +12,7 @@ export default class FeaturesView extends Component {
 
   render() {
     return (
-      <Paper
-        theme={this.state.theme}
-        elevation={3}
-        style={{ margin: "10px", padding: "10px" }}
-      >
+      <Paper theme={this.state.theme} elevation={3}>
         <div
           style={{
             display: "grid",

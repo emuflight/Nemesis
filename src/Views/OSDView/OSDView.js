@@ -107,11 +107,7 @@ export default class OSDView extends Component {
     });
     let maxRows = this.state.videoMode === "NTSC" ? 13 : 18;
     return (
-      <Paper
-        theme={this.state.theme}
-        elevation={3}
-        style={{ margin: "0 auto", padding: "10px", display: "flex" }}
-      >
+      <Paper theme={this.state.theme} elevation={3} style={{ display: "flex" }}>
         <div>
           <div
             style={{
@@ -156,11 +152,7 @@ export default class OSDView extends Component {
                 <Typography variant="headline">DROP ELEMENTS HERE</Typography>
               </div>
             )}
-            <Paper
-              theme={this.state.theme}
-              elevation={3}
-              style={{ margin: "10px", padding: "10px" }}
-            >
+            <Paper theme={this.state.theme} elevation={3}>
               <GridLayout
                 style={{
                   backgroundImage: "url('assets/osd-backdrop.png')",

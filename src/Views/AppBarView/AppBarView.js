@@ -15,7 +15,8 @@ import { FormattedMessage } from "react-intl";
 
 const styles = theme => ({
   root: {
-    width: "100%"
+    width: "100%",
+    magin: 0
   },
   grow: {
     flexGrow: 1

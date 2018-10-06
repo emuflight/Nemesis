@@ -79,7 +79,8 @@ export default class TpaCurveView extends Component {
               style={{
                 marginTop: 10,
                 display: "flex",
-                flexDirection: "column"
+                flexDirection: "column",
+                margin: "0 auto"
               }}
             >
               <Typography>
@@ -102,7 +103,8 @@ export default class TpaCurveView extends Component {
               style={{
                 marginTop: 10,
                 display: "flex",
-                flexDirection: "column"
+                flexDirection: "column",
+                margin: "0 auto"
               }}
             >
               <Typography>
@@ -124,7 +126,8 @@ export default class TpaCurveView extends Component {
               style={{
                 marginTop: 10,
                 display: "flex",
-                flexDirection: "column"
+                flexDirection: "column",
+                margin: "0 auto"
               }}
             >
               <Typography>

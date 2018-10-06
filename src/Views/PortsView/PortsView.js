@@ -33,7 +33,7 @@ export default class PortsView extends Component {
               key={port.id}
               theme={this.state.theme}
               elevation={3}
-              style={{ margin: "10px", padding: "10px", display: "flex" }}
+              style={{ display: "flex" }}
             >
               <PortsItemView
                 notifyDirty={(dirty, stateObj, newVal) =>
