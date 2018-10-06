@@ -36,7 +36,7 @@ export default class Disconnected extends React.Component {
           <CardContent>
             <Avatar
               alt="Helio RC, LLL"
-              src="/android-chrome-192x192.png"
+              src="assets/icons/png/192x192.png"
               style={{ width: 60, height: 60 }}
               onClick={() => localStorage.clear()}
             />
