@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import TpaCurveItemView from "./TpaCurveItemView";
+import VerticalSliderView from "../Items/VerticalSliderView";
 import FCConnector from "../../utilities/FCConnector";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { FormattedMessage } from "react-intl";
-
+import "./TpaCurveItem.css";
 const formatCurveItems = array => {
   return array.map((item, i) => {
     return {
@@ -90,7 +90,13 @@ export default class TpaCurveView extends Component {
               <div style={{ display: "flex" }}>
                 {this.state.kp.map((item, i) => {
                   return (
-                    <TpaCurveItemView
+                    <VerticalSliderView
+                      labelClassName="tpa-slider-control-label"
+                      sliderClassName="tpa-slider-control-slider"
+                      style={{ width: 40 }}
+                      textInputProps={{
+                        className: "tpa-slider-control-input"
+                      }}
                       key={`kp${i}`}
                       updateCurve={value => this.updateValue("kp", i, value)}
                       item={item}
@@ -113,7 +119,13 @@ export default class TpaCurveView extends Component {
               <div style={{ display: "flex" }}>
                 {this.state.ki.map((item, i) => {
                   return (
-                    <TpaCurveItemView
+                    <VerticalSliderView
+                      labelClassName="tpa-slider-control-label"
+                      sliderClassName="tpa-slider-control-slider"
+                      style={{ width: 40 }}
+                      textInputProps={{
+                        className: "tpa-slider-control-input"
+                      }}
                       key={`ki${i}`}
                       updateCurve={value => this.updateValue("ki", i, value)}
                       item={item}
@@ -136,7 +148,13 @@ export default class TpaCurveView extends Component {
               <div style={{ display: "flex" }}>
                 {this.state.kd.map((item, i) => {
                   return (
-                    <TpaCurveItemView
+                    <VerticalSliderView
+                      labelClassName="tpa-slider-control-label"
+                      sliderClassName="tpa-slider-control-slider"
+                      style={{ width: 40 }}
+                      textInputProps={{
+                        className: "tpa-slider-control-input"
+                      }}
                       key={`kd${i}`}
                       updateCurve={value => this.updateValue("kd", i, value)}
                       item={item}

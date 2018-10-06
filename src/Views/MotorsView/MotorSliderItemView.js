@@ -1,6 +1,6 @@
-import SliderView from "../Items/SliderView";
+import VerticalSliderView from "../Items/VerticalSliderView";
 
-export default class MotorSliderItemView extends SliderView {
+export default class MotorSliderItemView extends VerticalSliderView {
   constructor(props) {
     super(props);
     this.parser = parseInt;

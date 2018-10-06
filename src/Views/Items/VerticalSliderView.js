@@ -3,9 +3,8 @@ import Slider from "@material-ui/lab/Slider";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import { FormattedMessage } from "react-intl";
-import "./TpaCurveItem.css";
 
-export default class TpaCurveItemView extends Component {
+export default class VerticalSliderView extends Component {
   constructor(props) {
     super(props);
     this.parser = parseInt;
@@ -25,16 +24,17 @@ export default class TpaCurveItemView extends Component {
   }
   render() {
     return (
-      <div style={{ width: 40 }}>
+      <div style={this.props.style}>
         <div style={{ display: "flex", flexDirection: "column" }}>
           <Typography
             variant="caption"
-            style={{ marginLeft: 5, whiteSpace: "nowrap" }}
+            className={this.props.labelClassName}
+            style={{ whiteSpace: "nowrap" }}
           >
             <FormattedMessage id={this.props.item.id} />
           </Typography>
           <Slider
-            style={{ height: 80 }}
+            className={this.props.sliderClassName}
             value={this.parser(this.props.item.current)}
             disabled={!!this.state.isDirty}
             min={this.parser(this.props.item.min)}
@@ -55,9 +55,7 @@ export default class TpaCurveItemView extends Component {
         <div>
           <TextField
             name={this.props.item.id}
-            inputProps={{
-              className: "tpa-slider-control-input"
-            }}
+            inputProps={this.props.textInputProps}
             type="number"
             disabled={this.props.inputDisabled}
             value={this.parser(this.state.inputVal)}

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import MotorSliderItemView from "./MotorSliderItemView";
 import SafetyView from "../SafetyView/SafetyView";
 import FCConnector from "../../utilities/FCConnector";
+import "./MotorSliders.css";
 
 export default class MotorsSlidersView extends Component {
   constructor(props) {
@@ -49,6 +50,15 @@ export default class MotorsSlidersView extends Component {
           {this.state.motors.map((item, i) => {
             return (
               <MotorSliderItemView
+                sliderClassName="motor-control-slider"
+                labelClassName="motor-control-slider-label"
+                style={{ flex: 1 }}
+                textInputProps={{
+                  style: {
+                    width: 60,
+                    textAlign: "right"
+                  }
+                }}
                 key={`motor ${i}`}
                 inputDisabled={true}
                 updateMotor={value => this.updateValue(i + 1, value)}
