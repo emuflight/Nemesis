@@ -61,6 +61,21 @@ export default class GyroOrientationView extends Component {
     }
   };
 
+  resetOrientation() {
+    return FCConnector.setValue("align_board_roll", "0").then(() => {
+      return FCConnector.setValue("align_board_pitch", "0").then(() => {
+        return FCConnector.setValue("align_board_yaw", "0").then(() => {
+          return FCConnector.setValue("set acc_calibration", "0,0,0").then(
+            () => {
+              return FCConnector.setValue("acc_hardware", "AUTO").then(() => {
+                return this.setOrientation("DEFAULT");
+              });
+            }
+          );
+        });
+      });
+    });
+  }
   setOrientation(orientation) {
     return FCConnector.setValue("align_gyro", orientation).then(() => {
       return FCConnector.setValue("align_acc", orientation).then(() => {
@@ -143,13 +158,11 @@ export default class GyroOrientationView extends Component {
   componentDidMount() {
     FCConnector.webSockets.addEventListener("message", this.handleGyroData);
     if (!this.state.calibratedFlat) {
-      return this.setOrientation("DEFAULT").then(() => {
-        return FCConnector.setValue("acc_hardware", "AUTO").then(() => {
-          return this.props.handleSave().then(() => {
-            setTimeout(() => {
-              this.setState({ ready: true });
-            }, 5000);
-          });
+      return this.resetOrientation().then(() => {
+        return this.props.handleSave().then(() => {
+          setTimeout(() => {
+            this.setState({ ready: true });
+          }, 5000);
         });
       });
     }
