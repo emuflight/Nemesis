@@ -25,7 +25,7 @@ function createWindow() {
     minWidth: 1281,
     minHeight: 800,
     backgroundColor: "#303030",
-    icon: path.join(__dirname, "../build/android-chrome-192x192.png"),
+    icon: path.join(__dirname, "assets/icons/png/64x64.png"),
     webPreferences: {
       webSecurity: false
     },

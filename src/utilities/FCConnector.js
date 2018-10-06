@@ -1,7 +1,7 @@
 export default new class FCConnector {
-  serviceUrl = "http://localhost:9001";
+  serviceUrl = `http://${window.location.hostname}:9001`;
   startDetect(onFcConnect) {
-    this.webSockets = new WebSocket("ws://127.0.0.1:9002");
+    this.webSockets = new WebSocket(`ws://${window.location.hostname}:9002`);
 
     this.webSockets.addEventListener("open", () => {
       console.log("opened");
