@@ -41,7 +41,6 @@ export default class InfoBarView extends Component {
     try {
       let telemetry = JSON.parse(message.data);
       if (telemetry.type === "status") {
-        console.log(telemetry);
         this.setState({ telemetry });
       }
     } catch (ex) {

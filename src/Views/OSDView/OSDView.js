@@ -12,6 +12,7 @@ import LinearProgress from "@material-ui/core/LinearProgress";
 import ConfigListView from "../ConfigListView/ConfigListView";
 import FCConnector from "../../utilities/FCConnector";
 import HelperSelect from "../Items/HelperSelect";
+import OSDElement from "./OSDElement";
 import { FormattedMessage } from "react-intl";
 
 const visibilityFlag = 0x0800;
@@ -36,15 +37,16 @@ export default class OSDView extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      uploadProgress: 0,
       theme: props.theme,
       elementsAvailable: props.items.filter(item => {
-        return item.id.startsWith("osd_") && item.mode === "DIRECT";
+        console.log(item);
+        return item.id.endsWith("_pos");
       }),
       videoMode:
         props.fcConfig.vcd_video_system &&
         props.fcConfig.vcd_video_system.current,
       uploadingFont: false,
-      uploadProgress: 0,
       selectedFont: "butterflight"
     };
 
@@ -64,7 +66,7 @@ export default class OSDView extends Component {
       this.props.notifyDirty(true, gridElement, newPos);
     });
   }
-  handleUpload() {
+  handleUpload(message) {
     this.setState({ uploadingFont: true });
     FCConnector.uploadFont(this.state.selectedFont).then(() => {
       this.setState({ uploadProgress: 1 });
@@ -72,12 +74,14 @@ export default class OSDView extends Component {
   }
 
   handleUploadProgress = mesage => {
-    console.log(JSON.parse(mesage.data));
-    let newProgress = this.state.uploadProgress + 1;
-    this.setState({
-      uploadProgress: newProgress,
-      uploadingFont: !(newProgress >= 256)
-    });
+    let notification = JSON.parse(mesage.data);
+    if (notification.progress) {
+      let newProgress = this.state.uploadProgress + 1;
+      this.setState({
+        uploadProgress: newProgress,
+        uploadingFont: !(newProgress >= 256)
+      });
+    }
   };
 
   componentDidMount() {
@@ -99,7 +103,7 @@ export default class OSDView extends Component {
       checkOSDVal(item.current)
     );
     let nonElementSettings = this.props.items.filter(item => {
-      return item.mode !== "DIRECT";
+      return !item.id.endsWith("_pos");
     });
     let maxRows = this.state.videoMode === "NTSC" ? 13 : 18;
     return (
@@ -194,7 +198,7 @@ export default class OSDView extends Component {
                         isResizable: false
                       }}
                     >
-                      {item.id}
+                      <OSDElement fcConfig={this.props.fcConfig} id={item.id} />
                     </div>
                   );
                 })}
@@ -239,7 +243,7 @@ export default class OSDView extends Component {
                         }}
                       />
                     }
-                    label={item.id}
+                    label={<FormattedMessage id={item.id} />}
                   />
                 </FormGroup>
               );

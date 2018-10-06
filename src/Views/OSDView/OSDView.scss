@@ -20,3 +20,71 @@
   color: white;
   opacity: 0.2;
 }
+
+.osd-icon {
+  margin-right: 5px;
+  font-size: 0.8rem;
+}
+
+.osd-icon-label {
+  &.craft_name {
+    text-transform: capitalize;
+  }
+  color: whitesmoke;
+  font-weight: bold;
+  .osd-icon {
+    margin-right: 5px;
+    font-size: 0.9rem;
+    position: relative;
+    bottom: 2px;
+  }
+  .mah {
+    font-size: 0.4rem;
+    text-align: center;
+  }
+  .compass-bar {
+    line-height: 10px;
+  }
+  letter-spacing: 5px;
+  white-space: nowrap;
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.ah_sidebar {
+  height: 7rem;
+  width: 15rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  right: 7rem;
+  bottom: 2rem;
+  .ah_sidebar-left,
+  .ah_sidebar-right {
+    width: 0.8rem;
+  }
+  .ah_sidebar-mid {
+    flex-grow: 1;
+  }
+  cursor: pointer;
+}
+
+.ah_bar {
+  @extend .osd-icon-label;
+  height: 7rem;
+  width: 9rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: 5rem;
+  right: 4rem;
+  .osd-icon {
+    position: relative;
+    top: 2px;
+  }
+  cursor: pointer;
+}
