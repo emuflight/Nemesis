@@ -33,7 +33,7 @@ ReactDOM.render(
   <IntlProvider
     locale={language}
     defaultLocale="en"
-    messages={messages[language] || "en"}
+    messages={messages[language] || messages.en}
   >
     <App
       style={{ flex: "1", display: "flex", positon: "relative", width: "100%" }}
