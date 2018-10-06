@@ -347,11 +347,12 @@ export default class Connected extends Component {
           <List style={{ display: "block" }}>
             {this.routes.map(route => {
               return (
-                <MenuItem id={route.key} key={route.key}>
-                  <div
-                    style={{ flexGrow: 1 }}
-                    onClick={() => this.handleMenuItemClick(route.key)}
-                  >
+                <MenuItem
+                  id={route.key}
+                  key={route.key}
+                  onClick={() => this.handleMenuItemClick(route.key)}
+                >
+                  <div style={{ flexGrow: 1 }}>
                     <FormattedMessage id={route.key} />
                   </div>
                   {route.incompeteItems && (

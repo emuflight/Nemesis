@@ -5,25 +5,31 @@ let openConnection;
 const setupConnection = device => {
   return new Promise((resolve, reject) => {
     const connect = () => {
-      console.log("Trying to open port: ", device.comName);
-      openConnection.open(openError => {
-        if (openError) {
-          console.log("OPEN ERROR: ", openError);
-          reject(openError);
-        } else {
-          openConnection.write("!\n", cliError => {
-            if (cliError) {
-              console.log("couldn't get into cli mode: ", cliError);
+      if (!openConnection.isOpen) {
+        console.log("Trying to open port: ", device.comName);
+        try {
+          openConnection.open(openError => {
+            if (openError) {
+              console.log("OPEN ERROR: ", openError);
               reject(openError);
             } else {
-              setTimeout(() => {
-                openConnection.read();
-                resolve(openConnection);
-              }, 200);
+              openConnection.write("!\n", cliError => {
+                if (cliError) {
+                  console.log("couldn't get into cli mode: ", cliError);
+                  reject(cliError);
+                } else {
+                  setTimeout(() => {
+                    openConnection.read();
+                    resolve(openConnection);
+                  }, 200);
+                }
+              });
             }
           });
+        } catch (ex) {
+          reject(error);
         }
-      });
+      }
     };
     if (!openConnection) {
       console.log("creating new port port: ", device.comName);
@@ -67,36 +73,40 @@ let currentCommand;
 const runQueue = next => {
   if (!next) return;
   currentCommand = next;
-  setupConnection(next.device).then(port => {
-    console.log(
-      `sending command: ${next.command} on port ${next.device.comName}`
-    );
-    port.write(`${next.command}\n`, err => {
-      if (err) {
-        console.log("WRITE ERROR: ", err);
-        err && next.reject(err);
-        currentCommand = null;
-        runQueue(commandQueue.pop());
-      }
-    });
-    let currentRecBuffer = "";
-    let interval = setInterval(() => {
-      let more = port.read();
-      if (more) {
-        if (next.encode) {
-          let msg = more.toString(next.encode);
-          currentRecBuffer += msg;
-        } else {
-          currentRecBuffer = more;
+  setupConnection(next.device)
+    .then(port => {
+      console.log(
+        `sending command: ${next.command} on port ${next.device.comName}`
+      );
+      port.write(`${next.command}\n`, err => {
+        if (err) {
+          console.log("WRITE ERROR: ", err);
+          err && next.reject(err);
+          currentCommand = null;
+          runQueue(commandQueue.pop());
         }
-      } else {
-        interval && clearInterval(interval);
-        next.resolve(currentRecBuffer);
-        currentCommand = null;
-        runQueue(commandQueue.pop());
-      }
-    }, next.waitMs);
-  });
+      });
+      let currentRecBuffer = "";
+      let interval = setInterval(() => {
+        let more = port.read();
+        if (more) {
+          if (next.encode) {
+            let msg = more.toString(next.encode);
+            currentRecBuffer += msg;
+          } else {
+            currentRecBuffer = more;
+          }
+        } else {
+          interval && clearInterval(interval);
+          next.resolve(currentRecBuffer);
+          currentCommand = null;
+          runQueue(commandQueue.pop());
+        }
+      }, next.waitMs);
+    })
+    .catch(error => {
+      console.log(error);
+    });
 };
 
 const sendCommand = (device, command, waitMs = 200, encode = "utf8") => {

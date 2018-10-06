@@ -7,7 +7,9 @@ export default class DropdownView extends Component {
     super(props);
     this.state = props.item;
   }
-
+  componentWillReceiveProps(nextProps) {
+    this.setState(nextProps.item);
+  }
   render() {
     return (
       <HelperSelect
@@ -20,12 +22,15 @@ export default class DropdownView extends Component {
         disabled={!!this.state.isDirty}
         onChange={event => {
           let payload = event.target.value;
-          let isDirty = this.state.current !== payload && !!this.state.current;
-          this.props.notifyDirty(isDirty, this.state, payload);
-          this.setState({ current: payload, isDirty: isDirty });
-          FCConnector.setValue(this.state.id, payload).then(() => {
-            this.setState({ isDirty: false });
-          });
+          let isDirty = this.state.current !== payload;
+          if (isDirty) {
+            this.props.item.current = payload;
+            this.props.notifyDirty(isDirty, this.state, payload);
+            this.setState({ current: payload, isDirty: isDirty });
+            FCConnector.setValue(this.state.id, payload).then(() => {
+              this.setState({ isDirty: false });
+            });
+          }
         }}
         items={this.state.values}
       />
