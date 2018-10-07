@@ -193,7 +193,9 @@ const getTpaCurves = deviceInfo => {
   return sendCommand(deviceInfo, "tpacurve");
 };
 const setTpaCurves = (deviceInfo, pid, profile, newCurve) => {
-  return sendCommand(deviceInfo, `tpacurve ${pid} ${newCurve}`);
+  let command = `tpacurve ${pid} ${newCurve}`;
+  console.log(command);
+  return sendCommand(deviceInfo, command);
 };
 
 const saveEEPROM = device => {
