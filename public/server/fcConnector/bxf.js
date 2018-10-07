@@ -188,6 +188,14 @@ const spinTestMotor = (device, motor, startStop) => {
     10
   );
 };
+
+const getTpaCurves = deviceInfo => {
+  return sendCommand(deviceInfo, "tpacurve");
+};
+const setTpaCurves = (deviceInfo, pid, profile, newCurve) => {
+  return sendCommand(deviceInfo, `tpacurve ${pid} ${newCurve}`);
+};
+
 const saveEEPROM = device => {
   return sendCommand(device, `msp 250`);
 };
@@ -357,5 +365,7 @@ module.exports = {
   setChannelMap: setChannelMap,
   getModes: getModes,
   setMode: setMode,
+  getTpaCurves: getTpaCurves,
+  setTpaCurves: setTpaCurves,
   saveEEPROM: saveEEPROM
 };

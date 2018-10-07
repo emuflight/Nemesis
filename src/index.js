@@ -28,12 +28,12 @@ const messages = {
   ru: messages_ru
 };
 addLocaleData([
-    ...locale_en,
-    ...locale_de,
-    ...locale_es,
-    ...locale_fr,
-    ...locale_it,
-    ...locale_ru
+  ...locale_en,
+  ...locale_de,
+  ...locale_es,
+  ...locale_fr,
+  ...locale_it,
+  ...locale_ru
 ]);
 const language = navigator.language.split(/[-_]/)[0]; // language without region code
 

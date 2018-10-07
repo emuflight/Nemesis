@@ -78,9 +78,8 @@ export default class Connected extends Component {
     //TODO: filter config values based on text.
   };
   handleSave = () => {
-    return this.props.handleSave().then(() => {
-      this.setState({ isDirty: false });
-    });
+    this.setState({ isDirty: false });
+    return this.props.handleSave();
   };
 
   handleMenuItemClick = key => {
@@ -306,7 +305,11 @@ export default class Connected extends Component {
     }
 
     return (
-      <Paper theme={this.state.theme} elevation={3} className="connected-root">
+      <Paper
+        theme={this.state.theme}
+        elevation={3}
+        className={`connected-root ${this.state.fcConfig.version.fw}`}
+      >
         <AppBarView
           rebooting={this.props.rebooting}
           position="absolute"

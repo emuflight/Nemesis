@@ -279,6 +279,20 @@ module.exports = new class FcConnector {
       return bxfConnector.spinTestMotor(deviceInfo, motor, startStop);
     }
   }
+  getTpaCurves(deviceInfo, profile) {
+    if (deviceInfo.hid) {
+      return rf1Connector.getTpaCurves(deviceInfo, profile);
+    } else {
+      return bxfConnector.getTpaCurves(deviceInfo, profile);
+    }
+  }
+  setTpaCurves(deviceInfo, pid, profile, newCurve) {
+    if (deviceInfo.hid) {
+      return rf1Connector.setTpaCurves(deviceInfo, pid, profile, newCurve);
+    } else {
+      return bxfConnector.setTpaCurves(deviceInfo, pid, profile, newCurve);
+    }
+  }
   sendCommand(deviceInfo, command) {
     if (deviceInfo.hid) {
       return rf1Connector.sendCommand(deviceInfo, command);

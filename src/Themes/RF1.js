@@ -59,7 +59,7 @@ const theme = createMuiTheme({
     MuiSlider: {
       root: {
         padding: 0,
-        width: 100,
+        width: 200,
         marginTop: 10,
         height: 10
       },

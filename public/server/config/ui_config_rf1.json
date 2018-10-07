@@ -309,163 +309,163 @@
       "mode": "slider",
       "step": 1,
       "parse": "int",
-      "axis": "y"
+      "axis": "x"
     },
     "roll_kp1": {
       "mode": "slider",
       "step": 1,
       "parse": "int",
-      "axis": "y"
+      "axis": "x"
     },
     "pitch_kp1": {
       "mode": "slider",
       "step": 1,
       "parse": "int",
-      "axis": "y"
+      "axis": "x"
     },
     "yaw_ki1": {
       "mode": "slider",
       "step": 1,
       "parse": "int",
-      "axis": "y"
+      "axis": "x"
     },
     "roll_ki1": {
       "mode": "slider",
       "step": 1,
       "parse": "int",
-      "axis": "y"
+      "axis": "x"
     },
     "pitch_ki1": {
       "mode": "slider",
       "step": 1,
       "parse": "int",
-      "axis": "y"
+      "axis": "x"
     },
     "yaw_kd1": {
       "mode": "slider",
       "step": 1,
       "parse": "int",
-      "axis": "y"
+      "axis": "x"
     },
     "roll_kd1": {
       "mode": "slider",
       "step": 1,
       "parse": "int",
-      "axis": "y"
+      "axis": "x"
     },
     "pitch_kd1": {
       "mode": "slider",
       "step": 1,
       "parse": "int",
-      "axis": "y"
+      "axis": "x"
     },
     "yaw_kp2": {
       "mode": "slider",
       "step": 1,
       "parse": "int",
-      "axis": "y"
+      "axis": "x"
     },
     "roll_kp2": {
       "mode": "slider",
       "step": 1,
       "parse": "int",
-      "axis": "y"
+      "axis": "x"
     },
     "pitch_kp2": {
       "mode": "slider",
       "step": 1,
       "parse": "int",
-      "axis": "y"
+      "axis": "x"
     },
     "yaw_ki2": {
       "mode": "slider",
       "step": 1,
       "parse": "int",
-      "axis": "y"
+      "axis": "x"
     },
     "roll_ki2": {
       "mode": "slider",
       "step": 1,
       "parse": "int",
-      "axis": "y"
+      "axis": "x"
     },
     "pitch_ki2": {
       "mode": "slider",
       "step": 1,
       "parse": "int",
-      "axis": "y"
+      "axis": "x"
     },
     "yaw_kd2": {
       "mode": "slider",
       "step": 1,
       "parse": "int",
-      "axis": "y"
+      "axis": "x"
     },
     "roll_kd2": {
       "mode": "slider",
       "step": 1,
       "parse": "int",
-      "axis": "y"
+      "axis": "x"
     },
     "pitch_kd2": {
       "mode": "slider",
       "step": 1,
       "parse": "int",
-      "axis": "y"
+      "axis": "x"
     },
     "yaw_kp3": {
       "mode": "slider",
       "step": 1,
       "parse": "int",
-      "axis": "y"
+      "axis": "x"
     },
     "roll_kp3": {
       "mode": "slider",
       "step": 1,
       "parse": "int",
-      "axis": "y"
+      "axis": "x"
     },
     "pitch_kp3": {
       "mode": "slider",
       "step": 1,
       "parse": "int",
-      "axis": "y"
+      "axis": "x"
     },
     "yaw_ki3": {
       "mode": "slider",
       "step": 1,
       "parse": "int",
-      "axis": "y"
+      "axis": "x"
     },
     "roll_ki3": {
       "mode": "slider",
       "step": 1,
       "parse": "int",
-      "axis": "y"
+      "axis": "x"
     },
     "pitch_ki3": {
       "mode": "slider",
       "step": 1,
       "parse": "int",
-      "axis": "y"
+      "axis": "x"
     },
     "yaw_kd3": {
       "mode": "slider",
       "step": 1,
       "parse": "int",
-      "axis": "y"
+      "axis": "x"
     },
     "roll_kd3": {
       "mode": "slider",
       "step": 1,
       "parse": "int",
-      "axis": "y"
+      "axis": "x"
     },
     "pitch_kd3": {
       "mode": "slider",
       "step": 1,
       "parse": "int",
-      "axis": "y"
+      "axis": "x"
     },
     "pname1": {
       "type": "string",

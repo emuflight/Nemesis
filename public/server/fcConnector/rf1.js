@@ -167,6 +167,28 @@ const spinTestMotor = (device, motor, startStop) => {
     return sendCommand(device, `Idle ${parseInt(motor) - 1}`, 10);
   }
 };
+
+const getTpaCurves = (device, profile) => {
+  let profileInt = parseInt(profile) + 1;
+  return sendCommand(device, `dump`, 20).then(resp => {
+    let params = resp
+      .split("\n")
+      .filter(line => line.startsWith(`tpa`))
+      .reduce((reducer, line) => {
+        let parts = line.split(" ");
+        if (parts[0].endsWith(profileInt)) {
+          reducer[parts[0].slice(3, 5)] = parts[1].split("=");
+        }
+        return reducer;
+      }, {});
+    return params;
+  });
+};
+const setTpaCurves = (device, pid, profile, newCurve) => {
+  let command = `tpa${pid}${parseInt(profile, 10) + 1} ${newCurve}`;
+  console.log(command);
+  return sendCommand(device, command, 20);
+};
 const getChannelMap = device => {
   return sendCommand(device, `dump rccf`).then(response => {
     let params = response.split("set ").reduce((reducer, line) => {
@@ -315,5 +337,7 @@ module.exports = {
   setChannelMap: setChannelMap,
   getModes: getModes,
   setMode: setMode,
+  getTpaCurves: getTpaCurves,
+  setTpaCurves: setTpaCurves,
   saveEEPROM: saveEEPROM
 };

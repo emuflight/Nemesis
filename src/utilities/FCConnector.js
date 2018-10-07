@@ -149,6 +149,15 @@ export default new class FCConnector {
     );
   }
 
+  getTpaCurves(profile) {
+    return fetch(`${this.serviceUrl}/tpa/${profile}`).then(res => res.json());
+  }
+
+  setTpaCurves(pid, profile, newCurve) {
+    return fetch(
+      `${this.serviceUrl}/tpa/${pid}/${profile}/${encodeURIComponent(newCurve)}`
+    );
+  }
   stopTelemetry() {
     return fetch(`${this.serviceUrl}/telem/stop`);
   }

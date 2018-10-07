@@ -46,8 +46,10 @@ export default class TpaCurveView extends Component {
       right.current = Math.floor((middle.current + right.current) / 2);
     }
     this.setState(updateObj);
-    return FCConnector.sendCommand(
-      `tpacurve ${k} ${this.state[k].map(item => item.current).join("=")}`
+    return FCConnector.setTpaCurves(
+      k,
+      this.props.activeProfile,
+      this.state[k].map(item => item.current).join("=")
     ).then(() => this.props.notifyDirty(true, this.state, val));
   }
   render() {

@@ -35,6 +35,10 @@ export default class PidsView extends ProfileView {
     if (this.state.isBxF) {
       this.updatePidValues(this.props.fcConfig.gyro_sync_denom.current);
       this.handleTpaChange(this.props.fcConfig.tpa_type.current);
+    } else {
+      return FCConnector.getTpaCurves(this.props.active).then(curves => {
+        this.setState({ tpaCurves: curves });
+      });
     }
   };
   handleTpaChange = newVal => {
@@ -144,13 +148,18 @@ export default class PidsView extends ProfileView {
             />
           </Paper>
         )}
-
+        {!this.state.isBxF &&
+          this.state.tpaCurves && (
+            <Paper theme={this.state.theme} elevation={3}>
+              <TpaCurveView
+                activeProfile={this.props.active}
+                notifyDirty={this.props.notifyDirty}
+                item={this.state.tpaCurves}
+              />
+            </Paper>
+          )}
         {this.state.isBxF && (
-          <Paper
-            theme={this.state.theme}
-            elevation={3}
-            style={{ margin: "10px", padding: "10px" }}
-          >
+          <Paper theme={this.state.theme} elevation={3}>
             <DropdownView
               notifyDirty={(isDirty, state, payload) => {
                 this.handleTpaChange(payload);

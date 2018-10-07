@@ -206,6 +206,30 @@ app.get("/imuf/:binUrl", (req, res) => {
   });
 });
 
+app.get("/tpa/:profile", (req, res) => {
+  devices.get((err, connectedDevice) => {
+    if (err || !connectedDevice) return res.status(400).send(err);
+    fcConnector
+      .getTpaCurves(connectedDevice, req.params.profile)
+      .then(response => {
+        res.status(200).send(response);
+      });
+  });
+});
+
+app.get("/tpa/:pid/:profile/:newCurve", (req, res) => {
+  devices.get((err, connectedDevice) => {
+    if (err || !connectedDevice) return res.status(400).send(err);
+    fcConnector.setTpaCurves(
+      connectedDevice,
+      req.params.pid,
+      req.params.profile,
+      req.params.newCurve
+    );
+    res.sendStatus(200);
+  });
+});
+
 app.get("/dfu", (req, res) => {
   devices.get((err, connectedDevice) => {
     if (err) return res.status(400).send(err);
