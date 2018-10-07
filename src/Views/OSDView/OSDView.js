@@ -40,7 +40,6 @@ export default class OSDView extends Component {
       uploadProgress: 0,
       theme: props.theme,
       elementsAvailable: props.items.filter(item => {
-        console.log(item);
         return item.id.endsWith("_pos");
       }),
       videoMode:
@@ -51,13 +50,13 @@ export default class OSDView extends Component {
     };
 
     this.fontList = [
-      { label: "Bold", value: "bold" },
-      { label: "Butterflight", value: "butterflight" },
-      { label: "Cleanflight", value: "cleanflight" },
-      { label: "Default", value: "default" },
-      { label: "Digital", value: "digital" },
-      { label: "Extra Large", value: "extra_large" },
-      { label: "Large", value: "large" }
+      { label: "DEFAULT", value: "default" },
+      { label: "BUTTERFLIGHT", value: "butterflight" },
+      { label: "CLEANFLIGHT", value: "cleanflight" },
+      { label: "DIGITAL", value: "digital" },
+      { label: "BOLD", value: "bold" },
+      { label: "LARGE", value: "large" },
+      { label: "X-LARGE", value: "extra_large" }
     ];
   }
   setOSDElement(gridElement) {
@@ -117,8 +116,8 @@ export default class OSDView extends Component {
             }}
           >
             <HelperSelect
-              name="Font Selector"
-              label="Font Selector"
+              name="osd.select-font"
+              label="osd.select-font"
               value={this.state.selectedFont}
               onChange={(event, elem) => {
                 this.setState({ selectedFont: elem.key });

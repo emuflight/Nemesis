@@ -7,9 +7,7 @@ export default class DropdownView extends Component {
     super(props);
     this.state = props.item;
   }
-  componentWillReceiveProps(nextProps) {
-    this.setState(nextProps.item);
-  }
+
   render() {
     return (
       <HelperSelect

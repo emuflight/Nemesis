@@ -107,7 +107,8 @@
       "align_board_yaw",
       "min_throttle",
       "max_throttle",
-      "accxy_deadband"
+      "accxy_deadband",
+      "crash_recovery"
     ],
     "RX": [
       "mid_rc",
@@ -205,7 +206,8 @@
       "osd_stat_tim_2",
       "vcd_video_system",
       "vcd_h_offset",
-      "vcd_v_offset"
+      "vcd_v_offset",
+      "displayport_max7456_inv"
     ],
     "PORTS": ["ports"],
     "BLACKBOX": [

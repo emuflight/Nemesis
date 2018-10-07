@@ -194,7 +194,6 @@ const getTpaCurves = deviceInfo => {
 };
 const setTpaCurves = (deviceInfo, pid, profile, newCurve) => {
   let command = `tpacurve ${pid} ${newCurve}`;
-  console.log(command);
   return sendCommand(deviceInfo, command);
 };
 
@@ -239,7 +238,7 @@ const storage = (device, command) => {
     case "info":
       //MSP_DATAFLASH_SUMMARY
       return sendCommand(device, "msp 70", 50, false).then(storageInfo => {
-        let data = new DataView(new Uint8Array(storageInfo).buffer, 12);
+        let data = new DataView(new Uint8Array(storageInfo).buffer, 11);
         var flags = data.getUint8(0);
         return {
           ready: (flags & 1) != 0,

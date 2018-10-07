@@ -70,7 +70,7 @@ export default class CalibrateMotorsSteps extends Component {
           </Typography>
         </div>
       );
-    } else if (this.state.telemetry.volts < 1 && !this.state.throttleUp) {
+    } else if (this.state.telemetry.volts < 3 && !this.state.throttleUp) {
       return (
         <div>
           <Typography variant="headline">

@@ -6,7 +6,7 @@ export default class FeaturesView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      features: props.features
+      features: props.features.sort((a, b) => a.id > b.id)
     };
   }
 
