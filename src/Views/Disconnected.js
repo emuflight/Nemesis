@@ -17,7 +17,7 @@ export default class Disconnected extends Component {
   }
   render() {
     let device = this.props.device;
-    let openCli = device && device.error;
+    let openCli = !!(device && device.incompatible);
     return (
       <Paper
         theme={this.state.theme}
@@ -71,14 +71,16 @@ export default class Disconnected extends Component {
             )}
             {openCli && (
               <CliView
-                open={!!openCli}
+                open={openCli}
                 startText={
-                  <FormattedHTMLMessage
-                    id="disconnected.cli.incompatible"
-                    values={{ error: device.error }}
-                  />
+                  (
+                    <FormattedHTMLMessage
+                      id="disconnected.cli.incompatible"
+                      values={{ error: device.error }}
+                    />
+                  ).innerHTML
                 }
-                stayOpen={!!openCli}
+                stayOpen={openCli}
                 ref="cliView"
               />
             )}

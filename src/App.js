@@ -54,7 +54,8 @@ class App extends Component {
             id: device.comName,
             dfu: device.dfu,
             connected: false,
-            incompatible: true,
+            connecting: false,
+            incompatible: device.incompatible,
             deviceInfo: device
           });
         } else {
@@ -64,8 +65,7 @@ class App extends Component {
             id: device.comName,
             deviceInfo: device,
             currentConfig: device.config,
-            connected: !device.incompatible,
-            incompatible: device.incompatible,
+            connected: true,
             theme: device.config
               ? themes[device.config.version.fw]
               : themes.dark
@@ -119,6 +119,7 @@ class App extends Component {
       return (
         <MuiThemeProvider theme={themes.dark}>
           <Disconnected
+            incompatible={this.state.incompatible}
             connecting={this.state.connecting}
             device={this.state.deviceInfo}
           />

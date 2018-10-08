@@ -14,8 +14,9 @@ import { FormattedMessage } from "react-intl";
 export default class PidsView extends ProfileView {
   updatePidValues = newValue => {
     let use32K =
-      this.props.fcConfig.gyro_use_32khz &&
-      this.props.fcConfig.gyro_use_32khz.current === "ON";
+      this.props.fcConfig.version.imuf ||
+      (this.props.fcConfig.gyro_use_32khz &&
+        this.props.fcConfig.gyro_use_32khz.current === "ON");
     let gyroItem = this.props.fcConfig.gyro_sync_denom;
     let pidItem = this.props.fcConfig.pid_process_denom;
 
