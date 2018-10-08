@@ -900,7 +900,7 @@
   },
   "motor_order": [1, 2, 3, 4],
   "rx_scale": 2000,
-  "aux_scale": {
+  "rx_scale": {
     "min": 0,
     "max": 100,
     "step": 10

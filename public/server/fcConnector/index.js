@@ -167,7 +167,6 @@ const applyUIConfig = (device, config, uiConfig) => {
       mapping["3"]
     }1234`;
   }
-  config.rx_scale = uiConfig.rx_scale;
   config.motor_order = uiConfig.motor_order;
   config.reboot_on_save = uiConfig.reboot_on_save;
   config.routes = uiConfig.routes.map(route => {
@@ -178,7 +177,7 @@ const applyUIConfig = (device, config, uiConfig) => {
     };
   });
   config.aux_channel_modes = uiConfig.aux_channel_modes;
-  config.aux_scale = uiConfig.aux_scale;
+  config.rx_scale = uiConfig.rx_scale;
   let versionParts = config.version.split("|");
   config.version = {
     fw: versionParts[0],

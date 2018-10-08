@@ -528,8 +528,7 @@
     "dterm_lowpass": "dterm_lowpass_hz"
   },
   "motor_order": [4, 2, 1, 3],
-  "rx_scale": 3000,
-  "aux_scale": {
+  "rx_scale": {
     "min": 900,
     "max": 2100,
     "step": 100

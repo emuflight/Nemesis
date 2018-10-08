@@ -4,6 +4,7 @@ import ConfigListView from "../ConfigListView/ConfigListView";
 import Paper from "@material-ui/core/Paper";
 import RXTelemView from "./RXTelemView";
 import ChannelMapView from "./ChannelMapView";
+import FCConnector from "../../utilities/FCConnector";
 import { FormattedMessage } from "react-intl";
 
 export default class RXView extends Component {
@@ -11,9 +12,23 @@ export default class RXView extends Component {
     super(props);
     this.state = {
       theme: props.theme,
-      showRXTelem: false
+      showRXTelem: false,
+      mapping: this.props.fcConfig.channel_map
     };
   }
+
+  componentDidMount() {
+    if (!this.props.fcConfig.channel_map) {
+      return FCConnector.getChannelMap().then(mapping => {
+        this.props.fcConfig.channel_map = mapping;
+        this.setState({
+          mapping: this.props.fcConfig.isBxF ? "AERT1234" : mapping
+        });
+        this.refs.channelMap.setState({ mapping });
+      });
+    }
+  }
+
   render() {
     return (
       <div>
@@ -41,14 +56,19 @@ export default class RXView extends Component {
             </Button>
             <div style={{ flexGrow: 1 }} />
             <ChannelMapView
+              ref="channelMap"
               mapping={this.props.fcConfig.channel_map}
               openAssistant={this.props.openAssistant}
               notifyDirty={this.props.notifyDirty}
             />
           </div>
-          {this.state.showRXTelem && (
-            <RXTelemView scale={this.props.fcConfig.rx_scale} />
-          )}
+          {this.state.showRXTelem &&
+            this.state.mapping && (
+              <RXTelemView
+                scale={this.props.fcConfig.rx_scale}
+                channelMap={this.state.mapping}
+              />
+            )}
         </Paper>
         <Paper theme={this.state.theme} elevation={3}>
           <ConfigListView

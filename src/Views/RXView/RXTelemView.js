@@ -10,12 +10,16 @@ export default class RXTelemView extends Component {
     super(props);
     this.state = {
       channels: [],
-      scale: this.props.scale
+      scale: this.props.scale,
+      mapping: this.props.channelMap
     };
   }
 
   normalize(value) {
-    return (value * 100) / this.state.scale;
+    return (
+      ((value - this.state.scale.min) * 100) /
+      (this.state.scale.max - this.state.scale.min)
+    );
   }
   handleRXData = message => {
     try {
@@ -59,8 +63,12 @@ export default class RXTelemView extends Component {
                 </Typography>
                 <Typography variant="caption">
                   <FormattedMessage
-                    id="rx.channel.number"
-                    values={{ number: i + 1 }}
+                    id={
+                      i < 4
+                        ? `rx.channel.${this.state.mapping[i]}`
+                        : "rx.channel.aux-label"
+                    }
+                    values={i > 3 && { number: i - 3 }}
                   />
                 </Typography>
                 <LinearProgress
