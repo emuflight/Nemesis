@@ -137,11 +137,10 @@ export default new class FCConnector {
     this.stopTelemetry();
   }
   resumeTelemetry() {
-    if (this.paused) {
+    if (this.paused && this.lastTelemetry) {
       this.paused = false;
       return fetch(`${this.serviceUrl}/telem/${this.lastTelemetry}/start`);
     }
-    return Promise.reject("not paused");
   }
   storage(command = "info") {
     return fetch(`${this.serviceUrl}/storage/${command}`).then(res =>

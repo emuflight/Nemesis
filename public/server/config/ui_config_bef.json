@@ -557,11 +557,11 @@
     },
     {
       "value": 4,
-      "label": "GPSHOME"
+      "label": "ANTIGRAVITY"
     },
     {
       "value": 5,
-      "label": "GPSHOLD"
+      "label": "MAG"
     },
 
     {
@@ -570,134 +570,138 @@
     },
     {
       "value": 7,
-      "label": "PASSTHRU"
+      "label": "HEADADJ"
     },
     {
-      "value": 9,
-      "label": "FAILSAFE"
+      "value": 8,
+      "label": "CAMSTAB"
     },
     {
       "value": 10,
-      "label": "GPSRESCUE"
+      "label": "GPSHOME"
     },
     {
       "value": 11,
-      "label": "ANTIGRAVITY"
+      "label": "GPSHOLD"
     },
     {
       "value": 12,
-      "label": "BOXHEADADJ"
+      "label": "PASSTHU"
     },
     {
       "value": 13,
-      "label": "BOXCAMSTAB"
-    },
-    {
-      "value": 14,
-      "label": "BEEPERON"
+      "label": "BEEPER"
     },
     {
       "value": 15,
-      "label": "LEDLOW"
-    },
-    {
-      "value": 16,
-      "label": "CALIB"
+      "label": "LEDMAX"
     },
     {
       "value": 17,
-      "label": "OSD"
-    },
-    {
-      "value": 18,
-      "label": "TELEMETRY"
+      "label": "CALIB"
     },
     {
       "value": 19,
-      "label": "SERVO1"
+      "label": "OSD"
     },
     {
       "value": 20,
-      "label": "SERVO2"
-    },
-    {
-      "value": 21,
-      "label": "SERVO3"
-    },
-    {
-      "value": 22,
-      "label": "BLACKBOX"
+      "label": "TELEMETRY"
     },
     {
       "value": 23,
-      "label": "AIRMODE"
+      "label": "SERVO1"
     },
     {
       "value": 24,
-      "label": "3D"
+      "label": "SERVO2"
     },
     {
       "value": 25,
-      "label": "FPVANGLEMIX"
+      "label": "SERVO3"
     },
     {
       "value": 26,
-      "label": "BLACKBOXERASE"
+      "label": "BLACKBOX"
     },
     {
       "value": 27,
-      "label": "CAMERA1"
+      "label": "FAILSAFE"
     },
     {
       "value": 28,
-      "label": "CAMERA2"
+      "label": "AIRMODE"
     },
     {
       "value": 29,
-      "label": "CAMERA3"
+      "label": "SWITCH3D"
     },
     {
       "value": 30,
-      "label": "FLIPOVERAFTERCRASH"
+      "label": "FPVANGLEMIX"
     },
     {
       "value": 31,
-      "label": "PREARM"
+      "label": "BLACKBOXERASE"
     },
     {
       "value": 32,
-      "label": "BEEPGPSCOUNT"
+      "label": "CAMERA1"
     },
     {
       "value": 33,
-      "label": "VTXPITMODE"
+      "label": "CAMERA2"
     },
     {
       "value": 34,
-      "label": "PARALYZE"
+      "label": "CAMERA3"
     },
     {
       "value": 35,
-      "label": "USER1"
+      "label": "FLIPOVERAFTERCRASH"
     },
     {
       "value": 36,
-      "label": "USER2"
+      "label": "PREARM"
     },
     {
       "value": 37,
-      "label": "USER3"
-    },
-    {
-      "value": 38,
-      "label": "USER4"
+      "label": "BEEPGPSCOUNT"
     },
     {
       "value": 39,
-      "label": "PIDAUDIO"
+      "label": "VTXPITMODE"
     },
     {
       "value": 40,
+      "label": "USER1"
+    },
+    {
+      "value": 41,
+      "label": "USER2"
+    },
+    {
+      "value": 42,
+      "label": "USER3"
+    },
+    {
+      "value": 43,
+      "label": "USER4"
+    },
+    {
+      "value": 44,
+      "label": "PIDAUDIO"
+    },
+    {
+      "value": 45,
+      "label": "PARALYZE"
+    },
+    {
+      "value": 46,
+      "label": "GPSRESCUE"
+    },
+    {
+      "value": 47,
       "label": "ACROTRAINER"
     }
   ]

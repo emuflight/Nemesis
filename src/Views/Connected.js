@@ -62,6 +62,11 @@ export default class Connected extends Component {
       .map(k => fcConfig[k]);
   };
   handleDrawerToggle = () => {
+    if (this.state.drawerOpen) {
+      FCConnector.pauseTelemetry();
+    } else {
+      FCConnector.resumeTelemetry();
+    }
     this.setState({ drawerOpen: !this.state.drawerOpen });
   };
   handleSearch = event => {

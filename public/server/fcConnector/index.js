@@ -101,6 +101,7 @@ const applyUIConfig = (device, config, uiConfig) => {
   });
   config.currentRateProfile = parseInt(config.rate_profile.current, 10);
   if (config.modes) {
+    let hasArmMode = false;
     config.modes.values = config.modes.values.map((mode, i) => {
       let parts = mode.split("|");
 
@@ -110,17 +111,13 @@ const applyUIConfig = (device, config, uiConfig) => {
         channel = parseInt(parts[2], 10),
         start = parseInt(parts[3], 10),
         end = parseInt(parts[4], 10);
-      channel =
-        auxMode === 0 && channel === 0 && start === 900 && end === 900
-          ? -1
-          : channel;
-      auxMode =
-        auxMode === 0 &&
-        (channel === 0 || channel === -1) &&
-        start === 900 &&
-        end === 900
-          ? -1
-          : auxMode;
+
+      if (!hasArmMode && auxMode === 0) {
+        auxMode = 0;
+        hasArmMode = true;
+      } else if (auxMode === 0) {
+        auxMode = -1;
+      }
       return {
         id: id,
         auxId: auxId,
@@ -203,7 +200,7 @@ module.exports = new class FcConnector {
           return Object.assign({ error: config.version }, deviceInfo, config);
         } else {
           config.isBxF = true;
-          this.startTelemetry(deviceInfo, "status", 2000);
+          this.startTelemetry(deviceInfo, "status", 1000);
           return applyUIConfig(deviceInfo, config, BxfUiConfig);
         }
       });
@@ -339,7 +336,7 @@ module.exports = new class FcConnector {
       );
     });
   }
-  startTelemetry(deviceInfo, type, intervalMs = 100) {
+  startTelemetry(deviceInfo, type, intervalMs = 150) {
     clearInterval(websockets.wsServer.telemetryInterval);
     websockets.wsServer.telemetryType = type;
     websockets.wsServer.telemetryInterval = setInterval(() => {
