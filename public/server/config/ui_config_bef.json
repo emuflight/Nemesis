@@ -14,6 +14,27 @@
     "BLACKBOX",
     "ADVANCED"
   ],
+  "routeFeatures": {
+    "RX": [
+      "RX_PPM",
+      "RX_SERIAL",
+      "TELEMETRY",
+      "RX_PARALLEL_PWM",
+      "RSSI_ADC",
+      "CHANNEL_FORWARDING",
+      "RX_SPI"
+    ],
+    "MOTORS": ["MOTOR_STOP", "ESC_SENSOR", "3D", "AIRMODE", "ANTI_GRAVITY"],
+    "GPS": [
+      "GPS",
+      "RANGEFINDER",
+      "TRANSPONDER",
+      "TELEMETRY",
+      "SERVO_TILT",
+      "INFLIGHT_ACC_CALIB"
+    ],
+    "VTX": ["LEGACY_SA_SUPPORT"]
+  },
   "groups": {
     "MODES": ["modes"],
     "GPS": [

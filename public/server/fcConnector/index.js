@@ -173,6 +173,7 @@ const applyUIConfig = (device, config, uiConfig) => {
       assistant: assistants.indexOf(route) > -1
     };
   });
+  config.routeFeatures = uiConfig.routeFeatures;
   config.aux_channel_modes = uiConfig.aux_channel_modes;
   config.rx_scale = uiConfig.rx_scale;
   let versionParts = config.version.split("|");

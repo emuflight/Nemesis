@@ -14,6 +14,7 @@ import FCConnector from "../../utilities/FCConnector";
 import HelperSelect from "../Items/HelperSelect";
 import OSDElement from "./OSDElement";
 import { FormattedMessage } from "react-intl";
+import FeatureItemView from "../FeaturesView/FeatureItemView";
 
 const visibilityFlag = 0x0800;
 const normalise = value => (value * 100) / 256;
@@ -36,7 +37,11 @@ const osdPosToXy = osdVal => {
 export default class OSDView extends Component {
   constructor(props) {
     super(props);
+    this.osdFeature =
+      !props.fcConfig.isBxF ||
+      props.fcConfig.features.values.find(val => val.id === "OSD");
     this.state = {
+      osdEnabled: this.osdFeature.current,
       uploadProgress: 0,
       theme: props.theme,
       elementsAvailable: props.items.filter(item => {
@@ -115,6 +120,12 @@ export default class OSDView extends Component {
               alignItems: "center"
             }}
           >
+            {this.osdFeature && (
+              <FeatureItemView
+                notifyDirty={this.props.notifyDirty}
+                item={this.osdFeature}
+              />
+            )}
             <HelperSelect
               name="osd.select-font"
               label="osd.select-font"

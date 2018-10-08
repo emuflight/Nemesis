@@ -12,6 +12,7 @@
     "BLACKBOX",
     "ADVANCED"
   ],
+  "routeFeatures": {},
   "groups": {
     "OSD": ["osd"],
     "BLACKBOX": ["blackbox"],

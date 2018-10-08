@@ -155,10 +155,32 @@ export default class FiltersView extends ConfigListView {
                   notifyDirty={this.props.notifyDirty}
                   item={this.props.fcConfig.gyro_lowpass_type}
                 />
-                <InputView
-                  notifyDirty={this.props.notifyDirty}
-                  item={this.props.fcConfig.gyro_lowpass_hz}
-                />
+                {this.props.fcConfig.gyro_lowpass_type.current !== "KALMAN" && (
+                  <InputView
+                    notifyDirty={this.props.notifyDirty}
+                    item={this.props.fcConfig.gyro_lowpass_hz}
+                  />
+                )}
+                {this.props.fcConfig.gyro_lowpass_type.current === "KALMAN" && (
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyItems: "flex-start",
+                      alignItems: "flex-start",
+                      marginRight: 10
+                    }}
+                  >
+                    <InputView
+                      notifyDirty={this.props.notifyDirty}
+                      item={this.props.fcConfig.gyro_filter_q}
+                    />
+                    <InputView
+                      notifyDirty={this.props.notifyDirty}
+                      item={this.props.fcConfig.gyro_filter_r}
+                    />
+                  </div>
+                )}
               </div>
               <div
                 style={{

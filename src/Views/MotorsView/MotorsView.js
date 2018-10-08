@@ -51,6 +51,7 @@ export default class MotorsView extends Component {
         </Paper>
         <Paper theme={this.state.theme} elevation={3}>
           <ConfigListView
+            features={this.props.features}
             notifyDirty={this.props.notifyDirty}
             items={this.props.items}
           />

@@ -29,6 +29,7 @@ export default class Connected extends Component {
   constructor(props) {
     super(props);
     this.routes = props.fcConfig.routes;
+    this.routeFeatures = props.fcConfig.routeFeatures;
     this.state = {
       theme: props.theme,
       isBxF: props.fcConfig.isBxF,
@@ -41,7 +42,21 @@ export default class Connected extends Component {
       currentRoute: props.fcConfig.startingRoute
     };
   }
-  getRouteItems = (routeName, fcConfig, sort = false) => {
+
+  getRouteFeatures() {
+    if (
+      this.state.fcConfig.isBxF &&
+      this.routeFeatures[this.state.currentRoute.key]
+    ) {
+      return this.state.fcConfig.features.values.filter(feat => {
+        return (
+          this.routeFeatures[this.state.currentRoute.key].indexOf(feat.id) > -1
+        );
+      });
+    }
+  }
+
+  getRouteItems = (fcConfig, sort = false) => {
     let keys = Object.keys(fcConfig);
     if (sort) {
       keys.sort();
@@ -54,13 +69,14 @@ export default class Connected extends Component {
             fcConfig[key].id.indexOf(this.state.filterOn) > -1
           );
         }
-        if (routeName === "ADVANCED") {
+        if (this.state.currentRoute.key === "ADVANCED") {
           return fcConfig[key].id && !fcConfig[key].route;
         }
-        return fcConfig[key].route === routeName;
+        return fcConfig[key].route === this.state.currentRoute.key;
       })
       .map(k => fcConfig[k]);
   };
+
   handleDrawerToggle = () => {
     if (this.state.drawerOpen) {
       FCConnector.pauseTelemetry();
@@ -69,9 +85,11 @@ export default class Connected extends Component {
     }
     this.setState({ drawerOpen: !this.state.drawerOpen });
   };
+
   handleSearch = event => {
     this.setState({ filterOn: event.target.value });
   };
+
   handleSave = () => {
     this.setState({ isDirty: false });
     return this.props.handleSave();
@@ -127,10 +145,7 @@ export default class Connected extends Component {
             id="pid_profile"
             active={this.state.pid_profile}
             profileList={this.state.fcConfig.pidProfileList}
-            items={this.getRouteItems(
-              this.state.currentRoute.key,
-              mergedProfile
-            )}
+            items={this.getRouteItems(mergedProfile)}
           />
         );
         break;
@@ -156,10 +171,7 @@ export default class Connected extends Component {
             id={"rate_profile"}
             active={this.state.rate_profile}
             profileList={this.state.fcConfig.rateProfileList}
-            items={this.getRouteItems(
-              this.state.currentRoute.key,
-              mergedProfile
-            )}
+            items={this.getRouteItems(mergedProfile)}
           />
         );
         break;
@@ -181,11 +193,9 @@ export default class Connected extends Component {
       case "MOTORS":
         contents = (
           <MotorsView
-            items={this.getRouteItems(
-              this.state.currentRoute.key,
-              this.state.fcConfig,
-              true
-            )}
+            features={this.getRouteFeatures()}
+            items={this.getRouteItems(this.state.fcConfig, true)}
+            fcConfig={this.state.fcConfig}
             openAssistant={name => this.openAssistant(name)}
             notifyDirty={(isDirty, item, newValue) =>
               this.notifyDirty(isDirty, item, newValue)
@@ -196,11 +206,8 @@ export default class Connected extends Component {
       case "RX":
         contents = (
           <RXView
-            items={this.getRouteItems(
-              this.state.currentRoute.key,
-              this.state.fcConfig,
-              true
-            )}
+            features={this.getRouteFeatures()}
+            items={this.getRouteItems(this.state.fcConfig, true)}
             fcConfig={this.state.fcConfig}
             openAssistant={name => this.openAssistant(name)}
             notifyDirty={(isDirty, item, newValue) =>
@@ -227,22 +234,14 @@ export default class Connected extends Component {
             notifyDirty={(isDirty, item, newValue) =>
               this.notifyDirty(isDirty, item, newValue)
             }
-            items={this.getRouteItems(
-              this.state.currentRoute.key,
-              this.state.fcConfig,
-              true
-            )}
+            items={this.getRouteItems(this.state.fcConfig, true)}
           />
         );
         break;
       case "BLACKBOX":
         contents = (
           <BlackboxView
-            items={this.getRouteItems(
-              this.state.currentRoute.key,
-              this.state.fcConfig,
-              true
-            )}
+            items={this.getRouteItems(this.state.fcConfig, true)}
             notifyDirty={(isDirty, item, newValue) =>
               this.notifyDirty(isDirty, item, newValue)
             }
@@ -289,10 +288,7 @@ export default class Connected extends Component {
                   this.setState({ pid_profile: newProfile });
                 });
               }}
-              items={this.getRouteItems(
-                this.state.currentRoute.key,
-                mergedProfile
-              )}
+              items={this.getRouteItems(mergedProfile)}
             />
           );
         }
@@ -300,14 +296,11 @@ export default class Connected extends Component {
       default:
         contents = (
           <ConfigListView
+            features={this.getRouteFeatures()}
             notifyDirty={(isDirty, item, newValue) =>
               this.notifyDirty(isDirty, item, newValue)
             }
-            items={this.getRouteItems(
-              this.state.currentRoute.key,
-              this.state.fcConfig,
-              true
-            )}
+            items={this.getRouteItems(this.state.fcConfig, true)}
           />
         );
         break;

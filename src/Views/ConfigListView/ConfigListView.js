@@ -3,6 +3,7 @@ import DropdownView from "../Items/DropdownView";
 import SliderView from "../Items/SliderView";
 import InputView from "../Items/InputView";
 import Paper from "@material-ui/core/Paper";
+import FeaturesView from "../FeaturesView/FeaturesView";
 import "./ConfigListView.css";
 
 export default class ConfigListView extends Component {
@@ -29,6 +30,12 @@ export default class ConfigListView extends Component {
       [];
     return (
       <div className="config-list-view">
+        {this.props.features && (
+          <FeaturesView
+            features={this.props.features}
+            notifyDirty={this.props.notifyDirty}
+          />
+        )}
         {!!sliders.length && (
           <Paper
             theme={this.state.theme}
