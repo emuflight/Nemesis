@@ -9,7 +9,7 @@ import biquad from "./biquad";
 export default class FiltersView extends ConfigListView {
   render() {
     let bqData, notchData;
-    let bqColors = ["green", "yellow", "white"];
+    let bqColors = ["blue", "white", "green"];
     let notchDomainMax = 500;
     let use32K = this.props.fcConfig.gyro_use_32khz.current === "ON";
     let freq =

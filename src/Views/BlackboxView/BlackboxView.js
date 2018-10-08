@@ -6,6 +6,7 @@ import LinearProgress from "@material-ui/core/LinearProgress";
 import Typography from "@material-ui/core/Typography";
 import { Button } from "@material-ui/core";
 import { FormattedMessage } from "react-intl";
+import "./BlackboxView.css";
 
 export default class BlackBoxView extends Component {
   constructor(props) {
@@ -19,7 +20,7 @@ export default class BlackBoxView extends Component {
     };
   }
   componentDidMount() {
-    FCConnector.storage().then(storageInfo => {
+    return FCConnector.storage().then(storageInfo => {
       console.log(storageInfo);
       this.setState({ storageInfo });
     });
@@ -32,17 +33,7 @@ export default class BlackBoxView extends Component {
       <div>
         <Paper theme={this.state.theme} elevation={3}>
           <div style={{ position: "relative" }}>
-            <Typography
-              variant="caption"
-              style={{
-                position: "absolute",
-                top: 0,
-                right: 0,
-                bottom: 0,
-                left: 0,
-                textAlign: "center"
-              }}
-            >
+            <Typography variant="caption" className="absolute-center-text">
               {this.state.storageInfo.usedSize}/
               {this.state.storageInfo.totalSize}
             </Typography>
@@ -61,9 +52,17 @@ export default class BlackBoxView extends Component {
             <Button
               onClick={() => FCConnector.sendCommand("msc")}
               variant="raised"
-              color="secondary"
+              color="primary"
             >
               <FormattedMessage id="blackbox.load-drive" />
+            </Button>
+            <Button
+              onClick={() => FCConnector.storage("erase")}
+              variant="raised"
+              color="secondary"
+              style={{ marginLeft: 20 }}
+            >
+              <FormattedMessage id="blackbox.erase-storage" />
             </Button>
           </div>
         </Paper>

@@ -106,8 +106,8 @@ export default class OSDView extends Component {
     });
     let maxRows = this.state.videoMode === "NTSC" ? 13 : 18;
     return (
-      <Paper theme={this.state.theme} elevation={3} style={{ display: "flex" }}>
-        <div>
+      <Paper elevation={3} style={{ display: "flex" }}>
+        <div className={this.state.selectedFont}>
           <div
             style={{
               display: "flex",

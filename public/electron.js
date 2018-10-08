@@ -20,10 +20,10 @@ server.app.use(server.express.static(path.join(__dirname, "/")));
 function createWindow() {
   mainWindow = new BrowserWindow({
     titleBarStyle: "hidden",
-    width: 1281,
-    height: 800,
-    minWidth: 1281,
-    minHeight: 800,
+    width: 1024,
+    height: 768,
+    minWidth: 900,
+    minHeight: 700,
     backgroundColor: "#303030",
     icon: path.join(__dirname, "assets/icons/png/64x64.png"),
     webPreferences: {

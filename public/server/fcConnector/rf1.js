@@ -144,8 +144,6 @@ const storage = (device, command) => {
         let vals = data.map(v => {
           return parseInt(v.split("=")[1]);
         });
-        console.log(storageInfo);
-        console.log(data);
         return {
           ready: true,
           supported: true,

@@ -109,6 +109,7 @@
   "osd.select-font": "Select Font",
   "blackbox.flash-used": "Flash Used: {percent}%",
   "blackbox.load-drive": "Load as drive to download blackbox",
+  "blackbox.erase-storage": "Erase blackbox",
   "aux.item.save": "Set Mode",
   "pid_profile": "Active Profile",
   "rate_profile": "Active Profile",

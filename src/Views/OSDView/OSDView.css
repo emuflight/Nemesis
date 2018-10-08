@@ -3,6 +3,24 @@
   font-family: monospace;
   cursor: pointer; }
 
+.digital .osd-element {
+  font-family: sans-serif;
+  font-size: 0.8rem; }
+
+.bold .osd-icon-label, .bold .ah_bar {
+  font-weight: bolder; }
+
+.digital .osd-icon-label, .digital .ah_bar {
+  font-weight: bold;
+  font-style: italic; }
+
+.large .osd-icon-label, .large .ah_bar {
+  font-size: .9rem; }
+
+.extra_large .osd-icon-label, .extra_large .ah_bar {
+  font-size: 1.0rem;
+  font-weight: bold; }
+
 .dropzone-overlay {
   position: absolute;
   top: 0;
