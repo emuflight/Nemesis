@@ -15,23 +15,30 @@ class App extends Component {
       connected: false,
       theme: themes.dark
     };
+  }
 
-    FCConnector.startDetect(device => {
-      if (device.progress || device.telemetry) {
-        return;
-      }
-      if (device.connected) {
-        this.getFcConfig();
-      } else if (!this.rebooting) {
-        this.setState({
-          connecting: false,
-          imuf: false,
-          connected: false,
-          dfu: false,
-          deviceInfo: undefined
-        });
-      }
-    });
+  detectFc = device => {
+    if (device.progress || device.telemetry) {
+      return;
+    }
+    if (device.connected) {
+      this.getFcConfig();
+    } else if (!this.state.rebooting) {
+      this.setState({
+        connecting: false,
+        imuf: false,
+        connected: false,
+        dfu: false,
+        deviceInfo: undefined
+      });
+    }
+  };
+
+  componentDidMount() {
+    FCConnector.startDetect(device => this.detectFc(device));
+    if (!this.state.connecting) {
+      this.getFcConfig();
+    }
   }
 
   goToImuf = () => {
@@ -39,7 +46,6 @@ class App extends Component {
   };
 
   getFcConfig = () => {
-    this.rebooting = false;
     this.setState({ connecting: true, rebooting: false });
     return FCConnector.tryGetConfig()
       .then(device => {
@@ -77,16 +83,9 @@ class App extends Component {
   };
 
   handleSave = () => {
-    this.rebooting = this.state.currentConfig.reboot_on_save;
     this.setState({ rebooting: this.state.currentConfig.reboot_on_save });
     return FCConnector.saveConfig();
   };
-
-  componentDidMount() {
-    if (!this.state.connecting) {
-      this.getFcConfig();
-    }
-  }
 
   render() {
     if (this.state.imuf) {

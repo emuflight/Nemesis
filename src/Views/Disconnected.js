@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
@@ -8,7 +8,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import CliView from "./CliView/CliView";
 import { FormattedMessage, FormattedHTMLMessage } from "react-intl";
 
-export default class Disconnected extends React.Component {
+export default class Disconnected extends Component {
   constructor(props) {
     super(props);
     this.state = {

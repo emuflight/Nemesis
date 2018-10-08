@@ -13,7 +13,9 @@ import { FormattedMessage } from "react-intl";
 
 export default class PidsView extends ProfileView {
   updatePidValues = newValue => {
-    let use32K = this.props.fcConfig.gyro_use_32khz.current === "ON";
+    let use32K =
+      this.props.fcConfig.gyro_use_32khz &&
+      this.props.fcConfig.gyro_use_32khz.current === "ON";
     let gyroItem = this.props.fcConfig.gyro_sync_denom;
     let pidItem = this.props.fcConfig.pid_process_denom;
 
@@ -77,31 +79,33 @@ export default class PidsView extends ProfileView {
         {this.state.isBxF && (
           <Paper theme={this.state.theme} elevation={3}>
             <div>
-              <FormControlLabel
-                control={
-                  <Switch
-                    id={this.props.fcConfig.gyro_use_32khz.id}
-                    checked={
-                      this.props.fcConfig.gyro_use_32khz.current === "ON"
-                    }
-                    onChange={(event, isInputChecked) => {
-                      this.props.fcConfig.gyro_use_32khz.current = isInputChecked
-                        ? "ON"
-                        : "OFF";
-                      this.forceUpdate();
-                      FCConnector.setValue(
-                        "gyro_use_32khz",
-                        this.props.fcConfig.gyro_use_32khz.current
-                      ).then(() => {
-                        this.props.handleSave().then(() => {
-                          this.updatePidValues("1");
+              {this.props.fcConfig.gyro_use_32khz && (
+                <FormControlLabel
+                  control={
+                    <Switch
+                      id={this.props.fcConfig.gyro_use_32khz.id}
+                      checked={
+                        this.props.fcConfig.gyro_use_32khz.current === "ON"
+                      }
+                      onChange={(event, isInputChecked) => {
+                        this.props.fcConfig.gyro_use_32khz.current = isInputChecked
+                          ? "ON"
+                          : "OFF";
+                        this.forceUpdate();
+                        FCConnector.setValue(
+                          "gyro_use_32khz",
+                          this.props.fcConfig.gyro_use_32khz.current
+                        ).then(() => {
+                          this.props.handleSave().then(() => {
+                            this.updatePidValues("1");
+                          });
                         });
-                      });
-                    }}
-                  />
-                }
-                label={<FormattedMessage id="pid.gyro.use-32k" />}
-              />
+                      }}
+                    />
+                  }
+                  label={<FormattedMessage id="pid.gyro.use-32k" />}
+                />
+              )}
             </div>
             <DropdownView
               ref="gyroSyncDenomList"
