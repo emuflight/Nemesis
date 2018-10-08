@@ -552,76 +552,153 @@
       "label": "HORIZON"
     },
     {
-      "value": 5,
+      "value": 3,
+      "label": "BARO"
+    },
+    {
+      "value": 4,
       "label": "GPSHOME"
     },
     {
-      "value": 6,
+      "value": 5,
       "label": "GPSHOLD"
     },
+
     {
-      "value": 7,
+      "value": 6,
       "label": "HEADFREE"
     },
     {
+      "value": 7,
+      "label": "PASSTHRU"
+    },
+    {
       "value": 9,
-      "label": "RANGEFINDER"
+      "label": "FAILSAFE"
     },
     {
       "value": 10,
-      "label": "FAILSAFE"
+      "label": "GPSRESCUE"
     },
     {
       "value": 11,
       "label": "ANTIGRAVITY"
     },
     {
-      "value": 15,
+      "value": 12,
+      "label": "BOXHEADADJ"
+    },
+    {
+      "value": 13,
+      "label": "BOXCAMSTAB"
+    },
+    {
+      "value": 14,
       "label": "BEEPERON"
     },
     {
-      "value": 21,
+      "value": 15,
+      "label": "LEDLOW"
+    },
+    {
+      "value": 16,
+      "label": "CALIB"
+    },
+    {
+      "value": 17,
       "label": "OSD"
     },
     {
-      "value": 27,
+      "value": 18,
+      "label": "TELEMETRY"
+    },
+    {
+      "value": 19,
+      "label": "SERVO1"
+    },
+    {
+      "value": 20,
+      "label": "SERVO2"
+    },
+    {
+      "value": 21,
+      "label": "SERVO3"
+    },
+    {
+      "value": 22,
       "label": "BLACKBOX"
     },
     {
-      "value": 28,
+      "value": 23,
       "label": "AIRMODE"
     },
     {
-      "value": 29,
+      "value": 24,
       "label": "3D"
     },
     {
-      "value": 31,
+      "value": 25,
+      "label": "FPVANGLEMIX"
+    },
+    {
+      "value": 26,
       "label": "BLACKBOXERASE"
     },
     {
-      "value": 32,
+      "value": 27,
       "label": "CAMERA1"
     },
     {
-      "value": 33,
+      "value": 28,
       "label": "CAMERA2"
     },
     {
-      "value": 34,
+      "value": 29,
       "label": "CAMERA3"
     },
     {
-      "value": 35,
+      "value": 30,
       "label": "FLIPOVERAFTERCRASH"
     },
     {
-      "value": 36,
+      "value": 31,
       "label": "PREARM"
     },
     {
-      "value": 39,
+      "value": 32,
+      "label": "BEEPGPSCOUNT"
+    },
+    {
+      "value": 33,
       "label": "VTXPITMODE"
+    },
+    {
+      "value": 34,
+      "label": "PARALYZE"
+    },
+    {
+      "value": 35,
+      "label": "USER1"
+    },
+    {
+      "value": 36,
+      "label": "USER2"
+    },
+    {
+      "value": 37,
+      "label": "USER3"
+    },
+    {
+      "value": 38,
+      "label": "USER4"
+    },
+    {
+      "value": 39,
+      "label": "PIDAUDIO"
+    },
+    {
+      "value": 40,
+      "label": "ACROTRAINER"
     }
   ]
 }
