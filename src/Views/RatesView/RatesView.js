@@ -80,11 +80,11 @@ export default class RatesView extends ProfileView {
     let xcurve = [];
     let ycurve = [];
     let zcurve = [];
-    new Array(100).fill(0).forEach((v, i) => {
-      let percent = i + 1;
+    new Array(11).fill(0).forEach((v, i) => {
+      let percent = i * 10;
       let stickVal = percent * 0.01;
       xcurve.push({
-        x: i,
+        x: percent,
         y: rateFunc(
           stickVal,
           rates.roll.r,
@@ -94,7 +94,7 @@ export default class RatesView extends ProfileView {
         )
       });
       ycurve.push({
-        x: i,
+        x: percent,
         y: rateFunc(
           stickVal,
           rates.pitch.r,
@@ -104,7 +104,7 @@ export default class RatesView extends ProfileView {
         )
       });
       zcurve.push({
-        x: i,
+        x: percent,
         y: rateFunc(
           stickVal,
           rates.yaw.r,
@@ -172,7 +172,7 @@ export default class RatesView extends ProfileView {
                 style={{ width: 90 }}
                 disabled={true}
                 label={<FormattedMessage id="rates.max-dps" />}
-                value={xcurve[99].y}
+                value={xcurve[10].y}
               />
             </Paper>
             <Paper theme={this.state.theme} elevation={3}>
@@ -195,7 +195,7 @@ export default class RatesView extends ProfileView {
                 style={{ width: 90 }}
                 disabled={true}
                 label={<FormattedMessage id="rates.max-dps" />}
-                value={ycurve[99].y}
+                value={ycurve[10].y}
               />
             </Paper>
             <Paper theme={this.state.theme} elevation={3}>
@@ -219,22 +219,24 @@ export default class RatesView extends ProfileView {
                 style={{ width: 90 }}
                 disabled={true}
                 label={<FormattedMessage id="rates.max-dps" />}
-                value={zcurve[99].y}
+                value={zcurve[10].y}
               />
             </Paper>
           </div>
-          <div>
+          <Paper theme={this.state.theme} elevation={3}>
             <AreaChart
               xType={"text"}
               areaColors={["white", "blue", "green"]}
               interpolate={"cardinal"}
               axwsLabels={{ x: "DPS", y: "RC" }}
               yAxisOrientRight
+              axes
+              xTicks={0}
               width={450}
               height={350}
               data={[xcurve, ycurve, zcurve]}
             />
-          </div>
+          </Paper>
         </div>
       </div>
     );

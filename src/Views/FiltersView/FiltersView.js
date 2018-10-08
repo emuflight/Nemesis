@@ -8,13 +8,14 @@ import biquad from "./biquad";
 
 export default class FiltersView extends ConfigListView {
   render() {
-    let bqData;
-    let bqColors;
+    let bqData, notchData;
+    let bqColors = ["green", "yellow", "white"];
+    let notchDomainMax = 500;
+    let use32K = this.props.fcConfig.gyro_use_32khz.current === "ON";
     let freq =
-      32000 / parseInt(this.props.fcConfig.gyro_sync_denom.current, 10);
+      (use32K ? 32000 : 8000) /
+      parseInt(this.props.fcConfig.gyro_sync_denom.current, 10);
     if (this.props.fcConfig.imuf) {
-      freq = 32000;
-      bqColors = ["white", "blue", "green"];
       bqData = [
         biquad(
           "lowpass",
@@ -33,13 +34,29 @@ export default class FiltersView extends ConfigListView {
         ).plot
       ];
     } else {
-      bqColors = ["yellow", "red"];
+      let cutoff1 = parseInt(
+          this.props.fcConfig.gyro_notch1_cutoff.current,
+          10
+        ),
+        cutoff2 = parseInt(this.props.fcConfig.gyro_notch2_cutoff.current, 10),
+        hz1 = parseInt(this.props.fcConfig.gyro_notch1_hz.current, 10),
+        hz2 = parseInt(this.props.fcConfig.gyro_notch2_hz.current, 10);
+      notchDomainMax = Math.floor(Math.min(cutoff1, cutoff2, hz1, hz2) / 2);
       bqData = [
         biquad(
           "lowpass",
           parseInt(this.props.fcConfig.gyro_lowpass_hz.current, 10),
           freq
-        )
+        ).plot,
+        biquad(
+          "lowpass",
+          parseInt(this.props.fcConfig.gyro_lowpass2_hz.current, 10),
+          freq
+        ).plot
+      ];
+      notchData = [
+        biquad("notch", hz1, freq, cutoff1).plot,
+        biquad("notch", hz2, freq, cutoff2).plot
       ];
     }
     return (
@@ -117,13 +134,20 @@ export default class FiltersView extends ConfigListView {
             <Paper
               theme={this.state.theme}
               elevation={3}
-              style={{ display: "flex" }}
+              style={{
+                display: "flex",
+                justifyItems: "center",
+                alignItems: "center"
+              }}
             >
-              <div style={{ display: "flex", flexDirection: "column" }}>
-                <DropdownView
-                  notifyDirty={this.props.notifyDirty}
-                  item={this.props.fcConfig.gyro_hardware_lpf}
-                />
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyItems: "flex-start",
+                  alignItems: "flex-start"
+                }}
+              >
                 <DropdownView
                   notifyDirty={this.props.notifyDirty}
                   item={this.props.fcConfig.gyro_lowpass_type}
@@ -131,6 +155,23 @@ export default class FiltersView extends ConfigListView {
                 <InputView
                   notifyDirty={this.props.notifyDirty}
                   item={this.props.fcConfig.gyro_lowpass_hz}
+                />
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyItems: "flex-start",
+                  alignItems: "flex-start"
+                }}
+              >
+                <DropdownView
+                  notifyDirty={this.props.notifyDirty}
+                  item={this.props.fcConfig.gyro_lowpass2_type}
+                />
+                <InputView
+                  notifyDirty={this.props.notifyDirty}
+                  item={this.props.fcConfig.gyro_lowpass2_hz}
                 />
               </div>
               <div>
@@ -146,25 +187,50 @@ export default class FiltersView extends ConfigListView {
                 />
               </div>
             </Paper>
-            <Paper theme={this.state.theme} elevation={3}>
-              <InputView
-                notifyDirty={this.props.notifyDirty}
-                item={this.props.fcConfig.gyro_notch1_hz}
-              />
-              <InputView
-                notifyDirty={this.props.notifyDirty}
-                item={this.props.fcConfig.gyro_notch1_cutoff}
-              />
-            </Paper>
-            <Paper theme={this.state.theme} elevation={3}>
-              <InputView
-                notifyDirty={this.props.notifyDirty}
-                item={this.props.fcConfig.gyro_notch2_hz}
-              />
-              <InputView
-                notifyDirty={this.props.notifyDirty}
-                item={this.props.fcConfig.gyro_notch2_cutoff}
-              />
+            <Paper
+              theme={this.state.theme}
+              elevation={3}
+              style={{
+                display: "flex",
+                justifyItems: "center",
+                alignItems: "center"
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyItems: "flex-start",
+                  alignItems: "flex-start"
+                }}
+              >
+                <InputView
+                  notifyDirty={this.props.notifyDirty}
+                  item={this.props.fcConfig.gyro_notch1_hz}
+                />
+                <InputView
+                  notifyDirty={this.props.notifyDirty}
+                  item={this.props.fcConfig.gyro_notch1_cutoff}
+                />
+                <InputView
+                  notifyDirty={this.props.notifyDirty}
+                  item={this.props.fcConfig.gyro_notch2_hz}
+                />
+                <InputView
+                  notifyDirty={this.props.notifyDirty}
+                  item={this.props.fcConfig.gyro_notch2_cutoff}
+                />
+              </div>
+              <div style={{ padding: 20 }}>
+                <AreaChart
+                  data={notchData}
+                  areaColors={bqColors}
+                  yDomainRange={[-60, 10]}
+                  xDomainRange={[0, notchDomainMax]}
+                  width={350}
+                  height={250}
+                />
+              </div>
             </Paper>
           </div>
         )}

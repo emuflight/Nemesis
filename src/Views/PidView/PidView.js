@@ -13,17 +13,31 @@ import { FormattedMessage } from "react-intl";
 
 export default class PidsView extends ProfileView {
   updatePidValues = newValue => {
+    let use32K = this.props.fcConfig.gyro_use_32khz.current === "ON";
     let gyroItem = this.props.fcConfig.gyro_sync_denom;
     let pidItem = this.props.fcConfig.pid_process_denom;
 
+    let gyroValues = use32K
+      ? gyroItem.values
+      : gyroItem.values.slice(2).map((item, i) => {
+          return {
+            value: i.toString(),
+            label: item.label
+          };
+        });
+
+    this.refs.gyroSyncDenomList.setState({
+      values: gyroValues
+    });
+
     let offset = 0;
-    gyroItem.values.forEach((v, i) => {
+    gyroValues.forEach((v, i) => {
       if (v.value === newValue) {
         offset = i;
       }
     });
     this.refs.pidProcessList.setState({
-      values: gyroItem.values.slice(offset).map((item, index) => {
+      values: gyroValues.slice(offset).map((item, index) => {
         return {
           value: pidItem.values[index].value,
           label: item.label
@@ -62,7 +76,35 @@ export default class PidsView extends ProfileView {
           )}
         {this.state.isBxF && (
           <Paper theme={this.state.theme} elevation={3}>
+            <div>
+              <FormControlLabel
+                control={
+                  <Switch
+                    id={this.props.fcConfig.gyro_use_32khz.id}
+                    checked={
+                      this.props.fcConfig.gyro_use_32khz.current === "ON"
+                    }
+                    onChange={(event, isInputChecked) => {
+                      this.props.fcConfig.gyro_use_32khz.current = isInputChecked
+                        ? "ON"
+                        : "OFF";
+                      this.forceUpdate();
+                      FCConnector.setValue(
+                        "gyro_use_32khz",
+                        this.props.fcConfig.gyro_use_32khz.current
+                      ).then(() => {
+                        this.props.handleSave().then(() => {
+                          this.updatePidValues("1");
+                        });
+                      });
+                    }}
+                  />
+                }
+                label={<FormattedMessage id="pid.gyro.use-32k" />}
+              />
+            </div>
             <DropdownView
+              ref="gyroSyncDenomList"
               notifyDirty={(isDirty, state, payload) => {
                 this.updatePidValues(payload);
                 this.props.notifyDirty(isDirty, state, payload);
@@ -77,6 +119,10 @@ export default class PidsView extends ProfileView {
             <DropdownView
               notifyDirty={this.props.notifyDirty}
               item={this.props.fcConfig.buttered_pids}
+            />
+            <DropdownView
+              notifyDirty={this.props.notifyDirty}
+              item={this.props.fcConfig.motor_pwm_protocol}
             />
             <FormControlLabel
               control={
@@ -127,20 +173,16 @@ export default class PidsView extends ProfileView {
           <Paper
             theme={this.state.theme}
             elevation={3}
-            style={{ margin: "10px", padding: "10px" }}
+            style={{
+              display: "flex",
+              justifyItems: "center",
+              alignItems: "center"
+            }}
           >
             <DropdownView
               notifyDirty={this.props.notifyDirty}
               item={this.props.fcConfig.dterm_lowpass_hz_type}
             />
-          </Paper>
-        )}
-        {!this.props.fcConfig.imuf && (
-          <Paper
-            theme={this.state.theme}
-            elevation={3}
-            style={{ margin: "10px", padding: "10px" }}
-          >
             <InputView
               notifyDirty={this.props.notifyDirty}
               key={this.props.fcConfig.dterm_lowpass_hz.id}

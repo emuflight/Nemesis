@@ -1,10 +1,11 @@
-export default (type, Fc, Fs) => {
+export default (type, Fc, Fs, cutoff) => {
   let Q = 1.0 / Math.sqrt(2.0);
   //"lowpass", 160, 32000, , 6
   var a0, a1, a2, b1, b2, norm;
   var ymin, ymax, minVal, maxVal;
 
   var K = Math.tan((Math.PI * Fc) / Fs);
+  var len = 500;
   switch (type) {
     default:
     case "lowpass":
@@ -16,6 +17,7 @@ export default (type, Fc, Fs) => {
       b2 = (1 - K / Q + K * K) * norm;
       break;
     case "notch":
+      len = cutoff;
       norm = 1 / (1 + K / Q + K * K);
       a0 = (1 + K * K) * norm;
       a1 = 2 * (K * K - 1) * norm;
@@ -25,7 +27,6 @@ export default (type, Fc, Fs) => {
       break;
   }
 
-  var len = 500;
   var magPlot = [];
   for (var idx = 0; idx < len; idx++) {
     var w = (idx / (len - 1)) * Math.PI; // 0 to pi, linear scale
