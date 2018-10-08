@@ -11,7 +11,10 @@ export default class FiltersView extends ConfigListView {
     let bqData, notchData;
     let bqColors = ["blue", "white", "green"];
     let notchDomainMax = 500;
-    let use32K = this.props.fcConfig.gyro_use_32khz.current === "ON";
+    let use32K =
+      this.props.fcConfig.version.imuf ||
+      (this.props.fcConfig.gyro_use_32khz &&
+        this.props.fcConfig.gyro_use_32khz.current === "ON");
     let freq =
       (use32K ? 32000 : 8000) /
       parseInt(this.props.fcConfig.gyro_sync_denom.current, 10);
