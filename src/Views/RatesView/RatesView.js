@@ -50,6 +50,7 @@ export default class RatesView extends ProfileView {
     if (!this.state.isBxF) {
       return (
         <ConfigListView
+          fcConfig={this.props.fcConfig}
           notifyDirty={this.props.notifyDirty}
           items={this.props.items}
         />

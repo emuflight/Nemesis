@@ -68,6 +68,7 @@ export default class BlackBoxView extends Component {
         </Paper>
         <Paper theme={this.state.theme} elevation={3}>
           <ConfigListView
+            fcConfig={this.props.fcConfig}
             notifyDirty={this.props.notifyDirty}
             items={this.props.items}
           />

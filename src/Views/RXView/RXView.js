@@ -32,7 +32,7 @@ export default class RXView extends Component {
   render() {
     return (
       <div>
-        <Paper theme={this.state.theme} elevation={3}>
+        <Paper elevation={3}>
           <div style={{ display: "flex" }}>
             <Button
               onClick={() =>
@@ -70,8 +70,9 @@ export default class RXView extends Component {
               />
             )}
         </Paper>
-        <Paper theme={this.state.theme} elevation={3}>
+        <Paper elevation={3}>
           <ConfigListView
+            fcConfig={this.props.fcConfig}
             features={this.props.features}
             notifyDirty={this.props.notifyDirty}
             items={this.props.items}

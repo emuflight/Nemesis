@@ -15,6 +15,7 @@ export default class ProfileView extends Component {
     return (
       <ConfigListView
         ref="listView"
+        fcConfig={this.props.fcConfig}
         notifyDirty={this.props.notifyDirty}
         items={this.props.items}
       />

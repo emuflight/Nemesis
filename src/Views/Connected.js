@@ -102,6 +102,7 @@ export default class Connected extends Component {
       //TODO: save EEPROM
     }
     this.setState({
+      filterOn: undefined,
       drawerOpen: false,
       currentRoute: newRoute
     });
@@ -298,6 +299,7 @@ export default class Connected extends Component {
       default:
         contents = (
           <ConfigListView
+            fcConfig={this.props.fcConfig}
             features={this.getRouteFeatures()}
             notifyDirty={(isDirty, item, newValue) =>
               this.notifyDirty(isDirty, item, newValue)

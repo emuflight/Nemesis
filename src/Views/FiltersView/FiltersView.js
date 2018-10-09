@@ -66,6 +66,7 @@ export default class FiltersView extends Component {
       <div style={{ display: "flex", flexDirection: "column" }}>
         {!this.props.fcConfig.imuf && (
           <FeaturesView
+            fcConfig={this.props.fcConfig}
             features={this.props.features}
             notifyDirty={this.props.notifyDirty}
           />

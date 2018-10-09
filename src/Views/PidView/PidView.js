@@ -169,6 +169,7 @@ export default class PidsView extends ProfileView {
         >
           <div style={{ margin: "0 auto", width: "800px" }}>
             <ConfigListView
+              fcConfig={this.props.fcConfig}
               notifyDirty={this.props.notifyDirty}
               items={this.props.items}
             />

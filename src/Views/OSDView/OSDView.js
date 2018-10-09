@@ -208,6 +208,7 @@ export default class OSDView extends Component {
             </Paper>
             <div>
               <ConfigListView
+                fcConfig={this.props.fcConfig}
                 notifyDirty={(isDirty, item, val) => {
                   if (item.id === "vcd_video_system") {
                     this.setState({ videoMode: val });

@@ -26,6 +26,7 @@ export default class ConfigListView extends Component {
       <div className="config-list-view">
         {this.props.features && (
           <FeaturesView
+            fcConfig={this.props.fcConfig}
             features={this.props.features}
             notifyDirty={this.props.notifyDirty}
           />

@@ -16,7 +16,7 @@ export default class MotorsView extends Component {
   render() {
     return (
       <div>
-        <Paper theme={this.state.theme} elevation={3}>
+        <Paper elevation={3}>
           <div style={{ display: "flex", margin: 10 }}>
             <Button
               onClick={() =>
@@ -49,9 +49,10 @@ export default class MotorsView extends Component {
           </div>
           {this.state.showMotorSliders && <MotorsSlidersView />}
         </Paper>
-        <Paper theme={this.state.theme} elevation={3}>
+        <Paper elevation={3}>
           <ConfigListView
             features={this.props.features}
+            fcConfig={this.props.fcConfig}
             notifyDirty={this.props.notifyDirty}
             items={this.props.items}
           />
