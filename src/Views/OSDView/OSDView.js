@@ -15,6 +15,7 @@ import HelperSelect from "../Items/HelperSelect";
 import OSDElement from "./OSDElement";
 import { FormattedMessage } from "react-intl";
 import FeatureItemView from "../FeaturesView/FeatureItemView";
+import DropdownView from "../Items/DropdownView";
 
 const visibilityFlag = 0x0800;
 const normalise = value => (value * 100) / 256;
@@ -109,150 +110,166 @@ export default class OSDView extends Component {
     let nonElementSettings = this.props.items.filter(item => {
       return !item.id.endsWith("_pos");
     });
-    let maxRows = this.state.videoMode === "NTSC" ? 13 : 18;
+    let maxRows = this.state.videoMode !== "PAL" ? 13 : 18;
     return (
-      <Paper elevation={3} style={{ display: "flex" }}>
-        <div className={this.state.selectedFont}>
-          <div
-            style={{
-              display: "flex",
-              justifyItems: "center",
-              alignItems: "center"
-            }}
-          >
-            {this.osdFeature && (
-              <FeatureItemView
-                notifyDirty={this.props.notifyDirty}
-                item={this.osdFeature}
-              />
-            )}
-            <HelperSelect
-              name="osd.select-font"
-              label="osd.select-font"
-              value={this.state.selectedFont}
-              onChange={(event, elem) => {
-                this.setState({ selectedFont: elem.key });
-              }}
-              items={this.fontList}
-            />
-            <Button
-              variant="raised"
-              color="primary"
-              disabled={this.state.uploadingFont}
-              onClick={() => this.handleUpload()}
-            >
-              <FormattedMessage id="osd.upload" />
-            </Button>
-            <LinearProgress
-              style={{ height: 20, flex: 1, marginLeft: 10 }}
-              variant="determinate"
-              value={normalise(this.state.uploadProgress)}
-            />
-          </div>
-          <div
-            style={{
-              margin: "10px",
-              padding: "10px",
-              flex: 1,
-              position: "relative"
-            }}
-          >
-            {this.state.showDropZone && (
-              <div className="dropzone-overlay">
-                <Typography variant="headline">DROP ELEMENTS HERE</Typography>
-              </div>
-            )}
-            <Paper theme={this.state.theme} elevation={3}>
-              <GridLayout
-                style={{
-                  backgroundImage: "url('assets/osd-backdrop.png')",
-                  backgroundPosition: "center",
-                  backgroundRepeat: "none",
-                  backgroundSize: "cover",
-                  margin: "0 auto",
-                  height: maxRows * 26,
-                  width: 550,
-                  overflow: "hidden"
-                }}
-                width={550}
-                onDragStop={(layout, oldItem, newItem) => {
-                  this.setOSDElement(newItem);
-                }}
-                maxRows={maxRows}
-                autoSize={false}
-                cols={30}
-                compactType={null}
-                preventCollision={false}
-                rowHeight={16}
-              >
-                {elementsPositioned.map(item => {
-                  let gridPos = osdPosToXy(parseInt(item.current, 10));
-                  return (
-                    <div
-                      className="osd-element"
-                      key={item.id}
-                      data-grid={{
-                        i: item.id,
-                        x: gridPos.x,
-                        y: gridPos.y,
-                        w: 1,
-                        h: 1,
-                        isResizable: false
-                      }}
-                    >
-                      <OSDElement fcConfig={this.props.fcConfig} id={item.id} />
-                    </div>
-                  );
-                })}
-              </GridLayout>
-            </Paper>
-            <div>
-              <ConfigListView
-                fcConfig={this.props.fcConfig}
-                notifyDirty={(isDirty, item, val) => {
-                  if (item.id === "vcd_video_system") {
-                    this.setState({ videoMode: val });
-                  }
-                  this.props.notifyDirty(isDirty, item, val);
-                }}
-                items={nonElementSettings}
-              />
-            </div>
-          </div>
-        </div>
-        <Paper
-          theme={this.state.theme}
-          elevation={3}
+      <Paper elevation={3}>
+        <div
           style={{
-            margin: "10px",
-            padding: "10px",
-            height: 700,
-            overflow: "auto"
+            display: "flex",
+            justifyItems: "center",
+            alignItems: "center"
           }}
         >
-          <List style={{ overflow: "auto" }}>
-            {this.state.elementsAvailable.map(item => {
-              return (
-                <FormGroup key={item.id} component="fieldset">
-                  <FormControlLabel
-                    control={
-                      <Switch
-                        id={item.id}
-                        checked={checkOSDVal(item.current)}
-                        onChange={() => {
-                          item.current =
-                            parseInt(item.current, 10) ^ visibilityFlag;
-                          this.forceUpdate();
+          {this.osdFeature && (
+            <FeatureItemView
+              notifyDirty={(isDirty, state, newVal) => {
+                this.setState({ osdEnabled: newVal });
+                this.props.notifyDirty(isDirty, state, newVal);
+              }}
+              item={this.osdFeature}
+            />
+          )}
+          {this.state.osdEnabled && (
+            <React.Fragment>
+              <DropdownView
+                item={this.props.fcConfig.vcd_video_system}
+                notifyDirty={this.props.notifyDirty}
+              />
+              <HelperSelect
+                name="osd.select-font"
+                label="osd.select-font"
+                value={this.state.selectedFont}
+                onChange={(event, elem) => {
+                  this.setState({ selectedFont: elem.key });
+                }}
+                items={this.fontList}
+              />
+              <Button
+                variant="raised"
+                color="primary"
+                disabled={this.state.uploadingFont}
+                onClick={() => this.handleUpload()}
+              >
+                <FormattedMessage id="osd.upload" />
+              </Button>
+              <LinearProgress
+                style={{ height: 20, flex: 1, marginLeft: 10 }}
+                variant="determinate"
+                value={normalise(this.state.uploadProgress)}
+              />
+            </React.Fragment>
+          )}
+        </div>
+        {this.state.osdEnabled && (
+          <div className={this.state.selectedFont} style={{ display: "flex" }}>
+            <div
+              style={{
+                margin: "10px",
+                padding: "10px",
+                flex: 1,
+                position: "relative"
+              }}
+            >
+              {this.state.showDropZone && (
+                <div className="dropzone-overlay">
+                  <Typography variant="headline">DROP ELEMENTS HERE</Typography>
+                </div>
+              )}
+              <Paper theme={this.state.theme} elevation={3}>
+                <GridLayout
+                  style={{
+                    backgroundImage: "url('assets/osd-backdrop.png')",
+                    backgroundPosition: "center",
+                    backgroundRepeat: "none",
+                    backgroundSize: "cover",
+                    margin: "0 auto",
+                    height: maxRows * 26,
+                    width: 550,
+                    overflow: "hidden"
+                  }}
+                  width={550}
+                  onDragStop={(layout, oldItem, newItem) => {
+                    this.setOSDElement(newItem);
+                  }}
+                  maxRows={maxRows}
+                  autoSize={false}
+                  cols={30}
+                  compactType={null}
+                  preventCollision={false}
+                  rowHeight={16}
+                >
+                  {elementsPositioned.map(item => {
+                    let gridPos = osdPosToXy(parseInt(item.current, 10));
+                    return (
+                      <div
+                        className="osd-element"
+                        key={item.id}
+                        data-grid={{
+                          i: item.id,
+                          x: gridPos.x,
+                          y: gridPos.y,
+                          w: 1,
+                          h: 1,
+                          isResizable: false
                         }}
-                      />
+                      >
+                        <OSDElement
+                          fcConfig={this.props.fcConfig}
+                          id={item.id}
+                        />
+                      </div>
+                    );
+                  })}
+                </GridLayout>
+              </Paper>
+              <div>
+                <ConfigListView
+                  fcConfig={this.props.fcConfig}
+                  notifyDirty={(isDirty, item, val) => {
+                    if (item.id === "vcd_video_system") {
+                      this.setState({ videoMode: val });
                     }
-                    label={<FormattedMessage id={item.id} />}
-                  />
-                </FormGroup>
-              );
-            })}
-          </List>
-        </Paper>
+                    this.props.notifyDirty(isDirty, item, val);
+                  }}
+                  items={nonElementSettings}
+                />
+              </div>
+            </div>
+            <Paper
+              theme={this.state.theme}
+              elevation={3}
+              style={{
+                margin: "10px",
+                padding: "10px",
+                height: 700,
+                overflow: "auto"
+              }}
+            >
+              <List style={{ overflow: "auto" }}>
+                {this.state.elementsAvailable.map(item => {
+                  return (
+                    <FormGroup key={item.id} component="fieldset">
+                      <FormControlLabel
+                        control={
+                          <Switch
+                            id={item.id}
+                            checked={checkOSDVal(item.current)}
+                            onChange={() => {
+                              item.current =
+                                parseInt(item.current, 10) ^ visibilityFlag;
+                              this.forceUpdate();
+                            }}
+                          />
+                        }
+                        label={<FormattedMessage id={item.id} />}
+                      />
+                    </FormGroup>
+                  );
+                })}
+              </List>
+            </Paper>
+          </div>
+        )}
       </Paper>
     );
   }

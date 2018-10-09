@@ -226,7 +226,6 @@
       "osd_stat_rtc_date_time",
       "osd_stat_tim_1",
       "osd_stat_tim_2",
-      "vcd_video_system",
       "vcd_h_offset",
       "vcd_v_offset",
       "displayport_max7456_inv"
