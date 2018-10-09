@@ -17,6 +17,12 @@ const dark = createMuiTheme({
         // color: grey[900]
       }
     }
+  },
+  MuiPaper: {
+    root: {
+      margin: 10,
+      padding: 10
+    }
   }
 });
 

@@ -45,7 +45,7 @@ module.exports = {
       cb(err, list);
     });
   },
-  flashDFU: (fileBuffer, notify) => {
+  flashDFU: (fileBuffer, notify, chipErase) => {
     let isProd = __dirname.indexOf("app.asar") > -1;
     let relative = isProd ? "../../../.." : "../../..";
     let dfuPath = `${relative}/public/server/utils/dfu/`;
@@ -77,7 +77,7 @@ module.exports = {
       "-a",
       "0",
       "-s",
-      "0x08000000:leave",
+      `0x08000000${chipErase ? ":mass-erase:force:" : ":"}leave`,
       "-D",
       filePath
     ]);

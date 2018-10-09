@@ -165,18 +165,18 @@ export default new class FCConnector {
     return fetch(`${this.serviceUrl}/font/${name}`);
   }
 
-  flashDFU(binUrl) {
-    return fetch(`${this.serviceUrl}/flash/${encodeURIComponent(binUrl)}`).then(
-      response => {
-        return response.json();
-      }
-    );
+  flashDFU(binUrl, erase) {
+    return fetch(
+      `${this.serviceUrl}/flash/${encodeURIComponent(binUrl)}?erase=${erase}`
+    ).then(response => {
+      return response.json();
+    });
   }
 
-  flashDFULocal(binUrl) {
-    return fetch(`${this.serviceUrl}/flash`, {
-      method: "POST", // *GET, POST, PUT, DELETE, etc.
-      mode: "cors", // no-cors, cors, *same-origin
+  flashDFULocal(binUrl, erase) {
+    return fetch(`${this.serviceUrl}/flash?erase=${erase}`, {
+      method: "POST",
+      mode: "cors",
       body: binUrl
     }).then(response => {
       return response.json();

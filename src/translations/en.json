@@ -78,6 +78,7 @@
   "dfu.target.title": "Select a target",
   "dfu.select.version": "Select a version",
   "dfu.load.fail": "Unable to load file",
+  "dfu.full-erase": "Erase Flash",
   "telemetry.gyro.roll": "Gyro Roll: {value}",
   "telemetry.gyro.pitch": "Gyro Pitch: {value}",
   "telemetry.gyro.yaw": "Gyro Yaw: {value}",

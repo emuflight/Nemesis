@@ -8,6 +8,7 @@ import ReactMarkdown from "react-markdown";
 import HelperSelect from "./Items/HelperSelect";
 import Typography from "@material-ui/core/Typography";
 import { FormattedMessage } from "react-intl";
+import { FormControlLabel, FormGroup, Switch } from "@material-ui/core";
 
 export default class DfuView extends Component {
   constructor(props) {
@@ -17,6 +18,7 @@ export default class DfuView extends Component {
     this.state = {
       theme: props.theme,
       allowUpload: true,
+      chipErase: false,
       selectedFile: undefined,
       current: "",
       currentTarget: props.target || "",
@@ -72,9 +74,12 @@ export default class DfuView extends Component {
     this.setState({ isFlashing: true });
     let promise;
     if (this.state.selectedFile) {
-      promise = FCConnector.flashDFULocal(this.state.selectedFile);
+      promise = FCConnector.flashDFULocal(
+        this.state.selectedFile,
+        this.state.chipErase
+      );
     } else {
-      promise = FCConnector.flashDFU(this.state.current);
+      promise = FCConnector.flashDFU(this.state.current, this.state.chipErase);
     }
     promise
       .then(done => {
@@ -235,19 +240,38 @@ export default class DfuView extends Component {
             }
           />
         )}
-        <Button
-          style={{ margin: "20px" }}
-          color="primary"
-          variant="contained"
-          onClick={() => this.handleFlash()}
-          disabled={
-            this.state.isFlashing ||
-            (!this.state.current && !this.state.selectedFile)
-          }
+        <div
+          style={{
+            display: "flex",
+            justifyItems: "center",
+            alignItems: "center"
+          }}
         >
-          <FormattedMessage id="common.flash" />
-        </Button>
-        <Paper theme={this.state.theme} elevation={3}>
+          <FormGroup component="fieldset" style={{ paddingLeft: 10 }}>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={this.state.chipErase}
+                  onChange={(event, chipErase) => this.setState({ chipErase })}
+                />
+              }
+              label={<FormattedMessage id="dfu.full-erase" />}
+            />
+          </FormGroup>
+          <Button
+            style={{ margin: "20px", flex: 1 }}
+            color="primary"
+            variant="contained"
+            onClick={() => this.handleFlash()}
+            disabled={
+              this.state.isFlashing ||
+              (!this.state.current && !this.state.selectedFile)
+            }
+          >
+            <FormattedMessage id="common.flash" />
+          </Button>
+        </div>
+        <Paper elevation={3}>
           <Typography>
             <ReactMarkdown
               source={this.state.note}

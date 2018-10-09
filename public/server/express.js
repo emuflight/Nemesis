@@ -172,7 +172,11 @@ app.post("/flash", (req, res) => {
   console.log(message);
   websockets.notifyProgress(message);
 
-  devices.flashDFU(binBuffer, websockets.notifyProgress);
+  devices.flashDFU(
+    binBuffer,
+    websockets.notifyProgress,
+    req.query.erase === "true"
+  );
   res.sendStatus(202);
 });
 
@@ -189,7 +193,11 @@ app.get("/flash/:binUrl", (req, res) => {
     if (fileBuffer.error) {
       res.status(404).send(fileBuffer.error);
     } else {
-      devices.flashDFU(fileBuffer, websockets.notifyProgress);
+      devices.flashDFU(
+        fileBuffer,
+        websockets.notifyProgress,
+        req.query.erase === "true"
+      );
       res.sendStatus(202);
     }
   });
