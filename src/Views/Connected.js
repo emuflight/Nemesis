@@ -252,6 +252,7 @@ export default class Connected extends Component {
         contents = (
           <FeaturesView
             features={this.state.fcConfig.features.values}
+            fcConfig={this.state.fcConfig}
             notifyDirty={(isDirty, item, newValue) =>
               this.notifyDirty(isDirty, item, newValue)
             }
@@ -262,6 +263,7 @@ export default class Connected extends Component {
         if (this.state.isBxF) {
           contents = (
             <FiltersView
+              features={this.getRouteFeatures()}
               fcConfig={this.state.fcConfig}
               notifyDirty={(isDirty, item, newValue) =>
                 this.notifyDirty(isDirty, item, newValue)

@@ -5,8 +5,11 @@ import Paper from "@material-ui/core/Paper";
 export default class FeaturesView extends Component {
   constructor(props) {
     super(props);
+    let filteredFeatures = this.props.fcConfig.imuf
+      ? props.features.filter(feature => feature.id !== "DYNAMIC_FILTER")
+      : props.features;
     this.state = {
-      features: props.features.sort((a, b) => a.id > b.id)
+      features: filteredFeatures.sort((a, b) => a.id > b.id)
     };
   }
 

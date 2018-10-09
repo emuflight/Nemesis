@@ -24,6 +24,7 @@
       "CHANNEL_FORWARDING",
       "RX_SPI"
     ],
+    "FILTERS": ["DYNAMIC_FILTER"],
     "MOTORS": ["MOTOR_STOP", "ESC_SENSOR", "3D", "AIRMODE", "ANTI_GRAVITY"],
     "GPS": [
       "GPS",

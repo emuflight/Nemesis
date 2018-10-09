@@ -1,12 +1,12 @@
-import React from "react";
+import React, { Component } from "react";
 import InputView from "../Items/InputView";
 import DropdownView from "../Items/DropdownView";
-import ConfigListView from "../ConfigListView/ConfigListView";
+import FeaturesView from "../FeaturesView/FeaturesView";
 import Paper from "@material-ui/core/Paper";
 import { AreaChart } from "react-easy-chart";
 import biquad from "./biquad";
 
-export default class FiltersView extends ConfigListView {
+export default class FiltersView extends Component {
   render() {
     let bqData, notchData;
     let bqColors = ["blue", "white", "green"];
@@ -64,9 +64,15 @@ export default class FiltersView extends ConfigListView {
     }
     return (
       <div style={{ display: "flex", flexDirection: "column" }}>
+        {!this.props.fcConfig.imuf && (
+          <FeaturesView
+            features={this.props.features}
+            notifyDirty={this.props.notifyDirty}
+          />
+        )}
         {this.props.fcConfig.imuf ? (
           <div style={{ flex: 1 }}>
-            <Paper theme={this.state.theme} elevation={3}>
+            <Paper elevation={3}>
               <InputView
                 notifyDirty={this.props.notifyDirty}
                 item={this.props.fcConfig.imuf_roll_q}
@@ -80,11 +86,7 @@ export default class FiltersView extends ConfigListView {
                 item={this.props.fcConfig.imuf_yaw_q}
               />
             </Paper>
-            <Paper
-              theme={this.state.theme}
-              elevation={3}
-              style={{ display: "flex" }}
-            >
+            <Paper elevation={3} style={{ display: "flex" }}>
               <div style={{ display: "flex", flexDirection: "column" }}>
                 <InputView
                   notifyDirty={(isDirty, state, val) => {
@@ -125,7 +127,26 @@ export default class FiltersView extends ConfigListView {
                 />
               </div>
             </Paper>
-            <Paper theme={this.state.theme} elevation={3}>
+            <Paper
+              elevation={3}
+              style={{
+                display: "flex",
+                justifyItems: "center",
+                alignItems: "center"
+              }}
+            >
+              <DropdownView
+                notifyDirty={this.props.notifyDirty}
+                item={this.props.fcConfig.imuf_roll_af}
+              />
+              <DropdownView
+                notifyDirty={this.props.notifyDirty}
+                item={this.props.fcConfig.imuf_pitch_af}
+              />
+              <DropdownView
+                notifyDirty={this.props.notifyDirty}
+                item={this.props.fcConfig.imuf_yaw_af}
+              />
               <InputView
                 notifyDirty={this.props.notifyDirty}
                 item={this.props.fcConfig.imuf_w}
@@ -135,7 +156,6 @@ export default class FiltersView extends ConfigListView {
         ) : (
           <div style={{ flex: 1 }}>
             <Paper
-              theme={this.state.theme}
               elevation={3}
               style={{
                 display: "flex",
@@ -213,7 +233,6 @@ export default class FiltersView extends ConfigListView {
               </div>
             </Paper>
             <Paper
-              theme={this.state.theme}
               elevation={3}
               style={{
                 display: "flex",

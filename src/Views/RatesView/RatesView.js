@@ -117,7 +117,6 @@ export default class RatesView extends ProfileView {
     return (
       <div style={{ display: "flex", flex: 1, flexDirection: "column" }}>
         <Paper
-          theme={this.state.theme}
           elevation={3}
           style={{
             display: "flex",
@@ -152,7 +151,7 @@ export default class RatesView extends ProfileView {
         </Paper>
         <div style={{ display: "flex" }}>
           <div style={{ display: "flex", flex: 1, flexDirection: "column" }}>
-            <Paper theme={this.state.theme} elevation={3}>
+            <Paper elevation={3}>
               <Typography>
                 <FormattedMessage id="common.roll" />
               </Typography>
@@ -171,11 +170,15 @@ export default class RatesView extends ProfileView {
               <TextField
                 style={{ width: 90 }}
                 disabled={true}
-                label={<FormattedMessage id="rates.max-dps" />}
+                label={
+                  <span className="color-legend white">
+                    <FormattedMessage id="rates.max-dps" />
+                  </span>
+                }
                 value={xcurve[10].y}
               />
             </Paper>
-            <Paper theme={this.state.theme} elevation={3}>
+            <Paper elevation={3}>
               <Typography>
                 <FormattedMessage id="common.pitch" />
               </Typography>
@@ -194,11 +197,15 @@ export default class RatesView extends ProfileView {
               <TextField
                 style={{ width: 90 }}
                 disabled={true}
-                label={<FormattedMessage id="rates.max-dps" />}
+                label={
+                  <span className="color-legend blue">
+                    <FormattedMessage id="rates.max-dps" />
+                  </span>
+                }
                 value={ycurve[10].y}
               />
             </Paper>
-            <Paper theme={this.state.theme} elevation={3}>
+            <Paper elevation={3}>
               <Typography>
                 <FormattedMessage id="common.yaw" />
               </Typography>
@@ -214,16 +221,19 @@ export default class RatesView extends ProfileView {
                 notifyDirty={this.props.notifyDirty}
                 item={this.props.fcConfig.yaw_expo}
               />
-
               <TextField
                 style={{ width: 90 }}
                 disabled={true}
-                label={<FormattedMessage id="rates.max-dps" />}
+                label={
+                  <span className="color-legend green">
+                    <FormattedMessage id="rates.max-dps" />
+                  </span>
+                }
                 value={zcurve[10].y}
               />
             </Paper>
           </div>
-          <Paper theme={this.state.theme} elevation={3}>
+          <Paper elevation={3}>
             <AreaChart
               xType={"text"}
               areaColors={["white", "blue", "green"]}

@@ -7,12 +7,6 @@ import FeaturesView from "../FeaturesView/FeaturesView";
 import "./ConfigListView.css";
 
 export default class ConfigListView extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      theme: props.theme
-    };
-  }
   render() {
     let inputs =
       (this.props.items &&
@@ -37,11 +31,7 @@ export default class ConfigListView extends Component {
           />
         )}
         {!!sliders.length && (
-          <Paper
-            theme={this.state.theme}
-            elevation={3}
-            className="config-list-view-sliders"
-          >
+          <Paper elevation={3} className="config-list-view-sliders">
             {sliders.map(item => {
               return (
                 <SliderView
@@ -56,11 +46,7 @@ export default class ConfigListView extends Component {
           </Paper>
         )}
         {!!dropdowns.length && (
-          <Paper
-            theme={this.state.theme}
-            elevation={3}
-            className="config-list-view-dropdowns"
-          >
+          <Paper elevation={3} className="config-list-view-dropdowns">
             {dropdowns.map(item => {
               return (
                 <DropdownView
@@ -75,11 +61,7 @@ export default class ConfigListView extends Component {
         )}
 
         {!!inputs.length && (
-          <Paper
-            theme={this.state.theme}
-            elevation={3}
-            className="config-list-view-inputs"
-          >
+          <Paper elevation={3} className="config-list-view-inputs">
             {inputs.map(item => {
               return (
                 <InputView

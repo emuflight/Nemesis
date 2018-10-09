@@ -1,0 +1,9 @@
+.color-legend.white {
+  background-color: rgba(255, 255, 255, 0.6);
+  color: black; }
+
+.color-legend.blue {
+  background-color: rgba(0, 0, 255, 0.3); }
+
+.color-legend.green {
+  background-color: rgba(0, 255, 0, 0.3); }
