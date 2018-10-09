@@ -377,7 +377,7 @@ export default class Connected extends Component {
           </List>
         </Drawer>
         {contents}
-        <CliView theme={this.state.theme} />
+        <CliView handleSave={this.props.handleSave} theme={this.state.theme} />
         {this.state.openAssistant && (
           <AssistantView
             rebooting={this.props.rebooting}

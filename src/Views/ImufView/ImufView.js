@@ -1,6 +1,6 @@
 import React from "react";
-import DfuView from "./DfuView";
-import FCConnector from "../utilities/FCConnector";
+import DfuView from "../DfuView/DfuView";
+import FCConnector from "../../utilities/FCConnector";
 import { FormattedMessage, FormattedHTMLMessage } from "react-intl";
 
 export default class ImufView extends DfuView {

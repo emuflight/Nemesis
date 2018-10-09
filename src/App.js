@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import Connected from "./Views/Connected";
 import Disconnected from "./Views/Disconnected";
-import ImufView from "./Views/ImufView";
-import DfuView from "./Views/DfuView";
+import ImufView from "./Views/ImufView/ImufView";
+import DfuView from "./Views/DfuView/DfuView";
 import FCConnector from "./utilities/FCConnector";
 import themes from "./Themes/Dark";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 
-class App extends Component {
+export const FCConfigContext = React.createContext({});
+
+export class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -86,7 +88,7 @@ class App extends Component {
 
   handleSave = () => {
     this.setState({ rebooting: this.state.currentConfig.reboot_on_save });
-    return FCConnector.saveConfig();
+    return FCConnector.saveConfig().then();
   };
 
   render() {
@@ -105,16 +107,18 @@ class App extends Component {
     } else if (this.state.connected) {
       return (
         <MuiThemeProvider theme={this.state.theme}>
-          <Connected
-            rebooting={this.state.rebooting}
-            handleSave={this.handleSave}
-            theme={this.state.theme}
-            refreshConfig={this.getFcConfig}
-            goToImuf={this.goToImuf}
-            connectinId={this.state.id}
-            device={this.state.deviceInfo}
-            fcConfig={this.state.currentConfig}
-          />
+          <FCConfigContext.Provider value={this.state.currentConfig}>
+            <Connected
+              rebooting={this.state.rebooting}
+              handleSave={this.handleSave}
+              theme={this.state.theme}
+              refreshConfig={this.getFcConfig}
+              goToImuf={this.goToImuf}
+              connectinId={this.state.id}
+              device={this.state.deviceInfo}
+              fcConfig={this.state.currentConfig}
+            />
+          </FCConfigContext.Provider>
         </MuiThemeProvider>
       );
     } else {
@@ -130,5 +134,3 @@ class App extends Component {
     }
   }
 }
-
-export default App;

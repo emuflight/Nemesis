@@ -1,0 +1,9 @@
+.dfu-view-root {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  flex: 1;
+  padding: 30px 10px 10px 10px;
+  min-height: 100%;
+  box-sizing: border-box;
+}

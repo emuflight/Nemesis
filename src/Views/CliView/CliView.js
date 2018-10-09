@@ -23,10 +23,14 @@ export default class CliView extends Component {
       command: "",
       open: openState
     });
-    if (openState) {
-      FCConnector.pauseTelemetry();
-    } else {
-      FCConnector.resumeTelemetry();
+    if (this.props.handleSave) {
+      if (openState) {
+        FCConnector.pauseTelemetry();
+      } else {
+        this.props.handleSave().then(() => {
+          FCConnector.resumeTelemetry();
+        });
+      }
     }
   }
   replaceLast(update) {
