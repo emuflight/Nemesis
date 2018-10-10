@@ -1,15 +1,15 @@
 {
   "routes": [
     "PID",
-    "RATES",
-    "FILTERS",
     "MOTORS",
     "MODES",
+    "RATES",
+    "FILTERS",
     "RX",
-    "FEATURES",
-    "GPS",
-    "VTX",
     "OSD",
+    "GPS",
+    "FEATURES",
+    "VTX",
     "PORTS",
     "BLACKBOX",
     "ADVANCED"

@@ -1,14 +1,14 @@
 {
   "routes": [
     "PID",
+    "MOTORS",
+    "MODES",
     "RATES",
     "FILTERS",
-    "MOTORS",
     "RX",
-    "MODES",
-    "LEDS",
-    "TELEMETRY",
     "OSD",
+    "TELEMETRY",
+    "LEDS",
     "BLACKBOX",
     "ADVANCED"
   ],

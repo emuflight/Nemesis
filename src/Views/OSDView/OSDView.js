@@ -110,7 +110,7 @@ export default class OSDView extends Component {
     let nonElementSettings = this.props.items.filter(item => {
       return !item.id.endsWith("_pos");
     });
-    let maxRows = this.state.videoMode !== "PAL" ? 13 : 18;
+    let maxRows = this.state.videoMode === "NTSC" ? 13 : 18;
     return (
       <Paper elevation={3}>
         <div
