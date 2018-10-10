@@ -255,6 +255,7 @@ export default class OSDView extends Component {
                             onChange={() => {
                               item.current =
                                 parseInt(item.current, 10) ^ visibilityFlag;
+                              this.props.notifyDirty(true, item, item.current);
                               this.forceUpdate();
                             }}
                           />
