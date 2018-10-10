@@ -133,7 +133,10 @@ export default class OSDView extends Component {
             <React.Fragment>
               <DropdownView
                 item={this.props.fcConfig.vcd_video_system}
-                notifyDirty={this.props.notifyDirty}
+                notifyDirty={(isDirty, item, val) => {
+                  this.setState({ videoMode: val });
+                  this.props.notifyDirty(isDirty, item, val);
+                }}
               />
               <HelperSelect
                 name="osd.select-font"
@@ -225,12 +228,7 @@ export default class OSDView extends Component {
               <div>
                 <ConfigListView
                   fcConfig={this.props.fcConfig}
-                  notifyDirty={(isDirty, item, val) => {
-                    if (item.id === "vcd_video_system") {
-                      this.setState({ videoMode: val });
-                    }
-                    this.props.notifyDirty(isDirty, item, val);
-                  }}
+                  notifyDirty={this.props.notifyDirty}
                   items={nonElementSettings}
                 />
               </div>

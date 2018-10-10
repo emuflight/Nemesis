@@ -1,4 +1,19 @@
-g text {
-  fill: white;
-  font-family: Roboto, sans-serif;
+.filters-view {
+  g.x.axis text {
+    &.label {
+      transform: translate(-160px, 0);
+    }
+    fill: white;
+    font-family: Roboto, sans-serif !important;
+  }
+  g.y.axis text {
+    &.label {
+      transform: translate(0, 110px) rotate(-90deg);
+    }
+    fill: white;
+    font-family: Roboto, sans-serif !important;
+  }
+}
+.area-chart-container {
+  padding: 20px;
 }

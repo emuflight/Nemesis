@@ -43,7 +43,7 @@ export default (type, Fc, Fs, cutoff) => {
           4 * (b1 + 4 * b2 + b1 * b2) * phi +
           16 * b2 * phi * phi
       );
-    y = Math.max((y * 10) / Math.LN10, -120);
+    y = Math.max((y * 10) / Math.LN10, -100);
 
     magPlot.push({ x: idx, y });
     if (idx === 0) minVal = maxVal = y;

@@ -64,7 +64,10 @@ export default class FiltersView extends Component {
       ];
     }
     return (
-      <div style={{ display: "flex", flexDirection: "column" }}>
+      <div
+        className="filters-view"
+        style={{ display: "flex", flexDirection: "column" }}
+      >
         {!this.props.fcConfig.imuf && (
           <FeaturesView
             fcConfig={this.props.fcConfig}
@@ -116,11 +119,11 @@ export default class FiltersView extends Component {
                 />
               </div>
 
-              <div>
+              <div class="area-chart-container">
                 <AreaChart
                   data={bqData}
                   areaColors={bqColors}
-                  yDomainRange={[-120, 30]}
+                  yDomainRange={[-100, 0]}
                   xDomainRange={[0, 500]}
                   axisLabels={{ x: "Frequency", y: "Attenuation" }}
                   axes
@@ -221,11 +224,11 @@ export default class FiltersView extends Component {
                   item={this.props.fcConfig.gyro_lowpass2_hz}
                 />
               </div>
-              <div>
+              <div className="area-chart-container">
                 <AreaChart
                   data={bqData}
                   areaColors={bqColors}
-                  yDomainRange={[-120, 30]}
+                  yDomainRange={[-100, 0]}
                   xDomainRange={[0, 500]}
                   axesLabels={{ x: "Frequency", y: "Attenuation" }}
                   axes
@@ -267,7 +270,7 @@ export default class FiltersView extends Component {
                   item={this.props.fcConfig.gyro_notch2_cutoff}
                 />
               </div>
-              <div style={{ padding: 20 }}>
+              <div className="area-chart-container">
                 <AreaChart
                   data={notchData}
                   areaColors={bqColors}

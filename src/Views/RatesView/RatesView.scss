@@ -25,7 +25,19 @@
     background-color: rgba(0, 255, 0, 0.3);
   }
 }
-g text {
-  fill: white;
-  font-family: Roboto, sans-serif;
+.rates-view {
+  g.x.axis text {
+    &.label {
+      transform: translate(160px, 3px);
+    }
+    fill: white;
+    font-family: Roboto, sans-serif !important;
+  }
+  g.y.axis text {
+    &.label {
+      transform: translate(5px, 120px) rotate(-90deg);
+    }
+    fill: white;
+    font-family: Roboto, sans-serif !important;
+  }
 }

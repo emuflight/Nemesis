@@ -8,6 +8,14 @@
 .color-legend.green {
   background-color: rgba(0, 255, 0, 0.3); }
 
-g text {
+.rates-view g.x.axis text {
   fill: white;
-  font-family: Roboto, sans-serif; }
+  font-family: Roboto, sans-serif !important; }
+  .rates-view g.x.axis text.label {
+    transform: translate(160px, 3px); }
+
+.rates-view g.y.axis text {
+  fill: white;
+  font-family: Roboto, sans-serif !important; }
+  .rates-view g.y.axis text.label {
+    transform: translate(5px, 120px) rotate(-90deg); }

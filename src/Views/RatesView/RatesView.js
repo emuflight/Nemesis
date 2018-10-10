@@ -117,7 +117,10 @@ export default class RatesView extends ProfileView {
       });
     });
     return (
-      <div style={{ display: "flex", flex: 1, flexDirection: "column" }}>
+      <div
+        className="rates-view"
+        style={{ display: "flex", flex: 1, flexDirection: "column" }}
+      >
         <Paper
           elevation={3}
           style={{
@@ -240,7 +243,7 @@ export default class RatesView extends ProfileView {
               xType={"text"}
               areaColors={["white", "blue", "green"]}
               interpolate={"cardinal"}
-              axisLabels={{ x: "Stick % of Midpoint", y: "Degrees / s" }}
+              axisLabels={{ x: "Stick Midpoint %", y: "Deg / sec" }}
               yAxisOrientRight
               axes
               xTicks={0}
