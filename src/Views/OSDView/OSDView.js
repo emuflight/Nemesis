@@ -39,7 +39,7 @@ export default class OSDView extends Component {
   constructor(props) {
     super(props);
     this.osdFeature =
-      !props.fcConfig.isBxF ||
+      (!props.fcConfig.isBxF && props.fcConfig.osd_enabled) ||
       props.fcConfig.features.values.find(val => val.id === "OSD");
     this.state = {
       osdEnabled: this.osdFeature.current,
@@ -104,6 +104,32 @@ export default class OSDView extends Component {
   }
 
   render() {
+    if (!this.props.fcConfig.isBxF) {
+      return (
+        <Paper elevation={3}>
+          <FormGroup component="fieldset">
+            <FormControlLabel
+              control={
+                <Switch
+                  id={this.osdFeature.id}
+                  checked={this.state.osdEnabled}
+                  onChange={(event, osdEnabled) => {
+                    this.setState({ osdEnabled });
+                    FCConnector.setValue(
+                      this.osdFeature.id,
+                      osdEnabled ? "1" : "0"
+                    ).then(() => {
+                      this.props.notifyDirty(true, this.osdFeature, osdEnabled);
+                    });
+                  }}
+                />
+              }
+              label={<FormattedMessage id={this.osdFeature.id} />}
+            />
+          </FormGroup>
+        </Paper>
+      );
+    }
     let elementsPositioned = this.state.elementsAvailable.filter(item =>
       checkOSDVal(item.current)
     );
