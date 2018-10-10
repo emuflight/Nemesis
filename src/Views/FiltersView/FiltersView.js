@@ -5,6 +5,7 @@ import FeaturesView from "../FeaturesView/FeaturesView";
 import Paper from "@material-ui/core/Paper";
 import { AreaChart } from "react-easy-chart";
 import biquad from "./biquad";
+import "./FiltersView.css";
 
 export default class FiltersView extends Component {
   render() {
@@ -121,7 +122,7 @@ export default class FiltersView extends Component {
                   areaColors={bqColors}
                   yDomainRange={[-120, 30]}
                   xDomainRange={[0, 500]}
-                  axisLabels={{ x: "Hz", y: "Attenuation" }}
+                  axisLabels={{ x: "Frequency", y: "Attenuation" }}
                   axes
                   width={450}
                   height={350}
@@ -226,7 +227,7 @@ export default class FiltersView extends Component {
                   areaColors={bqColors}
                   yDomainRange={[-120, 30]}
                   xDomainRange={[0, 500]}
-                  axesLabels={{ x: "Hz", y: "Attenuation" }}
+                  axesLabels={{ x: "Frequency", y: "Attenuation" }}
                   axes
                   width={350}
                   height={250}
@@ -272,6 +273,7 @@ export default class FiltersView extends Component {
                   areaColors={bqColors}
                   yDomainRange={[-60, 10]}
                   xDomainRange={[0, notchDomainMax]}
+                  axisLabels={{ x: "Frequency", y: "Attenuation" }}
                   width={350}
                   height={250}
                 />

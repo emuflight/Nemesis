@@ -9,6 +9,7 @@ import { FormattedMessage } from "react-intl";
 import FloatView from "../Items/FloatView";
 import InputView from "../Items/InputView";
 import { AreaChart } from "react-easy-chart";
+import "./RatesView.css";
 
 export default class RatesView extends ProfileView {
   //these are the actual calculations from the functions applyBetaflightRates anf applyRaceflightRates
@@ -239,12 +240,13 @@ export default class RatesView extends ProfileView {
               xType={"text"}
               areaColors={["white", "blue", "green"]}
               interpolate={"cardinal"}
-              axwsLabels={{ x: "DPS", y: "RC" }}
+              axisLabels={{ x: "Stick % of Midpoint", y: "Degrees / s" }}
               yAxisOrientRight
               axes
               xTicks={0}
               width={450}
               height={350}
+              margin={{ top: 0, left: 0, bottom: 50, right: 50 }}
               data={[xcurve, ycurve, zcurve]}
             />
           </Paper>
