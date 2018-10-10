@@ -4,6 +4,7 @@ import deepOrange from "@material-ui/core/colors/deepOrange";
 // import grey from '@material-ui/core/colors/grey';
 import ButterFlight from "./BuF";
 import RACEFLIGHT from "./RF1";
+import targetThemes from "./targets";
 
 const dark = createMuiTheme({
   palette: {
@@ -26,8 +27,11 @@ const dark = createMuiTheme({
   }
 });
 
-export default {
-  dark,
-  ButterFlight,
-  RACEFLIGHT
-};
+export default Object.assign(
+  {
+    dark,
+    ButterFlight,
+    RACEFLIGHT
+  },
+  targetThemes
+);
