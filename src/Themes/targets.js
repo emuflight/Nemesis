@@ -63,7 +63,7 @@ const mode2Primary = {
 };
 
 export default {
-  HELIOSPRING: createMuiTheme(
+  MODE2FLUX: createMuiTheme(
     Object.assign({}, common, {
       logo: "",
       palette: {

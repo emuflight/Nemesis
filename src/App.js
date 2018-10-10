@@ -49,7 +49,10 @@ class App extends Component {
     this.setState({ connecting: true, rebooting: false });
     return FCConnector.tryGetConfig()
       .then(device => {
-        let uiTheme = themes[device.config.version.target] || themes[device.config.version.fw] || themes.dark;
+        let uiTheme =
+          themes[device.config.version.target] ||
+          themes[device.config.version.fw] ||
+          themes.dark;
         if (!device.config) {
           this.setState({
             id: device.comName,
