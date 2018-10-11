@@ -41,7 +41,7 @@ export default class MotorAssignmentAssistantView extends PickerAssistantView {
     if (this.state.saving && nextProps.rebooting === false) {
       setTimeout(() => {
         this.setState({ saving: false });
-      }, 3000);
+      }, 6000);
     }
   }
   render() {

@@ -34,7 +34,7 @@
   "assistant.gyro.unable-to-calibrate": "Unable to calibrate!... Please try again",
   "assistant.motors": "Motor Assistant",
   "assistant.motors.direction": "Which direction do your props spin?",
-  "assistant.motors.mapping": "Ensure your motors are mapped correctly",
+  "assistant.motors.mapping": "Ensure your motors are mapped correctly.\nClick a motor to spin it. Then, click which motor is actually spinning and it will be remapped.",
   "assistant.channel.map": "Configure channel map",
   "assistant.channel.calibrate": "Calibrate your receiver",
   "assistant.motors.calibration": "Calibrate your ESCs",
