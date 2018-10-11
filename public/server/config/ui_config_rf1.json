@@ -298,11 +298,43 @@
       "values": [
         {
           "value": "0",
-          "label": "NORMAL"
+          "label": "X1234-NORMAL"
         },
         {
           "value": "1",
-          "label": "REVERSED"
+          "label": "X1234-REVERSED"
+        },
+        {
+          "value": "2",
+          "label": "X4213"
+        },
+        {
+          "value": "3",
+          "label": "X4213-REVERSED"
+        },
+        {
+          "value": "4",
+          "label": "X1234_3D"
+        },
+        {
+          "value": "5",
+          "label": "X1234_3D-REVERSED"
+        },
+        {
+          "value": "6",
+          "label": "X4213_3D"
+        },
+        {
+          "value": "7",
+          "label": "X4213_3D-REVERSED"
+        },
+        {
+          "value": "8",
+          "label": "PLUS1234"
+        },
+        {
+          "value": "9",
+          "label": "PLUS1234-REVERSED"
         }
       ]
     },

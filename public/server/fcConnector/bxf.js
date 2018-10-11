@@ -58,7 +58,15 @@ const getConfig = device => {
   return sendCommand(device, "config").then(conf => {
     try {
       //trim off " config\n";
-      return JSON.parse(conf.slice(conf.indexOf("{"), conf.length - 3));
+      let config = JSON.parse(conf.slice(conf.indexOf("{"), conf.length - 3));
+      return sendCommand(device, "mixer", 20).then(mixer => {
+        let parts = mixer.split(":");
+        config.mixer_type = {
+          mode: "LOOKUP",
+          current: parts[1].replace(/\s|\n|#/gim, "")
+        };
+        return config;
+      });
     } catch (ex) {
       console.log(ex);
       return sendCommand(device, "version").then(version => {
@@ -159,7 +167,11 @@ const updateIMUF = (device, binName, notify) => {
 };
 
 const setValue = (device, name, newVal) => {
-  return sendCommand(device, `set ${name}=${newVal}`);
+  if (name === "mixer_type") {
+    return sendCommand(device, `mixer ${newVal}`);
+  } else {
+    return sendCommand(device, `set ${name}=${newVal}`);
+  }
 };
 
 const remapMotor = (device, from, to) => {

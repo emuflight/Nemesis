@@ -135,6 +135,11 @@ export default class Connected extends Component {
             fcConfig={mergedProfile}
             handleSave={this.handleSave}
             changeProfile={newProfile => {
+              this.notifyDirty(
+                true,
+                this.props.fcConfig.currentPidProfile,
+                newProfile
+              );
               FCConnector.changeProfile("pid", newProfile).then(() => {
                 this.props.fcConfig.currentPidProfile = newProfile;
                 this.setState({ pid_profile: newProfile });
@@ -161,6 +166,11 @@ export default class Connected extends Component {
           <RatesView
             fcConfig={mergedProfile}
             changeProfile={newProfile => {
+              this.notifyDirty(
+                true,
+                this.props.fcConfig.currentRateProfile,
+                newProfile
+              );
               FCConnector.changeProfile("rate", newProfile).then(() => {
                 this.props.fcConfig.currentRateProfile = newProfile;
                 this.setState({ rate_profile: newProfile });

@@ -5,12 +5,12 @@
     "MODES",
     "RATES",
     "FILTERS",
+    "PORTS",
     "RX",
     "OSD",
     "GPS",
     "FEATURES",
     "VTX",
-    "PORTS",
     "BLACKBOX",
     "ADVANCED"
   ],
@@ -108,6 +108,7 @@
       "imuf_yaw_lpf_cutoff_hz"
     ],
     "MOTORS": [
+      "mixer_type",
       "min_command",
       "dshot_idle_value",
       "dshot_burst",
@@ -539,6 +540,115 @@
         {
           "value": "12",
           "label": "AUX 12"
+        }
+      ]
+    },
+    "mixer_type": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "TRI",
+          "label": "TRI"
+        },
+        {
+          "value": "QUADP",
+          "label": "QUADP"
+        },
+        {
+          "value": "QUADX",
+          "label": "QUADX"
+        },
+        {
+          "value": "BI",
+          "label": "BI"
+        },
+        {
+          "value": "GIMBAL",
+          "label": "GIMBAL"
+        },
+        {
+          "value": "Y6",
+          "label": "Y6"
+        },
+        {
+          "value": "HEX6",
+          "label": "HEX6"
+        },
+        {
+          "value": "FLYING_WING",
+          "label": "FLYING_WING"
+        },
+        {
+          "value": "Y4",
+          "label": "Y4"
+        },
+        {
+          "value": "HEX6X",
+          "label": "HEX6X"
+        },
+        {
+          "value": "OCTOX8",
+          "label": "OCTOX8"
+        },
+        {
+          "value": "OCTOFLATP",
+          "label": "OCTOFLATP"
+        },
+        {
+          "value": "OCTOFLATX",
+          "label": "OCTOFLATX"
+        },
+        {
+          "value": "AIRPLANE",
+          "label": "AIRPLANE"
+        },
+        {
+          "value": "HELI_120_CCPM",
+          "label": "HELI_120_CCPM"
+        },
+        {
+          "value": "HELI_90_DEG",
+          "label": "HELI_90_DEG"
+        },
+        {
+          "value": "VTAIL4",
+          "label": "VTAIL4"
+        },
+        {
+          "value": "HEX6H",
+          "label": "HEX6H"
+        },
+        {
+          "value": "PPM_TO_SERVO",
+          "label": "PPM_TO_SERVO"
+        },
+        {
+          "value": "DUALCOPTER",
+          "label": "DUALCOPTER"
+        },
+        {
+          "value": "SINGLECOPTER",
+          "label": "SINGLECOPTER"
+        },
+        {
+          "value": "ATAIL4",
+          "label": "ATAIL4"
+        },
+        {
+          "value": "CUSTOM",
+          "label": "CUSTOM"
+        },
+        {
+          "value": "CUSTOMAIRPLANE",
+          "label": "CUSTOMAIRPLANE"
+        },
+        {
+          "value": "CUSTOMTRI",
+          "label": "CUSTOMTRI"
+        },
+        {
+          "value": "QUADX1234",
+          "label": "QUADX1234"
         }
       ]
     }
