@@ -29,8 +29,11 @@ wsServer.on("request", request => {
       devices.get((err, port) => {
         connectedDevice = port;
         if (connectedDevice) {
-          connectedDevice.connected = true;
-          connection.sendUTF(JSON.stringify(connectedDevice));
+          //wait a little bit before sending the notification for slower machines.
+          setTimeout(() => {
+            connectedDevice.connected = true;
+            connection.sendUTF(JSON.stringify(connectedDevice));
+          }, 500);
         }
       });
     }
