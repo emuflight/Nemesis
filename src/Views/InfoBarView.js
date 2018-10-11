@@ -12,7 +12,7 @@ export default class InfoBarView extends Component {
   constructor(props) {
     super(props);
     this.craftName = this.props.fcConfig.isBxF
-      ? props.fcConfig.craftName
+      ? props.fcConfig.name
       : props.fcConfig.craft_name.current;
     this.handleDrawerToggle = props.handleDrawerToggle;
     this.state = {
@@ -29,7 +29,7 @@ export default class InfoBarView extends Component {
       if (!this.props.fcConfig.isBxF) {
         command = `set craft_name=${this.state.craftName}`;
       }
-      FCConnector.sendCommand(command).then(() => {
+      FCConnector.sendCliCommand(command).then(() => {
         this.props.notifyDirty(true, this.state, this.state.craftName);
       });
     }
