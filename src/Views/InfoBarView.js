@@ -11,22 +11,27 @@ import { FormattedMessage } from "react-intl";
 export default class InfoBarView extends Component {
   constructor(props) {
     super(props);
+    this.craftName = this.props.fcConfig.isBxF
+      ? props.fcConfig.craftName
+      : props.fcConfig.craft_name.current;
     this.handleDrawerToggle = props.handleDrawerToggle;
     this.state = {
       setupCompleted: -1,
-      craftName: props.fcConfig.craftName,
+      craftName: this.craftName,
       telemetry: {
         cpu: 0
       }
     };
   }
   updateCraftName = () => {
-    if (this.props.fcConfig.craftName !== this.state.craftName) {
-      FCConnector.sendCommand(`name ${this.state.craftName || "-"}`).then(
-        () => {
-          this.props.notifyDirty(true, this.state, this.state.craftName);
-        }
-      );
+    if (this.craftName !== this.state.craftName) {
+      let command = `name ${this.state.craftName || "-"}`;
+      if (!this.props.fcConfig.isBxF) {
+        command = `set craft_name=${this.state.craftName}`;
+      }
+      FCConnector.sendCommand(command).then(() => {
+        this.props.notifyDirty(true, this.state, this.state.craftName);
+      });
     }
   };
 
@@ -88,7 +93,7 @@ export default class InfoBarView extends Component {
             id="craft_name"
             style={{ color: "grey" }}
             placeholder="A craft has no name..."
-            defaultValue={this.props.fcConfig.name}
+            defaultValue={this.state.craftName}
             onBlur={() => this.updateCraftName()}
             onChange={event => this.setState({ craftName: event.target.value })}
           />

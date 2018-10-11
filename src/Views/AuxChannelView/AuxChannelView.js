@@ -64,6 +64,7 @@ export default class AuxChannelView extends Component {
             return (
               <Paper key={mode.id} elevation={3}>
                 <AuxChannelItemView
+                  modeDisabled={!this.props.fcConfig.isBxF}
                   telemetry={this.state.telemetry.channels.slice(4)}
                   telemetryMin={this.state.telemetry.min}
                   telemetryMax={this.state.telemetry.max}

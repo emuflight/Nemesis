@@ -38,6 +38,7 @@ export default class AuxChannelItemView extends Component {
           <HelperSelect
             name={"mode " + this.state.id}
             label={"Mode"}
+            disabled={this.props.modeDisabled}
             value={this.state.mode}
             onChange={event => {
               this.setState({ mode: event.target.value, isDirty: true });

@@ -180,6 +180,7 @@ export default class Connected extends Component {
       case "MODES":
         contents = (
           <AuxChannelView
+            fcConfig={this.state.fcConfig}
             auxScale={this.state.fcConfig.rx_scale}
             auxModeList={this.state.fcConfig.aux_channel_modes}
             modes={
