@@ -29,8 +29,11 @@ wsServer.on("request", request => {
       devices.get((err, port) => {
         connectedDevice = port;
         if (connectedDevice) {
-          connectedDevice.connected = true;
-          connection.sendUTF(JSON.stringify(connectedDevice));
+          //wait a little bit before sending the notification for slower machines.
+          setTimeout(() => {
+            connectedDevice.connected = true;
+            connection.sendUTF(JSON.stringify(connectedDevice));
+          }, 500);
         }
       });
     }
@@ -38,7 +41,6 @@ wsServer.on("request", request => {
 
   // Detect remove
   usb.on(`detach`, device => {
-    console.log(device);
     if (device.deviceDescriptor.idVendor === STM32USB.vendorId) {
       connection.sendUTF(
         JSON.stringify({

@@ -2,13 +2,14 @@ import React, { Component } from "react";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import Input from "@material-ui/core/Input";
-import FCConnector from "../utilities/FCConnector";
-import CliView from "./CliView/CliView";
+import FCConnector from "../../utilities/FCConnector";
+import CliView from "../CliView/CliView";
 import ReactMarkdown from "react-markdown";
-import HelperSelect from "./Items/HelperSelect";
+import HelperSelect from "../Items/HelperSelect";
 import Typography from "@material-ui/core/Typography";
 import { FormattedMessage } from "react-intl";
 import { FormControlLabel, FormGroup, Switch } from "@material-ui/core";
+import "./DfuView.css";
 
 export default class DfuView extends Component {
   constructor(props) {
@@ -151,17 +152,7 @@ export default class DfuView extends Component {
 
   render() {
     return (
-      <Paper
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          position: "relative",
-          flex: "1",
-          padding: "30px 10px 10px 10px",
-          minHeight: "100%",
-          boxSizing: "border-box"
-        }}
-      >
+      <Paper className="dfu-view-root">
         <div style={{ display: "flex" }}>
           <Typography paragraph variant="title">
             <FormattedMessage id="dfu.select.version" />

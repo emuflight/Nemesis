@@ -11,16 +11,6 @@ const InputView = class extends Component {
     };
   }
 
-  sanitizeInput = value => {
-    if (value > this.props.max) {
-      this.setState({ new: this.props.max });
-    } else if (value < this.props.min) {
-      this.setState({ new: this.props.min });
-    } else {
-      this.setState({ new: value });
-    }
-  };
-
   updateValue() {
     let isDirty = this.state.current !== this.props.item.current;
     if (isDirty) {

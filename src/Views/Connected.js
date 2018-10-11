@@ -133,6 +133,7 @@ export default class Connected extends Component {
         contents = (
           <PidsView
             fcConfig={mergedProfile}
+            isBxF={this.state.fcConfig.isBxF}
             handleSave={this.handleSave}
             changeProfile={newProfile => {
               this.notifyDirty(
@@ -377,7 +378,7 @@ export default class Connected extends Component {
           </List>
         </Drawer>
         {contents}
-        <CliView theme={this.state.theme} />
+        <CliView handleSave={this.props.handleSave} theme={this.state.theme} />
         {this.state.openAssistant && (
           <AssistantView
             rebooting={this.props.rebooting}

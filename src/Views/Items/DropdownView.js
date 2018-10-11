@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import HelperSelect from "./HelperSelect";
 import FCConnector from "../../utilities/FCConnector";
+import StatelessSelect from "./StatelessSelect";
 
 export default class DropdownView extends Component {
   constructor(props) {
@@ -9,8 +9,10 @@ export default class DropdownView extends Component {
   }
 
   render() {
+    const { ...other } = this.props;
     return (
-      <HelperSelect
+      <StatelessSelect
+        {...other}
         style={this.props.item && this.props.item.style}
         id={this.state.id}
         className={this.state.id}
@@ -18,6 +20,7 @@ export default class DropdownView extends Component {
         label={this.state.id}
         value={this.state.current}
         disabled={!!this.state.isDirty}
+        onUpdate={this.props.onUpdate}
         onChange={event => {
           let payload = event.target.value;
           let isDirty = this.state.current !== payload;

@@ -11,7 +11,7 @@ export default class ProfileView extends Component {
     };
   }
 
-  getContent() {
+  get children() {
     return (
       <ConfigListView
         ref="listView"
@@ -35,7 +35,7 @@ export default class ProfileView extends Component {
             items={this.props.profileList}
           />
         </Paper>
-        {this.getContent()}
+        {this.children}
       </div>
     );
   }
