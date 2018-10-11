@@ -6,60 +6,46 @@ import FormControl from "@material-ui/core/FormControl";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import Select from "@material-ui/core/Select";
 import { injectIntl, intlShape, FormattedMessage } from "react-intl";
-import { FCConfigContext } from "../../App";
 
 const HelperSelect = class extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <FCConfigContext.Consumer>
-        {config => {
-          let item = config[this.props.id];
-          return (
-            <FormControl
-              classes={{ root: this.props.id }}
-              style={this.props.style}
-              className={classes.formControl}
-            >
-              <InputLabel
-                shrink
-                htmlFor={`${this.props.name}-label-placeholder`}
-              >
-                <FormattedMessage id={this.props.label} />
-              </InputLabel>
-              <Select
-                value={item.current || this.props.value}
-                onChange={event => {
-                  item.current = event.target.value;
-                  this.props.onChange(event);
-                }}
-                inputProps={{
-                  id: `${this.props.name}-label-placeholder`,
-                  name: this.props.name
-                }}
-                displayEmpty
-                disabled={this.props.disabled}
-                name={this.props.name}
-                className={classes.selectEmpty}
-              >
-                {this.props.items &&
-                  this.props.items.map(item => {
-                    return (
-                      <MenuItem key={item.value} value={item.value}>
-                        <FormattedMessage id={item.label} />
-                      </MenuItem>
-                    );
-                  })}
-              </Select>
-              {this.props.intl.messages[`${this.props.id}.helper`] && (
-                <FormHelperText>
-                  <FormattedMessage id={`${this.props.id}.helper`} />
-                </FormHelperText>
-              )}
-            </FormControl>
-          );
-        }}
-      </FCConfigContext.Consumer>
+      <FormControl
+        classes={{ root: this.props.id }}
+        style={this.props.style}
+        className={classes.formControl}
+      >
+        <InputLabel shrink htmlFor={`${this.props.name}-label-placeholder`}>
+          <FormattedMessage id={this.props.label} />
+        </InputLabel>
+        <Select
+          value={this.props.value}
+          onChange={this.props.onChange}
+          inputProps={{
+            id: `${this.props.name}-label-placeholder`,
+            name: this.props.name
+          }}
+          displayEmpty
+          disabled={this.props.disabled}
+          name={this.props.name}
+          className={classes.selectEmpty}
+        >
+          {this.props.items &&
+            this.props.items.map(item => {
+              return (
+                <MenuItem key={item.value} value={item.value}>
+                  <FormattedMessage id={item.label} />
+                </MenuItem>
+              );
+            })}
+        </Select>
+        {this.props.intl.messages[`${this.props.id}.helper`] && (
+          <FormHelperText>
+            <FormattedMessage id={`${this.props.id}.helper`} />
+          </FormHelperText>
+        )}
+      </FormControl>
     );
   }
 };

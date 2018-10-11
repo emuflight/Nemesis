@@ -133,6 +133,7 @@ export default class Connected extends Component {
         contents = (
           <PidsView
             fcConfig={mergedProfile}
+            isBxF={this.state.fcConfig.isBxF}
             handleSave={this.handleSave}
             changeProfile={newProfile => {
               this.notifyDirty(

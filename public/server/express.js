@@ -29,7 +29,7 @@ app.get("/device", (req, res) => {
         fcConnector
           .getConfig(connectedDevice)
           .then(deviceConfig => res.json(deviceConfig))
-          .catch(error => res.status(426).send(error));
+          .catch(error => res.status(500).send(error));
       }
     } else {
       res.sendStatus(404);

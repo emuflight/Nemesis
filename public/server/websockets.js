@@ -38,7 +38,6 @@ wsServer.on("request", request => {
 
   // Detect remove
   usb.on(`detach`, device => {
-    console.log(device);
     if (device.deviceDescriptor.idVendor === STM32USB.vendorId) {
       connection.sendUTF(
         JSON.stringify({

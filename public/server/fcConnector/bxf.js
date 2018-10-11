@@ -34,7 +34,6 @@ const setupConnection = device => {
     if (!openConnection) {
       console.log("creating new port port: ", device.comName);
       openConnection = new SerialPort(device.comName, {
-        baudRate: 115200,
         autoOpen: false
       });
       openConnection.on("error", err => {
@@ -53,25 +52,44 @@ const setupConnection = device => {
     }
   });
 };
-
+let retry = 3;
 const getConfig = device => {
-  return sendCommand(device, "config").then(conf => {
+  return sendCommand(device, "config", 500).then(conf => {
     try {
       //trim off " config\n";
       let config = JSON.parse(conf.slice(conf.indexOf("{"), conf.length - 3));
-      return sendCommand(device, "mixer", 20).then(mixer => {
-        let parts = mixer.split(":");
-        config.mixer_type = {
-          mode: "LOOKUP",
-          current: parts[1].replace(/\s|\n|#/gim, "")
-        };
-        return config;
+      retry = 3;
+      return sendCommand(device, "mixer").then(mixer => {
+        try {
+          let parts = mixer.split(":");
+          config.mixer_type = {
+            mode: "LOOKUP",
+            current: parts[1].replace(/\s|\n|#/gim, "")
+          };
+          retry = 3;
+          return config;
+        } catch (ex) {
+          if (retry) {
+            retry--;
+            return getConfig(device, "mixer");
+          } else {
+            console.log(ex);
+            return sendCommand(device, "version").then(version => {
+              return { version: version, incompatible: true };
+            });
+          }
+        }
       });
     } catch (ex) {
-      console.log(ex);
-      return sendCommand(device, "version").then(version => {
-        return { version: version, incompatible: true };
-      });
+      if (retry) {
+        retry--;
+        return getConfig(device);
+      } else {
+        console.log(ex);
+        return sendCommand(device, "version").then(version => {
+          return { version: version, incompatible: true };
+        });
+      }
     }
   });
 };

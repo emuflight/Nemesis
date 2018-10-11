@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import DropdownView from "../Items/DropdownView";
 import SliderView from "../Items/SliderView";
-import InputView from "../Items/InputView";
 import Paper from "@material-ui/core/Paper";
 import FeaturesView from "../FeaturesView/FeaturesView";
 import "./ConfigListView.css";
+import StatelessInput from "../Items/StatelessInput";
 
 export default class ConfigListView extends Component {
   render() {
@@ -65,7 +65,7 @@ export default class ConfigListView extends Component {
           <Paper elevation={3} className="config-list-view-inputs">
             {inputs.map(item => {
               return (
-                <InputView
+                <StatelessInput
                   className={item.id}
                   notifyDirty={this.props.notifyDirty}
                   key={item.id}

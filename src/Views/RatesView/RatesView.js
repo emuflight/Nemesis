@@ -47,7 +47,7 @@ export default class RatesView extends ProfileView {
     angleRate = angleRate * (1 + Math.abs(actualCommand) * superRate * 0.01);
     return Math.ceil(angleRate);
   }
-  getContent() {
+  get children() {
     if (!this.state.isBxF) {
       return (
         <ConfigListView
