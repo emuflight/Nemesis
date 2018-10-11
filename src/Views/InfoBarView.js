@@ -5,28 +5,35 @@ import Typography from "@material-ui/core/Typography";
 import FCConnector from "../utilities/FCConnector";
 import TelemetryView from "./TelemetryView";
 import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 import { FormattedMessage } from "react-intl";
+import FcBackup from "../utilities/FcBackup";
 
 // const calculatePercentComplete = fcConfig => {};
 export default class InfoBarView extends Component {
   constructor(props) {
     super(props);
+    this.craftName = this.props.fcConfig.isBxF
+      ? props.fcConfig.craftName
+      : props.fcConfig.craft_name.current;
     this.handleDrawerToggle = props.handleDrawerToggle;
     this.state = {
       setupCompleted: -1,
-      craftName: props.fcConfig.craftName,
+      craftName: this.craftName,
       telemetry: {
         cpu: 0
       }
     };
   }
   updateCraftName = () => {
-    if (this.props.fcConfig.craftName !== this.state.craftName) {
-      FCConnector.sendCommand(`name ${this.state.craftName || "-"}`).then(
-        () => {
-          this.props.notifyDirty(true, this.state, this.state.craftName);
-        }
-      );
+    if (this.craftName !== this.state.craftName) {
+      let command = `name ${this.state.craftName || "-"}`;
+      if (!this.props.fcConfig.isBxF) {
+        command = `set craft_name=${this.state.craftName}`;
+      }
+      FCConnector.sendCommand(command).then(() => {
+        this.props.notifyDirty(true, this.state, this.state.craftName);
+      });
     }
   };
 
@@ -75,23 +82,38 @@ export default class InfoBarView extends Component {
             alignItems: "center"
           }}
         >
-          <Typography
-            style={{
-              position: "relative",
-              margin: "0 10px",
-              whiteSpace: "nowrap"
-            }}
-          >
-            <FormattedMessage id="info.connected-to" />
-          </Typography>
+          {!this.props.offlineMode && (
+            <Typography
+              style={{
+                position: "relative",
+                margin: "0 10px",
+                whiteSpace: "nowrap"
+              }}
+            >
+              <FormattedMessage id="info.connected-to" />
+            </Typography>
+          )}
           <TextField
             id="craft_name"
             style={{ color: "grey" }}
             placeholder="A craft has no name..."
-            defaultValue={this.props.fcConfig.name}
+            defaultValue={this.state.craftName}
             onBlur={() => this.updateCraftName()}
             onChange={event => this.setState({ craftName: event.target.value })}
           />
+          {this.craftName && (
+            <Button
+              color="secondary"
+              variant="raised"
+              style={{ marginLeft: "10px" }}
+              onClick={() =>
+                FcBackup.backup(this.state.craftName, this.props.fcConfig)
+              }
+            >
+              <FormattedMessage id="common.backup" />
+            </Button>
+          )}
+
           <TelemetryView
             style={{ flexGrow: 1 }}
             rebooting={this.props.rebooting}

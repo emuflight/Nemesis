@@ -66,7 +66,11 @@ export default class VersionInfoView extends Component {
                   values={{ value: this.state.version }}
                 />
               </div>
-              <Launch onClick={() => FCConnector.goToDFU(this.state.target)} />
+              {!this.props.offlineMode && (
+                <Launch
+                  onClick={() => FCConnector.goToDFU(this.state.target)}
+                />
+              )}
             </MenuItem>
             {this.state.imuf && (
               <MenuItem style={{ display: "flex" }}>
@@ -76,7 +80,9 @@ export default class VersionInfoView extends Component {
                     values={{ value: this.state.imuf }}
                   />
                 </div>
-                <Launch onClick={() => this.goToImuf()} />
+                {!this.props.offlineMode && (
+                  <Launch onClick={() => this.goToImuf()} />
+                )}
               </MenuItem>
             )}
           </List>

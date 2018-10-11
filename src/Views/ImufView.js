@@ -15,6 +15,7 @@ export default class ImufView extends DfuView {
       current: "IMU-F",
       progress: "",
       hasTarget: true,
+      allowChipErase: false,
       allowUpload: false,
       targetItems: ["IMU-F"]
     };

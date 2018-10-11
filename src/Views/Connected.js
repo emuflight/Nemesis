@@ -337,6 +337,7 @@ export default class Connected extends Component {
         >
           <Divider style={{ marginTop: "30px" }} />
           <VersionInfoView
+            offlineMode={this.props.offlineMode}
             goToImuf={this.props.goToImuf}
             version={this.state.fcConfig.version}
             imuf={this.state.fcConfig.imuf}
@@ -366,7 +367,7 @@ export default class Connected extends Component {
           </List>
         </Drawer>
         {contents}
-        <CliView theme={this.state.theme} />
+        {!this.props.offlineMode && <CliView theme={this.state.theme} />}
         {this.state.openAssistant && (
           <AssistantView
             rebooting={this.props.rebooting}

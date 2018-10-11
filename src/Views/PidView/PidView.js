@@ -53,9 +53,13 @@ export default class PidsView extends ProfileView {
       this.updatePidValues(this.props.fcConfig.gyro_sync_denom.current);
       this.handleTpaChange(this.props.fcConfig.tpa_type.current);
     } else {
-      return FCConnector.getTpaCurves(this.props.active).then(curves => {
-        this.setState({ tpaCurves: curves });
-      });
+      if (this.props.fcConfig.tpaCurves) {
+        this.setState({ tpaCurves: this.props.fcConfig.tpaCurves });
+      } else {
+        return FCConnector.getTpaCurves(this.props.active).then(curves => {
+          this.setState({ tpaCurves: curves });
+        });
+      }
     }
   };
   handleTpaChange = newVal => {

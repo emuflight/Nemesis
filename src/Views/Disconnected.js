@@ -7,6 +7,7 @@ import Paper from "@material-ui/core/Paper";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import CliView from "./CliView/CliView";
 import { FormattedMessage, FormattedHTMLMessage } from "react-intl";
+import BackupsList from "./BackupsView/BackupsList";
 
 export default class Disconnected extends Component {
   constructor(props) {
@@ -86,6 +87,7 @@ export default class Disconnected extends Component {
             )}
           </CardContent>
         </Card>
+        <BackupsList onLoadBackup={this.props.onLoadBackup} />
       </Paper>
     );
   }

@@ -19,6 +19,7 @@ export default class DfuView extends Component {
       theme: props.theme,
       allowUpload: true,
       chipErase: false,
+      allowChipErase: true,
       selectedFile: undefined,
       current: "",
       currentTarget: props.target || "",
@@ -247,17 +248,21 @@ export default class DfuView extends Component {
             alignItems: "center"
           }}
         >
-          <FormGroup component="fieldset" style={{ paddingLeft: 10 }}>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={this.state.chipErase}
-                  onChange={(event, chipErase) => this.setState({ chipErase })}
-                />
-              }
-              label={<FormattedMessage id="dfu.full-erase" />}
-            />
-          </FormGroup>
+          {this.state.allowChipErase && (
+            <FormGroup component="fieldset" style={{ paddingLeft: 10 }}>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={this.state.chipErase}
+                    onChange={(event, chipErase) =>
+                      this.setState({ chipErase })
+                    }
+                  />
+                }
+                label={<FormattedMessage id="dfu.full-erase" />}
+              />
+            </FormGroup>
+          )}
           <Button
             style={{ margin: "20px", flex: 1 }}
             color="primary"

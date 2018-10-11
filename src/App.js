@@ -53,6 +53,7 @@ class App extends Component {
           this.setState({
             id: device.comName,
             dfu: device.dfu,
+            offlineMode: false,
             connected: false,
             connecting: false,
             incompatible: device.incompatible,
@@ -64,6 +65,7 @@ class App extends Component {
             themes[device.config.version.fw] ||
             themes.dark;
           this.setState({
+            offlineMode: false,
             connecting: false,
             dfu: device.dfu,
             id: device.comName,
@@ -106,6 +108,7 @@ class App extends Component {
       return (
         <MuiThemeProvider theme={this.state.theme}>
           <Connected
+            offlineMode={this.state.offlineMode}
             rebooting={this.state.rebooting}
             handleSave={this.handleSave}
             theme={this.state.theme}
@@ -121,6 +124,22 @@ class App extends Component {
       return (
         <MuiThemeProvider theme={themes.dark}>
           <Disconnected
+            onLoadBackup={(configBackup) => {
+              let uiTheme =
+                themes[configBackup.version.target] ||
+                themes[configBackup.version.fw] ||
+                themes.dark;
+              this.setState({
+                connecting: false,
+                offlineMode: true,
+                dfu: false,
+                id: "offline",
+                deviceInfo: {},
+                currentConfig: configBackup,
+                connected: true,
+                theme: uiTheme
+              });
+            }}
             incompatible={this.state.incompatible}
             connecting={this.state.connecting}
             device={this.state.deviceInfo}
