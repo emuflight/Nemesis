@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { FCConfigContext } from "../../App";
-import InputView from "./InputView";
+import FloatView from "./FloatView";
 
-export default class StatelessInput extends Component {
+export default class StatelessFloat extends Component {
   render() {
     const { ...other } = this.props;
     return (
@@ -10,7 +10,7 @@ export default class StatelessInput extends Component {
         {config => {
           other.item = config[this.props.item.id];
           this.props.onUpdate && this.props.onUpdate(other.item);
-          return <InputView {...other} />;
+          return <FloatView {...other} />;
         }}
       </FCConfigContext.Consumer>
     );

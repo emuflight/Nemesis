@@ -23,12 +23,16 @@ const InputView = class extends Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.item.current !== this.state.current) {
+      this.setState({ current: nextProps.item.current });
+    }
+  }
+
   render() {
-    const { inputRef, ...other } = this.props;
     return (
       <TextField
-        {...other}
-        ref={inputRef}
+        ref={this.props.inputRef}
         classes={{ root: this.props.item.id }}
         key={this.props.item.id}
         disabled={this.state.isDirty}

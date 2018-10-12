@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import InputView from "../Items/InputView";
+import StatelessInput from "../Items/StatelessInput";
 import DropdownView from "../Items/DropdownView";
 import FeaturesView from "../FeaturesView/FeaturesView";
 import Paper from "@material-ui/core/Paper";
@@ -78,22 +78,22 @@ export default class FiltersView extends Component {
         {this.props.fcConfig.imuf ? (
           <div style={{ flex: 1 }}>
             <Paper elevation={3}>
-              <InputView
+              <StatelessInput
                 notifyDirty={this.props.notifyDirty}
                 item={this.props.fcConfig.imuf_roll_q}
               />
-              <InputView
+              <StatelessInput
                 notifyDirty={this.props.notifyDirty}
                 item={this.props.fcConfig.imuf_pitch_q}
               />
-              <InputView
+              <StatelessInput
                 notifyDirty={this.props.notifyDirty}
                 item={this.props.fcConfig.imuf_yaw_q}
               />
             </Paper>
             <Paper elevation={3} style={{ display: "flex" }}>
               <div style={{ display: "flex", flexDirection: "column" }}>
-                <InputView
+                <StatelessInput
                   notifyDirty={(isDirty, state, val) => {
                     this.props.fcConfig.imuf_roll_lpf_cutoff_hz.current = val;
                     this.forceUpdate();
@@ -101,7 +101,7 @@ export default class FiltersView extends Component {
                   }}
                   item={this.props.fcConfig.imuf_roll_lpf_cutoff_hz}
                 />
-                <InputView
+                <StatelessInput
                   notifyDirty={(isDirty, state, val) => {
                     this.props.fcConfig.imuf_pitch_lpf_cutoff_hz.current = val;
                     this.forceUpdate();
@@ -109,7 +109,7 @@ export default class FiltersView extends Component {
                   }}
                   item={this.props.fcConfig.imuf_pitch_lpf_cutoff_hz}
                 />
-                <InputView
+                <StatelessInput
                   notifyDirty={(isDirty, state, val) => {
                     this.props.fcConfig.imuf_yaw_lpf_cutoff_hz.current = val;
                     this.forceUpdate();
@@ -152,7 +152,7 @@ export default class FiltersView extends Component {
                 notifyDirty={this.props.notifyDirty}
                 item={this.props.fcConfig.imuf_yaw_af}
               />
-              <InputView
+              <StatelessInput
                 notifyDirty={this.props.notifyDirty}
                 item={this.props.fcConfig.imuf_w}
               />
@@ -181,7 +181,7 @@ export default class FiltersView extends Component {
                   item={this.props.fcConfig.gyro_lowpass_type}
                 />
                 {this.props.fcConfig.gyro_lowpass_type.current !== "KALMAN" && (
-                  <InputView
+                  <StatelessInput
                     notifyDirty={this.props.notifyDirty}
                     item={this.props.fcConfig.gyro_lowpass_hz}
                   />
@@ -196,11 +196,11 @@ export default class FiltersView extends Component {
                       marginRight: 10
                     }}
                   >
-                    <InputView
+                    <StatelessInput
                       notifyDirty={this.props.notifyDirty}
                       item={this.props.fcConfig.gyro_filter_q}
                     />
-                    <InputView
+                    <StatelessInput
                       notifyDirty={this.props.notifyDirty}
                       item={this.props.fcConfig.gyro_filter_r}
                     />
@@ -219,7 +219,7 @@ export default class FiltersView extends Component {
                   notifyDirty={this.props.notifyDirty}
                   item={this.props.fcConfig.gyro_lowpass2_type}
                 />
-                <InputView
+                <StatelessInput
                   notifyDirty={this.props.notifyDirty}
                   item={this.props.fcConfig.gyro_lowpass2_hz}
                 />
@@ -253,19 +253,19 @@ export default class FiltersView extends Component {
                   alignItems: "flex-start"
                 }}
               >
-                <InputView
+                <StatelessInput
                   notifyDirty={this.props.notifyDirty}
                   item={this.props.fcConfig.gyro_notch1_hz}
                 />
-                <InputView
+                <StatelessInput
                   notifyDirty={this.props.notifyDirty}
                   item={this.props.fcConfig.gyro_notch1_cutoff}
                 />
-                <InputView
+                <StatelessInput
                   notifyDirty={this.props.notifyDirty}
                   item={this.props.fcConfig.gyro_notch2_hz}
                 />
-                <InputView
+                <StatelessInput
                   notifyDirty={this.props.notifyDirty}
                   item={this.props.fcConfig.gyro_notch2_cutoff}
                 />

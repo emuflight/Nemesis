@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ConfigListView from "../ConfigListView/ConfigListView";
 import HelperSelect from "../Items/HelperSelect";
 import Paper from "@material-ui/core/Paper";
+import { FCConfigContext } from "../../App";
 
 export default class ProfileView extends Component {
   constructor(props) {
@@ -25,15 +26,25 @@ export default class ProfileView extends Component {
   render() {
     return (
       <div>
-        <Paper theme={this.state.theme} elevation={3}>
-          <HelperSelect
-            id={this.props.id}
-            className={this.props.id}
-            label={this.props.id}
-            value={this.props.active}
-            onChange={event => this.props.changeProfile(event.target.value)}
-            items={this.props.profileList}
-          />
+        <Paper elevation={3}>
+          <FCConfigContext.Consumer>
+            {config => {
+              const item = config[this.props.id];
+              item.current = parseInt(item.current, 10);
+              return (
+                <HelperSelect
+                  id={this.props.id}
+                  className={this.props.id}
+                  label={this.props.id}
+                  value={item.current}
+                  onChange={event =>
+                    this.props.changeProfile(event.target.value)
+                  }
+                  items={this.props.profileList}
+                />
+              );
+            }}
+          </FCConfigContext.Consumer>
         </Paper>
         {this.children}
       </div>

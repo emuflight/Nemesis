@@ -6,10 +6,11 @@ import Paper from "@material-ui/core/Paper";
 import "./RatesView.css";
 import { Typography, TextField } from "@material-ui/core";
 import { FormattedMessage } from "react-intl";
-import FloatView from "../Items/FloatView";
-import InputView from "../Items/InputView";
+import StatelessInput from "../Items/StatelessInput";
+import StatelessFloat from "../Items/StatelessFloat";
 import { AreaChart } from "react-easy-chart";
 import "./RatesView.css";
+import { FCConfigContext } from "../../App";
 
 export default class RatesView extends ProfileView {
   //these are the actual calculations from the functions applyBetaflightRates anf applyRaceflightRates
@@ -47,36 +48,27 @@ export default class RatesView extends ProfileView {
     angleRate = angleRate * (1 + Math.abs(actualCommand) * superRate * 0.01);
     return Math.ceil(angleRate);
   }
-  get children() {
-    if (!this.state.isBxF) {
-      return (
-        <ConfigListView
-          fcConfig={this.props.fcConfig}
-          notifyDirty={this.props.notifyDirty}
-          items={this.props.items}
-        />
-      );
-    }
-    let bfRates = this.props.fcConfig.rates_type.current === "BETAFLIGHT";
+  generateCurves(config) {
+    let bfRates = config.rates_type.current === "BETAFLIGHT";
     let rateFunc = bfRates ? this.calcDps : this.calcDpsRf1;
     const rates = {
       roll: {
-        r: parseFloat(this.props.fcConfig.roll_rc_rate.current),
-        x: parseFloat(this.props.fcConfig.roll_expo.current),
-        s: parseFloat(this.props.fcConfig.roll_srate.current),
-        d: parseInt(this.props.fcConfig.deadband.current, 10) / 100
+        r: parseFloat(config.roll_rc_rate.current),
+        x: parseFloat(config.roll_expo.current),
+        s: parseFloat(config.roll_srate.current),
+        d: parseInt(config.deadband.current, 10) / 100
       },
       pitch: {
-        r: parseFloat(this.props.fcConfig.pitch_rc_rate.current),
-        x: parseFloat(this.props.fcConfig.pitch_expo.current),
-        s: parseFloat(this.props.fcConfig.pitch_srate.current),
-        d: parseInt(this.props.fcConfig.deadband.current, 10) / 100
+        r: parseFloat(config.pitch_rc_rate.current),
+        x: parseFloat(config.pitch_expo.current),
+        s: parseFloat(config.pitch_srate.current),
+        d: parseInt(config.deadband.current, 10) / 100
       },
       yaw: {
-        r: parseFloat(this.props.fcConfig.yaw_rc_rate.current),
-        x: parseFloat(this.props.fcConfig.yaw_expo.current),
-        s: parseFloat(this.props.fcConfig.yaw_srate.current),
-        d: parseInt(this.props.fcConfig.yaw_deadband.current, 10) / 100
+        r: parseFloat(config.yaw_rc_rate.current),
+        x: parseFloat(config.yaw_expo.current),
+        s: parseFloat(config.yaw_srate.current),
+        d: parseInt(config.yaw_deadband.current, 10) / 100
       }
     };
     let xcurve = [];
@@ -116,6 +108,23 @@ export default class RatesView extends ProfileView {
         )
       });
     });
+    return {
+      x: xcurve,
+      y: ycurve,
+      z: zcurve
+    };
+  }
+
+  get children() {
+    if (!this.state.isBxF) {
+      return (
+        <ConfigListView
+          fcConfig={this.props.fcConfig}
+          notifyDirty={this.props.notifyDirty}
+          items={this.props.items}
+        />
+      );
+    }
     return (
       <div
         className="rates-view"
@@ -129,19 +138,19 @@ export default class RatesView extends ProfileView {
             alignItems: "center"
           }}
         >
-          <FloatView
+          <StatelessFloat
             notifyDirty={this.props.notifyDirty}
             item={this.props.fcConfig.thr_expo}
           />
-          <FloatView
+          <StatelessFloat
             notifyDirty={this.props.notifyDirty}
             item={this.props.fcConfig.thr_mid}
           />
-          <InputView
+          <StatelessInput
             notifyDirty={this.props.notifyDirty}
             item={this.props.fcConfig.deadband}
           />
-          <InputView
+          <StatelessInput
             notifyDirty={this.props.notifyDirty}
             item={this.props.fcConfig.yaw_deadband}
           />
@@ -154,106 +163,115 @@ export default class RatesView extends ProfileView {
             item={this.props.fcConfig.rates_type}
           />
         </Paper>
-        <div style={{ display: "flex" }}>
-          <div style={{ display: "flex", flex: 1, flexDirection: "column" }}>
-            <Paper elevation={3}>
-              <Typography>
-                <FormattedMessage id="common.roll" />
-              </Typography>
-              <FloatView
-                notifyDirty={this.props.notifyDirty}
-                item={this.props.fcConfig.roll_rc_rate}
-              />
-              <FloatView
-                notifyDirty={this.props.notifyDirty}
-                item={this.props.fcConfig.roll_srate}
-              />
-              <FloatView
-                notifyDirty={this.props.notifyDirty}
-                item={this.props.fcConfig.roll_expo}
-              />
-              <TextField
-                style={{ width: 90 }}
-                disabled={true}
-                label={
-                  <span className="color-legend white">
-                    <FormattedMessage id="rates.max-dps" />
-                  </span>
-                }
-                value={xcurve[10].y}
-              />
-            </Paper>
-            <Paper elevation={3}>
-              <Typography>
-                <FormattedMessage id="common.pitch" />
-              </Typography>
-              <FloatView
-                notifyDirty={this.props.notifyDirty}
-                item={this.props.fcConfig.pitch_rc_rate}
-              />
-              <FloatView
-                notifyDirty={this.props.notifyDirty}
-                item={this.props.fcConfig.pitch_srate}
-              />
-              <FloatView
-                notifyDirty={this.props.notifyDirty}
-                item={this.props.fcConfig.pitch_expo}
-              />
-              <TextField
-                style={{ width: 90 }}
-                disabled={true}
-                label={
-                  <span className="color-legend blue">
-                    <FormattedMessage id="rates.max-dps" />
-                  </span>
-                }
-                value={ycurve[10].y}
-              />
-            </Paper>
-            <Paper elevation={3}>
-              <Typography>
-                <FormattedMessage id="common.yaw" />
-              </Typography>
-              <FloatView
-                notifyDirty={this.props.notifyDirty}
-                item={this.props.fcConfig.yaw_rc_rate}
-              />
-              <FloatView
-                notifyDirty={this.props.notifyDirty}
-                item={this.props.fcConfig.yaw_srate}
-              />
-              <FloatView
-                notifyDirty={this.props.notifyDirty}
-                item={this.props.fcConfig.yaw_expo}
-              />
-              <TextField
-                style={{ width: 90 }}
-                disabled={true}
-                label={
-                  <span className="color-legend green">
-                    <FormattedMessage id="rates.max-dps" />
-                  </span>
-                }
-                value={zcurve[10].y}
-              />
-            </Paper>
-          </div>
-          <Paper elevation={3}>
-            <AreaChart
-              xType={"text"}
-              areaColors={["white", "blue", "green"]}
-              interpolate={"cardinal"}
-              axisLabels={{ x: "Stick Midpoint %", y: "Deg / sec" }}
-              yAxisOrientRight
-              axes
-              xTicks={0}
-              width={450}
-              height={350}
-              margin={{ top: 0, left: 0, bottom: 50, right: 50 }}
-              data={[xcurve, ycurve, zcurve]}
-            />
-          </Paper>
-        </div>
+        <FCConfigContext.Consumer>
+          {config => {
+            let curves = this.generateCurves(config);
+            return (
+              <div style={{ display: "flex" }}>
+                <div
+                  style={{ display: "flex", flex: 1, flexDirection: "column" }}
+                >
+                  <Paper elevation={3}>
+                    <Typography>
+                      <FormattedMessage id="common.roll" />
+                    </Typography>
+                    <StatelessFloat
+                      notifyDirty={this.props.notifyDirty}
+                      item={this.props.fcConfig.roll_rc_rate}
+                    />
+                    <StatelessFloat
+                      notifyDirty={this.props.notifyDirty}
+                      item={this.props.fcConfig.roll_srate}
+                    />
+                    <StatelessFloat
+                      notifyDirty={this.props.notifyDirty}
+                      item={this.props.fcConfig.roll_expo}
+                    />
+                    <TextField
+                      style={{ width: 90 }}
+                      disabled={true}
+                      label={
+                        <span className="color-legend white">
+                          <FormattedMessage id="rates.max-dps" />
+                        </span>
+                      }
+                      value={curves.x[10].y}
+                    />
+                  </Paper>
+                  <Paper elevation={3}>
+                    <Typography>
+                      <FormattedMessage id="common.pitch" />
+                    </Typography>
+                    <StatelessFloat
+                      notifyDirty={this.props.notifyDirty}
+                      item={this.props.fcConfig.pitch_rc_rate}
+                    />
+                    <StatelessFloat
+                      notifyDirty={this.props.notifyDirty}
+                      item={this.props.fcConfig.pitch_srate}
+                    />
+                    <StatelessFloat
+                      notifyDirty={this.props.notifyDirty}
+                      item={this.props.fcConfig.pitch_expo}
+                    />
+                    <TextField
+                      style={{ width: 90 }}
+                      disabled={true}
+                      label={
+                        <span className="color-legend blue">
+                          <FormattedMessage id="rates.max-dps" />
+                        </span>
+                      }
+                      value={curves.y[10].y}
+                    />
+                  </Paper>
+                  <Paper elevation={3}>
+                    <Typography>
+                      <FormattedMessage id="common.yaw" />
+                    </Typography>
+                    <StatelessFloat
+                      notifyDirty={this.props.notifyDirty}
+                      item={this.props.fcConfig.yaw_rc_rate}
+                    />
+                    <StatelessFloat
+                      notifyDirty={this.props.notifyDirty}
+                      item={this.props.fcConfig.yaw_srate}
+                    />
+                    <StatelessFloat
+                      notifyDirty={this.props.notifyDirty}
+                      item={this.props.fcConfig.yaw_expo}
+                    />
+                    <TextField
+                      style={{ width: 90 }}
+                      disabled={true}
+                      label={
+                        <span className="color-legend green">
+                          <FormattedMessage id="rates.max-dps" />
+                        </span>
+                      }
+                      value={curves.z[10].y}
+                    />
+                  </Paper>
+                </div>
+                <Paper elevation={3}>
+                  <AreaChart
+                    xType={"text"}
+                    areaColors={["white", "blue", "green"]}
+                    interpolate={"cardinal"}
+                    axisLabels={{ x: "Stick Midpoint %", y: "Deg / sec" }}
+                    yAxisOrientRight
+                    axes
+                    xTicks={0}
+                    width={450}
+                    height={350}
+                    margin={{ top: 0, left: 0, bottom: 50, right: 50 }}
+                    data={[curves.x, curves.y, curves.z]}
+                  />
+                </Paper>
+              </div>
+            );
+          }}
+        </FCConfigContext.Consumer>
       </div>
     );
   }

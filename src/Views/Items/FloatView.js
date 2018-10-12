@@ -28,15 +28,13 @@ const FloatView = class extends Component {
     };
   }
 
-  sanitizeInput = value => {
-    if (value > this.props.max) {
-      this.setState({ new: this.props.max });
-    } else if (value < this.props.min) {
-      this.setState({ new: this.props.min });
-    } else {
-      this.setState({ new: value });
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.item.current !== this.state.current) {
+      this.setState({
+        current: nextProps.item.current.toString().padStart(3, "0")
+      });
     }
-  };
+  }
 
   updateValue() {
     let current = parseInt(this.state.current.replace(".", ""), 10);

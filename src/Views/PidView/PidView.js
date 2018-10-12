@@ -1,7 +1,6 @@
 import React from "react";
 import ProfileView from "../ProfileView/ProfileView";
 import DropdownView from "../Items/DropdownView";
-import InputView from "../Items/InputView";
 import ConfigListView from "../ConfigListView/ConfigListView";
 import TpaCurveView from "../TpaCurveView/TpaCurveView";
 import Paper from "@material-ui/core/Paper";
@@ -147,17 +146,17 @@ export default class PidsView extends ProfileView {
               notifyDirty={this.props.notifyDirty}
               item={this.props.fcConfig.dterm_lowpass_hz_type}
             />
-            <InputView
+            <StatelessInput
               notifyDirty={this.props.notifyDirty}
               key={this.props.fcConfig.dterm_lowpass_hz.id}
               item={this.props.fcConfig.dterm_lowpass_hz}
             />
-            <InputView
+            <StatelessInput
               notifyDirty={this.props.notifyDirty}
               key={this.props.fcConfig.dterm_notch_hz.id}
               item={this.props.fcConfig.dterm_notch_hz}
             />
-            <InputView
+            <StatelessInput
               notifyDirty={this.props.notifyDirty}
               key={this.props.fcConfig.dterm_notch_cutoff.id}
               item={this.props.fcConfig.dterm_notch_cutoff}
