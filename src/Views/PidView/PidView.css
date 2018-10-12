@@ -2,3 +2,19 @@
   flex-basis: 100%; }
   .pid-view .config-list-view {
     display: grid; }
+
+.config-list-view-sliders .p_roll,
+.config-list-view-sliders .i_roll,
+.config-list-view-sliders .d_roll,
+.config-list-view-sliders .f_roll {
+  order: 1; }
+
+.config-list-view-sliders .p_yaw,
+.config-list-view-sliders .i_yaw,
+.config-list-view-sliders .d_yaw,
+.config-list-view-sliders .f_yaw,
+.config-list-view-sliders .p_pitch,
+.config-list-view-sliders .i_pitch,
+.config-list-view-sliders .d_pitch,
+.config-list-view-sliders .f_pitch {
+  order: 2; }

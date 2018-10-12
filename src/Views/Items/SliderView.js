@@ -31,7 +31,7 @@ export default class SliderView extends Component {
   }
   render() {
     return (
-      <div className="slider-control">
+      <div className={`slider-control ${this.props.item.id}`}>
         <div className="slider-control-inner">
           <Typography className="slider-control-label">
             <FormattedMessage id={this.props.item.id} />

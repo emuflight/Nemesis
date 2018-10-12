@@ -4,3 +4,21 @@
   }
   flex-basis: 100%;
 }
+.config-list-view-sliders {
+  .p_roll,
+  .i_roll,
+  .d_roll,
+  .f_roll {
+    order: 1;
+  }
+  .p_yaw,
+  .i_yaw,
+  .d_yaw,
+  .f_yaw,
+  .p_pitch,
+  .i_pitch,
+  .d_pitch,
+  .f_pitch {
+    order: 2;
+  }
+}
