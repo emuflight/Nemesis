@@ -13,6 +13,7 @@
     "ADVANCED"
   ],
   "routeFeatures": {},
+  "featurePorts": [],
   "groups": {
     "OSD": ["osd"],
     "BLACKBOX": ["blackbox"],

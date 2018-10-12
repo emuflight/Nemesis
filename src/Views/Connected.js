@@ -43,16 +43,18 @@ export default class Connected extends Component {
     };
   }
 
-  getRouteFeatures() {
-    if (
-      this.state.fcConfig.isBxF &&
-      this.routeFeatures[this.state.currentRoute.key]
-    ) {
-      return this.state.fcConfig.features.values.filter(feat => {
-        return (
-          this.routeFeatures[this.state.currentRoute.key].indexOf(feat.id) > -1
-        );
-      });
+  getRouteFeatures(key) {
+    if (this.state.fcConfig.isBxF && this.routeFeatures[key]) {
+      return this.state.fcConfig.features.values
+        .filter(feat => {
+          return this.routeFeatures[key].indexOf(feat.id) > -1;
+        })
+        .map(feature => {
+          if (feature.hasPort) {
+            feature.ports = this.state.fcConfig.ports;
+          }
+          return feature;
+        });
     }
   }
 
@@ -206,7 +208,7 @@ export default class Connected extends Component {
       case "MOTORS":
         contents = (
           <MotorsView
-            features={this.getRouteFeatures()}
+            features={this.getRouteFeatures("MOTORS")}
             items={this.getRouteItems(this.state.fcConfig, true)}
             fcConfig={this.state.fcConfig}
             openAssistant={name => this.openAssistant(name)}
@@ -219,7 +221,7 @@ export default class Connected extends Component {
       case "RX":
         contents = (
           <RXView
-            features={this.getRouteFeatures()}
+            features={this.getRouteFeatures("RX")}
             items={this.getRouteItems(this.state.fcConfig, true)}
             fcConfig={this.state.fcConfig}
             openAssistant={name => this.openAssistant(name)}
@@ -276,7 +278,7 @@ export default class Connected extends Component {
         if (this.state.isBxF) {
           contents = (
             <FiltersView
-              features={this.getRouteFeatures()}
+              features={this.getRouteFeatures("FILTERS")}
               fcConfig={this.state.fcConfig}
               notifyDirty={(isDirty, item, newValue) =>
                 this.notifyDirty(isDirty, item, newValue)
@@ -312,7 +314,7 @@ export default class Connected extends Component {
         contents = (
           <ConfigListView
             fcConfig={this.props.fcConfig}
-            features={this.getRouteFeatures()}
+            features={this.getRouteFeatures(this.state.currentRoute.key)}
             notifyDirty={(isDirty, item, newValue) =>
               this.notifyDirty(isDirty, item, newValue)
             }
@@ -363,7 +365,7 @@ export default class Connected extends Component {
                   onClick={() => this.handleMenuItemClick(route.key)}
                 >
                   <div style={{ flexGrow: 1 }}>
-                    <FormattedMessage id={route.key} />
+                    <FormattedMessage id={"route." + route.key} />
                   </div>
                   {route.incompeteItems && (
                     <Badge

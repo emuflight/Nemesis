@@ -28,6 +28,7 @@ export default class FeaturesView extends Component {
                 notifyDirty={this.props.notifyDirty}
                 key={feature.id}
                 item={feature}
+                hasPort={feature.hasPort}
               />
             );
           })}

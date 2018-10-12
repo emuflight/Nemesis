@@ -5,6 +5,7 @@ import Paper from "@material-ui/core/Paper";
 import FeaturesView from "../FeaturesView/FeaturesView";
 import "./ConfigListView.css";
 import StatelessInput from "../Items/StatelessInput";
+import StatelessFloat from "../Items/StatelessFloat";
 
 export default class ConfigListView extends Component {
   render() {
@@ -64,7 +65,15 @@ export default class ConfigListView extends Component {
         {!!inputs.length && (
           <Paper elevation={3} className="config-list-view-inputs">
             {inputs.map(item => {
-              return (
+              return item.float ? (
+                <StatelessFloat
+                  floatPad={item.pad || 3}
+                  className={item.id}
+                  notifyDirty={this.props.notifyDirty}
+                  key={item.id}
+                  item={item}
+                />
+              ) : (
                 <StatelessInput
                   className={item.id}
                   notifyDirty={this.props.notifyDirty}

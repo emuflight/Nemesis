@@ -23,15 +23,17 @@ function TextMaskCustom(props) {
 const FloatView = class extends Component {
   constructor(props) {
     super(props);
+    this.floatPad = props.floatPad || 3;
     this.state = {
-      current: props.item.current.padStart(3, "0")
+      floatPad: this.floatPad,
+      current: props.item.current.padStart(this.floatPad, "0")
     };
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.item.current !== this.state.current) {
       this.setState({
-        current: nextProps.item.current.toString().padStart(3, "0")
+        current: nextProps.item.current.toString().padStart(this.floatPad, "0")
       });
     }
   }
@@ -43,7 +45,7 @@ const FloatView = class extends Component {
       this.props.item.current = current;
       this.setState({
         isDirty: true,
-        current: current.toString().padStart(3, "0")
+        current: current.toString().padStart(this.floatPad, "0")
       });
       FCConnector.setValue(this.props.item.id, current).then(() => {
         this.props.notifyDirty(true, this.state, current);
@@ -59,7 +61,7 @@ const FloatView = class extends Component {
         classes={{ root: this.props.item.id }}
         key={this.props.item.id}
       >
-        <InputLabel htmlFor={this.props.item.id}>
+        <InputLabel style={{ whiteSpace: "nowrap" }}>
           <FormattedMessage id={this.props.item.id} />
         </InputLabel>
         <Input

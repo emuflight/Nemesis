@@ -5,6 +5,7 @@
     "MODES",
     "RATES",
     "FILTERS",
+    "BATTERY",
     "PORTS",
     "RX",
     "OSD",
@@ -24,6 +25,7 @@
       "CHANNEL_FORWARDING",
       "RX_SPI"
     ],
+    "BATTERY": ["ESC_SENSOR"],
     "FILTERS": ["DYNAMIC_FILTER"],
     "MOTORS": ["MOTOR_STOP", "ESC_SENSOR", "3D", "AIRMODE", "ANTI_GRAVITY"],
     "GPS": [
@@ -36,7 +38,18 @@
     ],
     "VTX": ["LEGACY_SA_SUPPORT"]
   },
+  "featurePorts": ["ESC_SENSOR"],
   "groups": {
+    "BATTERY": [
+      "use_vbat_alerts",
+      "vbat_pid_gain",
+      "battery_meter",
+      "vbat_divider",
+      "vbat_warning_cell_voltage",
+      "vbat_scale",
+      "current_meter",
+      "esc_sensor_current_offset"
+    ],
     "MODES": ["modes"],
     "GPS": [
       "gps_provider",
@@ -241,6 +254,10 @@
     "ADVANCED": ["advanced"]
   },
   "elements": {
+    "vbat_warning_cell_voltage": {
+      "float": true,
+      "pad": 2
+    },
     "f_roll": {
       "mode": "slider",
       "step": 1,

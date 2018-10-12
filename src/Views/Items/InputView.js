@@ -41,7 +41,12 @@ const InputView = class extends Component {
             <FormattedMessage id={`${this.props.id}.helper`} />
           )
         }
-        label={<FormattedMessage id={this.props.item.id} />}
+        label={
+          <FormattedMessage
+            style={{ whiteSpace: "nowrap" }}
+            id={this.props.item.id}
+          />
+        }
         value={this.state.current}
         onBlur={() => this.updateValue()}
         onChange={event => {

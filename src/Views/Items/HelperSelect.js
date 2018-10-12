@@ -16,7 +16,11 @@ const HelperSelect = class extends Component {
         style={this.props.style}
         className={classes.formControl}
       >
-        <InputLabel shrink htmlFor={`${this.props.name}-label-placeholder`}>
+        <InputLabel
+          shrink
+          htmlFor={`${this.props.name}-label-placeholder`}
+          style={{ whiteSpace: "nowrap" }}
+        >
           <FormattedMessage id={this.props.label} />
         </InputLabel>
         <Select

@@ -100,7 +100,7 @@ export default class PidsView extends ProfileView {
                       "acc_hardware",
                       this.props.fcConfig.acc_hardware.current
                     ).then(() => {
-                      this.props.handleSave().then(() => {});
+                      this.props.handleSave();
                     });
                   }}
                 />
@@ -165,7 +165,19 @@ export default class PidsView extends ProfileView {
         )}
 
         {this.state.isBxF && (
-          <Paper theme={this.state.theme} elevation={3}>
+          <Paper
+            elevation={3}
+            style={{
+              justifyItems: "center",
+              alignItems: "center",
+              justifyContent: "center",
+              alignContent: "center"
+            }}
+          >
+            <DropdownView
+              notifyDirty={this.props.notifyDirty}
+              item={this.props.fcConfig.vbat_pid_gain}
+            />
             <DropdownView
               notifyDirty={this.props.notifyDirty}
               item={this.props.fcConfig.tpa_type}

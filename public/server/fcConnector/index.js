@@ -150,7 +150,8 @@ const applyUIConfig = (device, config, uiConfig) => {
       }
       return {
         id: key,
-        current: current
+        current: current,
+        hasPort: uiConfig.featurePorts.indexOf(key) > -1
       };
     });
   }
