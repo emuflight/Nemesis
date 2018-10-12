@@ -56,8 +56,6 @@ export default new class FCConnector {
 
   sendBulkCommands(commands, progress) {
     return new Promise((resolve, reject) => {
-      let response = "";
-      let i = 1;
       const sendNext = com => {
         this.sendCliCommand(com)
           .catch(err => {
@@ -65,12 +63,11 @@ export default new class FCConnector {
             reject(err);
           })
           .then(resp => {
-            response += resp;
-            progress && progress(i++);
+            progress && progress(resp);
             if (commands.length) {
               sendNext(commands.shift());
             } else {
-              resolve(response);
+              resolve();
             }
           });
       };
