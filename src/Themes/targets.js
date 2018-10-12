@@ -1,5 +1,5 @@
 import { createMuiTheme } from "@material-ui/core/styles";
-// import red from "@material-ui/core/colors/red";
+import grey from "@material-ui/core/colors/grey";
 
 const common = {
   overrides: {
@@ -104,7 +104,7 @@ export default {
       logo: "",
       palette: {
         primary: mode2Primary,
-        secondary: mode2Primary,
+        secondary: grey,
         type: "dark"
       },
       MuiSwitch: {

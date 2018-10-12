@@ -26,8 +26,7 @@ const checkOSDVal = val => {
   let isChecked = intVal > 0;
   return isChecked;
 };
-const xyPosToOSD = (x, y) =>
-  ((x & ((1 << 5) - 1)) | ((y & ((1 << 5) - 1)) << 5)) ^ visibilityFlag;
+const xyPosToOSD = (x, y) => (x & ((1 << 5) - 1)) | ((y & ((1 << 5) - 1)) << 5);
 const osdPosToXy = osdVal => {
   let pos = osdVal | visibilityFlag;
   let x = pos & 0x1f;
@@ -65,8 +64,11 @@ export default class OSDView extends Component {
       { label: "X-LARGE", value: "extra_large" }
     ];
   }
-  setOSDElement(gridElement) {
+  setOSDElement(gridElement, visible) {
     let newPos = xyPosToOSD(gridElement.x, gridElement.y);
+    if (visible) {
+      newPos = newPos | visibilityFlag;
+    }
     FCConnector.setValue(gridElement.i, newPos).then(() => {
       this.props.notifyDirty(true, gridElement, newPos);
     });
@@ -218,7 +220,7 @@ export default class OSDView extends Component {
                   }}
                   width={550}
                   onDragStop={(layout, oldItem, newItem) => {
-                    this.setOSDElement(newItem);
+                    this.setOSDElement(newItem, true);
                   }}
                   maxRows={maxRows}
                   autoSize={false}
@@ -278,10 +280,15 @@ export default class OSDView extends Component {
                           <Switch
                             id={item.id}
                             checked={checkOSDVal(item.current)}
-                            onChange={() => {
+                            onChange={(event, isChecked) => {
                               item.current =
                                 parseInt(item.current, 10) ^ visibilityFlag;
                               this.props.notifyDirty(true, item, item.current);
+                              const i = item.id;
+                              const { x, y } = osdPosToXy(
+                                parseInt(item.current, 10)
+                              );
+                              this.setOSDElement({ i, x, y }, isChecked);
                               this.forceUpdate();
                             }}
                           />
