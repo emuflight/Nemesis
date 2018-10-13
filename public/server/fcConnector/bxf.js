@@ -131,6 +131,8 @@ const runQueue = next => {
       }, next.waitMs);
     })
     .catch(error => {
+      next.reject(error);
+      runQueue(commandQueue.pop());
       console.log(error);
     });
 };

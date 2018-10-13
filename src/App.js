@@ -91,6 +91,8 @@ export class App extends Component {
     return FCConnector.saveConfig().then(() => {
       if (!this.state.currentConfig.reboot_on_save) {
         return this.getFcConfig();
+      } else {
+        return this.state.currentConfig;
       }
     });
   };
