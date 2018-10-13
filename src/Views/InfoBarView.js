@@ -13,7 +13,7 @@ export default class InfoBarView extends Component {
     super(props);
     this.craftName = this.props.fcConfig.isBxF
       ? props.fcConfig.name
-      : props.fcConfig.craft_name.current;
+      : props.fcConfig.craft_name && props.fcConfig.craft_name.current;
     this.handleDrawerToggle = props.handleDrawerToggle;
     this.state = {
       setupCompleted: -1,

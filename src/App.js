@@ -88,7 +88,11 @@ export class App extends Component {
 
   handleSave = () => {
     this.setState({ rebooting: this.state.currentConfig.reboot_on_save });
-    return FCConnector.saveConfig().then();
+    return FCConnector.saveConfig().then(() => {
+      if (!this.state.currentConfig.reboot_on_save) {
+        return this.getFcConfig();
+      }
+    });
   };
 
   render() {
@@ -107,18 +111,16 @@ export class App extends Component {
     } else if (this.state.connected) {
       return (
         <MuiThemeProvider theme={this.state.theme}>
-          <FCConfigContext.Provider value={this.state.currentConfig}>
-            <Connected
-              rebooting={this.state.rebooting}
-              handleSave={this.handleSave}
-              theme={this.state.theme}
-              refreshConfig={this.getFcConfig}
-              goToImuf={this.goToImuf}
-              connectinId={this.state.id}
-              device={this.state.deviceInfo}
-              fcConfig={this.state.currentConfig}
-            />
-          </FCConfigContext.Provider>
+          <Connected
+            rebooting={this.state.rebooting}
+            handleSave={this.handleSave}
+            theme={this.state.theme}
+            refreshConfig={this.getFcConfig}
+            goToImuf={this.goToImuf}
+            connectinId={this.state.id}
+            device={this.state.deviceInfo}
+            fcConfig={this.state.currentConfig}
+          />
         </MuiThemeProvider>
       );
     } else {
