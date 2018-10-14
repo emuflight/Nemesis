@@ -410,7 +410,7 @@
   "osd_flymode_pos": "Flight Mode",
   "osd_throttle_pos": "Throttle",
   "osd_vtx_channel_pos": "VTX Channel",
-  "osd_crosshairs": "Crosshairs",
+  "osd_crosshairs_pos": "Crosshairs",
   "osd_ah_sbar_pos": "Art. Horizon Sidebar",
   "osd_ah_pos": "Art. Horizon",
   "osd_current_pos": "Current Draw",

@@ -34,7 +34,7 @@ const OSDExamples = {
   osd_vtx_channel_pos: (
     <span className="osd-icon-label">R&nbsp;:&nbsp;5&nbsp;:&nbsp;3</span>
   ),
-  osd_crosshairs: <FlareSharp className="osd-icon" />,
+  osd_crosshairs_pos: <FlareSharp className="osd-icon" />,
   osd_ah_sbar_pos: (
     <div className="ah_sidebar">
       <div className="ah_sidebar-left">--------</div>

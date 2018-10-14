@@ -196,7 +196,7 @@
       "osd_flymode_pos",
       "osd_throttle_pos",
       "osd_vtx_channel_pos",
-      "osd_crosshairs",
+      "osd_crosshairs_pos",
       "osd_ah_sbar_pos",
       "osd_ah_pos",
       "osd_current_pos",
