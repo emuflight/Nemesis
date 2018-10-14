@@ -25,6 +25,7 @@ import OSDView from "./OSDView/OSDView";
 import { FormattedMessage } from "react-intl";
 import "./Connected.css";
 import { FCConfigContext } from "../App";
+import PreFlightCheckView from "./PreFlightCheckView/PreFlightCheckView";
 
 export default class Connected extends Component {
   constructor(props) {
@@ -129,6 +130,9 @@ export default class Connected extends Component {
     let contents;
 
     switch (this.state.currentRoute.key) {
+      case "PFC":
+        contents = <PreFlightCheckView />;
+        break;
       case "PID": {
         let mergedProfile = Object.assign(
           {},

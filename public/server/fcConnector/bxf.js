@@ -314,6 +314,25 @@ const getTelemetry = (device, type) => {
         return lastTelem;
       });
     }
+    case "attitude": {
+      return sendCommand(device, `msp 108`, 40, false).then(telem => {
+        if (telem) {
+          try {
+            let data = new DataView(new Uint8Array(telem).buffer, 12);
+            return {
+              type: "attitude",
+              y: (data.getInt16(0, 1) / 10) * -1.0 * 0.017453292519943295,
+              x:
+                (data.getInt16(2, 1) / 10) * -1.0 * 0.017453292519943295 +
+                Math.PI / 2,
+              z: data.getInt16(4, 1) * 0.017453292519943295 + Math.PI / 2
+            };
+          } catch (ex) {
+            console.log(ex);
+          }
+        }
+      });
+    }
     case "gyro": {
       return sendCommand(device, `msp 102`, 50, false).then(telem => {
         if (telem) {

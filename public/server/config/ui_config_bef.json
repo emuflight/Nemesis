@@ -1,5 +1,6 @@
 {
   "routes": [
+    "PFC",
     "PID",
     "MOTORS",
     "MODES",
@@ -40,6 +41,7 @@
   },
   "featurePorts": ["ESC_SENSOR"],
   "groups": {
+    "PFC": ["pfc"],
     "BATTERY": [
       "use_vbat_alerts",
       "vbat_pid_gain",
