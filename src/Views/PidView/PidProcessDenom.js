@@ -19,7 +19,7 @@ const PidProcessDenom = class extends Component {
             ? config.gyro_sync_denom.values
             : config.gyro_sync_denom.values.slice(2).map((item, i) => {
                 return {
-                  value: i.toString(),
+                  value: config.gyro_sync_denom.values[i].value,
                   label: item.label
                 };
               });

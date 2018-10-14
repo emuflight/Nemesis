@@ -20,7 +20,7 @@ const GyroSyncDenom = class extends Component {
             ? gyroItem.values
             : gyroItem.values.slice(2).map((item, i) => {
                 return {
-                  value: i.toString(),
+                  value: gyroItem.values[i].value,
                   label: item.label
                 };
               });
