@@ -131,7 +131,7 @@ export default class Connected extends Component {
 
     switch (this.state.currentRoute.key) {
       case "PFC":
-        contents = <PreFlightCheckView />;
+        contents = <PreFlightCheckView fcConfig={this.state.fcConfig} />;
         break;
       case "PID": {
         let mergedProfile = Object.assign(

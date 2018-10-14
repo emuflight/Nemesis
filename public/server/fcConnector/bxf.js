@@ -286,7 +286,6 @@ const storage = (device, command) => {
   }
 };
 
-let lastTelem;
 const getTelemetry = (device, type) => {
   switch (type) {
     case "status": {
@@ -300,7 +299,7 @@ const getTelemetry = (device, type) => {
             for (var i = 0; i < modeFlasCount; i++) {
               modeflags.push(data.getUint8(offset++));
             }
-            lastTelem = {
+            return {
               type: "status",
               cpu: data.getUint16(11, 1),
               modeflags: modeflags,
@@ -311,21 +310,19 @@ const getTelemetry = (device, type) => {
             console.log(ex);
           }
         }
-        return lastTelem;
       });
     }
     case "attitude": {
       return sendCommand(device, `msp 108`, 40, false).then(telem => {
         if (telem) {
+          let coeff = 0.017453292519943295;
           try {
             let data = new DataView(new Uint8Array(telem).buffer, 12);
             return {
               type: "attitude",
-              y: (data.getInt16(0, 1) / 10) * -1.0 * 0.017453292519943295,
-              x:
-                (data.getInt16(2, 1) / 10) * -1.0 * 0.017453292519943295 +
-                Math.PI / 2,
-              z: data.getInt16(4, 1) * 0.017453292519943295 + Math.PI / 2
+              x: data.getInt16(0, 1) / 10,
+              y: data.getInt16(2, 1) / 10,
+              z: data.getInt16(4, 1)
             };
           } catch (ex) {
             console.log(ex);
@@ -338,7 +335,7 @@ const getTelemetry = (device, type) => {
         if (telem) {
           try {
             let data = new DataView(new Uint8Array(telem).buffer, 12);
-            lastTelem = {
+            return {
               type: "gyro",
               acc: {
                 x: data.getInt16(0, 1) / 512,
@@ -360,7 +357,6 @@ const getTelemetry = (device, type) => {
             console.log(ex);
           }
         }
-        return lastTelem;
       });
     }
     case "vbat": {
@@ -389,15 +385,13 @@ const getTelemetry = (device, type) => {
           }
         } catch (ex) {
           console.log(ex);
-          return lastTelem;
         }
-        lastTelem = {
+        return {
           type: "rx",
           min: 800,
           max: 2200,
           channels
         };
-        return lastTelem;
       });
     }
   }

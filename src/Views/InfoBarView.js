@@ -3,7 +3,6 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
 import FCConnector from "../utilities/FCConnector";
-import TelemetryView from "./TelemetryView";
 import TextField from "@material-ui/core/TextField";
 import { FormattedMessage } from "react-intl";
 
@@ -96,10 +95,6 @@ export default class InfoBarView extends Component {
             defaultValue={this.state.craftName}
             onBlur={() => this.updateCraftName()}
             onChange={event => this.setState({ craftName: event.target.value })}
-          />
-          <TelemetryView
-            style={{ flexGrow: 1 }}
-            rebooting={this.props.rebooting}
           />
           {this.props.fcConfig.isBxF && (
             <Typography>

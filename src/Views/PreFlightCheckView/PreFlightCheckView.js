@@ -17,19 +17,21 @@ export default class PreFlightCheckView extends Component {
     return (
       <Paper>
         <div>
-          <Button
-            color="secondary"
-            variant="raised"
-            disabled={this.state.calibrating}
-            onClick={() => {
-              this.setState({ calibrating: true });
-              // FCConnector.calibrateAcc().then(() => {
-              //   this.setState({ calibrating: false });
-              // });
-            }}
-          >
-            <FormattedMessage id="accelerometer.calibrate" />
-          </Button>
+          {this.props.fcConfig.isBxF && (
+            <Button
+              color="secondary"
+              variant="raised"
+              disabled={this.state.calibrating}
+              onClick={() => {
+                this.setState({ calibrating: true });
+                FCConnector.sendCommand("msp 205").then(() => {
+                  this.setState({ calibrating: false });
+                });
+              }}
+            >
+              <FormattedMessage id="accelerometer.calibrate" />
+            </Button>
+          )}
           <Button
             style={{ marginLeft: 20 }}
             color="secondary"

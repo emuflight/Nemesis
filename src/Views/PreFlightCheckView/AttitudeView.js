@@ -16,7 +16,13 @@ export default class AttitudeView extends Component {
     try {
       let telemetry = JSON.parse(message.data);
       if (telemetry.type === "attitude") {
-        this.mesh.rotation.set(telemetry.x, telemetry.y, telemetry.z);
+        this.mesh.rotation.set(
+          telemetry.y * 0.017453292519943295 + Math.PI / 2,
+          telemetry.x * 0.017453292519943295,
+          0
+        );
+        //rotate Yaw from the scene perspective (y) and not the mesh so when the quad model moves it doesn't mess up p/r
+        this.scene.rotation.set(0, telemetry.z * 0.017453292519943295, 0);
         this.renderer.render(this.scene, this.camera);
       }
     } catch (ex) {
