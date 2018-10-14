@@ -5,6 +5,7 @@ import Paper from "@material-ui/core/Paper";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import Badge from "@material-ui/core/Badge";
+import Typography from "@material-ui/core/Typography";
 import VersionInfoView from "./VersionInfoView";
 import AuxChannelView from "./AuxChannelView/AuxChannelView";
 import ConfigListView from "./ConfigListView/ConfigListView";
@@ -399,13 +400,14 @@ export default class Connected extends Component {
               {this.routes.map(route => {
                 return (
                   <MenuItem
+                    style={{ padding: 8 }}
                     id={route.key}
                     key={route.key}
                     onClick={() => this.handleMenuItemClick(route.key)}
                   >
-                    <div style={{ flexGrow: 1 }}>
+                    <Typography variant="subheading" style={{ flexGrow: 1 }}>
                       <FormattedMessage id={"route." + route.key} />
-                    </div>
+                    </Typography>
                     {route.incompeteItems && (
                       <Badge
                         style={{ top: "12px" }}
