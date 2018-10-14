@@ -71,8 +71,10 @@ const notifyProgress = data => {
 };
 
 const notifyTelem = telemetryData => {
-  telemetryData.telemetry = true;
-  clients.forEach(client => client.sendUTF(JSON.stringify(telemetryData)));
+  if (telemetryData) {
+    telemetryData.telemetry = true;
+    clients.forEach(client => client.sendUTF(JSON.stringify(telemetryData)));
+  }
 };
 
 wsServer.telemetryInterval;

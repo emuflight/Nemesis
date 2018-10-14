@@ -16,6 +16,7 @@ export default class AttitudeView extends Component {
     try {
       let telemetry = JSON.parse(message.data);
       if (telemetry.type === "attitude") {
+        //rotate the model on the Y axis so it's oriented correctly
         this.mesh.rotation.set(
           telemetry.y * 0.017453292519943295 + Math.PI / 2,
           telemetry.x * 0.017453292519943295,
@@ -33,7 +34,7 @@ export default class AttitudeView extends Component {
   onWindowResize() {
     this.camera.aspect = 1;
     this.camera.updateProjectionMatrix();
-    this.renderer.setSize(300, 300);
+    this.renderer.setSize(400, 400);
   }
   componentDidMount() {
     this.scene = new THREE.Scene();
@@ -57,7 +58,7 @@ export default class AttitudeView extends Component {
     this.renderer = new THREE.WebGLRenderer();
     this.renderer.clearColor(0, 0, 0, 0);
     this.renderer.setPixelRatio(window.devicePixelRatio);
-    this.renderer.setSize(300, 300);
+    this.renderer.setSize(400, 400);
     this.refs.modelContainer.appendChild(this.renderer.domElement);
     FCConnector.webSockets.addEventListener("message", this.handleGyroData);
     FCConnector.startTelemetry("attitude");
@@ -70,6 +71,6 @@ export default class AttitudeView extends Component {
   }
 
   render() {
-    return <div ref="modelContainer" style={{ height: 300, width: 300 }} />;
+    return <div ref="modelContainer" style={{ height: 400, width: 400 }} />;
   }
 }
