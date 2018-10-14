@@ -95,7 +95,7 @@ export default class TpaCurveView extends Component {
                     <VerticalSliderView
                       labelClassName="tpa-slider-control-label"
                       sliderClassName="tpa-slider-control-slider"
-                      style={{ width: 40 }}
+                      style={{ width: 50 }}
                       textInputProps={{
                         className: "tpa-slider-control-input"
                       }}
@@ -124,7 +124,7 @@ export default class TpaCurveView extends Component {
                     <VerticalSliderView
                       labelClassName="tpa-slider-control-label"
                       sliderClassName="tpa-slider-control-slider"
-                      style={{ width: 40 }}
+                      style={{ width: 50 }}
                       textInputProps={{
                         className: "tpa-slider-control-input"
                       }}
