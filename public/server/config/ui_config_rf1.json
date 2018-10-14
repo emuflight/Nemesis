@@ -1,6 +1,5 @@
 {
   "routes": [
-    "PFC",
     "PID",
     "MOTORS",
     "MODES",
@@ -16,7 +15,6 @@
   "routeFeatures": {},
   "featurePorts": [],
   "groups": {
-    "PFC": ["pfc"],
     "OSD": ["osd"],
     "BLACKBOX": ["blackbox"],
     "MODES": ["modes"],
