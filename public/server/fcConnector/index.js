@@ -202,7 +202,7 @@ module.exports = new class FcConnector {
           return Object.assign({ error: config.version }, deviceInfo, config);
         } else {
           config.isBxF = true;
-          this.startTelemetry(deviceInfo, "status", 1000);
+          this.startTelemetry(deviceInfo, "status", 125);
           return applyUIConfig(deviceInfo, config, BxfUiConfig);
         }
       });
@@ -355,9 +355,6 @@ module.exports = new class FcConnector {
   }
   stopTelemetry(deviceInfo) {
     clearInterval(websockets.wsServer.telemetryInterval);
-    if (websockets.wsServer.telemetryType !== "status") {
-      this.startTelemetry(deviceInfo, "status", 2000);
-    }
   }
   rebootDFU(deviceInfo) {
     if (deviceInfo.hid) {

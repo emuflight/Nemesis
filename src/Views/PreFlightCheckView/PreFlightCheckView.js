@@ -7,6 +7,7 @@ import AttitudeView from "./AttitudeView";
 import FCConnector from "../../utilities/FCConnector";
 import { FormattedMessage } from "react-intl";
 import MotorsSlidersView from "../MotorsView/MotorsSlidersView";
+import ArmingFlagsView from "./ArmingFlagsView";
 
 export default class PreFlightCheckView extends Component {
   constructor(props) {
@@ -97,19 +98,7 @@ export default class PreFlightCheckView extends Component {
         <Paper style={{ display: "flex" }}>
           <AttitudeView />
           <Paper style={{ flex: 1 }}>
-            <Button
-              onClick={() =>
-                this.setState({
-                  showMotorSliders: !this.state.showMotorSliders
-                })
-              }
-              variant="raised"
-              color="primary"
-            >
-              {`${this.state.showMotorSliders ? "Hide" : "Show"} Motor Sliders`}
-            </Button>
-
-            {this.state.showMotorSliders && <MotorsSlidersView />}
+            <ArmingFlagsView />
           </Paper>
         </Paper>
       </React.Fragment>

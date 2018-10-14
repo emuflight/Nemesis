@@ -18,7 +18,7 @@ export default class InfoBarView extends Component {
       setupCompleted: -1,
       craftName: this.craftName,
       telemetry: {
-        cpu: 0
+        cpu: undefined
       }
     };
   }
@@ -96,14 +96,15 @@ export default class InfoBarView extends Component {
             onBlur={() => this.updateCraftName()}
             onChange={event => this.setState({ craftName: event.target.value })}
           />
-          {this.props.fcConfig.isBxF && (
-            <Typography>
-              <FormattedMessage
-                id="info.cpu-load"
-                values={{ percent: this.state.telemetry.cpu }}
-              />
-            </Typography>
-          )}
+          {this.props.fcConfig.isBxF &&
+            this.state.telemetry.cpu !== undefined && (
+              <Typography>
+                <FormattedMessage
+                  id="info.cpu-load"
+                  values={{ percent: this.state.telemetry.cpu }}
+                />
+              </Typography>
+            )}
           {this.state.setupCompleted > -1 && (
             <List
               style={{ cursor: "pointer" }}

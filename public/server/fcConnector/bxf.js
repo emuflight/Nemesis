@@ -289,23 +289,34 @@ const storage = (device, command) => {
 const getTelemetry = (device, type) => {
   switch (type) {
     case "status": {
-      return sendCommand(device, `msp 150`, 50, false).then(telem => {
-        if (telem) {
+      return sendCommand(device, `msp 150`, 30, false).then(status => {
+        if (status) {
           try {
-            let data = new DataView(new Uint8Array(telem).buffer, 12);
+            let data = new DataView(new Uint8Array(status).buffer, 12);
             let modeFlasCount = data.getUint8(15);
             let modeflags = [];
             let offset = 16;
             for (var i = 0; i < modeFlasCount; i++) {
               modeflags.push(data.getUint8(offset++));
             }
-            return {
-              type: "status",
-              cpu: data.getUint16(11, 1),
-              modeflags: modeflags,
-              flagCount: data.getUint8(offset++),
-              armingFlags: data.getUint32(offset, 1)
-            };
+            return sendCommand(device, `msp 108`, 30, false).then(attitude => {
+              let attitudeData = new DataView(
+                new Uint8Array(attitude).buffer,
+                12
+              );
+              return {
+                type: "status",
+                cpu: data.getUint16(11, 1),
+                modeflags: modeflags,
+                flagCount: data.getUint8(offset++),
+                armingFlags: data.getUint32(offset, 1),
+                attitude: {
+                  x: attitudeData.getInt16(0, 1) / 10,
+                  y: attitudeData.getInt16(2, 1) / 10,
+                  z: attitudeData.getInt16(4, 1)
+                }
+              };
+            });
           } catch (ex) {
             console.log(ex);
           }
@@ -315,7 +326,6 @@ const getTelemetry = (device, type) => {
     case "attitude": {
       return sendCommand(device, `msp 108`, 40, false).then(telem => {
         if (telem) {
-          let coeff = 0.017453292519943295;
           try {
             let data = new DataView(new Uint8Array(telem).buffer, 12);
             return {

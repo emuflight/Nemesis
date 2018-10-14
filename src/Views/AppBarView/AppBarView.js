@@ -12,6 +12,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import InfoBarView from "../InfoBarView";
 import { FormattedMessage } from "react-intl";
+import AttitudeView from "../PreFlightCheckView/AttitudeView";
 
 const styles = theme => ({
   root: {
@@ -126,6 +127,7 @@ class AppBarView extends Component {
                 </Typography>
               </div>
             )}
+            {this.props.title !== "PFC" && <AttitudeView size={50} />}
             <div className={classes.grow} />
             <Button
               color="secondary"
