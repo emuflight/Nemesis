@@ -25,7 +25,7 @@ export default class DfuView extends Component {
       currentTarget: props.target || "",
       progress: "",
       hasTarget: !!props.target,
-      targetItems: [
+      targetList: [
         "",
         "HELIOSPRING",
         "-REDACTED-M2-",
@@ -102,15 +102,29 @@ export default class DfuView extends Component {
     return "https://raw.githubusercontent.com/heliorc/imuf-release/master/README.md";
   }
 
+  targetRegex = /.*_(\w+)\.bin/;
+
   setFirmware(data) {
+    let targetList = [];
     let firmwares = data
-      .filter(
-        file => file.name.endsWith(".bin") && !file.name.startsWith("IMUF")
-      )
-      .reverse();
-    firmwares.unshift("");
+      .filter(file => {
+        return file.name.endsWith(".bin") && !file.name.startsWith("IMUF");
+      })
+      .reduce((reducer, file) => {
+        let match = file.name.match(this.targetRegex);
+        if (match && match[1]) {
+          let targetName = match[1];
+          reducer[targetName] = reducer[targetName] || [];
+          reducer[targetName].push(file);
+          if (targetList.indexOf(targetName) < 0) {
+            targetList.push(targetName);
+          }
+        }
+        return reducer;
+      }, {});
     this.setState({
-      items: firmwares,
+      firmwares: firmwares,
+      targetList: targetList,
       isFlashing: false
     });
   }
@@ -178,8 +192,8 @@ export default class DfuView extends Component {
               this.setState({ currentTarget: event.target.value });
             }}
             items={
-              this.state.targetItems &&
-              this.state.targetItems.map(target => {
+              this.state.targetList &&
+              this.state.targetList.map(target => {
                 return {
                   value: target,
                   label: target || "Choose One..."
@@ -221,8 +235,8 @@ export default class DfuView extends Component {
               this.setState({ current: event.target.value });
             }}
             items={
-              this.state.items &&
-              this.state.items.map(fw => {
+              this.state.firmwares[this.state.currentTarget] &&
+              this.state.firmwares[this.state.currentTarget].map(fw => {
                 return {
                   value: fw.download_url || "",
                   label: fw.name || "Choose One..."

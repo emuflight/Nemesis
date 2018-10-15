@@ -6,7 +6,6 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import AttitudeView from "./AttitudeView";
 import FCConnector from "../../utilities/FCConnector";
 import { FormattedMessage } from "react-intl";
-import MotorsSlidersView from "../MotorsView/MotorsSlidersView";
 import ArmingFlagsView from "./ArmingFlagsView";
 
 export default class PreFlightCheckView extends Component {
