@@ -50,6 +50,7 @@ export default class ArmingFlagsView extends Component {
         <List>
           {this.state.armingFlags.map(flag => (
             <Chip
+              key={flag.label}
               style={{ margin: 4 }}
               label={<FormattedMessage id={flag.label} />}
             />
