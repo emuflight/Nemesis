@@ -125,7 +125,7 @@ export default new class FCConnector {
     });
   }
 
-  startTelemetry(type = "gyro") {
+  startTelemetry(type = "status") {
     this.lastTelemetry = type;
     return fetch(`${this.serviceUrl}/telem/${this.lastTelemetry}/start`);
   }

@@ -122,10 +122,12 @@ export default class Connected extends Component {
   };
 
   openAssistant(routeName) {
+    FCConnector.pauseTelemetry();
     this.setState({ openAssistant: true, assistantType: routeName });
   }
   closeAssistant() {
     this.setState({ openAssistant: false, assistantType: "" });
+    FCConnector.resumeTelemetry();
   }
   render() {
     let contents;
@@ -137,6 +139,7 @@ export default class Connected extends Component {
             <PreFlightCheckView
               fcConfig={this.state.fcConfig}
               handleSave={this.handleSave}
+              openAssistant={name => this.openAssistant(name)}
             />
           </FCConfigContext.Provider>
         );
