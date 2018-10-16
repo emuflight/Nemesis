@@ -25,14 +25,7 @@ export default class DfuView extends Component {
       currentTarget: props.target || "",
       progress: "",
       hasTarget: !!props.target,
-      targetList: [
-        "",
-        "HELIOSPRING",
-        "-REDACTED-M2-",
-        "-REDACTED-F10-",
-        "-REDACTED-KIA-"
-      ],
-      items: []
+      firmwares: {}
     };
 
     let isProgressStarted = false;

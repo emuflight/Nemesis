@@ -16,7 +16,8 @@ export default class ImufView extends DfuView {
       progress: "",
       hasTarget: true,
       allowUpload: false,
-      targetItems: ["IMU-F"]
+      targetList: ["IMU-F"],
+      firmwares: {}
     };
   }
   get releasesKey() {
@@ -33,7 +34,7 @@ export default class ImufView extends DfuView {
   setFirmware(data) {
     let firmwares = data.reverse().filter(file => file.name.endsWith(".bin"));
     this.setState({
-      items: firmwares,
+      firmwares: { "IMU-F": firmwares },
       current: firmwares[0].download_url,
       isFlashing: false
     });

@@ -44,6 +44,7 @@ export class App extends Component {
   }
 
   goToImuf = () => {
+    FCConnector.stopTelemetry();
     this.setState({ imuf: true });
   };
 
