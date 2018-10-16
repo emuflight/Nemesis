@@ -48,7 +48,6 @@ export default class AttitudeView extends Component {
 
     var loader = new STLLoader();
     loader.load("assets/gatesman.stl", geometry => {
-      console.log(geometry);
       var material = new THREE.MeshNormalMaterial();
       this.mesh = new THREE.Mesh(geometry, material);
       this.scene.add(this.mesh);

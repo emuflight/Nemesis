@@ -18,16 +18,23 @@ const setupConnection = device => {
                   console.log("couldn't get into cli mode: ", cliError);
                   reject(cliError);
                 } else {
-                  setTimeout(() => {
-                    openConnection.read();
-                    resolve(openConnection);
-                  }, 200);
+                  openConnection.read();
+                  resolve(openConnection);
                 }
               });
             }
           });
         } catch (ex) {
-          reject(error);
+          console.log("ALREADY OPEN!!!!!", ex);
+          openConnection.write("!\n", cliError => {
+            if (cliError) {
+              console.log("couldn't get into cli mode: ", cliError);
+              reject(cliError);
+            } else {
+              openConnection.read();
+              resolve(openConnection);
+            }
+          });
         }
       }
     };
@@ -42,20 +49,18 @@ const setupConnection = device => {
         reject(err);
       });
       // openConnection.setEncoding('utf8');
-      setTimeout(() => connect(), 200);
-    } else if (!openConnection.isOpen) {
-      console.log("port is not open! ", device.comName);
-      connect();
+      setTimeout(() => connect(), 300);
     } else {
       console.log("using open port: ", device.comName);
       resolve(openConnection);
     }
   });
 };
-let retry = 3;
+let retry = 5;
 const getConfig = device => {
-  return sendCommand(device, "config", 500).then(conf => {
+  return sendCommand(device, "config", 800).then(conf => {
     try {
+      console.log("RESPONSE: ", conf);
       //trim off " config\n";
       let config = JSON.parse(conf.slice(conf.indexOf("{"), conf.length - 3));
       retry = 3;
@@ -66,12 +71,12 @@ const getConfig = device => {
             mode: "LOOKUP",
             current: parts[1].replace(/\s|\n|#/gim, "")
           };
-          retry = 3;
+          retry = 5;
           return config;
         } catch (ex) {
           if (retry) {
             retry--;
-            return getConfig(device, "mixer");
+            return getConfig(device);
           } else {
             console.log(ex);
             return sendCommand(device, "version").then(version => {
@@ -81,11 +86,12 @@ const getConfig = device => {
         }
       });
     } catch (ex) {
+      console.log(ex);
       if (retry) {
         retry--;
         return getConfig(device);
       } else {
-        console.log(ex);
+        retry = 5;
         return sendCommand(device, "version").then(version => {
           return { version: version, incompatible: true };
         });
@@ -114,30 +120,37 @@ const runQueue = next => {
       });
       let currentRecBuffer = "";
       let interval = setInterval(() => {
-        let more = port.read();
-        if (more) {
-          if (next.encode) {
-            let msg = more.toString(next.encode);
-            currentRecBuffer += msg;
+        try {
+          let more = port.read();
+          if (more) {
+            console.log("MORE: ", more);
+            if (next.encode) {
+              let msg = more.toString(next.encode);
+              currentRecBuffer += msg;
+            } else {
+              currentRecBuffer = more;
+            }
           } else {
-            currentRecBuffer = more;
+            console.log("NO MORE: ", more);
+            interval && clearInterval(interval);
+            next.resolve(currentRecBuffer);
+            currentCommand = null;
+            runQueue(commandQueue.pop());
           }
-        } else {
-          interval && clearInterval(interval);
-          next.resolve(currentRecBuffer);
-          currentCommand = null;
-          runQueue(commandQueue.pop());
+        } catch (ex) {
+          log(ex);
         }
       }, next.waitMs);
     })
     .catch(error => {
       next.reject(error);
+      currentCommand = null;
       runQueue(commandQueue.pop());
       console.log(error);
     });
 };
 
-const sendCommand = (device, command, waitMs = 200, encode = "utf8") => {
+const sendCommand = (device, command, waitMs = 30, encode = "utf8") => {
   return new Promise((resolve, reject) => {
     commandQueue.unshift({ device, command, waitMs, encode, resolve, reject });
     if (!currentCommand) {
@@ -289,7 +302,7 @@ const storage = (device, command) => {
 const getTelemetry = (device, type) => {
   switch (type) {
     case "status": {
-      return sendCommand(device, `msp 150`, 30, false).then(status => {
+      return sendCommand(device, `msp 150`, 25, false).then(status => {
         if (status) {
           try {
             let data = new DataView(new Uint8Array(status).buffer, 12);
@@ -299,23 +312,36 @@ const getTelemetry = (device, type) => {
             for (var i = 0; i < modeFlasCount; i++) {
               modeflags.push(data.getUint8(offset++));
             }
-            return sendCommand(device, `msp 108`, 30, false).then(attitude => {
+            return sendCommand(device, `msp 108`, 25, false).then(attitude => {
               let attitudeData = new DataView(
                 new Uint8Array(attitude).buffer,
                 12
               );
-              return {
-                type: "status",
-                cpu: data.getUint16(11, 1),
-                modeflags: modeflags,
-                flagCount: data.getUint8(offset++),
-                armingFlags: data.getUint32(offset, 1),
-                attitude: {
-                  x: attitudeData.getInt16(0, 1) / 10,
-                  y: attitudeData.getInt16(2, 1) / 10,
-                  z: attitudeData.getInt16(4, 1)
+              return sendCommand(device, `msp 105`, 25, false).then(rx => {
+                let channels = [];
+                let rxData = new DataView(new Uint8Array(rx).buffer, 12);
+                let active = (rxData.byteLength - 4) / 2;
+                for (var i = 0; i < active; i++) {
+                  channels[i] = rxData.getUint16(i * 2, 1);
                 }
-              };
+                return {
+                  type: "status",
+                  cpu: data.getUint16(11, 1),
+                  modeflags: modeflags,
+                  flagCount: data.getUint8(offset++),
+                  armingFlags: data.getUint32(offset, 1),
+                  attitude: {
+                    x: attitudeData.getInt16(0, 1) / 10,
+                    y: attitudeData.getInt16(2, 1) / 10,
+                    z: attitudeData.getInt16(4, 1)
+                  },
+                  rx: {
+                    min: 800,
+                    max: 2200,
+                    channels
+                  }
+                };
+              });
             });
           } catch (ex) {
             console.log(ex);
@@ -407,6 +433,13 @@ const getTelemetry = (device, type) => {
   }
 };
 
+const reset = () => {
+  if (openConnection && openConnection.isOpen) {
+    openConnection.close();
+  }
+  openConnection = undefined;
+};
+
 module.exports = {
   sendCommand: sendCommand,
   updateIMUF: updateIMUF,
@@ -423,5 +456,6 @@ module.exports = {
   setMode: setMode,
   getTpaCurves: getTpaCurves,
   setTpaCurves: setTpaCurves,
-  saveEEPROM: saveEEPROM
+  saveEEPROM: saveEEPROM,
+  reset: reset
 };

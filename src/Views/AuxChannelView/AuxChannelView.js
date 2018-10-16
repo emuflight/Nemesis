@@ -32,9 +32,9 @@ export default class AuxChannelView extends Component {
 
   handleRXData = message => {
     try {
-      let telemetry = JSON.parse(message.data);
-      if (telemetry.type === "rx") {
-        this.setState({ telemetry });
+      let { rx } = JSON.parse(message.data);
+      if (rx) {
+        this.setState({ telemetry: rx });
       }
     } catch (ex) {
       console.warn("unable to parse telemetry", ex);
@@ -48,12 +48,10 @@ export default class AuxChannelView extends Component {
       });
     }
     FCConnector.webSockets.addEventListener("message", this.handleRXData);
-    FCConnector.startTelemetry("rx");
   }
 
   componentWillUnmount() {
     FCConnector.webSockets.removeEventListener("message", this.handleRXData);
-    FCConnector.stopTelemetry();
   }
 
   render() {

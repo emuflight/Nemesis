@@ -3,6 +3,7 @@ const WebSocketServer = require("websocket").server;
 const devices = require("./devices");
 const http = require("http");
 const STM32USB = require("./devices/STM32USB.json");
+const BxF = require("./fcConnector/bxf");
 
 const server = http.createServer((request, response) => {
   // process HTTP request. Since we're writing just WebSockets
@@ -30,10 +31,8 @@ wsServer.on("request", request => {
         connectedDevice = port;
         if (connectedDevice) {
           //wait a little bit before sending the notification for slower machines.
-          setTimeout(() => {
-            connectedDevice.connected = true;
-            connection.sendUTF(JSON.stringify(connectedDevice));
-          }, 500);
+          connectedDevice.connected = true;
+          connection.sendUTF(JSON.stringify(connectedDevice));
         }
       });
     }
@@ -42,13 +41,14 @@ wsServer.on("request", request => {
   // Detect remove
   usb.on(`detach`, device => {
     if (device.deviceDescriptor.idVendor === STM32USB.vendorId) {
+      clearInterval(wsServer.telemetryInterval);
+      BxF.reset();
       connection.sendUTF(
         JSON.stringify({
           dfu: false,
           connected: false
         })
       );
-      clearInterval(wsServer.telemetryInterval);
     }
   });
   // This is the most important callback for us, we'll handle

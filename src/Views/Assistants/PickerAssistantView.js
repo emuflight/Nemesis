@@ -58,7 +58,6 @@ export default class PickerAssistantView extends Component {
           this.setState({ verifying: true });
           const verifySetting = () => {
             FCConnector.sendCliCommand(type.verify.command).then(resp => {
-              console.log(resp);
               if (this.state.cancel) {
                 this.setState({
                   currentMessage: <FormattedMessage id="common.cancelled" />,

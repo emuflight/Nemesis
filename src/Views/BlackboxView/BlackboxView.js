@@ -21,7 +21,6 @@ export default class BlackBoxView extends Component {
   }
   componentDidMount() {
     return FCConnector.storage().then(storageInfo => {
-      console.log(storageInfo);
       this.setState({ storageInfo });
     });
   }

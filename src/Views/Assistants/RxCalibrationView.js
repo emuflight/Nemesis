@@ -69,10 +69,9 @@ export default class RxCalibrationView extends Component {
 
   handleRXData = message => {
     try {
-      let telemetry = JSON.parse(message.data);
-      if (telemetry.type === "rx") {
-        console.log(telemetry);
-        this.setState({ channels: telemetry.channels.slice(0, 6) });
+      let { rx } = JSON.parse(message.data);
+      if (rx) {
+        this.setState({ channels: rx.channels.slice(0, 6) });
       }
     } catch (ex) {
       console.warn("unable to parse telemetry", ex);
@@ -81,11 +80,9 @@ export default class RxCalibrationView extends Component {
 
   componentDidMount() {
     FCConnector.webSockets.addEventListener("message", this.handleRXData);
-    FCConnector.startTelemetry("rx");
   }
 
   componentWillUnmount = () => {
-    FCConnector.stopTelemetry();
     FCConnector.webSockets.removeEventListener("message", this.handleRXData);
   };
 

@@ -97,7 +97,6 @@ export default class MotorAssignmentAssistantView extends PickerAssistantView {
                       this.remapMotor(fromMotorIndex, this.state.spinning);
                     }}
                     spinTest={motorIndex => {
-                      console.log(motorIndex);
                       FCConnector.spinTestMotor(motorIndex, 1100).then(() => {
                         this.setState({ spinning: motorIndex });
                       });
