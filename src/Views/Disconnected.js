@@ -20,14 +20,10 @@ export default class Disconnected extends Component {
     let openCli = !!(device && device.incompatible);
     return (
       <Paper
-        theme={this.state.theme}
-        elevation={3}
+        className="flex-column"
         style={{
-          display: "flex",
-          flexDirection: "column",
           position: "relative",
           flex: "1",
-          padding: "10px",
           minHeight: "100%",
           boxSizing: "border-box"
         }}

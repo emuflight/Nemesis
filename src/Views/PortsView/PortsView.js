@@ -29,12 +29,7 @@ export default class PortsView extends Component {
       <div>
         {this.state.ports.map((port, i) => {
           return (
-            <Paper
-              key={port.id}
-              theme={this.state.theme}
-              elevation={3}
-              style={{ display: "flex" }}
-            >
+            <Paper key={port.id} className="flex">
               <PortsItemView
                 notifyDirty={(dirty, stateObj, newVal) =>
                   this.handleDirty(dirty, stateObj, i, newVal)

@@ -26,7 +26,7 @@ export default class ProfileView extends Component {
   render() {
     return (
       <div>
-        <Paper elevation={3}>
+        <Paper>
           <FCConfigContext.Consumer>
             {config => {
               const item = config[this.props.id];

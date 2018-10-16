@@ -108,7 +108,7 @@ export default class OSDView extends Component {
   render() {
     if (!this.props.fcConfig.isBxF) {
       return (
-        <Paper elevation={3}>
+        <Paper>
           <FormGroup component="fieldset">
             <FormControlLabel
               control={
@@ -140,14 +140,8 @@ export default class OSDView extends Component {
     });
     let maxRows = this.state.videoMode === "NTSC" ? 13 : 18;
     return (
-      <Paper elevation={3}>
-        <div
-          style={{
-            display: "flex",
-            justifyItems: "center",
-            alignItems: "center"
-          }}
-        >
+      <Paper>
+        <div className="flex-center">
           {this.osdFeature && (
             <FeatureItemView
               notifyDirty={(isDirty, state, newVal) => {
@@ -206,7 +200,7 @@ export default class OSDView extends Component {
                   <Typography variant="headline">DROP ELEMENTS HERE</Typography>
                 </div>
               )}
-              <Paper theme={this.state.theme} elevation={3}>
+              <Paper>
                 <GridLayout
                   style={{
                     backgroundImage: "url('assets/osd-backdrop.png')",
@@ -262,11 +256,7 @@ export default class OSDView extends Component {
               </div>
             </div>
             <Paper
-              theme={this.state.theme}
-              elevation={3}
               style={{
-                margin: "10px",
-                padding: "10px",
                 height: 700,
                 overflow: "auto"
               }}

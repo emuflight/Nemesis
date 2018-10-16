@@ -272,7 +272,7 @@ export default class DfuView extends Component {
             <FormattedMessage id="common.flash" />
           </Button>
         </div>
-        <Paper elevation={3}>
+        <Paper>
           <Typography>
             <ReactMarkdown
               source={this.state.note}

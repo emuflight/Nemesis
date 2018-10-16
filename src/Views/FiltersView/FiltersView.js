@@ -6,6 +6,7 @@ import Paper from "@material-ui/core/Paper";
 import { AreaChart } from "react-easy-chart";
 import biquad from "./biquad";
 import "./FiltersView.css";
+import StatelessSelect from "../Items/StatelessSelect";
 
 export default class FiltersView extends Component {
   render() {
@@ -64,10 +65,7 @@ export default class FiltersView extends Component {
       ];
     }
     return (
-      <div
-        className="filters-view"
-        style={{ display: "flex", flexDirection: "column" }}
-      >
+      <div className="filters-view">
         {!this.props.fcConfig.imuf && (
           <FeaturesView
             fcConfig={this.props.fcConfig}
@@ -77,49 +75,49 @@ export default class FiltersView extends Component {
         )}
         {this.props.fcConfig.imuf ? (
           <div style={{ flex: 1 }}>
-            <Paper elevation={3}>
+            <Paper>
               <StatelessInput
                 notifyDirty={this.props.notifyDirty}
-                item={this.props.fcConfig.imuf_roll_q}
+                id="imuf_roll_q"
               />
               <StatelessInput
                 notifyDirty={this.props.notifyDirty}
-                item={this.props.fcConfig.imuf_pitch_q}
+                id="imuf_pitch_q"
               />
               <StatelessInput
                 notifyDirty={this.props.notifyDirty}
-                item={this.props.fcConfig.imuf_yaw_q}
+                id="imuf_yaw_q"
               />
             </Paper>
-            <Paper elevation={3} style={{ display: "flex" }}>
-              <div style={{ display: "flex", flexDirection: "column" }}>
+            <Paper className="flex">
+              <div className="flex-column">
                 <StatelessInput
+                  id="imuf_roll_lpf_cutoff_hz"
                   notifyDirty={(isDirty, state, val) => {
                     this.props.fcConfig.imuf_roll_lpf_cutoff_hz.current = val;
                     this.forceUpdate();
                     this.props.notifyDirty(isDirty, state, val);
                   }}
-                  item={this.props.fcConfig.imuf_roll_lpf_cutoff_hz}
                 />
                 <StatelessInput
+                  id="imuf_pitch_lpf_cutoff_hz"
                   notifyDirty={(isDirty, state, val) => {
                     this.props.fcConfig.imuf_pitch_lpf_cutoff_hz.current = val;
                     this.forceUpdate();
                     this.props.notifyDirty(isDirty, state, val);
                   }}
-                  item={this.props.fcConfig.imuf_pitch_lpf_cutoff_hz}
                 />
                 <StatelessInput
+                  id="imuf_yaw_lpf_cutoff_hz"
                   notifyDirty={(isDirty, state, val) => {
                     this.props.fcConfig.imuf_yaw_lpf_cutoff_hz.current = val;
                     this.forceUpdate();
                     this.props.notifyDirty(isDirty, state, val);
                   }}
-                  item={this.props.fcConfig.imuf_yaw_lpf_cutoff_hz}
                 />
               </div>
 
-              <div class="area-chart-container">
+              <div className="area-chart-container">
                 <AreaChart
                   data={bqData}
                   areaColors={bqColors}
@@ -132,89 +130,60 @@ export default class FiltersView extends Component {
                 />
               </div>
             </Paper>
-            <Paper
-              elevation={3}
-              style={{
-                display: "flex",
-                justifyItems: "center",
-                alignItems: "center"
-              }}
-            >
-              <DropdownView
-                notifyDirty={this.props.notifyDirty}
-                item={this.props.fcConfig.imuf_roll_af}
-              />
-              <DropdownView
-                notifyDirty={this.props.notifyDirty}
-                item={this.props.fcConfig.imuf_pitch_af}
-              />
-              <DropdownView
-                notifyDirty={this.props.notifyDirty}
-                item={this.props.fcConfig.imuf_yaw_af}
-              />
+            <Paper className="flex-center">
+              {this.props.fcConfig.imuf >= 110 && (
+                <React.Fragment>
+                  <StatelessSelect
+                    id="imuf_roll_af"
+                    notifyDirty={this.props.notifyDirty}
+                  />
+                  <StatelessSelect
+                    id="imuf_pitch_af"
+                    notifyDirty={this.props.notifyDirty}
+                  />
+                  <StatelessSelect
+                    id="imuf_yaw_af"
+                    notifyDirty={this.props.notifyDirty}
+                  />
+                </React.Fragment>
+              )}
               <StatelessInput
+                id="imuf_w"
                 notifyDirty={this.props.notifyDirty}
-                item={this.props.fcConfig.imuf_w}
               />
             </Paper>
           </div>
         ) : (
           <div style={{ flex: 1 }}>
-            <Paper
-              elevation={3}
-              style={{
-                display: "flex",
-                justifyItems: "center",
-                alignItems: "center"
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyItems: "flex-start",
-                  alignItems: "flex-start"
-                }}
-              >
-                <DropdownView
+            <Paper className="flex-center">
+              <div className="flex-column-start">
+                <StatelessSelect
+                  id="gyro_lowpass_type"
                   notifyDirty={this.props.notifyDirty}
-                  item={this.props.fcConfig.gyro_lowpass_type}
                 />
                 {this.props.fcConfig.gyro_lowpass_type.current !== "KALMAN" && (
                   <StatelessInput
+                    id="gyro_lowpass_hz"
                     notifyDirty={this.props.notifyDirty}
-                    item={this.props.fcConfig.gyro_lowpass_hz}
                   />
                 )}
                 {this.props.fcConfig.gyro_lowpass_type.current === "KALMAN" && (
                   <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyItems: "flex-start",
-                      alignItems: "flex-start",
-                      marginRight: 10
-                    }}
+                    className="flex-column-start"
+                    style={{ marginRight: 10 }}
                   >
                     <StatelessInput
+                      id="gyro_filter_q"
                       notifyDirty={this.props.notifyDirty}
-                      item={this.props.fcConfig.gyro_filter_q}
                     />
                     <StatelessInput
+                      id="gyro_filter_r"
                       notifyDirty={this.props.notifyDirty}
-                      item={this.props.fcConfig.gyro_filter_r}
                     />
                   </div>
                 )}
               </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyItems: "flex-start",
-                  alignItems: "flex-start"
-                }}
-              >
+              <div className="flex-column-start">
                 <DropdownView
                   notifyDirty={this.props.notifyDirty}
                   item={this.props.fcConfig.gyro_lowpass2_type}
@@ -237,22 +206,8 @@ export default class FiltersView extends Component {
                 />
               </div>
             </Paper>
-            <Paper
-              elevation={3}
-              style={{
-                display: "flex",
-                justifyItems: "center",
-                alignItems: "center"
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyItems: "flex-start",
-                  alignItems: "flex-start"
-                }}
-              >
+            <Paper className="flex-center">
+              <div className="flex-column-start">
                 <StatelessInput
                   notifyDirty={this.props.notifyDirty}
                   item={this.props.fcConfig.gyro_notch1_hz}

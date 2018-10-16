@@ -88,7 +88,10 @@
       "f_yaw",
       "p_yaw",
       "i_yaw",
-      "d_yaw"
+      "d_yaw",
+      "feedforward_transition",
+      "vbat_pid_gain",
+      "tpa_type"
     ],
     "RATES": [
       "thr_expo",
@@ -104,7 +107,10 @@
       "yaw_srate",
       "thr_mid",
       "deadband",
-      "yaw_deadband"
+      "yaw_deadband",
+      "roll_rate_limit",
+      "pitch_rate_limit",
+      "yaw_rate_limit"
     ],
     "FILTERS": [
       "gyro_hardware_lpf",
@@ -137,6 +143,7 @@
       "3d_neutral",
       "3d_deadband_throttle",
       "3d_switched_mode",
+      "small_angle",
       "align_gyro",
       "align_acc",
       "align_mag",
@@ -154,6 +161,7 @@
       "max_check",
       "rssi_channel",
       "rssi_scale",
+      "rssi_offset",
       "rc_interp",
       "rc_interp_ch",
       "rc_interp_int",
@@ -169,7 +177,8 @@
       "tlm_switch",
       "tlm_inverted",
       "tlm_halfduplex",
-      "yaw_control_reversed"
+      "yaw_control_reversed",
+      "max_aux_channels"
     ],
     "FEATURES": ["features"],
     "VTX": [
@@ -229,6 +238,14 @@
       "osd_rtc_date_time_pos",
       "osd_adjustment_range_pos",
       "osd_core_temp_pos",
+      "osd_log_status_pos",
+      "osd_g_force_pos",
+      "osd_flip_arrow_pos",
+      "osd_anti_gravity_pos",
+      "osd_esc_temp_alarm",
+      "osd_esc_rpm_alarm",
+      "osd_esc_current_alarm",
+      "osd_core_temp_alarm",
       "osd_stat_max_spd",
       "osd_stat_max_dist",
       "osd_stat_min_batt",
@@ -256,7 +273,19 @@
     "ADVANCED": ["advanced"]
   },
   "elements": {
+    "vbat_detect_cell_voltage": {
+      "float": true,
+      "pad": 2
+    },
+    "vbat_full_cell_voltage": {
+      "float": true,
+      "pad": 2
+    },
     "vbat_warning_cell_voltage": {
+      "float": true,
+      "pad": 2
+    },
+    "vbat_min_cell_voltage": {
       "float": true,
       "pad": 2
     },

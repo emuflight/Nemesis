@@ -96,7 +96,7 @@ export default class PreFlightCheckView extends Component {
             </Button>
           </div>
         </Paper>
-        <Paper style={{ display: "flex" }}>
+        <Paper className="flex">
           <AttitudeView />
           <Paper style={{ flex: 1 }}>
             <ArmingFlagsView />

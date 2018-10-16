@@ -16,7 +16,7 @@ export default class MotorsView extends Component {
   render() {
     return (
       <div>
-        <Paper elevation={3}>
+        <Paper>
           <div style={{ display: "flex", margin: 10 }}>
             <Button
               onClick={() =>
@@ -49,7 +49,7 @@ export default class MotorsView extends Component {
           </div>
           {this.state.showMotorSliders && <MotorsSlidersView />}
         </Paper>
-        <Paper elevation={3}>
+        <Paper>
           <ConfigListView
             features={this.props.features}
             fcConfig={this.props.fcConfig}

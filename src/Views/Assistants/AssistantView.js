@@ -62,18 +62,13 @@ export default class AssistantView extends Component {
         onClose={this.props.onClose}
       >
         <Paper
-          theme={this.state.theme}
-          elevation={3}
+          className="flex-column-center"
           style={{
             position: "absolute",
             top: 50,
             right: 50,
             bottom: 50,
-            left: 50,
-            display: "flex",
-            flexDirection: "column",
-            justifyItems: "center",
-            alignItems: "center"
+            left: 50
           }}
         >
           <div style={{ display: "flex", height: 50 }}>
@@ -81,12 +76,9 @@ export default class AssistantView extends Component {
             {this.props.rebooting && (
               <div style={{ display: "flex" }}>
                 <CircularProgress
+                  className="flex-column-center"
                   style={{
-                    margin: 10,
-                    justifyContent: "center",
-                    alignContent: "center",
-                    justifyItems: "center",
-                    alignItems: "center"
+                    margin: 10
                   }}
                   color="secondary"
                   thickness={7}

@@ -62,7 +62,7 @@ export default class AuxChannelView extends Component {
         {this.state.modes &&
           this.state.modes.map((mode, i) => {
             return (
-              <Paper key={mode.id} elevation={3}>
+              <Paper key={mode.id}>
                 <AuxChannelItemView
                   modeDisabled={!this.props.fcConfig.isBxF}
                   telemetry={this.state.telemetry.channels.slice(4)}

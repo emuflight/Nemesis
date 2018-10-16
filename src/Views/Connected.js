@@ -367,11 +367,7 @@ export default class Connected extends Component {
     }
 
     return (
-      <Paper
-        theme={this.state.theme}
-        elevation={3}
-        className={`connected-root ${this.state.fcConfig.version.fw}`}
-      >
+      <Paper className={`connected-root ${this.state.fcConfig.version.fw}`}>
         <FCConfigContext.Provider value={this.state.fcConfig}>
           <AppBarView
             rebooting={this.props.rebooting}

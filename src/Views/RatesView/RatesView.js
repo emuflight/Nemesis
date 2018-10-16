@@ -126,18 +126,8 @@ export default class RatesView extends ProfileView {
       );
     }
     return (
-      <div
-        className="rates-view"
-        style={{ display: "flex", flex: 1, flexDirection: "column" }}
-      >
-        <Paper
-          elevation={3}
-          style={{
-            display: "flex",
-            justifyItems: "center",
-            alignItems: "center"
-          }}
-        >
+      <div className="rates-view">
+        <Paper className="flex-center">
           <StatelessFloat
             notifyDirty={this.props.notifyDirty}
             item={this.props.fcConfig.thr_expo}
@@ -171,7 +161,7 @@ export default class RatesView extends ProfileView {
                 <div
                   style={{ display: "flex", flex: 1, flexDirection: "column" }}
                 >
-                  <Paper elevation={3}>
+                  <Paper>
                     <Typography>
                       <FormattedMessage id="common.roll" />
                     </Typography>
@@ -198,7 +188,7 @@ export default class RatesView extends ProfileView {
                       value={curves.x[10].y}
                     />
                   </Paper>
-                  <Paper elevation={3}>
+                  <Paper>
                     <Typography>
                       <FormattedMessage id="common.pitch" />
                     </Typography>
@@ -225,7 +215,7 @@ export default class RatesView extends ProfileView {
                       value={curves.y[10].y}
                     />
                   </Paper>
-                  <Paper elevation={3}>
+                  <Paper>
                     <Typography>
                       <FormattedMessage id="common.yaw" />
                     </Typography>
@@ -253,7 +243,7 @@ export default class RatesView extends ProfileView {
                     />
                   </Paper>
                 </div>
-                <Paper elevation={3}>
+                <Paper>
                   <AreaChart
                     xType={"text"}
                     areaColors={["white", "blue", "green"]}

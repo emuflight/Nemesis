@@ -15,7 +15,7 @@ export default class FeaturesView extends Component {
 
   render() {
     return (
-      <Paper theme={this.state.theme} elevation={3}>
+      <Paper>
         <div
           style={{
             display: "grid",

@@ -26,6 +26,9 @@
   }
 }
 .rates-view {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
   g.x.axis text {
     &.label {
       transform: translate(160px, 3px);

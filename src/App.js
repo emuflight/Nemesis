@@ -6,6 +6,7 @@ import DfuView from "./Views/DfuView/DfuView";
 import FCConnector from "./utilities/FCConnector";
 import themes from "./Themes/Dark";
 import { MuiThemeProvider } from "@material-ui/core/styles";
+import "./App.css";
 
 export const FCConfigContext = React.createContext({});
 

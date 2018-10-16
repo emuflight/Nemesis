@@ -1,14 +1,16 @@
-.filters-view g.x.axis text {
-  fill: white;
-  font-family: Roboto, sans-serif !important; }
-  .filters-view g.x.axis text.label {
-    transform: translate(-160px, 0); }
-
-.filters-view g.y.axis text {
-  fill: white;
-  font-family: Roboto, sans-serif !important; }
-  .filters-view g.y.axis text.label {
-    transform: translate(0, 110px) rotate(-90deg); }
+.filters-view {
+  display: flex;
+  flex-direction: column; }
+  .filters-view g.x.axis text {
+    fill: white;
+    font-family: Roboto, sans-serif !important; }
+    .filters-view g.x.axis text.label {
+      transform: translate(-160px, 0); }
+  .filters-view g.y.axis text {
+    fill: white;
+    font-family: Roboto, sans-serif !important; }
+    .filters-view g.y.axis text.label {
+      transform: translate(0, 110px) rotate(-90deg); }
 
 .area-chart-container {
   padding: 20px; }

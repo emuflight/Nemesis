@@ -1,4 +1,6 @@
 .filters-view {
+  display: flex;
+  flex-direction: column;
   g.x.axis text {
     &.label {
       transform: translate(-160px, 0);

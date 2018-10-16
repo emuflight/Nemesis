@@ -31,7 +31,7 @@ export default class PidsView extends ProfileView {
       >
         {!this.state.isBxF &&
           this.state.tpaCurves && (
-            <Paper theme={this.state.theme} elevation={3}>
+            <Paper>
               <TpaCurveView
                 activeProfile={this.props.active}
                 notifyDirty={this.props.notifyDirty}
@@ -40,7 +40,7 @@ export default class PidsView extends ProfileView {
             </Paper>
           )}
         {this.state.isBxF && (
-          <Paper theme={this.state.theme} elevation={3}>
+          <Paper>
             <div>
               {this.props.fcConfig.gyro_use_32khz && (
                 <FormControlLabel
@@ -119,11 +119,7 @@ export default class PidsView extends ProfileView {
             />
           </Paper>
         )}
-        <Paper
-          theme={this.state.theme}
-          elevation={3}
-          style={{ margin: "10px", padding: "10px" }}
-        >
+        <Paper>
           <div style={{ margin: "0 auto", width: "800px" }}>
             <ConfigListView
               fcConfig={this.props.fcConfig}
@@ -133,15 +129,7 @@ export default class PidsView extends ProfileView {
           </div>
         </Paper>
         {!this.props.fcConfig.imuf && (
-          <Paper
-            theme={this.state.theme}
-            elevation={3}
-            style={{
-              display: "flex",
-              justifyItems: "center",
-              alignItems: "center"
-            }}
-          >
+          <Paper className="flex-center">
             <DropdownView
               notifyDirty={this.props.notifyDirty}
               item={this.props.fcConfig.dterm_lowpass_hz_type}
@@ -165,23 +153,7 @@ export default class PidsView extends ProfileView {
         )}
 
         {this.state.isBxF && (
-          <Paper
-            elevation={3}
-            style={{
-              justifyItems: "center",
-              alignItems: "center",
-              justifyContent: "center",
-              alignContent: "center"
-            }}
-          >
-            <DropdownView
-              notifyDirty={this.props.notifyDirty}
-              item={this.props.fcConfig.vbat_pid_gain}
-            />
-            <DropdownView
-              notifyDirty={this.props.notifyDirty}
-              item={this.props.fcConfig.tpa_type}
-            />
+          <Paper className="flex-center">
             <FCConfigContext.Consumer>
               {config => {
                 return config.tpa_type.current === "RACEFLIGHT" ? (

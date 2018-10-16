@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import DropdownView from "../Items/DropdownView";
 import SliderView from "../Items/SliderView";
 import Paper from "@material-ui/core/Paper";
 import FeaturesView from "../FeaturesView/FeaturesView";
 import "./ConfigListView.css";
 import StatelessInput from "../Items/StatelessInput";
 import StatelessFloat from "../Items/StatelessFloat";
+import StatelessSelect from "../Items/StatelessSelect";
 
 export default class ConfigListView extends Component {
   render() {
@@ -33,7 +33,7 @@ export default class ConfigListView extends Component {
           />
         )}
         {!!sliders.length && (
-          <Paper elevation={3} className="config-list-view-sliders">
+          <Paper className="config-list-view-sliders">
             {sliders.map(item => {
               return (
                 <SliderView
@@ -48,14 +48,14 @@ export default class ConfigListView extends Component {
           </Paper>
         )}
         {!!dropdowns.length && (
-          <Paper elevation={3} className="config-list-view-dropdowns">
+          <Paper className="config-list-view-dropdowns">
             {dropdowns.map(item => {
               return (
-                <DropdownView
+                <StatelessSelect
                   className={item.id}
                   notifyDirty={this.props.notifyDirty}
                   key={item.id}
-                  item={item}
+                  id={item.id}
                 />
               );
             })}
@@ -63,7 +63,7 @@ export default class ConfigListView extends Component {
         )}
 
         {!!inputs.length && (
-          <Paper elevation={3} className="config-list-view-inputs">
+          <Paper className="config-list-view-inputs">
             {inputs.map(item => {
               return item.float ? (
                 <StatelessFloat
@@ -71,14 +71,14 @@ export default class ConfigListView extends Component {
                   className={item.id}
                   notifyDirty={this.props.notifyDirty}
                   key={item.id}
-                  item={item}
+                  id={item.id}
                 />
               ) : (
                 <StatelessInput
                   className={item.id}
                   notifyDirty={this.props.notifyDirty}
                   key={item.id}
-                  item={item}
+                  id={item.id}
                 />
               );
             })}

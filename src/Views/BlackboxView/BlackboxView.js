@@ -30,7 +30,7 @@ export default class BlackBoxView extends Component {
       (this.state.storageInfo.totalSize - 0);
     return (
       <div>
-        <Paper theme={this.state.theme} elevation={3}>
+        <Paper>
           <div style={{ position: "relative" }}>
             <Typography variant="caption" className="absolute-center-text">
               {this.state.storageInfo.usedSize}/
@@ -39,7 +39,7 @@ export default class BlackBoxView extends Component {
             <Typography variant="caption">
               <FormattedMessage
                 id="blackbox.flash-used"
-                values={{ percent: normalizedPercent }}
+                values={{ percent: normalizedPercent.toFixed(2) }}
               />
             </Typography>
             <LinearProgress
@@ -65,7 +65,7 @@ export default class BlackBoxView extends Component {
             </Button>
           </div>
         </Paper>
-        <Paper theme={this.state.theme} elevation={3}>
+        <Paper>
           <ConfigListView
             fcConfig={this.props.fcConfig}
             notifyDirty={this.props.notifyDirty}
