@@ -241,24 +241,22 @@ export default class DfuView extends Component {
             }
           />
         )}
-        <div
-          style={{
-            display: "flex",
-            justifyItems: "center",
-            alignItems: "center"
-          }}
-        >
-          <FormGroup component="fieldset" style={{ paddingLeft: 10 }}>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={this.state.chipErase}
-                  onChange={(event, chipErase) => this.setState({ chipErase })}
-                />
-              }
-              label={<FormattedMessage id="dfu.full-erase" />}
-            />
-          </FormGroup>
+        <div className="flex-center">
+          {this.state.currentTarget !== "IMU-F" && (
+            <FormGroup component="fieldset" style={{ paddingLeft: 10 }}>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={this.state.chipErase}
+                    onChange={(event, chipErase) =>
+                      this.setState({ chipErase })
+                    }
+                  />
+                }
+                label={<FormattedMessage id="dfu.full-erase" />}
+              />
+            </FormGroup>
+          )}
           <Button
             style={{ margin: "20px", flex: 1 }}
             color="primary"
