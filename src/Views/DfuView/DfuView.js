@@ -88,22 +88,24 @@ export default class DfuView extends Component {
     return "firmwareReleases";
   }
   get releaseUrl() {
-    return "https://api.github.com/repos/heliorc/imuf_dev_repo/contents";
+    return "https://api.github.com/repos/ButterFlight/Butterflight/releases/latest";
   }
 
   get releaseNotesUrl() {
-    return "https://raw.githubusercontent.com/heliorc/imuf-release/master/README.md";
+    return "https://raw.githubusercontent.com/ButterFlight/butterflight/3.6.0/README.md";
   }
 
   targetRegex = /.*_(\w+)\.bin/;
 
   setFirmware(data) {
     let targetList = [];
-    let firmwares = data
+    let assets = data.assets || data;
+    let firmwares = assets
       .filter(file => {
         return file.name.endsWith(".bin") && !file.name.startsWith("IMUF");
       })
       .reduce((reducer, file) => {
+        file.download_url = file.download_url || file.browser_download_url;
         let match = file.name.match(this.targetRegex);
         if (match && match[1]) {
           let targetName = match[1];
@@ -115,6 +117,7 @@ export default class DfuView extends Component {
         }
         return reducer;
       }, {});
+    targetList.sort();
     this.setState({
       firmwares: firmwares,
       targetList: targetList,
