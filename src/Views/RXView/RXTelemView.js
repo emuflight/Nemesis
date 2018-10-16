@@ -33,10 +33,12 @@ export default class RXTelemView extends Component {
   };
   componentDidMount() {
     FCConnector.webSockets.addEventListener("message", this.handleRXData);
+    FCConnector.startTelemetry("rx");
   }
 
   componentWillUnmount() {
     FCConnector.webSockets.removeEventListener("message", this.handleRXData);
+    FCConnector.stopTelemetry();
   }
   render() {
     return (

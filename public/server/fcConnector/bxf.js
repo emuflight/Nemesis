@@ -302,7 +302,7 @@ const storage = (device, command) => {
 const getTelemetry = (device, type) => {
   switch (type) {
     case "status": {
-      return sendCommand(device, `msp 150`, 25, false).then(status => {
+      return sendCommand(device, `msp 150`, 30, false).then(status => {
         if (status) {
           try {
             let data = new DataView(new Uint8Array(status).buffer, 12);
@@ -312,37 +312,13 @@ const getTelemetry = (device, type) => {
             for (var i = 0; i < modeFlasCount; i++) {
               modeflags.push(data.getUint8(offset++));
             }
-            return sendCommand(device, `msp 108`, 25, false).then(attitude => {
-              let attitudeData = new DataView(
-                new Uint8Array(attitude).buffer,
-                12
-              );
-              return sendCommand(device, `msp 105`, 25, false).then(rx => {
-                let channels = [];
-                let rxData = new DataView(new Uint8Array(rx).buffer, 12);
-                let active = (rxData.byteLength - 4) / 2;
-                for (var i = 0; i < active; i++) {
-                  channels[i] = rxData.getUint16(i * 2, 1);
-                }
-                return {
-                  type: "status",
-                  cpu: data.getUint16(11, 1),
-                  modeflags: modeflags,
-                  flagCount: data.getUint8(offset++),
-                  armingFlags: data.getUint32(offset, 1),
-                  attitude: {
-                    x: attitudeData.getInt16(0, 1) / 10,
-                    y: attitudeData.getInt16(2, 1) / 10,
-                    z: attitudeData.getInt16(4, 1)
-                  },
-                  rx: {
-                    min: 800,
-                    max: 2200,
-                    channels
-                  }
-                };
-              });
-            });
+            return {
+              type: "status",
+              cpu: data.getUint16(11, 1),
+              modeflags: modeflags,
+              flagCount: data.getUint8(offset++),
+              armingFlags: data.getUint32(offset, 1)
+            };
           } catch (ex) {
             console.log(ex);
           }
@@ -355,10 +331,11 @@ const getTelemetry = (device, type) => {
           try {
             let data = new DataView(new Uint8Array(telem).buffer, 12);
             return {
-              type: "attitude",
-              x: data.getInt16(0, 1) / 10,
-              y: data.getInt16(2, 1) / 10,
-              z: data.getInt16(4, 1)
+              attitude: {
+                x: data.getInt16(0, 1) / 10,
+                y: data.getInt16(2, 1) / 10,
+                z: data.getInt16(4, 1)
+              }
             };
           } catch (ex) {
             console.log(ex);
@@ -423,10 +400,11 @@ const getTelemetry = (device, type) => {
           console.log(ex);
         }
         return {
-          type: "rx",
-          min: 800,
-          max: 2200,
-          channels
+          rx: {
+            min: 800,
+            max: 2200,
+            channels
+          }
         };
       });
     }

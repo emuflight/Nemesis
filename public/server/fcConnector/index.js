@@ -202,7 +202,7 @@ module.exports = new class FcConnector {
           return Object.assign({ error: config.version }, deviceInfo, config);
         } else {
           config.isBxF = true;
-          this.startTelemetry(deviceInfo, "status", 150);
+          this.startTelemetry(deviceInfo, "status");
           return applyUIConfig(deviceInfo, config, BxfUiConfig);
         }
       });
@@ -338,23 +338,37 @@ module.exports = new class FcConnector {
       );
     });
   }
-  startTelemetry(deviceInfo, type, intervalMs = 150) {
-    clearInterval(websockets.wsServer.telemetryInterval);
+  startTelemetry(deviceInfo, type, fastIntervalMs = 80) {
+    clearInterval(websockets.wsServer.fastTelemetryInterval);
+    clearInterval(websockets.wsServer.slowTelemetryInterval);
     websockets.wsServer.telemetryType = type;
-    websockets.wsServer.telemetryInterval = setInterval(() => {
+    if (type !== "status") {
+      websockets.wsServer.fastTelemetryInterval = setInterval(() => {
+        if (deviceInfo.hid) {
+          rf1Connector.getTelemetry(deviceInfo, type).then(telemData => {
+            websockets.notifyTelem(telemData);
+          });
+        } else {
+          bxfConnector.getTelemetry(deviceInfo, type).then(telemData => {
+            websockets.notifyTelem(telemData);
+          });
+        }
+      }, fastIntervalMs);
+    }
+    websockets.wsServer.slowTelemetryInterval = setInterval(() => {
       if (deviceInfo.hid) {
-        rf1Connector.getTelemetry(deviceInfo, type).then(telemData => {
+        rf1Connector.getTelemetry(deviceInfo, "status").then(telemData => {
           websockets.notifyTelem(telemData);
         });
       } else {
-        bxfConnector.getTelemetry(deviceInfo, type).then(telemData => {
+        bxfConnector.getTelemetry(deviceInfo, "status").then(telemData => {
           websockets.notifyTelem(telemData);
         });
       }
-    }, intervalMs);
+    }, 500);
   }
   stopTelemetry(deviceInfo) {
-    clearInterval(websockets.wsServer.telemetryInterval);
+    clearInterval(websockets.wsServer.fastTelemetryInterval);
   }
   rebootDFU(deviceInfo) {
     if (deviceInfo.hid) {

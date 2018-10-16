@@ -48,10 +48,12 @@ export default class AuxChannelView extends Component {
       });
     }
     FCConnector.webSockets.addEventListener("message", this.handleRXData);
+    FCConnector.startTelemetry("rx");
   }
 
   componentWillUnmount() {
     FCConnector.webSockets.removeEventListener("message", this.handleRXData);
+    FCConnector.stopTelemetry();
   }
 
   render() {

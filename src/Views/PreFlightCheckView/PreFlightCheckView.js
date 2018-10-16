@@ -42,7 +42,7 @@ export default class PreFlightCheckView extends Component {
                           this.props.handleSave().then(() => {
                             this.forceUpdate();
                             setTimeout(() => {
-                              FCConnector.startTelemetry();
+                              FCConnector.startTelemetry("attitude");
                             }, 10000);
                           });
                         });
@@ -70,7 +70,7 @@ export default class PreFlightCheckView extends Component {
                     this.setState({ calibrating: true });
                     FCConnector.sendCommand("msp 205").then(() => {
                       this.setState({ calibrating: false });
-                      FCConnector.startTelemetry();
+                      FCConnector.startTelemetry("attitude");
                     });
                   }}
                 >

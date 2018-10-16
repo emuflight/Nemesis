@@ -19,14 +19,12 @@ export default class RXView extends Component {
 
   componentDidMount() {
     if (!this.props.fcConfig.channel_map) {
-      FCConnector.stopTelemetry();
       return FCConnector.getChannelMap().then(mapping => {
         this.props.fcConfig.channel_map = mapping;
         this.setState({
           mapping: this.props.fcConfig.isBxF ? "AERT1234" : mapping
         });
         this.refs.channelMap.setState({ mapping });
-        FCConnector.startTelemetry();
       });
     }
   }

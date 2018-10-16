@@ -14,8 +14,8 @@ export default class AttitudeView extends Component {
   }
   handleStatusMessage = message => {
     try {
-      let { attitude, type } = JSON.parse(message.data);
-      if (type === "status") {
+      let { attitude } = JSON.parse(message.data);
+      if (attitude) {
         //rotate the model on the Y axis so it's oriented correctly
         this.mesh.rotation.set(
           attitude.y * 0.017453292519943295 + Math.PI / 2,
@@ -63,10 +63,12 @@ export default class AttitudeView extends Component {
       "message",
       this.handleStatusMessage
     );
+    FCConnector.startTelemetry("attitude");
   }
 
   componentWillUnmount() {
     window.removeEventListener("resize", this.onWindowResize);
+    FCConnector.stopTelemetry();
     FCConnector.webSockets.removeEventListener(
       "message",
       this.handleStatusMessage

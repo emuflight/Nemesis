@@ -41,7 +41,8 @@ wsServer.on("request", request => {
   // Detect remove
   usb.on(`detach`, device => {
     if (device.deviceDescriptor.idVendor === STM32USB.vendorId) {
-      clearInterval(wsServer.telemetryInterval);
+      clearInterval(wsServer.fastTelemetryInterval);
+      clearInterval(wsServer.slowTelemetryInterval);
       BxF.reset();
       connection.sendUTF(
         JSON.stringify({
@@ -56,7 +57,8 @@ wsServer.on("request", request => {
   connection.on("message", message => {});
 
   connection.on("close", connection => {
-    clearInterval(wsServer.telemetryInterval);
+    clearInterval(wsServer.fastTelemetryInterval);
+    clearInterval(wsServer.slowTelemetryInterval);
   });
 });
 
@@ -77,7 +79,8 @@ const notifyTelem = telemetryData => {
   }
 };
 
-wsServer.telemetryInterval;
+wsServer.fastTelemetryInterval;
+wsServer.slowTelemetryInterval;
 module.exports = {
   wsServer: wsServer,
   clients: clients,

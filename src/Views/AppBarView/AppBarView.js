@@ -127,7 +127,6 @@ class AppBarView extends Component {
                 </Typography>
               </div>
             )}
-            {this.props.title !== "PFC" && <AttitudeView size={50} />}
             <div className={classes.grow} />
             <Button
               color="secondary"
