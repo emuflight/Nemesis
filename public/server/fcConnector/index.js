@@ -202,7 +202,7 @@ module.exports = new class FcConnector {
           return Object.assign({ error: config.version }, deviceInfo, config);
         } else {
           config.isBxF = true;
-          this.startTelemetry(deviceInfo, "status", 125);
+          this.startTelemetry(deviceInfo, "status", 150);
           return applyUIConfig(deviceInfo, config, BxfUiConfig);
         }
       });
