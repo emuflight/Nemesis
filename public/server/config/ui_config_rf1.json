@@ -81,7 +81,16 @@
       "sld3",
       "tpa_kp_curve_type3",
       "tpa_ki_curve_type3",
-      "tpa_kd_curve_type3"
+      "tpa_kd_curve_type3",
+      "yaw_kd_rap1",
+      "roll_kd_rap1",
+      "pitch_kd_rap1",
+      "yaw_kd_rap2",
+      "roll_kd_rap2",
+      "pitch_kd_rap2",
+      "yaw_kd_rap3",
+      "roll_kd_rap3",
+      "pitch_kd_rap3"
     ],
     "RATES": [
       "pname1",
@@ -138,9 +147,6 @@
       "yaw_quick1",
       "roll_quick1",
       "pitch_quick1",
-      "yaw_kd_rap1",
-      "roll_kd_rap1",
-      "pitch_kd_rap1",
       "x_vector_quick1",
       "x_vector_rap1",
       "y_vector_quick1",
@@ -163,9 +169,6 @@
       "yaw_quick2",
       "roll_quick2",
       "pitch_quick2",
-      "yaw_kd_rap2",
-      "roll_kd_rap2",
-      "pitch_kd_rap2",
       "x_vector_quick2",
       "x_vector_rap2",
       "y_vector_quick2",
@@ -188,9 +191,6 @@
       "yaw_quick3",
       "roll_quick3",
       "pitch_quick3",
-      "yaw_kd_rap3",
-      "roll_kd_rap3",
-      "pitch_kd_rap3",
       "x_vector_quick3",
       "x_vector_rap3",
       "y_vector_quick3",
@@ -923,6 +923,387 @@
         {
           "value": "4.000",
           "label": "BABY'S ASS"
+        }
+      ]
+    },
+    "filter_type1": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "0",
+          "label": "BIQUAD"
+        },
+        {
+          "value": "1",
+          "label": "FIR"
+        }
+      ]
+    },
+    "filter_type2": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "0",
+          "label": "BIQUAD"
+        },
+        {
+          "value": "1",
+          "label": "FIR"
+        }
+      ]
+    },
+    "filter_type3": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "0",
+          "label": "BIQUAD"
+        },
+        {
+          "value": "1",
+          "label": "FIR"
+        }
+      ]
+    },
+    "kd_filter_type1": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "0",
+          "label": "BIQUAD"
+        },
+        {
+          "value": "1",
+          "label": "FIR"
+        }
+      ]
+    },
+    "kd_filter_type2": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "0",
+          "label": "BIQUAD"
+        },
+        {
+          "value": "1",
+          "label": "FIR"
+        }
+      ]
+    },
+    "kd_filter_type3": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "0",
+          "label": "BIQUAD"
+        },
+        {
+          "value": "1",
+          "label": "FIR"
+        }
+      ]
+    },
+    "vtx_pitmode_type": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "0",
+          "label": "ALWAYS OFF"
+        },
+        {
+          "value": "1",
+          "label": "ON POWERUP"
+        }
+      ]
+    },
+    "crsf_otx_cur_hack": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "0",
+          "label": "OFF"
+        },
+        {
+          "value": "1",
+          "label": "ON"
+        }
+      ]
+    },
+    "vbat_buzzer": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "0",
+          "label": "OFF"
+        },
+        {
+          "value": "1",
+          "label": "ON"
+        }
+      ]
+    },
+    "telem_rfosd": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "0",
+          "label": "OFF"
+        },
+        {
+          "value": "1",
+          "label": "UART1"
+        },
+        {
+          "value": "2",
+          "label": "UART2"
+        },
+        {
+          "value": "3",
+          "label": "UART3"
+        },
+        {
+          "value": "4",
+          "label": "UART4"
+        },
+        {
+          "value": "5",
+          "label": "UART5"
+        },
+        {
+          "value": "6",
+          "label": "UART6"
+        }
+      ]
+    },
+    "telem_crsf": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "0",
+          "label": "OFF"
+        },
+        {
+          "value": "1",
+          "label": "UART1"
+        },
+        {
+          "value": "2",
+          "label": "UART2"
+        },
+        {
+          "value": "3",
+          "label": "UART3"
+        },
+        {
+          "value": "4",
+          "label": "UART4"
+        },
+        {
+          "value": "5",
+          "label": "UART5"
+        },
+        {
+          "value": "6",
+          "label": "UART6"
+        }
+      ]
+    },
+    "telem_mavlink": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "0",
+          "label": "OFF"
+        },
+        {
+          "value": "1",
+          "label": "UART1"
+        },
+        {
+          "value": "2",
+          "label": "UART2"
+        },
+        {
+          "value": "3",
+          "label": "UART3"
+        },
+        {
+          "value": "4",
+          "label": "UART4"
+        },
+        {
+          "value": "5",
+          "label": "UART5"
+        },
+        {
+          "value": "6",
+          "label": "UART6"
+        }
+      ]
+    },
+    "telem_msp": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "0",
+          "label": "OFF"
+        },
+        {
+          "value": "1",
+          "label": "UART1"
+        },
+        {
+          "value": "2",
+          "label": "UART2"
+        },
+        {
+          "value": "3",
+          "label": "UART3"
+        },
+        {
+          "value": "4",
+          "label": "UART4"
+        },
+        {
+          "value": "5",
+          "label": "UART5"
+        },
+        {
+          "value": "6",
+          "label": "UART6"
+        }
+      ]
+    },
+    "telem_smartaudio": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "0",
+          "label": "OFF"
+        },
+        {
+          "value": "1",
+          "label": "UART1"
+        },
+        {
+          "value": "2",
+          "label": "UART2"
+        },
+        {
+          "value": "3",
+          "label": "UART3"
+        },
+        {
+          "value": "4",
+          "label": "UART4"
+        },
+        {
+          "value": "5",
+          "label": "UART5"
+        },
+        {
+          "value": "6",
+          "label": "UART6"
+        }
+      ]
+    },
+    "telem_spek": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "0",
+          "label": "OFF"
+        },
+        {
+          "value": "1",
+          "label": "UART1"
+        },
+        {
+          "value": "2",
+          "label": "UART2"
+        },
+        {
+          "value": "3",
+          "label": "UART3"
+        },
+        {
+          "value": "4",
+          "label": "UART4"
+        },
+        {
+          "value": "5",
+          "label": "UART5"
+        },
+        {
+          "value": "6",
+          "label": "UART6"
+        }
+      ]
+    },
+    "telem_sport": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "0",
+          "label": "OFF"
+        },
+        {
+          "value": "1",
+          "label": "UART1"
+        },
+        {
+          "value": "2",
+          "label": "UART2"
+        },
+        {
+          "value": "3",
+          "label": "UART3"
+        },
+        {
+          "value": "4",
+          "label": "UART4"
+        },
+        {
+          "value": "5",
+          "label": "UART5"
+        },
+        {
+          "value": "6",
+          "label": "UART6"
+        }
+      ]
+    },
+    "telem_tramp": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "0",
+          "label": "OFF"
+        },
+        {
+          "value": "1",
+          "label": "UART1"
+        },
+        {
+          "value": "2",
+          "label": "UART2"
+        },
+        {
+          "value": "3",
+          "label": "UART3"
+        },
+        {
+          "value": "4",
+          "label": "UART4"
+        },
+        {
+          "value": "5",
+          "label": "UART5"
+        },
+        {
+          "value": "6",
+          "label": "UART6"
         }
       ]
     }

@@ -22,3 +22,42 @@
     order: 2;
   }
 }
+.RACEFLIGHT {
+  .kd_limit1,
+  .kd_limit2,
+  .kd_limit3,
+  .ki_limit1,
+  .ki_limit2,
+  .ki_limit3 {
+    order: 1;
+  }
+  .sla1,
+  .sla2,
+  .sla3 {
+    order: 2;
+  }
+  .config-list-view-sliders {
+    .pitch_kp1,
+    .pitch_kp2,
+    .pitch_kp3,
+    .pitch_ki1,
+    .pitch_ki2,
+    .pitch_ki3,
+    .pitch_kd1,
+    .pitch_kd2,
+    .pitch_kd3 {
+      order: 1;
+    }
+    .yaw_kp1,
+    .yaw_kp2,
+    .yaw_kp3,
+    .yaw_ki1,
+    .yaw_ki2,
+    .yaw_ki3,
+    .yaw_kd1,
+    .yaw_kd2,
+    .yaw_kd3 {
+      order: 2;
+    }
+  }
+}

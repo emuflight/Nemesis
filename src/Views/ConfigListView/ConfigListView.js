@@ -13,12 +13,14 @@ export default class ConfigListView extends Component {
       (this.props.items &&
         this.props.items.filter(item => item.mode === "DIRECT")) ||
       [];
+    inputs.sort();
     let dropdowns =
       (this.props.items &&
         this.props.items.filter(
           item => item.mode === "LOOKUP" || item.mode === "BITMASK"
         )) ||
       [];
+    dropdowns.sort();
     let sliders =
       (this.props.items &&
         this.props.items.filter(item => item.mode === "slider")) ||

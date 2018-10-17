@@ -332,7 +332,7 @@ export default class Connected extends Component {
           contents = (
             <FCConfigContext.Provider value={mergedProfile}>
               <ProfileView
-                id="filter_profile"
+                id="pid_profile"
                 active={this.state.pid_profile}
                 profileList={this.state.fcConfig.pidProfileList}
                 fcConfig={this.state.fcConfig}

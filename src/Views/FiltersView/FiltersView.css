@@ -14,3 +14,38 @@
 
 .area-chart-container {
   padding: 20px; }
+
+.RACEFLIGHT .roll_lpf1,
+.RACEFLIGHT .roll_lpf2,
+.RACEFLIGHT .roll_lpf3 {
+  order: 0; }
+
+.RACEFLIGHT .pitch_lpf1,
+.RACEFLIGHT .pitch_lpf2,
+.RACEFLIGHT .pitch_lpf3 {
+  order: 1; }
+
+.RACEFLIGHT .yaw_lpf1,
+.RACEFLIGHT .yaw_lpf2,
+.RACEFLIGHT .yaw_lpf3 {
+  order: 2; }
+
+.RACEFLIGHT .roll_quick1,
+.RACEFLIGHT .roll_quick2,
+.RACEFLIGHT .roll_quick3 {
+  order: 3; }
+
+.RACEFLIGHT .pitch_quick1,
+.RACEFLIGHT .pitch_quick2,
+.RACEFLIGHT .pitch_quick3 {
+  order: 4; }
+
+.RACEFLIGHT .yaw_quick1,
+.RACEFLIGHT .yaw_quick2,
+.RACEFLIGHT .yaw_quick3 {
+  order: 5; }
+
+.RACEFLIGHT .roll_rap1,
+.RACEFLIGHT .roll_rap2,
+.RACEFLIGHT .roll_rap3 {
+  order: 6; }

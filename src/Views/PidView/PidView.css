@@ -18,3 +18,38 @@
 .config-list-view-sliders .d_pitch,
 .config-list-view-sliders .f_pitch {
   order: 2; }
+
+.RACEFLIGHT .kd_limit1,
+.RACEFLIGHT .kd_limit2,
+.RACEFLIGHT .kd_limit3,
+.RACEFLIGHT .ki_limit1,
+.RACEFLIGHT .ki_limit2,
+.RACEFLIGHT .ki_limit3 {
+  order: 1; }
+
+.RACEFLIGHT .sla1,
+.RACEFLIGHT .sla2,
+.RACEFLIGHT .sla3 {
+  order: 2; }
+
+.RACEFLIGHT .config-list-view-sliders .pitch_kp1,
+.RACEFLIGHT .config-list-view-sliders .pitch_kp2,
+.RACEFLIGHT .config-list-view-sliders .pitch_kp3,
+.RACEFLIGHT .config-list-view-sliders .pitch_ki1,
+.RACEFLIGHT .config-list-view-sliders .pitch_ki2,
+.RACEFLIGHT .config-list-view-sliders .pitch_ki3,
+.RACEFLIGHT .config-list-view-sliders .pitch_kd1,
+.RACEFLIGHT .config-list-view-sliders .pitch_kd2,
+.RACEFLIGHT .config-list-view-sliders .pitch_kd3 {
+  order: 1; }
+
+.RACEFLIGHT .config-list-view-sliders .yaw_kp1,
+.RACEFLIGHT .config-list-view-sliders .yaw_kp2,
+.RACEFLIGHT .config-list-view-sliders .yaw_kp3,
+.RACEFLIGHT .config-list-view-sliders .yaw_ki1,
+.RACEFLIGHT .config-list-view-sliders .yaw_ki2,
+.RACEFLIGHT .config-list-view-sliders .yaw_ki3,
+.RACEFLIGHT .config-list-view-sliders .yaw_kd1,
+.RACEFLIGHT .config-list-view-sliders .yaw_kd2,
+.RACEFLIGHT .config-list-view-sliders .yaw_kd3 {
+  order: 2; }

@@ -26,6 +26,10 @@ export default class RXView extends Component {
         });
         this.refs.channelMap.setState({ mapping });
       });
+    } else {
+      this.refs.channelMap.setState({
+        mapping: this.props.fcConfig.channel_map
+      });
     }
   }
 
