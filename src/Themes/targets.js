@@ -98,45 +98,52 @@ const strixF10Secondary = {
   contrastDefaultColor: "light"
 };
 
+const mode2flux = createMuiTheme(
+  Object.assign({}, common, {
+    logo: "",
+    palette: {
+      primary: mode2Primary,
+      secondary: grey,
+      type: "dark"
+    },
+    MuiSwitch: {
+      colorSecondary: {
+        "&$checked": {
+          color: mode2Primary[500],
+          "& + $bar": {
+            backgroundColor: mode2Primary[500]
+          }
+        }
+      }
+    }
+  })
+);
+
+mode2flux.modelUrl = "assets/ghost.stl";
+
+const strixf10 = createMuiTheme(
+  Object.assign({}, common, {
+    logo: "",
+    palette: {
+      primary: srixF10Primary,
+      secondary: strixF10Secondary,
+      type: "dark"
+    },
+    MuiSwitch: {
+      colorSecondary: {
+        "&$checked": {
+          color: strixF10Secondary[500],
+          "& + $bar": {
+            backgroundColor: strixF10Secondary[500]
+          }
+        }
+      }
+    }
+  })
+);
+
+strixf10.modelUrl = "assets/screech.stl";
 export default {
-  MODE2FLUX: createMuiTheme(
-    Object.assign({}, common, {
-      logo: "",
-      palette: {
-        primary: mode2Primary,
-        secondary: grey,
-        type: "dark"
-      },
-      MuiSwitch: {
-        colorSecondary: {
-          "&$checked": {
-            color: mode2Primary[500],
-            "& + $bar": {
-              backgroundColor: mode2Primary[500]
-            }
-          }
-        }
-      }
-    })
-  ),
-  STRIXF10: createMuiTheme(
-    Object.assign({}, common, {
-      logo: "",
-      palette: {
-        primary: srixF10Primary,
-        secondary: strixF10Secondary,
-        type: "dark"
-      },
-      MuiSwitch: {
-        colorSecondary: {
-          "&$checked": {
-            color: strixF10Secondary[500],
-            "& + $bar": {
-              backgroundColor: strixF10Secondary[500]
-            }
-          }
-        }
-      }
-    })
-  )
+  MODE2FLUX: mode2flux,
+  STRIXF10: strixf10
 };

@@ -74,7 +74,7 @@
   "devDependencies": {
     "node-sass-chokidar": "0.0.3",
     "concurrently": "^3.5.0",
-    "electron": "^3.0.0",
+    "electron": "^3.0.4",
     "electron-builder": "^20.28.4",
     "electron-packager": "^12.1.2",
     "electron-rebuild": "^1.8.2",

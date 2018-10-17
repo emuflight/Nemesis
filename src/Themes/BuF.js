@@ -76,5 +76,5 @@ const theme = createMuiTheme({
     }
   }
 });
-
+theme.modelUrl = "assets/gatesman.stl";
 export default theme;

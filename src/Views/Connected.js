@@ -139,6 +139,7 @@ export default class Connected extends Component {
             <PreFlightCheckView
               fcConfig={this.state.fcConfig}
               handleSave={this.handleSave}
+              modelUrl={this.state.theme.modelUrl}
               openAssistant={name => this.openAssistant(name)}
             />
           </FCConfigContext.Provider>

@@ -97,7 +97,7 @@ export default class PreFlightCheckView extends Component {
           </div>
         </Paper>
         <Paper className="flex">
-          <AttitudeView />
+          <AttitudeView modelUrl={this.props.modelUrl} />
           <Paper style={{ flex: 1 }}>
             <ArmingFlagsView />
           </Paper>
