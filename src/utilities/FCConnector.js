@@ -67,7 +67,7 @@ export default new class FCConnector {
             if (commands.length) {
               sendNext(commands.shift());
             } else {
-              resolve();
+              resolve(resp);
             }
           });
       };

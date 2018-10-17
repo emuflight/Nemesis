@@ -38,20 +38,21 @@ export default class PickerAssistantView extends Component {
           saved: percent >= 100
         });
       }
-    ).then(reponse => {
+    ).then(response => {
       if (type.verify) {
         if (type.verify.success) {
-          if (reponse.toLowerCase().indexOf(type.verify.success) > -1) {
+          if (response.toLowerCase().indexOf(type.verify.success) > -1) {
             this.setState({
               saving: false,
-              completed: true
+              completed: true,
+              currentMessage: <FormattedMessage id="common.continue" />
             });
           } else {
             this.setState({
               saving: false,
               completed: false,
               currentMessage: <FormattedMessage id="common.failed" />,
-              currentResponse: reponse
+              currentResponse: response
             });
           }
         } else if (type.verify.command) {
