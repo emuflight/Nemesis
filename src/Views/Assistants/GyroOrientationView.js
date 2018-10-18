@@ -68,7 +68,7 @@ export default class GyroOrientationView extends Component {
           return FCConnector.setValue("set acc_calibration", "0,0,0").then(
             () => {
               return FCConnector.setValue("acc_hardware", "AUTO").then(() => {
-                return this.setOrientation("DEFAULT");
+                return this.setOrientation("CW0");
               });
             }
           );
