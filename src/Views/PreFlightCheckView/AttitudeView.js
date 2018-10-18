@@ -9,21 +9,32 @@ export default class AttitudeView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      size: this.props.size || 500
+      size: this.props.size || 500,
+      isBxF: this.props.firmwareName !== "RACEFLIGHT"
     };
   }
   handleStatusMessage = message => {
     try {
       let { attitude } = JSON.parse(message.data);
       if (attitude) {
-        //rotate the model on the Y axis so it's oriented correctly
-        this.mesh.rotation.set(
-          attitude.y * 0.017453292519943295 + Math.PI / 2,
-          attitude.x * 0.017453292519943295,
-          0
-        );
+        if (this.state.isBxF) {
+          //rotate the model on the Y axis so it's oriented correctly
+          this.mesh.rotation.set(
+            attitude.y * 0.017453292519943295 + Math.PI / 2,
+            attitude.x * 0.017453292519943295,
+            0
+          );
+          //rotate Yaw from the scene perspective (y) and not the mesh so when the quad model moves it doesn't mess up p/r
+          this.scene.rotation.set(
+            0,
+            attitude.z * -1.0 * 0.017453292519943295,
+            0
+          );
+        } else {
+          this.mesh.rotation.set(attitude.y + Math.PI / 2, attitude.x, 0);
+          this.scene.rotation.set(0, attitude.z, 0);
+        }
         //rotate Yaw from the scene perspective (y) and not the mesh so when the quad model moves it doesn't mess up p/r
-        this.scene.rotation.set(0, attitude.z * -1.0 * 0.017453292519943295, 0);
         this.renderer.render(this.scene, this.camera);
       }
     } catch (ex) {

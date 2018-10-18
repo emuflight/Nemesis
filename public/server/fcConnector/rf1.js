@@ -65,9 +65,7 @@ const runQueue = next => {
 const sendCommand = (device, command, waitMs = 200) => {
   return new Promise((resolve, reject) => {
     commandQueue.unshift({ device, command, waitMs, resolve, reject });
-    if (!currentCommand) {
-      runQueue(commandQueue.pop());
-    }
+    runQueue(commandQueue.pop());
   });
 };
 
@@ -259,10 +257,11 @@ const getTelemetry = (device, type) => {
           });
         }
         return {
-          type: type,
-          min: 0,
-          max: 2000,
-          channels
+          rx: {
+            min: 0,
+            max: 2000,
+            channels
+          }
         };
       });
     case "vbat": {
@@ -288,6 +287,7 @@ const getTelemetry = (device, type) => {
         };
       });
     }
+    case "attitude":
     case "gyro":
       return sendCommand(device, "telem", 20).then(telemString => {
         let obj = {};
@@ -310,7 +310,7 @@ const getTelemetry = (device, type) => {
             y: obj.gy,
             z: obj.gz
           },
-          q: {
+          attitude: {
             x: obj.qx,
             y: obj.qy,
             z: obj.qz,
