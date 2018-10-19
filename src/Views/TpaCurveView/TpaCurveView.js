@@ -74,7 +74,7 @@ export default class TpaCurveView extends Component {
               flexDirection: "column"
             }}
           >
-            <Typography variant="headline">
+            <Typography variant="h5">
               <FormattedMessage id="pid.tpa.curves" />
             </Typography>
             <div

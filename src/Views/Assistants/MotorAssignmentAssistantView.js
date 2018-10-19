@@ -55,7 +55,7 @@ export default class MotorAssignmentAssistantView extends PickerAssistantView {
         }}
       >
         <div style={{ display: "flex" }}>
-          <Typography variant="headline">
+          <Typography variant="h5">
             <FormattedMessage id="assistant.motors.mapping" />
           </Typography>
           <div style={{ flexGrow: 1 }} />

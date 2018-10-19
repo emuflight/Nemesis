@@ -18,6 +18,9 @@ const rfRed = {
   contrastDefaultColor: "light"
 };
 const theme = createMuiTheme({
+  typography: {
+    useNextVariants: true
+  },
   palette: {
     type: "dark",
     primary: rfRed,

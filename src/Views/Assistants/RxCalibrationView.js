@@ -90,7 +90,7 @@ export default class RxCalibrationView extends Component {
     return (
       <div>
         <div>
-          <Typography variant="headline">
+          <Typography variant="h5">
             <FormattedMessage id={this.state.stepMessage} />
           </Typography>
           <Button

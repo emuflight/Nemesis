@@ -93,11 +93,7 @@ class AppBarView extends Component {
             >
               <MenuIcon />
             </IconButton>
-            <Typography
-              variant="title"
-              color="inherit"
-              className={classes.title}
-            >
+            <Typography variant="h6" color="inherit" className={classes.title}>
               {this.props.title}
             </Typography>
             <InfoBarView

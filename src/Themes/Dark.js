@@ -7,6 +7,9 @@ import RACEFLIGHT from "./RF1";
 import targetThemes from "./targets";
 
 const dark = createMuiTheme({
+  typography: {
+    useNextVariants: true
+  },
   palette: {
     type: "dark",
     primary: cyan,

@@ -405,7 +405,7 @@ export default class Connected extends Component {
                     key={route.key}
                     onClick={() => this.handleMenuItemClick(route.key)}
                   >
-                    <Typography variant="subheading" style={{ flexGrow: 1 }}>
+                    <Typography variant="subtitle1" style={{ flexGrow: 1 }}>
                       <FormattedMessage id={"route." + route.key} />
                     </Typography>
                     {route.incompeteItems && (

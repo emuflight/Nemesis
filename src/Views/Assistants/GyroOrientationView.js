@@ -191,23 +191,23 @@ export default class GyroOrientationView extends Component {
               }
             />
           ) : (
-            <Typography variant="headline">
+            <Typography variant="h5">
               <FormattedMessage id="assistant.gyro.reset" />
             </Typography>
           )}
           {this.state.checking && (
-            <Typography variant="headline">
+            <Typography variant="h5">
               <FormattedMessage id="assistant.gyro.checking" />
             </Typography>
           )}
           {this.state.error && (
-            <Typography variant="headline">
+            <Typography variant="h5">
               <FormattedMessage id="assistant.gyro.unable-to-calibrate" />
             </Typography>
           )}
           {this.state.completed && (
             <div>
-              <Typography variant="headline">
+              <Typography variant="h5">
                 <FormattedMessage
                   id="assistant.gyro.success"
                   values={{ orientation: this.state.orientation }}

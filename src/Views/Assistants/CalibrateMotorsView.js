@@ -10,7 +10,7 @@ export default class CalibrateMotorsView extends Component {
       <SafetyView>
         <div style={{ display: "flex", flex: 1, flexDirection: "column" }}>
           <div>
-            <Typography variant="headline">
+            <Typography variant="h5">
               <FormattedMessage id="assistant.motors.calibration" />
             </Typography>
           </div>

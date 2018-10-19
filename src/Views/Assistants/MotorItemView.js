@@ -19,7 +19,7 @@ export default class MotorItemView extends Component {
       <Card style={this.props.style}>
         <CardActionArea style={{ width: "100%" }}>
           <CardContent>
-            <Typography gutterBottom variant="headline" component="h3">
+            <Typography gutterBottom variant="h5" component="h3">
               {this.props.label}
             </Typography>
           </CardContent>

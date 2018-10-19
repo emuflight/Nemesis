@@ -164,7 +164,7 @@ export default class DfuView extends Component {
     return (
       <Paper className="dfu-view-root">
         <div style={{ display: "flex" }}>
-          <Typography paragraph variant="title">
+          <Typography paragraph variant="h6">
             <FormattedMessage id="dfu.select.version" />
           </Typography>
           <div style={{ flexGrow: 1 }} />

@@ -103,7 +103,7 @@ export default class PickerAssistantView extends Component {
           padding: 30
         }}
       >
-        <Typography variant="headline">
+        <Typography variant="h5">
           <FormattedMessage id={this.props.title} />
         </Typography>
         <div style={{ flex: 1 }}>
@@ -137,11 +137,7 @@ export default class PickerAssistantView extends Component {
                         title={type.title}
                       />
                       <CardContent>
-                        <Typography
-                          gutterBottom
-                          variant="headline"
-                          component="h2"
-                        >
+                        <Typography gutterBottom variant="h5" component="h2">
                           {type.headline}
                         </Typography>
                       </CardContent>
@@ -153,7 +149,7 @@ export default class PickerAssistantView extends Component {
         </div>
         <div style={{ height: 60, display: "flex", flexDirection: "column" }}>
           <div style={{ display: "flex", flex: 1, padding: 10 }}>
-            <Typography variant="subheading">
+            <Typography variant="subtitle1">
               {this.state.currentMessage}
               <span style={{ fontFamily: "monospace" }}>
                 {this.state.currentResponse}

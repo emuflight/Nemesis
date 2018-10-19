@@ -50,10 +50,10 @@ export default class SafetyView extends Component {
               title="TEE-HEE"
             />
             <CardContent>
-              <Typography variant="headline">
+              <Typography variant="h5">
                 <FormattedMessage id="safety.remove-props" />
               </Typography>
-              <Typography variant="headline">
+              <Typography variant="h5">
                 {this.state.secondsRemaining > 0
                   ? `You may proceed in ${
                       this.state.secondsRemaining

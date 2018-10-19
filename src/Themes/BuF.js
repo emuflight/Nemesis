@@ -20,6 +20,9 @@ const butterPrimary = {
 };
 
 const theme = createMuiTheme({
+  typography: {
+    useNextVariants: true
+  },
   palette: {
     type: "dark",
     primary: butterPrimary,

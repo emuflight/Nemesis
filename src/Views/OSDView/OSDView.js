@@ -197,7 +197,7 @@ export default class OSDView extends Component {
             >
               {this.state.showDropZone && (
                 <div className="dropzone-overlay">
-                  <Typography variant="headline">DROP ELEMENTS HERE</Typography>
+                  <Typography variant="h5">DROP ELEMENTS HERE</Typography>
                 </div>
               )}
               <Paper>

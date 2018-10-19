@@ -39,7 +39,7 @@ export default class Disconnected extends Component {
             <Typography style={{ marginBottom: 12 }} color="textSecondary">
               <FormattedMessage id="disconnected.title" />
             </Typography>
-            <Typography variant="headline" component="h2">
+            <Typography variant="h5" component="h2">
               <FormattedMessage id="disconnected.headline" />
             </Typography>
             <Typography component="p">

@@ -44,7 +44,7 @@ export default class ArmingFlagsView extends Component {
   render() {
     return (
       <React.Fragment>
-        <Typography variant="headline">
+        <Typography variant="h5">
           <FormattedMessage id="pfc.armingflags.title" />
         </Typography>
         <List>

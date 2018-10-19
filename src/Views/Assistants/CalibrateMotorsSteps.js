@@ -47,7 +47,7 @@ export default class CalibrateMotorsSteps extends Component {
     if (this.state.calibrated) {
       return (
         <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-          <Typography variant="headline">
+          <Typography variant="h5">
             <FormattedMessage id="assistant.motors.calibration.complete" />
           </Typography>
           <Button
@@ -62,7 +62,7 @@ export default class CalibrateMotorsSteps extends Component {
     } else if (this.state.telemetry.volts > 1 && !this.state.throttleUp) {
       return (
         <div style={{ flex: 1, display: "flex" }}>
-          <Typography variant="headline">
+          <Typography variant="h5">
             <FormattedMessage
               id="assistant.motors.calibration.unplug"
               values={{ volts: this.state.telemetry.volts }}
@@ -73,7 +73,7 @@ export default class CalibrateMotorsSteps extends Component {
     } else if (this.state.telemetry.volts < 3 && !this.state.throttleUp) {
       return (
         <div>
-          <Typography variant="headline">
+          <Typography variant="h5">
             <FormattedMessage id="assistant.motors.calibration.confirm.unplugged" />
           </Typography>
           <Button
@@ -94,7 +94,7 @@ export default class CalibrateMotorsSteps extends Component {
     } else if (this.state.telemetry.volts > 1 && this.state.throttleUp) {
       return (
         <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-          <Typography variant="headline">
+          <Typography variant="h5">
             <FormattedMessage id="assistant.motors.calibration.throttleup" />
           </Typography>
           <Button
@@ -117,7 +117,7 @@ export default class CalibrateMotorsSteps extends Component {
     } else {
       return (
         <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-          <Typography variant="headline">
+          <Typography variant="h5">
             <FormattedMessage
               id="assistant.motors.calibration.plugin"
               values={{ volts: this.state.telemetry.volts }}
