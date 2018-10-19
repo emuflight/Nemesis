@@ -1311,7 +1311,6 @@
     }
   },
   "keymap": {
-    "yaw_kd_rap": "dterm_lowpass_hz",
     "dterm_lowpass_type": "dterm_lowpass_hz_type",
     "dterm_lowpass": "dterm_lowpass_hz"
   },

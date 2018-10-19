@@ -11,7 +11,7 @@ const strToBytes = string => {
 };
 
 const getConfig = device => {
-  return sendCommand(device, "config\n").then(ret => {
+  return sendCommand(device, "config\n", 5).then(ret => {
     try {
       let data = JSON.parse(ret);
       data.version = "RACEFLIGHT|HELIOSPRING|HESP|392";
@@ -72,7 +72,7 @@ const runQueue = next => {
     runQueue(commandQueue.pop());
   }
 };
-const sendCommand = (device, command, waitMs = 200) => {
+const sendCommand = (device, command, waitMs = 5) => {
   return new Promise((resolve, reject) => {
     commandQueue.unshift({ device, command, waitMs, resolve, reject });
     if (!currentCommand) {
@@ -137,8 +137,8 @@ const getModes = device => {
 const remapMotor = (device, from, to) => {
   let commandFrom = `set mout${from}=${parseInt(to) - 1}`;
   let commandto = `set mout${to}=${parseInt(from) - 1}`;
-  return sendCommand(device, commandFrom, 40).then(resp => {
-    return sendCommand(device, commandto, 40).then(resp => {
+  return sendCommand(device, commandFrom, 20).then(resp => {
+    return sendCommand(device, commandto, 20).then(resp => {
       return resp;
     });
   });
@@ -256,7 +256,7 @@ const getTelemetry = (device, type) => {
   switch (type) {
     default:
     case "rx":
-      return sendCommand(device, "rcrxdata", 40).then(telemString => {
+      return sendCommand(device, "rcrxdata", 10).then(telemString => {
         let channels = [];
         if (telemString) {
           telemString.split("\n#rb ").forEach(part => {
@@ -277,7 +277,7 @@ const getTelemetry = (device, type) => {
         };
       });
     case "vbat": {
-      return sendCommand(device, `polladc`, 30).then(vbatData => {
+      return sendCommand(device, `polladc`, 10).then(vbatData => {
         let params = vbatData
           .replace("#me ", "")
           .split(", ")
@@ -301,7 +301,7 @@ const getTelemetry = (device, type) => {
     }
     case "attitude":
     case "gyro":
-      return sendCommand(device, "telem", 20).then(telemString => {
+      return sendCommand(device, "telem", 10).then(telemString => {
         let obj = {};
         telemString.split("\n#tm ").forEach(part => {
           let vals = part.split("=");
