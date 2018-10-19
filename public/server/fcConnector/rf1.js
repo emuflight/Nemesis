@@ -14,13 +14,13 @@ const getConfig = device => {
   return sendCommand(device, "config\n").then(ret => {
     try {
       let data = JSON.parse(ret);
-      data.version = "RACEFLIGHT|HELIO_SPRING|HESP|392";
+      data.version = "RACEFLIGHT|HELIOSPRING|HESP|392";
       data.imuf = "108";
       return data;
     } catch (ex) {
       console.log(ex);
       return {
-        version: "RACEFLIGHT|HELIO_SPRING|HESP|392",
+        version: "RACEFLIGHT|HELIOSPRING|HESP|392",
         error: ret,
         incompatible: true
       };
@@ -33,33 +33,39 @@ let currentCommand;
 const runQueue = next => {
   if (!next) return;
   currentCommand = next;
-  let connectedDevice = new HID.HID(next.device.path);
-  let ret = "";
-  let timeout;
-  connectedDevice.on("data", data => {
-    if (data) {
-      ret += data.toString("utf8");
-    }
-    if (ret.indexOf("\n\0") === -1) {
-      connectedDevice.write(strToBytes("more\n"));
-    }
-    timeout && clearTimeout(timeout);
-    timeout = setTimeout(() => {
+  try {
+    let connectedDevice = new HID.HID(next.device.path);
+    let ret = "";
+    let timeout;
+    connectedDevice.on("data", data => {
+      if (data) {
+        ret += data.toString("utf8");
+      }
+      if (ret.indexOf("\n\0") === -1) {
+        connectedDevice.write(strToBytes("more\n"));
+      }
+      timeout && clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        connectedDevice.close();
+        next.resolve(
+          ret.slice(0, ret.indexOf("\n\0") + 1).replace(/\u0001/gim, "")
+        );
+        currentCommand = null;
+        runQueue(commandQueue.pop());
+      }, next.waitMs);
+    });
+    connectedDevice.on("error", error => {
       connectedDevice.close();
-      next.resolve(
-        ret.slice(0, ret.indexOf("\n\0") + 1).replace(/\u0001/gim, "")
-      );
+      console.log("HID ERROR:", error);
+      next.reject(error);
       currentCommand = null;
       runQueue(commandQueue.pop());
-    }, next.waitMs);
-  });
-  connectedDevice.on("error", error => {
-    connectedDevice.close();
-    console.log("HID ERROR:", error);
-    next.reject(error);
+    });
+  } catch (ex) {
+    next.reject(ex);
     currentCommand = null;
     runQueue(commandQueue.pop());
-  });
+  }
   connectedDevice.write(strToBytes(`${next.command}\n`));
 };
 const sendCommand = (device, command, waitMs = 200) => {
