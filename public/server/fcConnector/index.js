@@ -391,6 +391,10 @@ module.exports = new class FcConnector {
       return bxfConnector.saveEEPROM(deviceInfo);
     }
   }
+  reset() {
+    bxfConnector.reset();
+    rf1Connector.reset();
+  }
   updateIMUF(deviceInfo, binUrl, cb, ecb) {
     if (deviceInfo.hid) {
       return rf1Connector.updateIMUF(

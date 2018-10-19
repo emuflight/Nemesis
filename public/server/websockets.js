@@ -43,7 +43,7 @@ wsServer.on("request", request => {
     if (device.deviceDescriptor.idVendor === STM32USB.vendorId) {
       clearInterval(wsServer.fastTelemetryInterval);
       clearInterval(wsServer.slowTelemetryInterval);
-      BxF.reset();
+      FcConnector.reset();
       connection.sendUTF(
         JSON.stringify({
           dfu: false,

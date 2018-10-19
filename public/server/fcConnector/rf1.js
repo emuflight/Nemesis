@@ -30,43 +30,47 @@ const getConfig = device => {
 
 const commandQueue = [];
 let currentCommand;
+let connectedDevice;
+
 const runQueue = next => {
   if (!next) return;
   currentCommand = next;
   try {
-    let connectedDevice = new HID.HID(next.device.path);
+    if (!connectedDevice) {
+      connectedDevice = new HID.HID(next.device.path);
+    }
     let ret = "";
-    let timeout;
-    connectedDevice.on("data", data => {
-      if (data) {
-        ret += data.toString("utf8");
-      }
-      if (ret.indexOf("\n\0") === -1) {
-        connectedDevice.write(strToBytes("more\n"));
-      }
-      timeout && clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        connectedDevice.close();
-        next.resolve(
-          ret.slice(0, ret.indexOf("\n\0") + 1).replace(/\u0001/gim, "")
-        );
-        currentCommand = null;
-        runQueue(commandQueue.pop());
-      }, next.waitMs);
-    });
-    connectedDevice.on("error", error => {
-      connectedDevice.close();
-      console.log("HID ERROR:", error);
-      next.reject(error);
-      currentCommand = null;
-      runQueue(commandQueue.pop());
-    });
+
+    connectedDevice.write(strToBytes(`${next.command}\n`));
+    let interval = setInterval(() => {
+      connectedDevice.read((err, data) => {
+        if (err) {
+          console.log("HID ERROR:", err);
+          next.reject(err);
+          currentCommand = null;
+          runQueue(commandQueue.pop());
+        }
+        if (data) {
+          ret += data.toString("utf8");
+        }
+        if (ret.indexOf("\n\0") === -1) {
+          connectedDevice.write(strToBytes("more\n"));
+        } else {
+          interval && clearInterval(interval);
+          next.resolve(
+            ret.slice(0, ret.indexOf("\n\0") + 1).replace(/\u0001/gim, "")
+          );
+          currentCommand = null;
+          runQueue(commandQueue.pop());
+        }
+      });
+    }, next.waitMs);
   } catch (ex) {
+    console.log("HID ERROR:", ex);
     next.reject(ex);
     currentCommand = null;
     runQueue(commandQueue.pop());
   }
-  connectedDevice.write(strToBytes(`${next.command}\n`));
 };
 const sendCommand = (device, command, waitMs = 200) => {
   return new Promise((resolve, reject) => {
@@ -329,6 +333,13 @@ const getTelemetry = (device, type) => {
   }
 };
 
+const reset = () => {
+  if (connectedDevice) {
+    connectedDevice.close();
+  }
+  connectedDevice = undefined;
+};
+
 module.exports = {
   sendCommand: sendCommand,
   updateIMUF: updateIMUF,
@@ -345,5 +356,6 @@ module.exports = {
   setMode: setMode,
   getTpaCurves: getTpaCurves,
   setTpaCurves: setTpaCurves,
-  saveEEPROM: saveEEPROM
+  saveEEPROM: saveEEPROM,
+  reset: reset
 };
