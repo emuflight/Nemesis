@@ -37,7 +37,7 @@ function createWindow() {
   let port = isProd ? 9001 : 3000;
   mainWindow.loadURL(`http://localhost:${port}/`); // load the react app
   mainWindow.on("closed", () => (mainWindow = null));
-  return isProd || mainWindow.webContents.openDevTools();
+  return mainWindow.webContents.openDevTools();
 }
 
 function createMenu() {
