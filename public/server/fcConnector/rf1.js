@@ -256,7 +256,7 @@ const getTelemetry = (device, type) => {
   switch (type) {
     default:
     case "rx":
-      return sendCommand(device, "rcrxdata", 10).then(telemString => {
+      return sendCommand(device, "rcrxdata").then(telemString => {
         let channels = [];
         if (telemString) {
           telemString.split("\n#rb ").forEach(part => {
@@ -277,7 +277,7 @@ const getTelemetry = (device, type) => {
         };
       });
     case "vbat": {
-      return sendCommand(device, `polladc`, 10).then(vbatData => {
+      return sendCommand(device, `polladc`).then(vbatData => {
         let params = vbatData
           .replace("#me ", "")
           .split(", ")
@@ -301,7 +301,7 @@ const getTelemetry = (device, type) => {
     }
     case "attitude":
     case "gyro":
-      return sendCommand(device, "telem", 10).then(telemString => {
+      return sendCommand(device, "telem").then(telemString => {
         let obj = {};
         telemString.split("\n#tm ").forEach(part => {
           let vals = part.split("=");
