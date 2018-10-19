@@ -65,7 +65,9 @@ const runQueue = next => {
 const sendCommand = (device, command, waitMs = 200) => {
   return new Promise((resolve, reject) => {
     commandQueue.unshift({ device, command, waitMs, resolve, reject });
-    runQueue(commandQueue.pop());
+    if (!currentCommand) {
+      runQueue(commandQueue.pop());
+    }
   });
 };
 

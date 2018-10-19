@@ -64,7 +64,7 @@ export default class SafetyView extends Component {
             <CardActions>
               <Button
                 color="secondary"
-                variant="raised"
+                variant="contained"
                 disabled={this.state.secondsRemaining > 0}
                 onClick={() => this.setState({ acceptedRisk: true })}
               >

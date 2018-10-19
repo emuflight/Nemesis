@@ -63,7 +63,7 @@ export default class PreFlightCheckView extends Component {
                 />
                 <Button
                   color="secondary"
-                  variant="raised"
+                  variant="contained"
                   disabled={this.state.calibrating}
                   onClick={() => {
                     FCConnector.stopTelemetry();
@@ -81,7 +81,7 @@ export default class PreFlightCheckView extends Component {
             <Button
               style={{ marginLeft: 20 }}
               color="secondary"
-              variant="raised"
+              variant="contained"
               onClick={() => this.props.openAssistant("GYRO")}
             >
               <FormattedMessage id="assistant.gyro.orientation" />
@@ -89,7 +89,7 @@ export default class PreFlightCheckView extends Component {
             <Button
               style={{ marginLeft: 20 }}
               color="secondary"
-              variant="raised"
+              variant="contained"
               onClick={() => this.props.openAssistant("motors")}
             >
               <FormattedMessage id="assistant.motors" />

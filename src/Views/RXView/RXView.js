@@ -42,7 +42,7 @@ export default class RXView extends Component {
               onClick={() =>
                 this.setState({ showRXTelem: !this.state.showRXTelem })
               }
-              variant="raised"
+              variant="contained"
               color="primary"
             >
               <FormattedMessage
@@ -53,7 +53,7 @@ export default class RXView extends Component {
             <Button
               style={{ marginLeft: 20 }}
               color="secondary"
-              variant="raised"
+              variant="contained"
               onClick={() => this.props.openAssistant("rx")}
             >
               <FormattedMessage id="assistant.rx" />

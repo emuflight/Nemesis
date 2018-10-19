@@ -66,7 +66,7 @@ export default class AuxChannelItemView extends Component {
                 name="aux_save"
                 onClick={() => this.updateValue()}
                 color="primary"
-                variant="raised"
+                variant="contained"
               >
                 <FormattedMessage id="aux.item.save" />
               </Button>

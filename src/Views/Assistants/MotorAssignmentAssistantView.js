@@ -61,7 +61,7 @@ export default class MotorAssignmentAssistantView extends PickerAssistantView {
           <div style={{ flexGrow: 1 }} />
           <Button
             color="secondary"
-            variant="raised"
+            variant="contained"
             onClick={() => this.props.onFinish()}
           >
             <FormattedMessage id="common.finished" />

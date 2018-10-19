@@ -125,7 +125,7 @@ class AppBarView extends Component {
             <div className={classes.grow} />
             <Button
               color="secondary"
-              variant="raised"
+              variant="contained"
               style={{ marginLeft: "10px" }}
               disabled={!this.props.isDirty}
               onClick={() => this.props.onSave()}

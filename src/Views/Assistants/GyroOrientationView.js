@@ -215,7 +215,7 @@ export default class GyroOrientationView extends Component {
               </Typography>
               <Button
                 color="secondary"
-                variant="raised"
+                variant="contained"
                 onClick={() => this.props.onFinish()}
               >
                 <FormattedMessage id="common.finished" />

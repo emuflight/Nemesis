@@ -27,7 +27,7 @@ export default class MotorItemView extends Component {
             {this.props.spinning ? (
               <Button
                 size="small"
-                variant="raised"
+                variant="contained"
                 color="secondary"
                 disabled={this.props.remapping}
                 onClick={() => {
@@ -39,7 +39,7 @@ export default class MotorItemView extends Component {
             ) : (
               <Button
                 size="small"
-                variant="raised"
+                variant="contained"
                 color="primary"
                 disabled={this.props.remapping}
                 onClick={() => this.props.spinTest(this.state.motorIndex)}

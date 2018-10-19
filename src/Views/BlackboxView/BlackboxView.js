@@ -50,14 +50,14 @@ export default class BlackBoxView extends Component {
             <br />
             <Button
               onClick={() => FCConnector.sendCommand("msc")}
-              variant="raised"
+              variant="contained"
               color="primary"
             >
               <FormattedMessage id="blackbox.load-drive" />
             </Button>
             <Button
               onClick={() => FCConnector.storage("erase")}
-              variant="raised"
+              variant="contained"
               color="secondary"
               style={{ marginLeft: 20 }}
             >

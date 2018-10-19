@@ -52,7 +52,7 @@ export default class CalibrateMotorsSteps extends Component {
           </Typography>
           <Button
             color="secondary"
-            variant="raised"
+            variant="contained"
             onClick={() => this.props.onFinish(this.props.lastChoice)}
           >
             <FormattedMessage id="common.next" />
@@ -78,7 +78,7 @@ export default class CalibrateMotorsSteps extends Component {
           </Typography>
           <Button
             color="secondary"
-            variant="raised"
+            variant="contained"
             onClick={() => {
               let command = "wiz mot1";
               if (this.props.fcConfig.isBxF) {
@@ -99,7 +99,7 @@ export default class CalibrateMotorsSteps extends Component {
           </Typography>
           <Button
             color="secondary"
-            variant="raised"
+            variant="contained"
             onClick={() => {
               let command = "wiz mot2";
               if (this.props.fcConfig.isBxF) {

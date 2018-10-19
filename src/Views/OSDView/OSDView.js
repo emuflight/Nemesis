@@ -170,7 +170,7 @@ export default class OSDView extends Component {
                 items={this.fontList}
               />
               <Button
-                variant="raised"
+                variant="contained"
                 color="primary"
                 disabled={this.state.uploadingFont}
                 onClick={() => this.handleUpload()}

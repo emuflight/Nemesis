@@ -163,7 +163,7 @@ export default class PickerAssistantView extends Component {
                     ? this.props.onCancel()
                     : this.setState({ cancel: true })
                 }
-                variant="raised"
+                variant="contained"
                 color="secondary"
               >
                 {this.state.cancel ? "Dismiss" : "Cancel"}
@@ -177,7 +177,7 @@ export default class PickerAssistantView extends Component {
                     this.setState({ completed: false });
                     this.props.onFinish(this.userChoice);
                   }}
-                  variant="raised"
+                  variant="contained"
                   color="primary"
                 >
                   <FormattedMessage id="common.next" />

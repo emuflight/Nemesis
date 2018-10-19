@@ -94,7 +94,7 @@ export default class RxCalibrationView extends Component {
             <FormattedMessage id={this.state.stepMessage} />
           </Typography>
           <Button
-            variant="raised"
+            variant="contained"
             color="secondary"
             onClick={() => {
               this.handleNextStep();

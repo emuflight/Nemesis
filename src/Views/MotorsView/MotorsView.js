@@ -24,7 +24,7 @@ export default class MotorsView extends Component {
                   showMotorSliders: !this.state.showMotorSliders
                 })
               }
-              variant="raised"
+              variant="contained"
               color="primary"
             >{`${
               this.state.showMotorSliders ? "Hide" : "Show"
@@ -32,7 +32,7 @@ export default class MotorsView extends Component {
             <Button
               style={{ marginLeft: 20 }}
               color="secondary"
-              variant="raised"
+              variant="contained"
               onClick={() => this.props.openAssistant("GYRO")}
             >
               <FormattedMessage id="assistant.gyro.orientation" />
@@ -40,7 +40,7 @@ export default class MotorsView extends Component {
             <Button
               style={{ marginLeft: 20 }}
               color="secondary"
-              variant="raised"
+              variant="contained"
               onClick={() => this.props.openAssistant("motors")}
             >
               <FormattedMessage id="assistant.motors" />
