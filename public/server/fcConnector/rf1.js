@@ -11,7 +11,7 @@ const strToBytes = string => {
 };
 
 const getConfig = device => {
-  return sendCommand(device, "config\n", 5).then(ret => {
+  return sendCommand(device, "config\n").then(ret => {
     try {
       let data = JSON.parse(ret);
       data.version = "RACEFLIGHT|HELIOSPRING|HESP|392";
@@ -35,50 +35,33 @@ let connectedDevice;
 const runQueue = next => {
   if (!next) return;
   currentCommand = next;
-  try {
-    if (!connectedDevice) {
-      connectedDevice = new HID.HID(next.device.path);
-    }
-    let ret = "";
-
-    connectedDevice.write(strToBytes(`${next.command}\n`));
-    let interval = setInterval(() => {
-      connectedDevice.read((err, data) => {
-        if (err) {
-          console.log("HID ERROR:", err);
-          next.reject(err);
-          currentCommand = null;
-          runQueue(commandQueue.pop());
-        }
-        if (data) {
-          ret += data.toString("utf8");
-        }
-        if (ret && ret.indexOf("\n\0") === -1) {
-          connectedDevice.write(strToBytes("more\n"));
-        } else if (ret) {
-          interval && clearInterval(interval);
-          next.resolve(
-            ret.slice(0, ret.indexOf("\n\0") + 1).replace(/\u0001|\.000/gim, "")
-          );
-          currentCommand = null;
-          runQueue(commandQueue.pop());
-        } else {
-          next.resolve(ret);
-          currentCommand = null;
-          runQueue(commandQueue.pop());
-        }
-      });
-    }, next.waitMs);
-  } catch (ex) {
-    console.log("HID ERROR:", ex);
-    next.reject(ex);
-    currentCommand = null;
-    runQueue(commandQueue.pop());
+  if (!connectedDevice) {
+    connectedDevice = new HID.HID(next.device.path);
   }
+  let ret = "";
+  const process = command => {
+    connectedDevice.write(strToBytes(command));
+    connectedDevice.read((err, data) => {
+      if (data) {
+        ret += data.toString("utf8");
+      }
+      if (ret.indexOf("\n\0") === -1) {
+        process("more\n");
+      } else {
+        ret =
+          ret &&
+          ret.slice(0, ret.indexOf("\n\0") + 1).replace(/\u0001|\.000/gim, "");
+        next.resolve(ret);
+        currentCommand = null;
+        runQueue(commandQueue.pop());
+      }
+    });
+  };
+  process(`${next.command}\n`);
 };
-const sendCommand = (device, command, waitMs = 10) => {
+const sendCommand = (device, command) => {
   return new Promise((resolve, reject) => {
-    commandQueue.unshift({ device, command, waitMs, resolve, reject });
+    commandQueue.unshift({ device, command, resolve, reject });
     if (!currentCommand) {
       runQueue(commandQueue.pop());
     }
@@ -91,7 +74,7 @@ const updateIMUF = (codeviceName, binName, notify, cb, ecb) => {
 const saveEEPROM = (codeviceName, binName, notify, cb, ecb) => {};
 
 const setValue = (device, name, newVal) => {
-  return sendCommand(device, `set ${name}=${newVal}`, 20);
+  return sendCommand(device, `set ${name}=${newVal}`);
 };
 
 const getMotors = device => {
@@ -105,13 +88,12 @@ const setMode = (device, modeVals) => {
     device,
     `modes ${valParts[1]}=${parseInt(valParts[2]) + 5}=${valParts[3]}=${
       valParts[4]
-    }`,
-    20
+    }`
   );
 };
 
 const getModes = device => {
-  return sendCommand(device, "modes list", 20).then(response => {
+  return sendCommand(device, "modes list").then(response => {
     let split = response.split("\nmodes ");
     split.shift();
     let modes = split.map((mode, i) => {
@@ -141,8 +123,8 @@ const getModes = device => {
 const remapMotor = (device, from, to) => {
   let commandFrom = `set mout${from}=${parseInt(to) - 1}`;
   let commandto = `set mout${to}=${parseInt(from) - 1}`;
-  return sendCommand(device, commandFrom, 20).then(resp => {
-    return sendCommand(device, commandto, 20).then(resp => {
+  return sendCommand(device, commandFrom).then(resp => {
+    return sendCommand(device, commandto).then(resp => {
       return resp;
     });
   });
@@ -174,15 +156,15 @@ const storage = (device, command) => {
 
 const spinTestMotor = (device, motor, startStop) => {
   if (parseInt(startStop) < 1004) {
-    return sendCommand(device, `idlestop`, 10);
+    return sendCommand(device, `idlestop`);
   } else {
-    return sendCommand(device, `Idle ${parseInt(motor) - 1}`, 10);
+    return sendCommand(device, `Idle ${parseInt(motor) - 1}`);
   }
 };
 
 const getTpaCurves = (device, profile) => {
   let profileInt = parseInt(profile) + 1;
-  return sendCommand(device, `dump`, 20).then(resp => {
+  return sendCommand(device, `dump`).then(resp => {
     let params = resp
       .split("\n")
       .filter(line => line.startsWith(`tpa`))
@@ -199,7 +181,7 @@ const getTpaCurves = (device, profile) => {
 const setTpaCurves = (device, pid, profile, newCurve) => {
   let command = `tpa${pid}${parseInt(profile, 10) + 1} ${newCurve}`;
   console.log(command);
-  return sendCommand(device, command, 20);
+  return sendCommand(device, command);
 };
 const getChannelMap = device => {
   return sendCommand(device, `dump rccf`).then(response => {
@@ -260,14 +242,14 @@ const getTelemetry = (device, type) => {
   switch (type) {
     default:
     case "rx":
-      return sendCommand(device, "rcrxdata", 30).then(telemString => {
+      return sendCommand(device, "rcrxdata").then(telemString => {
         let channels = [];
         if (telemString) {
           telemString.split("\n#rb ").forEach(part => {
             let pairs = part.split("=");
-            let vals = pairs[1].split(":");
+            let vals = pairs[1] && pairs[1].split(":");
             channels[parseInt(pairs[0].replace("#rb ", "")) - 1] = parseInt(
-              vals[0],
+              vals && vals[0],
               10
             );
           });
@@ -281,7 +263,7 @@ const getTelemetry = (device, type) => {
         };
       });
     case "vbat": {
-      return sendCommand(device, `polladc`, 30).then(vbatData => {
+      return sendCommand(device, `polladc`).then(vbatData => {
         let params = vbatData
           .replace("#me ", "")
           .split(", ")
@@ -305,7 +287,7 @@ const getTelemetry = (device, type) => {
     }
     case "attitude":
     case "gyro":
-      return sendCommand(device, "telem", 30).then(telemString => {
+      return sendCommand(device, "telem").then(telemString => {
         let obj = {};
         telemString.split("\n#tm ").forEach(part => {
           let vals = part.split("=");
