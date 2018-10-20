@@ -19,6 +19,8 @@
   "common.pitch": "Pitch",
   "common.yaw": "Yaw",
   "common.throttle": "Throttle",
+  "calibration.rc": "Run RC Assistant",
+  "calibration.board": "Run Orientation Assistant",
   "pfc.armingflags.title": "Arming Prevention Flags",
   "RX_FAILSAFE": "No RX Signal",
   "CLI": "USB Connected",

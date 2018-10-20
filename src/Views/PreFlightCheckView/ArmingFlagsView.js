@@ -8,8 +8,22 @@ import Typography from "@material-ui/core/Typography";
 export default class ArmingFlagsView extends Component {
   constructor(props) {
     super(props);
+    let flags = [];
+    if (props.rcCalibrated && props.rcCalibrated.current !== "1") {
+      flags.push({
+        id: "rc_calibrated",
+        label: "calibration.rc"
+      });
+    }
+    if (props.boardCalibrated && props.boardCalibrated.current !== "1") {
+      flags.push({
+        id: "board_calibrated",
+        label: "calibration.board"
+      });
+    }
+
     this.state = {
-      armingFlags: []
+      armingFlags: flags
     };
   }
   handleStatusMessage = message => {

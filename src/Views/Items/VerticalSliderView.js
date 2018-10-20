@@ -41,7 +41,7 @@ export default class VerticalSliderView extends Component {
             max={this.parser(this.props.item.max)}
             step={this.props.item.step}
             vertical={this.props.item.axis === "y"}
-            reverse
+            reverse="true"
             onChange={(event, inputVal) => {
               this.setState({ inputVal: this.parser(inputVal) });
               this.props.item.current = this.parser(inputVal);

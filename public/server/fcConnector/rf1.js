@@ -53,13 +53,17 @@ const runQueue = next => {
         if (data) {
           ret += data.toString("utf8");
         }
-        if (ret.indexOf("\n\0") === -1) {
+        if (ret && ret.indexOf("\n\0") === -1) {
           connectedDevice.write(strToBytes("more\n"));
-        } else {
+        } else if (ret) {
           interval && clearInterval(interval);
           next.resolve(
-            ret.slice(0, ret.indexOf("\n\0") + 1).replace(/\u0001/gim, "")
+            ret.slice(0, ret.indexOf("\n\0") + 1).replace(/\u0001|\.000/gim, "")
           );
+          currentCommand = null;
+          runQueue(commandQueue.pop());
+        } else {
+          next.resolve(ret);
           currentCommand = null;
           runQueue(commandQueue.pop());
         }
@@ -72,7 +76,7 @@ const runQueue = next => {
     runQueue(commandQueue.pop());
   }
 };
-const sendCommand = (device, command, waitMs = 5) => {
+const sendCommand = (device, command, waitMs = 10) => {
   return new Promise((resolve, reject) => {
     commandQueue.unshift({ device, command, waitMs, resolve, reject });
     if (!currentCommand) {

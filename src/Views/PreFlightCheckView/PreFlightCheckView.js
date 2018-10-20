@@ -102,7 +102,10 @@ export default class PreFlightCheckView extends Component {
             modelUrl={this.props.modelUrl}
           />
           <Paper style={{ flex: 1 }}>
-            <ArmingFlagsView />
+            <ArmingFlagsView
+              rcCalibrated={this.props.fcConfig.rc_calibrated}
+              boardCalibrated={this.props.fcConfig.board_calibrated}
+            />
           </Paper>
         </Paper>
       </React.Fragment>
