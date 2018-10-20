@@ -3,7 +3,8 @@ const WebSocketServer = require("websocket").server;
 const devices = require("./devices");
 const http = require("http");
 const STM32USB = require("./devices/STM32USB.json");
-const BxF = require("./fcConnector/bxf");
+const bxf = require("./fcConnector/bxf");
+const rf1 = require("./fcConnector/bxf");
 
 const server = http.createServer((request, response) => {
   // process HTTP request. Since we're writing just WebSockets
@@ -32,6 +33,7 @@ wsServer.on("request", request => {
         if (connectedDevice) {
           //wait a little bit before sending the notification for slower machines.
           connectedDevice.connected = true;
+          connectedDevice.connectionEvent = true;
           connection.sendUTF(JSON.stringify(connectedDevice));
         }
       });
@@ -43,9 +45,11 @@ wsServer.on("request", request => {
     if (device.deviceDescriptor.idVendor === STM32USB.vendorId) {
       clearInterval(wsServer.fastTelemetryInterval);
       clearInterval(wsServer.slowTelemetryInterval);
-      FcConnector.reset();
+      bxf.reset();
+      rf1.reset();
       connection.sendUTF(
         JSON.stringify({
+          connectionEvent: true,
           dfu: false,
           connected: false
         })

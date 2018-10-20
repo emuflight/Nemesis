@@ -18,7 +18,7 @@ export default new class FCConnector {
       } catch (ex) {
         console.warn("unable to parse connection message:", ex);
       }
-      if (!data.telemetry) {
+      if (data.connectionEvent) {
         onFcConnect(data);
       }
     });
