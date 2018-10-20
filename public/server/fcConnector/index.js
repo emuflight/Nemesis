@@ -201,8 +201,6 @@ module.exports = new class FcConnector {
         if (config.incompatible) {
           return Object.assign({ error: config.version }, deviceInfo, config);
         } else {
-          config.isBxF = true;
-          this.startTelemetry(deviceInfo, "status");
           return applyUIConfig(deviceInfo, config, BxfUiConfig);
         }
       });
@@ -338,7 +336,7 @@ module.exports = new class FcConnector {
       );
     });
   }
-  startTelemetry(deviceInfo, type, fastIntervalMs = 80) {
+  startTelemetry(deviceInfo, type, fastIntervalMs = 100) {
     clearInterval(websockets.wsServer.fastTelemetryInterval);
     clearInterval(websockets.wsServer.slowTelemetryInterval);
     websockets.wsServer.telemetryType = type;
@@ -353,7 +351,7 @@ module.exports = new class FcConnector {
             websockets.notifyTelem(telemData);
           });
         }
-      }, fastIntervalMs);
+      }, type === "rx" ? 250 : fastIntervalMs);
     }
     websockets.wsServer.slowTelemetryInterval = setInterval(() => {
       if (deviceInfo.hid) {
