@@ -201,6 +201,7 @@ module.exports = new class FcConnector {
         if (config.incompatible) {
           return Object.assign({ error: config.version }, deviceInfo, config);
         } else {
+          config.isBxF = true;
           return applyUIConfig(deviceInfo, config, BxfUiConfig);
         }
       });

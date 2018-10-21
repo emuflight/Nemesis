@@ -28,3 +28,5 @@ yarn.lock
 electron-builder.yml
 
 release-builds
+
+public/server/utils/dfu/temp.bin
