@@ -107,6 +107,7 @@
   "disconnected.cli.incompatible": "**********<h1>YOU ARE IN CLI MODE.\nTHIS FIRMWARE IS NOT OFFICIALLY SUPPORTED.\nPLEASE REBOOT INTO DFU AND FLASH A SUPPORTED VERSION.</h1>**********\n{error}",
   "imuf.title": "IMU-F Updater",
   "imuf.select.version": "Select a version to flash IMU-F",
+  "imuf.needs-update": "IMU-F needs updated",
   "imuf.update.message": "\n\n**********<h1>YOU ARE IN IMU-F UPDATE MODE.\nDO NOT UNPLUG YOUR DEVICE UNTIL UPDATE IS COMPLETE OR YOU'RE GONNA HAVE A BAD TIME.</h1><img id=\"pbjt\" src=\"assets/teehee.png\" height=\"90\" width=\"90\"/><br/>**********\n\n",
   "dfu.flash.message": "\n\n**********<h1>YOU ARE IN DFU MODE.\nDO NOT UNPLUG YOUR DEVICE UNTIL FLASHING IS COMPLETE OR YOU'RE GONNA HAVE A BAD TIME.</h1><img id=\"pbjt\" src=\"assets/dfu.gif\" height=\"90\" width=\"90\"/><br/>#flyhelio\n**********\n\n",
   "dfu.target.title": "Select a target",

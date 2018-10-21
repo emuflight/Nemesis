@@ -21,6 +21,12 @@ export default class ArmingFlagsView extends Component {
         label: "calibration.board"
       });
     }
+    if (props.imufVersion === "9999") {
+      flags.push({
+        id: "imuf_update",
+        label: "imuf.needs-update"
+      });
+    }
 
     this.state = {
       armingFlags: flags
