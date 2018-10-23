@@ -27,9 +27,10 @@ export default class ArmingFlagsView extends Component {
         label: "imuf.needs-update"
       });
     }
+    this.staticFlags = flags;
 
     this.state = {
-      armingFlags: flags
+      armingFlags: this.staticFlags
     };
   }
   handleStatusMessage = message => {
@@ -39,7 +40,9 @@ export default class ArmingFlagsView extends Component {
         //rotate the model on the Y axis so it's oriented correctly
 
         this.setState({
-          armingFlags: armingFlagsList.filter(flag => armingFlags & flag.mask)
+          armingFlags: this.staticFlags.concat(
+            armingFlagsList.filter(flag => armingFlags & flag.mask)
+          )
         });
       }
     } catch (ex) {

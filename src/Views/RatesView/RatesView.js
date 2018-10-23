@@ -10,7 +10,6 @@ import StatelessInput from "../Items/StatelessInput";
 import StatelessFloat from "../Items/StatelessFloat";
 import { AreaChart } from "react-easy-chart";
 import "./RatesView.css";
-import { FCConfigContext } from "../../App";
 
 export default class RatesView extends ProfileView {
   //these are the actual calculations from the functions applyBetaflightRates anf applyRaceflightRates
@@ -125,6 +124,8 @@ export default class RatesView extends ProfileView {
         />
       );
     }
+    let curves = this.generateCurves(this.props.fcConfig);
+
     return (
       <div className="rates-view">
         <Paper className="flex-center">
@@ -153,115 +154,107 @@ export default class RatesView extends ProfileView {
             item={this.props.fcConfig.rates_type}
           />
         </Paper>
-        <FCConfigContext.Consumer>
-          {config => {
-            let curves = this.generateCurves(config);
-            return (
-              <div style={{ display: "flex" }}>
-                <div
-                  style={{ display: "flex", flex: 1, flexDirection: "column" }}
-                >
-                  <Paper>
-                    <Typography>
-                      <FormattedMessage id="common.roll" />
-                    </Typography>
-                    <StatelessFloat
-                      notifyDirty={this.props.notifyDirty}
-                      item={this.props.fcConfig.roll_rc_rate}
-                    />
-                    <StatelessFloat
-                      notifyDirty={this.props.notifyDirty}
-                      item={this.props.fcConfig.roll_srate}
-                    />
-                    <StatelessFloat
-                      notifyDirty={this.props.notifyDirty}
-                      item={this.props.fcConfig.roll_expo}
-                    />
-                    <TextField
-                      style={{ width: 90 }}
-                      disabled={true}
-                      label={
-                        <span className="color-legend white">
-                          <FormattedMessage id="rates.max-dps" />
-                        </span>
-                      }
-                      value={curves.x[10].y}
-                    />
-                  </Paper>
-                  <Paper>
-                    <Typography>
-                      <FormattedMessage id="common.pitch" />
-                    </Typography>
-                    <StatelessFloat
-                      notifyDirty={this.props.notifyDirty}
-                      item={this.props.fcConfig.pitch_rc_rate}
-                    />
-                    <StatelessFloat
-                      notifyDirty={this.props.notifyDirty}
-                      item={this.props.fcConfig.pitch_srate}
-                    />
-                    <StatelessFloat
-                      notifyDirty={this.props.notifyDirty}
-                      item={this.props.fcConfig.pitch_expo}
-                    />
-                    <TextField
-                      style={{ width: 90 }}
-                      disabled={true}
-                      label={
-                        <span className="color-legend blue">
-                          <FormattedMessage id="rates.max-dps" />
-                        </span>
-                      }
-                      value={curves.y[10].y}
-                    />
-                  </Paper>
-                  <Paper>
-                    <Typography>
-                      <FormattedMessage id="common.yaw" />
-                    </Typography>
-                    <StatelessFloat
-                      notifyDirty={this.props.notifyDirty}
-                      item={this.props.fcConfig.yaw_rc_rate}
-                    />
-                    <StatelessFloat
-                      notifyDirty={this.props.notifyDirty}
-                      item={this.props.fcConfig.yaw_srate}
-                    />
-                    <StatelessFloat
-                      notifyDirty={this.props.notifyDirty}
-                      item={this.props.fcConfig.yaw_expo}
-                    />
-                    <TextField
-                      style={{ width: 90 }}
-                      disabled={true}
-                      label={
-                        <span className="color-legend green">
-                          <FormattedMessage id="rates.max-dps" />
-                        </span>
-                      }
-                      value={curves.z[10].y}
-                    />
-                  </Paper>
-                </div>
-                <Paper>
-                  <AreaChart
-                    xType={"text"}
-                    areaColors={["white", "blue", "green"]}
-                    interpolate={"cardinal"}
-                    axisLabels={{ x: "Stick Midpoint %", y: "Deg / sec" }}
-                    yAxisOrientRight
-                    axes
-                    xTicks={0}
-                    width={450}
-                    height={350}
-                    margin={{ top: 0, left: 0, bottom: 50, right: 50 }}
-                    data={[curves.x, curves.y, curves.z]}
-                  />
-                </Paper>
-              </div>
-            );
-          }}
-        </FCConfigContext.Consumer>
+
+        <div style={{ display: "flex" }}>
+          <div style={{ display: "flex", flex: 1, flexDirection: "column" }}>
+            <Paper>
+              <Typography>
+                <FormattedMessage id="common.roll" />
+              </Typography>
+              <StatelessFloat
+                notifyDirty={this.props.notifyDirty}
+                item={this.props.fcConfig.roll_rc_rate}
+              />
+              <StatelessFloat
+                notifyDirty={this.props.notifyDirty}
+                item={this.props.fcConfig.roll_srate}
+              />
+              <StatelessFloat
+                notifyDirty={this.props.notifyDirty}
+                item={this.props.fcConfig.roll_expo}
+              />
+              <TextField
+                style={{ width: 90 }}
+                disabled={true}
+                label={
+                  <span className="color-legend white">
+                    <FormattedMessage id="rates.max-dps" />
+                  </span>
+                }
+                value={curves.x[10].y}
+              />
+            </Paper>
+            <Paper>
+              <Typography>
+                <FormattedMessage id="common.pitch" />
+              </Typography>
+              <StatelessFloat
+                notifyDirty={this.props.notifyDirty}
+                item={this.props.fcConfig.pitch_rc_rate}
+              />
+              <StatelessFloat
+                notifyDirty={this.props.notifyDirty}
+                item={this.props.fcConfig.pitch_srate}
+              />
+              <StatelessFloat
+                notifyDirty={this.props.notifyDirty}
+                item={this.props.fcConfig.pitch_expo}
+              />
+              <TextField
+                style={{ width: 90 }}
+                disabled={true}
+                label={
+                  <span className="color-legend blue">
+                    <FormattedMessage id="rates.max-dps" />
+                  </span>
+                }
+                value={curves.y[10].y}
+              />
+            </Paper>
+            <Paper>
+              <Typography>
+                <FormattedMessage id="common.yaw" />
+              </Typography>
+              <StatelessFloat
+                notifyDirty={this.props.notifyDirty}
+                item={this.props.fcConfig.yaw_rc_rate}
+              />
+              <StatelessFloat
+                notifyDirty={this.props.notifyDirty}
+                item={this.props.fcConfig.yaw_srate}
+              />
+              <StatelessFloat
+                notifyDirty={this.props.notifyDirty}
+                item={this.props.fcConfig.yaw_expo}
+              />
+              <TextField
+                style={{ width: 90 }}
+                disabled={true}
+                label={
+                  <span className="color-legend green">
+                    <FormattedMessage id="rates.max-dps" />
+                  </span>
+                }
+                value={curves.z[10].y}
+              />
+            </Paper>
+          </div>
+          <Paper>
+            <AreaChart
+              xType={"text"}
+              areaColors={["white", "blue", "green"]}
+              interpolate={"cardinal"}
+              axisLabels={{ x: "Stick Midpoint %", y: "Deg / sec" }}
+              yAxisOrientRight
+              axes
+              xTicks={0}
+              width={450}
+              height={350}
+              margin={{ top: 0, left: 0, bottom: 50, right: 50 }}
+              data={[curves.x, curves.y, curves.z]}
+            />
+          </Paper>
+        </div>
       </div>
     );
   }

@@ -50,7 +50,7 @@ export class App extends Component {
   };
 
   getFcConfig = () => {
-    this.setState({ connecting: true, rebooting: false });
+    this.setState({ connecting: true });
     return FCConnector.tryGetConfig()
       .then(device => {
         if (!device.config) {
@@ -60,7 +60,8 @@ export class App extends Component {
             connected: false,
             connecting: false,
             incompatible: device.incompatible,
-            deviceInfo: device
+            deviceInfo: device,
+            rebooting: false
           });
         } else {
           let uiTheme =
@@ -74,7 +75,8 @@ export class App extends Component {
             deviceInfo: device,
             currentConfig: device.config,
             connected: true,
-            theme: uiTheme
+            theme: uiTheme,
+            rebooting: false
           });
           FCConnector.currentTarget = "";
           return device.config;
@@ -83,7 +85,8 @@ export class App extends Component {
       .catch(() =>
         this.setState({
           connecting: false,
-          connected: false
+          connected: false,
+          rebooting: false
         })
       );
   };
@@ -119,9 +122,7 @@ export class App extends Component {
             rebooting={this.state.rebooting}
             handleSave={this.handleSave}
             theme={this.state.theme}
-            refreshConfig={this.getFcConfig}
             goToImuf={this.goToImuf}
-            connectinId={this.state.id}
             device={this.state.deviceInfo}
             fcConfig={this.state.currentConfig}
           />

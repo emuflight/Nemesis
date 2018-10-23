@@ -273,6 +273,10 @@
     "ADVANCED": ["advanced"]
   },
   "elements": {
+    "feedforward_transition": {
+      "float": true,
+      "pad": 3
+    },
     "vbat_detect_cell_voltage": {
       "float": true,
       "pad": 2

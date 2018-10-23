@@ -25,14 +25,16 @@ const FloatView = class extends Component {
     super(props);
     this.floatPad = props.floatPad || 3;
     this.state = {
+      currentRaw: props.item.current,
       floatPad: this.floatPad,
       current: props.item.current.padStart(this.floatPad, "0")
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.item.current !== this.state.current) {
+    if (nextProps.item.current !== this.state.currentRaw) {
       this.setState({
+        currentRaw: nextProps.item.current,
         current: nextProps.item.current.toString().padStart(this.floatPad, "0")
       });
     }
