@@ -77,6 +77,8 @@ export class App extends Component {
             connected: true,
             theme: uiTheme,
             rebooting: false
+          }, ()=>{
+            FCConnector.startTelemetry();
           });
           FCConnector.currentTarget = "";
           return device.config;
