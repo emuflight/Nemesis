@@ -240,6 +240,21 @@ const setChannelMap = (device, newmap) => {
 
 const getTelemetry = (device, type) => {
   switch (type) {
+    case "status": {
+      return sendCommand(device, "telem").then(telemString => {
+        let obj = {};
+        telemString.split("\n#tm ").forEach(part => {
+          let vals = part.split("=");
+          obj[vals[0].replace("#tm ", "")] = parseFloat(vals[1]);
+        });
+        return {
+          type: type,
+          cpu: Math.ceil(obj.cpu * 100),
+          loop: obj.loop,
+          khz: obj.khz * 0.001
+        };
+      });
+    }
     default:
     case "rx":
       return sendCommand(device, "rcrxdata").then(telemString => {

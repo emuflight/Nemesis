@@ -653,7 +653,7 @@
           "label": "LOW"
         },
         {
-          "value": "1.000",
+          "value": "1",
           "label": "MED"
         },
         {
@@ -696,15 +696,15 @@
       "mode": "LOOKUP",
       "values": [
         {
-          "value": "3.000",
+          "value": "3",
           "label": "LOW"
         },
         {
-          "value": "6.000",
+          "value": "6",
           "label": "MED"
         },
         {
-          "value": "9.000",
+          "value": "9",
           "label": "HIGH"
         },
         {
@@ -713,7 +713,7 @@
         },
         {
           "value": "15.00",
-          "label": "OMG WTF"
+          "label": "OMGWTF"
         }
       ]
     },
@@ -721,15 +721,15 @@
       "mode": "LOOKUP",
       "values": [
         {
-          "value": "4.000",
+          "value": "4",
           "label": "LOW"
         },
         {
-          "value": "6.000",
+          "value": "6",
           "label": "MED"
         },
         {
-          "value": "8.000",
+          "value": "8",
           "label": "HIGH"
         },
         {
@@ -738,7 +738,7 @@
         },
         {
           "value": "12.00",
-          "label": "OMG WTF"
+          "label": "OMGWTF"
         }
       ]
     },
@@ -857,24 +857,24 @@
       "mode": "LOOKUP",
       "values": [
         {
-          "value": "0.000",
+          "value": "0",
           "label": "OFF"
         },
         {
-          "value": "1.000",
+          "value": "1",
           "label": "LOW"
         },
         {
-          "value": "2.000",
+          "value": "2",
           "label": "MED"
         },
         {
-          "value": "3.000",
+          "value": "3",
           "label": "HIGH"
         },
         {
-          "value": "4.000",
-          "label": "BABY'S ASS"
+          "value": "4",
+          "label": "BABYS_ASS"
         }
       ]
     },
@@ -882,24 +882,24 @@
       "mode": "LOOKUP",
       "values": [
         {
-          "value": "0.000",
+          "value": "0",
           "label": "OFF"
         },
         {
-          "value": "1.000",
+          "value": "1",
           "label": "LOW"
         },
         {
-          "value": "2.000",
+          "value": "2",
           "label": "MED"
         },
         {
-          "value": "3.000",
+          "value": "3",
           "label": "HIGH"
         },
         {
-          "value": "4.000",
-          "label": "BABY'S ASS"
+          "value": "4",
+          "label": "BABYS_ASS"
         }
       ]
     },
@@ -907,24 +907,24 @@
       "mode": "LOOKUP",
       "values": [
         {
-          "value": "0.000",
+          "value": "0",
           "label": "OFF"
         },
         {
-          "value": "1.000",
+          "value": "1",
           "label": "LOW"
         },
         {
-          "value": "2.000",
+          "value": "2",
           "label": "MED"
         },
         {
-          "value": "3.000",
+          "value": "3",
           "label": "HIGH"
         },
         {
-          "value": "4.000",
-          "label": "BABY'S ASS"
+          "value": "4",
+          "label": "BABYS_ASS"
         }
       ]
     },
@@ -1045,6 +1045,33 @@
         }
       ]
     },
+    "led_with_usb": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "0",
+          "label": "OFF"
+        },
+        {
+          "value": "1",
+          "label": "ON"
+        }
+      ]
+    },
+    "esc_frequency": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "16000",
+          "label": "16kHz"
+        },
+        {
+          "value": "32000",
+          "label": "32kHz"
+        }
+      ]
+    },
+
     "telem_rfosd": {
       "mode": "LOOKUP",
       "values": [
@@ -1306,6 +1333,67 @@
         {
           "value": "6",
           "label": "UART6"
+        }
+      ]
+    },
+    "led_mode": {
+      "mode": "LOOKUP",
+      "values": [
+        {
+          "value": "0",
+          "label": "OFF"
+        },
+        {
+          "value": "1",
+          "label": "ON"
+        },
+        {
+          "value": "2",
+          "label": "DISCO_FAST"
+        },
+        {
+          "value": "3",
+          "label": "DISCO_SLOW"
+        },
+        {
+          "value": "4",
+          "label": "PARTY_FAST"
+        },
+        {
+          "value": "5",
+          "label": "PARTY_SLOW"
+        },
+        {
+          "value": "6",
+          "label": "GYRO_MOTION"
+        },
+        {
+          "value": "7",
+          "label": "COLOR_PULSE"
+        },
+        {
+          "value": "8",
+          "label": "MULTI_DISCO_FAST"
+        },
+        {
+          "value": "9",
+          "label": "MULTI_DISCO_SLOW"
+        },
+        {
+          "value": "10",
+          "label": "MULTI_PARTY_FAST"
+        },
+        {
+          "value": "11",
+          "label": "MULTI_PARTY_SLOW"
+        },
+        {
+          "value": "12",
+          "label": "KNIGHT_RIDER"
+        },
+        {
+          "value": "13",
+          "label": "BATTERY_LEVEL"
         }
       ]
     }

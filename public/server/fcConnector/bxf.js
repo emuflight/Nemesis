@@ -60,7 +60,6 @@ let retry = 5;
 const getConfig = device => {
   return sendCommand(device, "config", 800).then(conf => {
     try {
-      console.log("RESPONSE: ", conf);
       //trim off " config\n";
       let config = JSON.parse(conf.slice(conf.indexOf("{"), conf.length - 3));
       retry = 3;
@@ -123,7 +122,6 @@ const runQueue = next => {
         try {
           let more = port.read();
           if (more) {
-            console.log("MORE: ", more);
             if (next.encode) {
               let msg = more.toString(next.encode);
               currentRecBuffer += msg;
@@ -131,7 +129,6 @@ const runQueue = next => {
               currentRecBuffer = more;
             }
           } else {
-            console.log("NO MORE: ", more);
             interval && clearInterval(interval);
             next.resolve(currentRecBuffer);
             currentCommand = null;

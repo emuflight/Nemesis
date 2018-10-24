@@ -52,14 +52,10 @@ export default class InfoBarView extends Component {
     }
   };
   componentDidMount() {
-    if (this.props.fcConfig.isBxF) {
-      FCConnector.webSockets.addEventListener("message", this.handleStatus);
-    }
+    FCConnector.webSockets.addEventListener("message", this.handleStatus);
   }
   componentWillUnmount() {
-    if (this.props.fcConfig.isBxF) {
-      FCConnector.webSockets.removeEventListener("message", this.handleStatus);
-    }
+    FCConnector.webSockets.removeEventListener("message", this.handleStatus);
   }
   render() {
     return (
@@ -96,15 +92,33 @@ export default class InfoBarView extends Component {
             onBlur={() => this.updateCraftName()}
             onChange={event => this.setState({ craftName: event.target.value })}
           />
-          {this.props.fcConfig.isBxF &&
-            this.state.telemetry.cpu !== undefined && (
-              <Typography>
-                <FormattedMessage
-                  id="info.cpu-load"
-                  values={{ percent: this.state.telemetry.cpu }}
-                />
-              </Typography>
-            )}
+          {this.state.telemetry.cpu !== undefined && (
+            <Typography>
+              <FormattedMessage
+                id="info.cpu-load"
+                values={{ percent: this.state.telemetry.cpu }}
+              />
+            </Typography>
+          )}
+          {this.state.telemetry.loop && (
+            <Typography>
+              ,&nbsp;
+              <FormattedMessage
+                id="info.loop-time"
+                values={{ time: this.state.telemetry.loop }}
+              />
+              &micro;s
+            </Typography>
+          )}
+          {this.state.telemetry.khz && (
+            <Typography>
+              ,&nbsp;
+              <FormattedMessage
+                id="info.loop-speed"
+                values={{ khz: this.state.telemetry.khz }}
+              />
+            </Typography>
+          )}
           {this.state.setupCompleted > -1 && (
             <List
               style={{ cursor: "pointer" }}
