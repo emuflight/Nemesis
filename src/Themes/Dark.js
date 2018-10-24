@@ -34,6 +34,7 @@ export default Object.assign(
   {
     dark,
     ButterFlight,
+    Betaflight: ButterFlight,
     RACEFLIGHT
   },
   targetThemes

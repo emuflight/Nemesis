@@ -78,10 +78,12 @@ export default class PidsView extends ProfileView {
               notifyDirty={this.props.notifyDirty}
               item={this.props.fcConfig.pid_process_denom}
             />
-            <DropdownView
-              notifyDirty={this.props.notifyDirty}
-              item={this.props.fcConfig.buttered_pids}
-            />
+            {this.props.fcConfig.buttered_pids && (
+              <DropdownView
+                notifyDirty={this.props.notifyDirty}
+                item={this.props.fcConfig.buttered_pids}
+              />
+            )}
             <DropdownView
               notifyDirty={this.props.notifyDirty}
               item={this.props.fcConfig.motor_pwm_protocol}
@@ -156,7 +158,8 @@ export default class PidsView extends ProfileView {
           <Paper className="flex-center">
             <FCConfigContext.Consumer>
               {config => {
-                return config.tpa_type.current === "RACEFLIGHT" ? (
+                return config.tpa_type &&
+                  config.tpa_type.current === "RACEFLIGHT" ? (
                   <TpaCurveView
                     notifyDirty={this.props.notifyDirty}
                     item={this.props.fcConfig.tpa_curves}
