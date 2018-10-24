@@ -93,7 +93,15 @@ export default class InfoBarView extends Component {
             onChange={event => this.setState({ craftName: event.target.value })}
           />
           {this.state.telemetry.cpu !== undefined && (
-            <Typography>
+            <Typography
+              className={
+                this.state.telemetry.cpu > 49
+                  ? this.state.telemetry.cpu > 59
+                    ? "danger"
+                    : "warning"
+                  : "nominal"
+              }
+            >
               <FormattedMessage
                 id="info.cpu-load"
                 values={{ percent: this.state.telemetry.cpu }}
