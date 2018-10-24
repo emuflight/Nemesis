@@ -251,7 +251,13 @@ const getTelemetry = (device, type) => {
           type: type,
           cpu: Math.ceil(obj.cpu * 100),
           loop: obj.loop,
-          khz: obj.khz * 0.001
+          khz: obj.khz * 0.001,
+          debug: [
+            Math.random(42),
+            Math.random(42),
+            Math.random(42),
+            Math.random(42)
+          ]
         };
       });
     }

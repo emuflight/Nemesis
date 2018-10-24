@@ -136,6 +136,7 @@
   "info.cpu-load": "CPU: {percent}%",
   "info.loop-time": "LOOPTIME: {time}",
   "info.loop-speed": "{khz}kHz",
+  "info.show-debug": "Show Debug",
   "pid.tpa.curves": "Throttle Attenuation Curves",
   "pid.gyro.use-32k": "32KHZ Mode",
   "pid.kp": "Progressive",
