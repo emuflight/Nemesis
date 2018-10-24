@@ -247,18 +247,18 @@ const getTelemetry = (device, type) => {
           let vals = part.split("=");
           obj[vals[0].replace("#tm ", "")] = parseFloat(vals[1]);
         });
-        return {
-          type: type,
-          cpu: Math.ceil(obj.cpu * 100),
-          loop: obj.loop,
-          khz: obj.khz * 0.001,
-          debug: [
-            Math.random(42),
-            Math.random(42),
-            Math.random(42),
-            Math.random(42)
-          ]
-        };
+        return sendCommand(device, "julian").then(julian => {
+          return {
+            type: type,
+            cpu: Math.ceil(obj.cpu * 100),
+            loop: obj.loop,
+            khz: obj.khz * 0.001,
+            debug: julian
+              .split("#me Goes Pro #")
+              .filter(part => part)
+              .map(part => part.split("!! ")[1])
+          };
+        });
       });
     }
     default:

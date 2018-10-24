@@ -4,6 +4,9 @@ import { FormattedMessage } from "react-intl";
 import Chip from "@material-ui/core/Chip";
 import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
+
+import "./ArmingFlagsView.css";
+
 import {
   Switch,
   ListItem,
@@ -87,27 +90,28 @@ export default class ArmingFlagsView extends Component {
           ))}
         </List>
         <FormGroup component="fieldset">
-          <FormControlLabel
-            control={
-              <Switch
-                checked={this.state.showDebug}
-                onChange={(event, showDebug) => {
-                  this.setState({ showDebug });
-                }}
-              />
-            }
-            label={<FormattedMessage id="info.show-debug" />}
-          />
+          {this.state.debug && (
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={this.state.showDebug}
+                  onChange={(event, showDebug) => {
+                    this.setState({ showDebug });
+                  }}
+                />
+              }
+              label={<FormattedMessage id="info.show-debug" />}
+            />
+          )}
           {this.state.showDebug && (
             <List>
-              {this.state.debug &&
-                this.state.debug.map((debugVal, index) => {
-                  return (
-                    <ListItem>
-                      DEBUG {index}: {debugVal}
-                    </ListItem>
-                  );
-                })}
+              {this.state.debug.map((debugVal, index) => {
+                return (
+                  <ListItem className="debug-item" key={index}>
+                    DEBUG {index}: {debugVal}
+                  </ListItem>
+                );
+              })}
             </List>
           )}
         </FormGroup>
