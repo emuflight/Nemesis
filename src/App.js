@@ -69,15 +69,15 @@ export class App extends Component {
             themes[device.config.version.fw] ||
             themes.dark;
           this.setState({
-              connecting: false,
-              dfu: device.dfu,
-              id: device.comName,
-              deviceInfo: device,
-              currentConfig: device.config,
-              connected: true,
-              theme: uiTheme,
-              rebooting: false
-            });
+            connecting: false,
+            dfu: device.dfu,
+            id: device.comName,
+            deviceInfo: device,
+            currentConfig: device.config,
+            connected: true,
+            theme: uiTheme,
+            rebooting: false
+          });
           FCConnector.currentTarget = "";
           return device.config;
         }
@@ -95,7 +95,7 @@ export class App extends Component {
     this.setState({ rebooting: this.state.currentConfig.reboot_on_save });
     return FCConnector.saveConfig().then(() => {
       if (!this.state.currentConfig.reboot_on_save) {
-        return this.getFcConfig().then(()=>{
+        return this.getFcConfig().then(() => {
           FCConnector.startTelemetry();
         });
       } else {
