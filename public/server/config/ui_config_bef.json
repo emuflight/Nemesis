@@ -49,6 +49,8 @@
       "vbat_divider",
       "vbat_warning_cell_voltage",
       "vbat_scale",
+      "ibata_scale",
+      "ibata_offset",
       "current_meter",
       "esc_sensor_current_offset"
     ],
