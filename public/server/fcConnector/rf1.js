@@ -250,7 +250,6 @@ const getTelemetry = (device, type) => {
             let vals = part.split(/=|:/gim);
             obj[vals[0].replace("#tm ", "")] = vals[1];
           });
-        console.log(obj);
         return {
           type: type,
           cpu: Math.ceil(parseFloat(obj.cpu) * 100),
@@ -268,7 +267,7 @@ const getTelemetry = (device, type) => {
           telemString.split("\n#rb ").forEach(part => {
             let pairs = part.split("=");
             let vals = pairs[1] && pairs[1].split(":");
-            channels[parseInt(pairs[0].replace("#rb ", "")) - 1] = parseInt(
+            channels[parseInt(pairs[1].replace("#rb ", "")) - 1] = parseInt(
               vals && vals[0],
               10
             );

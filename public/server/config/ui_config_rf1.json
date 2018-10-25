@@ -1404,9 +1404,9 @@
   },
   "motor_order": [1, 2, 3, 4],
   "rx_scale": {
-    "min": 0,
-    "max": 100,
-    "step": 10
+    "min": -1000,
+    "max": 1000,
+    "step": 100
   },
   "aux_channel_modes": [
     {
