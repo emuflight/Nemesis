@@ -1,6 +1,6 @@
 [
   {
-    "id": "assistant.rx",
+    "id": "assistant.rx.title",
     "options": [
       {
         "image": "assets/frsky.png",
@@ -10,10 +10,14 @@
         },
         "title": "FrSky",
         "headline": "FrSky",
-        "commands": ["set telem_spek=0", "set telem_sport=14", "save"],
+        "commands": [
+          "set telem_spek=0",
+          "set telem_sport=14",
+          "save",
+          "wiz rx"
+        ],
         "verify": {
-          "command": "wiz rx",
-          "until": "found on usart",
+          "success": "found on usart",
           "error": "not found"
         }
       },
@@ -24,10 +28,9 @@
         },
         "title": "Crossfire",
         "headline": "Crossfire",
-        "commands": ["crsf_b2", "save"],
+        "commands": ["crsf_b2", "save", "wiz rx"],
         "verify": {
-          "command": "wiz rx",
-          "until": "found on usart",
+          "success": "found on usart",
           "error": "not found"
         }
       },
@@ -39,10 +42,23 @@
         },
         "title": "Spektrum",
         "headline": "Spektrum",
-        "commands": ["set telem_spek=1", "set telem_sport=0", "save"],
+        "commands": ["set telem_spek=1", "set telem_sport=0", "save", "wiz rx"],
         "verify": {
-          "command": "wiz rx",
-          "until": "found on usart",
+          "success": "found on usart",
+          "error": "not found"
+        }
+      },
+      {
+        "image": "assets/other.jpg",
+        "style": {
+          "height": 240,
+          "backgroundSize": "contain"
+        },
+        "title": "Other",
+        "headline": "Other",
+        "commands": ["set telem_spek=0", "set telem_sport=0", "save", "wiz rx"],
+        "verify": {
+          "success": "found on usart",
           "error": "not found"
         }
       }

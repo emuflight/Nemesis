@@ -10,7 +10,6 @@ export default class RxCalibrationView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      scale: 2000,
       step: 1,
       channelSubStep: 0,
       telemetry: {},
@@ -19,39 +18,35 @@ export default class RxCalibrationView extends Component {
   }
 
   normalize(value) {
-    return (value * 100) / this.state.scale;
+    return (
+      ((value - this.state.scaleMin) * 100) /
+      (this.state.scaleMax - this.state.scaleMin)
+    );
   }
   cleanupMessage(message) {
-    return message
-      .replace("#wiz ", "")
-      .slice(0, message.toLowerCase().indexOf("then") - 4);
+    return message.replace("#wiz ", "").slice(0, message.length);
   }
   begin() {
     this.setState({ step: 2 });
     FCConnector.sendCliCommand("wiz rc1").then(message => {
       this.setState({ stepMessage: this.cleanupMessage(message) });
-      this.wizInterval = setInterval(() => {
-        FCConnector.sendCliCommand("wiz rc1");
-      }, 400);
     });
   }
 
   handleNextStep() {
     if (this.state.step > 5) {
-      this.props.handleNextStep();
+      this.props.onFinish();
     }
     if (this.state.step === 0) {
       return this.begin();
     }
 
-    clearInterval(this.wizInterval);
-
     this.setState({ busy: true });
-    FCConnector.pauseTelemetry();
+    FCConnector.stopTelemetry();
     FCConnector.sendCliCommand(`wiz rc${this.state.step}`).then(message => {
-      FCConnector.resumeTelemetry();
+      FCConnector.startTelemetry("rx");
       let cleanMessage = this.cleanupMessage(message);
-      if (this.state.step === 3 && this.state.channelSubStep < 4) {
+      if (this.state.step === 3 && this.state.channelSubStep < 3) {
         this.setState({
           channelSubStep: this.state.channelSubStep + 1,
           busy: false,
@@ -71,7 +66,11 @@ export default class RxCalibrationView extends Component {
     try {
       let { rx } = JSON.parse(message.data);
       if (rx) {
-        this.setState({ channels: rx.channels.slice(0, 6) });
+        this.setState({
+          scaleMin: rx.min,
+          scaleMax: rx.max,
+          channels: rx.channels.slice(0, 8)
+        });
       }
     } catch (ex) {
       console.warn("unable to parse telemetry", ex);
@@ -80,9 +79,11 @@ export default class RxCalibrationView extends Component {
 
   componentDidMount() {
     FCConnector.webSockets.addEventListener("message", this.handleRXData);
+    FCConnector.startTelemetry("rx");
   }
 
   componentWillUnmount = () => {
+    FCConnector.stopTelemetry();
     FCConnector.webSockets.removeEventListener("message", this.handleRXData);
   };
 
@@ -123,8 +124,8 @@ export default class RxCalibrationView extends Component {
                   </Typography>
                   <Typography variant="caption">
                     <FormattedMessage
-                      id="rx.channel.number"
-                      values={{ number: i + 1 }}
+                      id="rx.channel.label"
+                      values={{ label: `Channel: ${i + 1}` }}
                     />
                   </Typography>
                   <LinearProgress

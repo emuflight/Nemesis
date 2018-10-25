@@ -35,11 +35,11 @@ export default class CalibrateMotorsSteps extends Component {
   };
 
   nextCommand(command) {
-    FCConnector.pauseTelemetry();
+    FCConnector.stopTelemetry();
 
     return FCConnector.sendCliCommand(command).then(() => {
       this.setState({ throttleUp: true });
-      FCConnector.resumeTelemetry();
+      FCConnector.startTelemetry("vbat");
     });
   }
 

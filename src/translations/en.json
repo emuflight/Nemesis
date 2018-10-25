@@ -38,7 +38,7 @@
   "accelerometer.calibrate": "Calibrate Accelerometer",
   "motor.item.this-one": "I'm spinning",
   "assistant.rx": "Receiver Assistant",
-  "assistant.rx.title": "Select your receiver.",
+  "assistant.rx.title": "Select your receiver. Please ensure your receiver is turned on, bound, and connected.",
   "assistant.rx.center-sticks": "Center your sticks. Then, click next.",
   "assistant.vtx": "Select your video transmitter.",
   "assistant.gyro.lay-flat": "Lay your quad flat.",

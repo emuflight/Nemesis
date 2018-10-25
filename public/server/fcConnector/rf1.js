@@ -267,16 +267,16 @@ const getTelemetry = (device, type) => {
           telemString.split("\n#rb ").forEach(part => {
             let pairs = part.split("=");
             let vals = pairs[1] && pairs[1].split(":");
-            channels[parseInt(pairs[1].replace("#rb ", "")) - 1] = parseInt(
-              vals && vals[0],
+            channels[parseInt(pairs[0].replace("#rb ", "")) - 1] = parseInt(
+              vals && vals[1],
               10
             );
           });
         }
         return {
           rx: {
-            min: 0,
-            max: 2000,
+            min: -1000,
+            max: 1000,
             channels
           }
         };
