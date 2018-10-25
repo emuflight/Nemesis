@@ -243,22 +243,21 @@ const getTelemetry = (device, type) => {
     case "status": {
       return sendCommand(device, "telem").then(telemString => {
         let obj = {};
-        telemString.split("\n#tm ").forEach(part => {
-          let vals = part.split("=");
-          obj[vals[0].replace("#tm ", "")] = parseFloat(vals[1]);
-        });
-        return sendCommand(device, "julian").then(julian => {
-          return {
-            type: type,
-            cpu: Math.ceil(obj.cpu * 100),
-            loop: obj.loop,
-            khz: obj.khz * 0.001,
-            debug: julian
-              .split("#me Goes Pro #")
-              .filter(part => part)
-              .map(part => part.split("!! ")[1])
-          };
-        });
+        telemString
+          .replace("\n#nomore\n")
+          .split("\n#tm ")
+          .forEach(part => {
+            let vals = part.split(/=|:/gim);
+            obj[vals[0].replace("#tm ", "")] = vals[1];
+          });
+        console.log(obj);
+        return {
+          type: type,
+          cpu: Math.ceil(parseFloat(obj.cpu) * 100),
+          loop: parseFloat(obj.loop),
+          khz: parseInt(obj.hz, 10) * 0.001,
+          debug: [obj.DEBUGF, obj.DEBUGI, obj.DEBUGU]
+        };
       });
     }
     default:
