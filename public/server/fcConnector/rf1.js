@@ -11,6 +11,9 @@ const strToBytes = string => {
 };
 
 const getConfig = device => {
+  if (!connectedDevice) {
+    connectedDevice = new HID.HID(device.path);
+  }
   return sendCommand(device, "config\n").then(ret => {
     try {
       let data = JSON.parse(ret);
@@ -35,27 +38,32 @@ let connectedDevice;
 const runQueue = next => {
   if (!next) return;
   currentCommand = next;
-  if (!connectedDevice) {
-    connectedDevice = new HID.HID(next.device.path);
-  }
   let ret = "";
   const process = command => {
-    connectedDevice.write(strToBytes(command));
-    connectedDevice.read((err, data) => {
-      if (data) {
-        ret += data.toString("utf8");
-      }
-      if (ret.indexOf("\n\0") === -1) {
-        process("more\n");
-      } else {
-        ret =
-          ret &&
-          ret.slice(0, ret.indexOf("\n\0") + 1).replace(/\u0001|\.000/gim, "");
-        next.resolve(ret);
-        currentCommand = null;
-        runQueue(commandQueue.pop());
-      }
-    });
+    try {
+      connectedDevice.write(strToBytes(command));
+      connectedDevice.read((err, data) => {
+        if (data) {
+          ret += data.toString("utf8");
+        }
+        if (ret.indexOf("\n\0") === -1) {
+          process("more\n");
+        } else {
+          ret =
+            ret &&
+            ret
+              .slice(0, ret.indexOf("\n\0") + 1)
+              .replace(/\u0001|\.000/gim, "");
+          next.resolve(ret);
+          currentCommand = null;
+          runQueue(commandQueue.pop());
+        }
+      });
+    } catch (ex) {
+      next.reject(ret);
+      currentCommand = null;
+      runQueue(commandQueue.pop());
+    }
   };
   process(`${next.command}\n`);
 };
@@ -121,12 +129,9 @@ const getModes = device => {
 };
 
 const remapMotor = (device, from, to) => {
-  let commandFrom = `set mout${from}=${parseInt(to) - 1}`;
-  let commandto = `set mout${to}=${parseInt(from) - 1}`;
-  return sendCommand(device, commandFrom).then(resp => {
-    return sendCommand(device, commandto).then(resp => {
-      return resp;
-    });
+  let command = `set mout${to}=${parseInt(from) - 1}`;
+  return sendCommand(device, command).then(resp => {
+    return resp;
   });
 };
 const storage = (device, command) => {

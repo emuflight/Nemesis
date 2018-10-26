@@ -4,7 +4,7 @@ const devices = require("./devices");
 const http = require("http");
 const STM32USB = require("./devices/STM32USB.json");
 const bxf = require("./fcConnector/bxf");
-const rf1 = require("./fcConnector/bxf");
+const rf1 = require("./fcConnector/rf1");
 
 const server = http.createServer((request, response) => {
   // process HTTP request. Since we're writing just WebSockets
@@ -28,6 +28,8 @@ wsServer.on("request", request => {
   // Detect add/insert
   usb.on(`attach`, device => {
     if (device.deviceDescriptor.idVendor === STM32USB.vendorId) {
+      clearInterval(wsServer.fastTelemetryInterval);
+      clearInterval(wsServer.slowTelemetryInterval);
       devices.get((err, port) => {
         connectedDevice = port;
         if (connectedDevice) {
@@ -43,10 +45,10 @@ wsServer.on("request", request => {
   // Detect remove
   usb.on(`detach`, device => {
     if (device.deviceDescriptor.idVendor === STM32USB.vendorId) {
-      clearInterval(wsServer.fastTelemetryInterval);
-      clearInterval(wsServer.slowTelemetryInterval);
       bxf.reset();
       rf1.reset();
+      clearInterval(wsServer.fastTelemetryInterval);
+      clearInterval(wsServer.slowTelemetryInterval);
       connection.sendUTF(
         JSON.stringify({
           connectionEvent: true,
