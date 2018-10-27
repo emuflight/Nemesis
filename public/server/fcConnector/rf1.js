@@ -51,9 +51,7 @@ const runQueue = next => {
         } else {
           ret =
             ret &&
-            ret
-              .slice(0, ret.indexOf("\n\0") + 1)
-              .replace(/\u0001|\.000/gim, "");
+            ret.slice(0, ret.indexOf("\n\0") + 1).replace(/\u0001/gim, "");
           next.resolve(ret);
           currentCommand = null;
           runQueue(commandQueue.pop());

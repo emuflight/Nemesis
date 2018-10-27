@@ -1,6 +1,5 @@
 import React from "react";
 import ProfileView from "../ProfileView/ProfileView";
-import ConfigListView from "../ConfigListView/ConfigListView";
 import DropdownView from "../Items/DropdownView";
 import Paper from "@material-ui/core/Paper";
 import "./RatesView.css";
@@ -38,7 +37,7 @@ export default class RatesView extends ProfileView {
     }
     return Math.ceil(angleRate);
   }
-  calcDpsRf1(input, rcRate, expo, superRate, deadband) {
+  calcDpsRf(input, rcRate, expo, superRate, deadband) {
     let actualCommand = input - deadband;
     let rcCommand =
       (1.0 + 0.01 * expo * (actualCommand * actualCommand - 1.0)) *
@@ -47,29 +46,94 @@ export default class RatesView extends ProfileView {
     angleRate = angleRate * (1 + Math.abs(actualCommand) * superRate * 0.01);
     return Math.ceil(angleRate);
   }
-  generateCurves(config) {
-    let bfRates = config.rates_type.current === "BETAFLIGHT";
-    let rateFunc = bfRates ? this.calcDps : this.calcDpsRf1;
-    const rates = {
-      roll: {
-        r: parseFloat(config.roll_rc_rate.current),
-        x: parseFloat(config.roll_expo.current),
-        s: parseFloat(config.roll_srate.current),
-        d: parseInt(config.deadband.current, 10) / 100
-      },
-      pitch: {
-        r: parseFloat(config.pitch_rc_rate.current),
-        x: parseFloat(config.pitch_expo.current),
-        s: parseFloat(config.pitch_srate.current),
-        d: parseInt(config.deadband.current, 10) / 100
-      },
-      yaw: {
-        r: parseFloat(config.yaw_rc_rate.current),
-        x: parseFloat(config.yaw_expo.current),
-        s: parseFloat(config.yaw_srate.current),
-        d: parseInt(config.yaw_deadband.current, 10) / 100
-      }
+
+  getRateFunc(curveToUse) {
+    let maxOutput, maxOutputMod, returnValue;
+    let flopSuperRate, flopRcRate, flopExpo, flopFactor;
+    let kissSetpoint,
+      kissRate,
+      kissGRate,
+      kissUseCurve,
+      kissTempCurve,
+      kissRpyUseRates,
+      kissRxRaw,
+      kissAngle;
+
+    maxOutput = 1;
+    maxOutputMod = 0.01;
+
+    const constrain = (amt, low, high) => {
+      if (amt < low) return low;
+      else if (amt > high) return high;
+      return amt;
     };
+
+    switch (curveToUse) {
+      case "3":
+        return (rcCommand, rate, expo, acrop) => {
+          returnValue =
+            (maxOutput + maxOutputMod * expo * (rcCommand * rcCommand - 1.0)) *
+            rcCommand;
+          returnValue = returnValue * (rate + rate * acrop * 0.01);
+          return returnValue;
+        };
+      case "4":
+        return (rcCommand, rate, expo, acrop) => {
+          returnValue =
+            (maxOutput + maxOutputMod * expo * (rcCommand * rcCommand - 1.0)) *
+            rcCommand;
+          returnValue =
+            returnValue * (rate + Math.abs(returnValue) * rate * acrop * 0.01);
+          return returnValue;
+        };
+      case "5":
+        return (rcCommand, rate, expo, acrop) => {
+          kissUseCurve = expo;
+          kissRate = acrop;
+          kissGRate = rate;
+          kissSetpoint = rcCommand;
+
+          kissRpyUseRates = 1 - Math.abs(rcCommand) * kissGRate;
+          kissRxRaw = rcCommand * 1000;
+          kissTempCurve = (kissRxRaw * kissRxRaw) / 1000000;
+          kissSetpoint =
+            (kissSetpoint * kissTempCurve * kissUseCurve +
+              kissSetpoint * (1 - kissUseCurve)) *
+            (kissRate / 10);
+          kissAngle = 2000.0 * (1.0 / kissRpyUseRates) * kissSetpoint; //setpoint is calculated directly here
+          return kissAngle;
+        };
+      case "7":
+        return (rcCommand, rate, expo, acrop) => {
+          flopExpo = expo;
+          flopRcRate = acrop;
+          flopSuperRate = rate;
+
+          if (flopRcRate > 2.0)
+            flopRcRate = flopRcRate + 14.55 * (flopRcRate - 2.0);
+
+          if (flopExpo !== 0.0)
+            rcCommand =
+              rcCommand * Math.pow(Math.abs(rcCommand), 3) * flopExpo +
+              rcCommand * (1.0 - flopExpo);
+
+          let flopAngle = 200.0 * flopRcRate * rcCommand;
+
+          if (flopSuperRate !== 0.0) {
+            flopFactor =
+              1.0 /
+              constrain(1.0 - Math.abs(rcCommand) * flopSuperRate, 0.01, 1.0);
+            flopAngle *= flopFactor; //setpoint is calculated directly here
+          }
+          return flopAngle;
+        };
+      default:
+        return (rcCommand, rate, expo, acrop) => {
+          return rcCommand; //same as default for now.
+        };
+    }
+  }
+  generateCurves(rates, rateFunc) {
     let xcurve = [];
     let ycurve = [];
     let zcurve = [];
@@ -116,43 +180,145 @@ export default class RatesView extends ProfileView {
 
   get children() {
     if (!this.state.isBxF) {
-      return (
-        <ConfigListView
-          fcConfig={this.props.fcConfig}
-          notifyDirty={this.props.notifyDirty}
-          items={this.props.items}
-        />
-      );
+      return this.rf1RateView;
+    } else {
+      return this.bxfRateView;
     }
-    let curves = this.generateCurves(this.props.fcConfig);
+  }
 
+  get rf1RateView() {
+    let config = this.props.fcConfig;
+    let profNum = config.currentRateProfile + 1;
+    const rates = {
+      roll: {
+        r: parseFloat(config[`roll_rate${profNum}`].current),
+        x: parseFloat(config[`roll_expo${profNum}`].current),
+        s: parseFloat(config[`roll_acrop${profNum}`].current),
+        d: parseInt(config.roll_deadband.current, 10) / 100
+      },
+      pitch: {
+        r: parseFloat(config[`pitch_rate${profNum}`].current),
+        x: parseFloat(config[`pitch_expo${profNum}`].current),
+        s: parseFloat(config[`pitch_acrop${profNum}`].current),
+        d: parseInt(config.pitch_deadband.current, 10) / 100
+      },
+      yaw: {
+        r: parseFloat(config[`yaw_rate${profNum}`].current),
+        x: parseFloat(config[`yaw_expo${profNum}`].current),
+        s: parseFloat(config[`yaw_acrop${profNum}`].current),
+        d: parseInt(config.yaw_deadband.current, 10) / 100
+      }
+    };
+
+    let curves = this.generateCurves(
+      rates,
+      this.getRateFunc(config[`stick_curve${profNum}`].current)
+    );
+    console.log(curves);
+    return this.getRatesView(
+      curves,
+      Object.assign(
+        {
+          rates_type: config[`stick_curve${profNum}`],
+          roll_rc_rate: config[`roll_rate${profNum}`],
+          roll_srate: config[`roll_acrop${profNum}`],
+          roll_expo: config[`roll_expo${profNum}`],
+          pitch_rc_rate: config[`pitch_rate${profNum}`],
+          pitch_srate: config[`pitch_acrop${profNum}`],
+          pitch_expo: config[`pitch_expo${profNum}`],
+          yaw_rc_rate: config[`yaw_rate${profNum}`],
+          yaw_srate: config[`yaw_acrop${profNum}`],
+          yaw_expo: config[`yaw_expo${profNum}`]
+        },
+        config
+      )
+    );
+  }
+
+  get bxfRateView() {
+    let config = this.props.fcConfig;
+    let rateFunc =
+      config.rates_type.current === "BETAFLIGHT"
+        ? this.calcDps
+        : this.calcDpsRf1;
+    const rates = {
+      roll: {
+        r: parseFloat(config.roll_rc_rate.current),
+        x: parseFloat(config.roll_expo.current),
+        s: parseFloat(config.roll_srate.current),
+        d: parseInt(config.deadband.current, 10) / 100
+      },
+      pitch: {
+        r: parseFloat(config.pitch_rc_rate.current),
+        x: parseFloat(config.pitch_expo.current),
+        s: parseFloat(config.pitch_srate.current),
+        d: parseInt(config.deadband.current, 10) / 100
+      },
+      yaw: {
+        r: parseFloat(config.yaw_rc_rate.current),
+        x: parseFloat(config.yaw_expo.current),
+        s: parseFloat(config.yaw_srate.current),
+        d: parseInt(config.yaw_deadband.current, 10) / 100
+      }
+    };
+    let curves = this.generateCurves(rates, rateFunc);
+    return this.getRatesView(curves, config);
+  }
+
+  getRatesView(curves, fields) {
     return (
       <div className="rates-view">
         <Paper className="flex-center">
-          <StatelessFloat
-            notifyDirty={this.props.notifyDirty}
-            item={this.props.fcConfig.thr_expo}
-          />
-          <StatelessFloat
-            notifyDirty={this.props.notifyDirty}
-            item={this.props.fcConfig.thr_mid}
-          />
+          {fields.thr_expo && (
+            <StatelessFloat
+              notifyDirty={this.props.notifyDirty}
+              item={fields.thr_expo}
+            />
+          )}
+          {fields.thr_mid && (
+            <StatelessFloat
+              notifyDirty={this.props.notifyDirty}
+              item={fields.thr_mid}
+            />
+          )}
+          {fields.throttle_midrc && (
+            <StatelessFloat
+              notifyDirty={this.props.notifyDirty}
+              item={fields.throttle_midrc}
+            />
+          )}
+          {fields.roll_deadband && (
+            <StatelessInput
+              notifyDirty={this.props.notifyDirty}
+              item={fields.roll_deadband}
+            />
+          )}
+          {fields.pitch_deadband && (
+            <StatelessInput
+              notifyDirty={this.props.notifyDirty}
+              item={fields.pitch_deadband}
+            />
+          )}
+          {fields.deadband && (
+            <StatelessInput
+              notifyDirty={this.props.notifyDirty}
+              item={fields.deadband}
+            />
+          )}
           <StatelessInput
             notifyDirty={this.props.notifyDirty}
-            item={this.props.fcConfig.deadband}
+            item={fields.yaw_deadband}
           />
-          <StatelessInput
-            notifyDirty={this.props.notifyDirty}
-            item={this.props.fcConfig.yaw_deadband}
-          />
-          <DropdownView
-            notifyDirty={(isDirty, state, val) => {
-              this.props.fcConfig.rates_type.current = val;
-              this.forceUpdate();
-              this.props.notifyDirty(isDirty, state, val);
-            }}
-            item={this.props.fcConfig.rates_type}
-          />
+          {fields.rates_type && (
+            <DropdownView
+              notifyDirty={(isDirty, state, val) => {
+                this.fields.current = val;
+                this.forceUpdate();
+                this.props.notifyDirty(isDirty, state, val);
+              }}
+              item={fields.rates_type}
+            />
+          )}
         </Paper>
 
         <div style={{ display: "flex" }}>
@@ -163,15 +329,15 @@ export default class RatesView extends ProfileView {
               </Typography>
               <StatelessFloat
                 notifyDirty={this.props.notifyDirty}
-                item={this.props.fcConfig.roll_rc_rate}
+                item={fields.roll_rc_rate}
               />
               <StatelessFloat
                 notifyDirty={this.props.notifyDirty}
-                item={this.props.fcConfig.roll_srate}
+                item={fields.roll_srate}
               />
               <StatelessFloat
                 notifyDirty={this.props.notifyDirty}
-                item={this.props.fcConfig.roll_expo}
+                item={fields.roll_expo}
               />
               <TextField
                 style={{ width: 90 }}
@@ -190,15 +356,15 @@ export default class RatesView extends ProfileView {
               </Typography>
               <StatelessFloat
                 notifyDirty={this.props.notifyDirty}
-                item={this.props.fcConfig.pitch_rc_rate}
+                item={fields.pitch_rc_rate}
               />
               <StatelessFloat
                 notifyDirty={this.props.notifyDirty}
-                item={this.props.fcConfig.pitch_srate}
+                item={fields.pitch_srate}
               />
               <StatelessFloat
                 notifyDirty={this.props.notifyDirty}
-                item={this.props.fcConfig.pitch_expo}
+                item={fields.pitch_expo}
               />
               <TextField
                 style={{ width: 90 }}
@@ -217,15 +383,15 @@ export default class RatesView extends ProfileView {
               </Typography>
               <StatelessFloat
                 notifyDirty={this.props.notifyDirty}
-                item={this.props.fcConfig.yaw_rc_rate}
+                item={fields.yaw_rc_rate}
               />
               <StatelessFloat
                 notifyDirty={this.props.notifyDirty}
-                item={this.props.fcConfig.yaw_srate}
+                item={fields.yaw_srate}
               />
               <StatelessFloat
                 notifyDirty={this.props.notifyDirty}
-                item={this.props.fcConfig.yaw_expo}
+                item={fields.yaw_expo}
               />
               <TextField
                 style={{ width: 90 }}

@@ -95,6 +95,10 @@
       "pitch_kd_rap3"
     ],
     "RATES": [
+      "roll_deadband",
+      "pitch_deadband",
+      "yaw_deadband",
+      "throttle_deadband",
       "pname1",
       "stick_curve1",
       "rc_smoothing1",
@@ -771,7 +775,7 @@
         },
         {
           "value": "7",
-          "label": "BxF"
+          "label": "BETAFLIGHT"
         },
         {
           "value": "5",
@@ -808,7 +812,7 @@
         },
         {
           "value": "7",
-          "label": "BxF"
+          "label": "BETAFLIGHT"
         },
         {
           "value": "5",
@@ -845,7 +849,7 @@
         },
         {
           "value": "7",
-          "label": "BxF"
+          "label": "BETAFLIGHT"
         },
         {
           "value": "5",
