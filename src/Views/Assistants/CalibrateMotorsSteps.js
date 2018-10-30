@@ -59,7 +59,7 @@ export default class CalibrateMotorsSteps extends Component {
           </Button>
         </div>
       );
-    } else if (this.state.telemetry.volts > 1 && !this.state.throttleUp) {
+    } else if (this.state.telemetry.volts > 3 && !this.state.throttleUp) {
       return (
         <div style={{ flex: 1, display: "flex" }}>
           <Typography variant="h5">
@@ -91,7 +91,7 @@ export default class CalibrateMotorsSteps extends Component {
           </Button>
         </div>
       );
-    } else if (this.state.telemetry.volts > 1 && this.state.throttleUp) {
+    } else if (this.state.telemetry.volts > 3 && this.state.throttleUp) {
       return (
         <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
           <Typography variant="h5">

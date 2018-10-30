@@ -94,6 +94,14 @@ export default class PreFlightCheckView extends Component {
             >
               <FormattedMessage id="assistant.motors" />
             </Button>
+            <Button
+              style={{ marginLeft: 20 }}
+              color="secondary"
+              variant="contained"
+              onClick={() => this.props.openAssistant("rx")}
+            >
+              <FormattedMessage id="assistant.rx" />
+            </Button>
           </div>
         </Paper>
         <Paper className="flex">

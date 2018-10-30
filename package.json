@@ -1,6 +1,6 @@
 {
-  "name": "pegasus",
-  "version": "0.1.11",
+  "name": "Pegasus",
+  "version": "0.1.12",
   "author": "Helio RC, LLC",
   "homepage": "https://www.heliorc.com",
   "description": "Pegagus Multi-Firmware-UI",
@@ -17,7 +17,14 @@
       "node_modules/**/*"
     ],
     "directories": {
-      "buildResources": "assets"
+      "buildResources": "public/assets"
+    },
+    "mac": {
+      "category": "public.app-category.lifestyle",
+      "target": [
+        "zip",
+        "dmg"
+      ]
     }
   },
   "dependencies": {

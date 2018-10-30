@@ -54,6 +54,7 @@
   "assistant.channel.map": "Configure channel map",
   "assistant.channel.calibrate": "Calibrate your receiver",
   "assistant.motors.calibration": "Calibrate your ESCs",
+  "assistant.motors.skip-calibration": "Skip Calibration",
   "assistant.motors.calibration.complete": "Wait for the esc calibration tones. Then, calibration will be completed.",
   "assistant.motors.calibration.unplug": "Please unplug current voltage is: {volts}",
   "assistant.motors.calibration.plugin": "Please Plug in.. current voltage is: {volts}",

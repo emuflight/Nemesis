@@ -2,7 +2,7 @@ const { app, BrowserWindow, ipcMain, Menu } = require("electron");
 const path = require("path");
 const server = require("./server/express.js");
 
-// const { autoUpdater } = require("electron-updater");
+const { autoUpdater } = require("electron-updater");
 require("electron-context-menu")({
   prepend: (params, browserWindow) => [
     {
@@ -19,7 +19,6 @@ server.app.use(server.express.static(path.join(__dirname, "/")));
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    titleBarStyle: "hidden",
     width: 1024,
     height: 768,
     minWidth: 900,
@@ -65,19 +64,6 @@ function createMenu() {
     label: "Edit",
     submenu: [
       {
-        label: "Undo",
-        accelerator: "CmdOrCtrl+Z",
-        selector: "undo:"
-      },
-      {
-        label: "Redo",
-        accelerator: "Shift+CmdOrCtrl+Z",
-        selector: "redo:"
-      },
-      {
-        type: "separator"
-      },
-      {
         label: "Cut",
         accelerator: "CmdOrCtrl+X",
         selector: "cut:"
@@ -105,10 +91,10 @@ function createMenu() {
   Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 }
 // when the app is loaded create a BrowserWindow and check for updates
-app.on("ready", function() {
+app.on("ready", function () {
   createWindow();
   createMenu();
-  // autoUpdater.checkForUpdates();
+  autoUpdater.checkForUpdates();
 });
 
 // on MacOS leave process running also with no windows
@@ -123,36 +109,36 @@ app.on("activate", () => {
   }
 });
 
-process.on("uncaughtException", function(error) {
+process.on("uncaughtException", function (error) {
   process.stdout.write(error);
   // Handle the error
 });
 
 // when the update has been downloaded and is ready to be installed, notify the BrowserWindow
-// autoUpdater.on("update-downloaded", info => {
-//   mainWindow.webContents.send("updateReady");
-// });
+autoUpdater.on("update-downloaded", info => {
+  mainWindow.webContents.send("updateReady");
+});
 
-// autoUpdater.on('checking-for-update', () => {
-//   mainWindow.webContents.send('Checking for update...');
-// })
-// autoUpdater.on('update-available', (info) => {
-//   mainWindow.webContents.send('Update available.');
-// })
-// autoUpdater.on('update-not-available', (info) => {
-//   mainWindow.webContents.send('Update not available.');
-// })
-// autoUpdater.on('error', (err) => {
-//   mainWindow.webContents.send('Error in auto-updater. ' + err);
-// })
-// autoUpdater.on('download-progress', (progressObj) => {
-//   let log_message = "Download speed: " + progressObj.bytesPerSecond;
-//   log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
-//   log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';
-//   mainWindow.webContents.send(log_message);
-// })
+autoUpdater.on('checking-for-update', () => {
+  mainWindow.webContents.send('Checking for update...');
+})
+autoUpdater.on('update-available', (info) => {
+  mainWindow.webContents.send('Update available.');
+})
+autoUpdater.on('update-not-available', (info) => {
+  mainWindow.webContents.send('Update not available.');
+})
+autoUpdater.on('error', (err) => {
+  mainWindow.webContents.send('Error in auto-updater. ' + err);
+})
+autoUpdater.on('download-progress', (progressObj) => {
+  let log_message = "Download speed: " + progressObj.bytesPerSecond;
+  log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
+  log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';
+  mainWindow.webContents.send(log_message);
+})
 
 // when receiving a quitAndInstall signal, quit and install the new version ;)
 ipcMain.on("quitAndInstall", (event, arg) => {
-  // autoUpdater.quitAndInstall();
+  autoUpdater.quitAndInstall();
 });

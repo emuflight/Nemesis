@@ -32,7 +32,7 @@ export default class Disconnected extends Component {
           <CardContent>
             <Avatar
               alt="Helio RC, LLL"
-              src="assets/icons/png/192x192.png"
+              src="assets/icon.png"
               style={{ width: 60, height: 60 }}
               onClick={() => localStorage.clear()}
             />

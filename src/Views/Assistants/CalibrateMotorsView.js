@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import SafetyView from "../SafetyView/SafetyView";
 import CalibrateMotorsSteps from "./CalibrateMotorsSteps";
-import { Typography } from "@material-ui/core";
+import { Typography, Button } from "@material-ui/core";
 import { FormattedMessage } from "react-intl";
 
 export default class CalibrateMotorsView extends Component {
@@ -21,6 +21,9 @@ export default class CalibrateMotorsView extends Component {
               lastChoice={this.props.lastChoice}
             />
           </div>
+          <Button variant="contained" onClick={this.props.onFinish}>
+            <FormattedMessage id="assistant.motors.skip-calibration" />
+          </Button>
         </div>
       </SafetyView>
     );
