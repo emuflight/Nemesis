@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import List from "@material-ui/core/List";
 import MenuItem from "@material-ui/core/MenuItem";
 import Popover from "@material-ui/core/Popover";
-import Button from "@material-ui/core/Button";
 import Launch from "@material-ui/icons/Launch";
 import FCConnector from "../utilities/FCConnector";
 import { FormattedMessage } from "react-intl";

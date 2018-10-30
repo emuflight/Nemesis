@@ -75,11 +75,11 @@ export default class MotorAssignmentAssistantView extends PickerAssistantView {
         >
           <div
             style={{
-              width: 550,
-              height: 450,
+              width: 600,
+              height: 600,
               margin: "0 auto",
               position: "relative",
-              backgroundImage: `url("${this.props.lastChoice.image}")`,
+              backgroundImage: `url("assets/props.png")`,
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat"
             }}
