@@ -20,7 +20,7 @@ export default class VersionInfoView extends Component {
     // This prevents ghost click.
     event.preventDefault();
     this.setState({
-      open: true,
+      open: !this.state.open,
       anchorEl: event.currentTarget
     });
   };
@@ -32,10 +32,8 @@ export default class VersionInfoView extends Component {
   };
   render() {
     return (
-      <MenuItem style={{ display: "flex" }}>
-        <Button onClick={this.handleClick}>
-          <FormattedMessage id="common.version-info" />
-        </Button>
+      <MenuItem style={{ display: "flex" }} onClick={this.handleClick}>
+        <FormattedMessage id="common.version-info" />
         <Popover
           open={this.state.open}
           anchorEl={this.state.anchorEl}

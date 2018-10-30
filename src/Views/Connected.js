@@ -1,12 +1,5 @@
 import React, { Component } from "react";
-import Drawer from "@material-ui/core/Drawer";
-import MenuItem from "@material-ui/core/MenuItem";
 import Paper from "@material-ui/core/Paper";
-import List from "@material-ui/core/List";
-import Divider from "@material-ui/core/Divider";
-import Badge from "@material-ui/core/Badge";
-import Typography from "@material-ui/core/Typography";
-import VersionInfoView from "./VersionInfoView";
 import AuxChannelView from "./AuxChannelView/AuxChannelView";
 import ConfigListView from "./ConfigListView/ConfigListView";
 import FeaturesView from "./FeaturesView/FeaturesView";
@@ -23,10 +16,10 @@ import BlackboxView from "./BlackboxView/BlackboxView";
 import RXView from "./RXView/RXView";
 import MotorsView from "./MotorsView/MotorsView";
 import OSDView from "./OSDView/OSDView";
-import { FormattedMessage } from "react-intl";
 import "./Connected.css";
 import { FCConfigContext } from "../App";
 import PreFlightCheckView from "./PreFlightCheckView/PreFlightCheckView";
+import DrawerView from "./DrawerView";
 
 export default class Connected extends Component {
   constructor(props) {
@@ -357,43 +350,16 @@ export default class Connected extends Component {
             fcConfig={mergedProfile}
             isDirty={this.state.isDirty}
           />
-          <Drawer
+          <DrawerView
+            routes={this.routes}
+            goToImuf={this.props.goToImuf}
+            fcConfig={mergedProfile}
             open={this.state.drawerOpen}
             onClose={() => {
               this.setState({ drawerOpen: false });
             }}
-          >
-            <Divider style={{ marginTop: "30px" }} />
-            <VersionInfoView
-              goToImuf={this.props.goToImuf}
-              version={mergedProfile.version}
-              imuf={mergedProfile.imuf}
-            />
-            <Divider />
-            <List style={{ display: "block" }}>
-              {this.routes.map(route => {
-                return (
-                  <MenuItem
-                    style={{ padding: 8 }}
-                    id={route.key}
-                    key={route.key}
-                    onClick={() => this.handleMenuItemClick(route.key)}
-                  >
-                    <Typography variant="subtitle1" style={{ flexGrow: 1 }}>
-                      <FormattedMessage id={"route." + route.key} />
-                    </Typography>
-                    {route.incompeteItems && (
-                      <Badge
-                        style={{ top: "12px" }}
-                        badgeContent={route.incompeteItems}
-                        secondary={true}
-                      />
-                    )}
-                  </MenuItem>
-                );
-              })}
-            </List>
-          </Drawer>
+            handleMenuItemClick={this.handleMenuItemClick}
+          />
           {contents}
           <CliView handleSave={this.handleSave} theme={this.state.theme} />
           {this.state.openAssistant && (

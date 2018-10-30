@@ -9,17 +9,46 @@
           "backgroundSize": "contain"
         },
         "title": "FrSky",
-        "headline": "FrSky",
-        "commands": ["set serialrx_provider=SBUS"]
+        "headline": "SBUS",
+        "commands": [
+          "set serialrx_provider=SBUS",
+          "feature TELEMETRY",
+          "set min_check=1005",
+          "set max_check=1995",
+          "set rc_interp_int=14"
+        ]
+      },
+      {
+        "image": "assets/frsky.png",
+        "style": {
+          "height": 240,
+          "backgroundSize": "contain"
+        },
+        "title": "FrSky",
+        "headline": "F.Port",
+        "commands": [
+          "set serialrx_provider=FPORT",
+          "feature TELEMETRY",
+          "set min_check=1005",
+          "set max_check=1995",
+          "set rc_interp_int=9"
+        ]
       },
       {
         "image": "assets/tbs.jpg",
         "style": {
-          "height": 240
+          "height": 240,
+          "backgroundSize": "contain"
         },
         "title": "TBS Crossfire",
         "headline": "TBS Crossfire",
-        "commands": ["set serialrx_provider=CRSF"]
+        "commands": [
+          "set serialrx_provider=CRSF",
+          "feature TELEMETRY",
+          "set min_check=1005",
+          "set max_check=1995",
+          "set rc_interp_int=11"
+        ]
       },
       {
         "image": "assets/spektrum.png",
@@ -28,7 +57,39 @@
           "backgroundSize": "contain"
         },
         "title": "Spektrum",
-        "headline": "Spektrum",
+        "headline": "Spektrum SBUS",
+        "commands": [
+          "set serialrx_provider=SBUS",
+          "feature TELEMETRY",
+          "set min_check=1005",
+          "set max_check=1995",
+          "set rc_interp_int=8"
+        ]
+      },
+      {
+        "image": "assets/graupner.png",
+        "style": {
+          "height": 240,
+          "backgroundSize": "contain"
+        },
+        "title": "Graupner",
+        "headline": "Grapner SUMD",
+        "commands": [
+          "set serialrx_provider=SUMD",
+          "feature TELEMETRY",
+          "set min_check=1005",
+          "set max_check=1995",
+          "set rc_interp_int=8"
+        ]
+      },
+      {
+        "image": "assets/other.jpg",
+        "style": {
+          "height": 240,
+          "backgroundSize": "contain"
+        },
+        "title": "Other",
+        "headline": "Other",
         "commands": ["set serialrx_provider=SBUS"]
       }
     ]

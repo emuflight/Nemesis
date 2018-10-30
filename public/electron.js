@@ -19,8 +19,8 @@ server.app.use(server.express.static(path.join(__dirname, "/")));
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 1024,
-    height: 768,
+    width: 1200,
+    height: 800,
     minWidth: 900,
     minHeight: 700,
     backgroundColor: "#303030",
@@ -91,7 +91,7 @@ function createMenu() {
   Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 }
 // when the app is loaded create a BrowserWindow and check for updates
-app.on("ready", function () {
+app.on("ready", function() {
   createWindow();
   createMenu();
   autoUpdater.checkForUpdates();
@@ -109,7 +109,7 @@ app.on("activate", () => {
   }
 });
 
-process.on("uncaughtException", function (error) {
+process.on("uncaughtException", function(error) {
   process.stdout.write(error);
   // Handle the error
 });
@@ -119,24 +119,30 @@ autoUpdater.on("update-downloaded", info => {
   mainWindow.webContents.send("updateReady");
 });
 
-autoUpdater.on('checking-for-update', () => {
-  mainWindow.webContents.send('Checking for update...');
-})
-autoUpdater.on('update-available', (info) => {
-  mainWindow.webContents.send('Update available.');
-})
-autoUpdater.on('update-not-available', (info) => {
-  mainWindow.webContents.send('Update not available.');
-})
-autoUpdater.on('error', (err) => {
-  mainWindow.webContents.send('Error in auto-updater. ' + err);
-})
-autoUpdater.on('download-progress', (progressObj) => {
+autoUpdater.on("checking-for-update", () => {
+  mainWindow.webContents.send("Checking for update...");
+});
+autoUpdater.on("update-available", info => {
+  mainWindow.webContents.send("Update available.");
+});
+autoUpdater.on("update-not-available", info => {
+  mainWindow.webContents.send("Update not available.");
+});
+autoUpdater.on("error", err => {
+  mainWindow.webContents.send("Error in auto-updater. " + err);
+});
+autoUpdater.on("download-progress", progressObj => {
   let log_message = "Download speed: " + progressObj.bytesPerSecond;
-  log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
-  log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';
+  log_message = log_message + " - Downloaded " + progressObj.percent + "%";
+  log_message =
+    log_message +
+    " (" +
+    progressObj.transferred +
+    "/" +
+    progressObj.total +
+    ")";
   mainWindow.webContents.send(log_message);
-})
+});
 
 // when receiving a quitAndInstall signal, quit and install the new version ;)
 ipcMain.on("quitAndInstall", (event, arg) => {
