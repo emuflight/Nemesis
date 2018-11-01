@@ -17,7 +17,7 @@
     "min": " 0.000",
     "max": " 1.000"
   },
-  "esc_protocol": {
+  "motor_pwm_protocol": {
     "current": "0",
     "default": " 0.000",
     "min": " 0.000",

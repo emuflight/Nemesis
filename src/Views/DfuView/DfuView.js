@@ -11,6 +11,20 @@ import { FormattedMessage } from "react-intl";
 import { FormControlLabel, FormGroup, Switch } from "@material-ui/core";
 import "./DfuView.css";
 
+const releaseUrls = {
+  ButterFlight:
+    "https://api.github.com/repos/ButterFlight/Butterflight/releases/latest",
+  RACEFLIGHT: "https://api.github.com/repos/orneryd/omg/releases/latest",
+  Betaflight:
+    "https://api.github.com/repos/heliorc/imuf-release-bef/releases/latest"
+};
+const releaseNotesUrls = {
+  ButterFlight:
+    "https://raw.githubusercontent.com/ButterFlight/butterflight/3.6.2/README.md",
+  RACEFLIGHT: "https://raw.githubusercontent.com/orneryd/omg/v3.0.33/README.md",
+  Betaflight:
+    "https://raw.githubusercontent.com/Betaflight/Betaflight/3.5.2/README.md"
+};
 export default class DfuView extends Component {
   constructor(props) {
     super(props);
@@ -23,11 +37,12 @@ export default class DfuView extends Component {
       selectedFile: undefined,
       current: "",
       currentTarget: props.target || "",
+      firmwareType: props.firmware || "RACEFLIGHT",
+      firmwareTypeList: ["RACEFLIGHT", "ButterFlight", "Betaflight"],
       progress: "",
       hasTarget: !!props.target,
       firmwares: {}
     };
-
     let isProgressStarted = false;
     FCConnector.webSockets.addEventListener("message", message => {
       try {
@@ -85,14 +100,14 @@ export default class DfuView extends Component {
       });
   }
   get releasesKey() {
-    return "firmwareReleases";
+    return `${this.state.firmwareType}.releases`;
   }
   get releaseUrl() {
-    return "https://api.github.com/repos/ButterFlight/Butterflight/releases/latest";
+    return releaseUrls[this.state.firmwareType];
   }
 
   get releaseNotesUrl() {
-    return "https://raw.githubusercontent.com/ButterFlight/butterflight/3.6.0/README.md";
+    return releaseNotesUrls[this.state.firmwareType];
   }
 
   targetRegex = /.*_(\w+)\.bin/;
@@ -138,14 +153,17 @@ export default class DfuView extends Component {
         return releases;
       });
   }
-
-  componentDidMount() {
+  loadReleaseNotes() {
     fetch(this.releaseNotesUrl)
       .then(response => response.arrayBuffer())
       .then(notes => {
         let note = new TextDecoder("utf-8").decode(notes);
         this.setState({ note });
       });
+  }
+
+  componentDidMount() {
+    this.loadReleaseNotes();
     let cachedReleases = localStorage.getItem(this.releasesKey);
     if (cachedReleases) {
       let expiry = new Date(
@@ -163,6 +181,25 @@ export default class DfuView extends Component {
   render() {
     return (
       <Paper className="dfu-view-root">
+        <HelperSelect
+          label="dfu.target.firmware-type"
+          value={this.state.firmwareType}
+          disabled={this.state.isFlashing}
+          onChange={event => {
+            this.setState({ firmwareType: event.target.value }, () => {
+              this.loadReleaseNotes();
+            });
+          }}
+          items={
+            this.state.firmwareTypeList &&
+            this.state.firmwareTypeList.map(target => {
+              return {
+                value: target,
+                label: target
+              };
+            })
+          }
+        />
         <div style={{ display: "flex" }}>
           <Typography paragraph variant="h6">
             <FormattedMessage id="dfu.select.version" />

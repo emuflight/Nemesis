@@ -63,7 +63,7 @@ export default class VersionInfoView extends Component {
                   values={{ value: this.state.version }}
                 />
               </div>
-              <Launch onClick={() => FCConnector.goToDFU(this.state.target)} />
+              <Launch onClick={() => FCConnector.goToDFU(this.state)} />
             </MenuItem>
             {this.state.imuf && (
               <MenuItem style={{ display: "flex" }}>

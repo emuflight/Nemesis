@@ -27,7 +27,9 @@ const FloatView = class extends Component {
     this.state = {
       currentRaw: props.item.current,
       floatPad: this.floatPad,
-      current: props.item.current.padStart(this.floatPad, "0")
+      current: props.item.current
+        .replace(".000", "")
+        .padStart(this.floatPad, "0")
     };
   }
 
@@ -41,13 +43,13 @@ const FloatView = class extends Component {
   }
 
   updateValue() {
-    let current = parseInt(this.state.current.replace(".", ""), 10);
+    let current = parseInt(this.state.current.padEnd(this.floatPad, "0"), 10);
     let isDirty = parseInt(this.props.item.current, 10) !== current;
     if (isDirty) {
       this.props.item.current = current;
       this.setState({
         isDirty: true,
-        current: current.toString().padStart(this.floatPad, "0")
+        current: current.toString()
       });
       FCConnector.setValue(this.props.item.id, current).then(() => {
         this.props.notifyDirty(true, this.state, current);

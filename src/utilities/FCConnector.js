@@ -98,8 +98,9 @@ export default new class FCConnector {
   setChannelMap(newMap) {
     return fetch(`${this.serviceUrl}/channelmap/${newMap}`);
   }
-  goToDFU(target) {
-    this.currentTarget = target;
+  goToDFU(version) {
+    this.currentTarget = version.target;
+    this.currentFirmware = version.fw;
     return fetch(`${this.serviceUrl}/dfu`);
   }
 

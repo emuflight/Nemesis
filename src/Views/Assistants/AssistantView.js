@@ -49,13 +49,12 @@ export default class AssistantView extends Component {
       const step = this.state.steps[nextStep];
       if (step.id === "assistant.motors.calibration") {
         const config = this.props.fcConfig;
-        const esc_protocol = (config.esc_protocol || config.motor_pwm_protocol)
-          .current;
+        const motor_pwm_protocol = config.motor_pwm_protocol.current;
         if (
-          esc_protocol === "6" ||
-          esc_protocol === "7" ||
-          esc_protocol.startsWith("DSHOT") ||
-          esc_protocol.startsWith("PROSHOT")
+          motor_pwm_protocol === "6" ||
+          motor_pwm_protocol === "7" ||
+          motor_pwm_protocol.startsWith("DSHOT") ||
+          motor_pwm_protocol.startsWith("PROSHOT")
         ) {
           return this.setState({ lastChoice, currentStep: nextStep + 1 });
         }

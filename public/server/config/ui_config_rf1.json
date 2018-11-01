@@ -202,7 +202,7 @@
       "mixer_type",
       "famx",
       "mixer_style",
-      "esc_protocol",
+      "motor_pwm_protocol",
       "idle_percent",
       "idle_percent_inv",
       "quopa_style",
@@ -673,7 +673,7 @@
         }
       ]
     },
-    "esc_protocol": {
+    "motor_pwm_protocol": {
       "mode": "LOOKUP",
       "values": [
         {
@@ -687,6 +687,10 @@
         {
           "value": "7",
           "label": "DSHOT1200"
+        },
+        {
+          "value": "10",
+          "label": "PROSHOT"
         }
       ]
     },

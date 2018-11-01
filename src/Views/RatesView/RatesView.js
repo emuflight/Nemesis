@@ -282,7 +282,7 @@ export default class RatesView extends ProfileView {
             />
           )}
           {fields.throttle_midrc && (
-            <StatelessFloat
+            <StatelessInput
               notifyDirty={this.props.notifyDirty}
               item={fields.throttle_midrc}
             />
