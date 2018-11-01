@@ -70,7 +70,8 @@ const FloatView = class extends Component {
           id={this.props.item.id}
           disabled={this.state.isDirty}
           onChange={event => {
-            this.setState({ current: event.target.value });
+            let val = event.target.value || "";
+            this.setState({ current: val.replace(".", "") });
           }}
           onBlur={() => this.updateValue()}
           value={this.state.current}

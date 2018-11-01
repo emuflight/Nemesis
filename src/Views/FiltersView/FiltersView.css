@@ -45,7 +45,7 @@
 .RACEFLIGHT .yaw_gyro_q3 {
   order: 5; }
 
-.RACEFLIGHT .roll_gyro_q1,
-.RACEFLIGHT .roll_gyro_q2,
-.RACEFLIGHT .roll_gyro_q3 {
+.RACEFLIGHT .imuf_w1,
+.RACEFLIGHT .imuf_w2,
+.RACEFLIGHT .imuf_w3 {
   order: 6; }

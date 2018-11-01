@@ -2,7 +2,7 @@ const { app, BrowserWindow, ipcMain, Menu } = require("electron");
 const path = require("path");
 const server = require("./server/express.js");
 
-const { autoUpdater } = require("electron-updater");
+// const { autoUpdater } = require("electron-updater");
 require("electron-context-menu")({
   prepend: (params, browserWindow) => [
     {
@@ -94,7 +94,7 @@ function createMenu() {
 app.on("ready", function() {
   createWindow();
   createMenu();
-  autoUpdater.checkForUpdates();
+  // autoUpdater.checkForUpdates();
 });
 
 // on MacOS leave process running also with no windows
@@ -114,37 +114,37 @@ process.on("uncaughtException", function(error) {
   // Handle the error
 });
 
-// when the update has been downloaded and is ready to be installed, notify the BrowserWindow
-autoUpdater.on("update-downloaded", info => {
-  mainWindow.webContents.send("updateReady");
-});
+// // when the update has been downloaded and is ready to be installed, notify the BrowserWindow
+// autoUpdater.on("update-downloaded", info => {
+//   mainWindow.webContents.send("updateReady");
+// });
 
-autoUpdater.on("checking-for-update", () => {
-  mainWindow.webContents.send("Checking for update...");
-});
-autoUpdater.on("update-available", info => {
-  mainWindow.webContents.send("Update available.");
-});
-autoUpdater.on("update-not-available", info => {
-  mainWindow.webContents.send("Update not available.");
-});
-autoUpdater.on("error", err => {
-  mainWindow.webContents.send("Error in auto-updater. " + err);
-});
-autoUpdater.on("download-progress", progressObj => {
-  let log_message = "Download speed: " + progressObj.bytesPerSecond;
-  log_message = log_message + " - Downloaded " + progressObj.percent + "%";
-  log_message =
-    log_message +
-    " (" +
-    progressObj.transferred +
-    "/" +
-    progressObj.total +
-    ")";
-  mainWindow.webContents.send(log_message);
-});
+// autoUpdater.on("checking-for-update", () => {
+//   mainWindow.webContents.send("Checking for update...");
+// });
+// autoUpdater.on("update-available", info => {
+//   mainWindow.webContents.send("Update available.");
+// });
+// autoUpdater.on("update-not-available", info => {
+//   mainWindow.webContents.send("Update not available.");
+// });
+// autoUpdater.on("error", err => {
+//   mainWindow.webContents.send("Error in auto-updater. " + err);
+// });
+// autoUpdater.on("download-progress", progressObj => {
+//   let log_message = "Download speed: " + progressObj.bytesPerSecond;
+//   log_message = log_message + " - Downloaded " + progressObj.percent + "%";
+//   log_message =
+//     log_message +
+//     " (" +
+//     progressObj.transferred +
+//     "/" +
+//     progressObj.total +
+//     ")";
+//   mainWindow.webContents.send(log_message);
+// });
 
 // when receiving a quitAndInstall signal, quit and install the new version ;)
-ipcMain.on("quitAndInstall", (event, arg) => {
-  autoUpdater.quitAndInstall();
-});
+// ipcMain.on("quitAndInstall", (event, arg) => {
+//   autoUpdater.quitAndInstall();
+// });
