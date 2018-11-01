@@ -153,7 +153,7 @@ const storage = (device, command) => {
       });
     case "download":
     default:
-      return sendCommand(device, "flashmsd");
+      return sendCommand(device, "msd");
   }
 };
 
