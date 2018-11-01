@@ -36,24 +36,24 @@
   .yaw_lpf3 {
     order: 2;
   }
-  .roll_quick1,
-  .roll_quick2,
-  .roll_quick3 {
+  .roll_gyro_q1,
+  .roll_gyro_q2,
+  .roll_gyro_q3 {
     order: 3;
   }
-  .pitch_quick1,
-  .pitch_quick2,
-  .pitch_quick3 {
+  .pitch_gyro_q1,
+  .pitch_gyro_q2,
+  .pitch_gyro_q3 {
     order: 4;
   }
-  .yaw_quick1,
-  .yaw_quick2,
-  .yaw_quick3 {
+  .yaw_gyro_q1,
+  .yaw_gyro_q2,
+  .yaw_gyro_q3 {
     order: 5;
   }
-  .roll_rap1,
-  .roll_rap2,
-  .roll_rap3 {
+  .imuf_w1,
+  .imuf_w2,
+  .imuf_w3 {
     order: 6;
   }
 }

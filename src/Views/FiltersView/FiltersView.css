@@ -30,22 +30,22 @@
 .RACEFLIGHT .yaw_lpf3 {
   order: 2; }
 
-.RACEFLIGHT .roll_quick1,
-.RACEFLIGHT .roll_quick2,
-.RACEFLIGHT .roll_quick3 {
+.RACEFLIGHT .roll_gyro_q1,
+.RACEFLIGHT .roll_gyro_q2,
+.RACEFLIGHT .roll_gyro_q3 {
   order: 3; }
 
-.RACEFLIGHT .pitch_quick1,
-.RACEFLIGHT .pitch_quick2,
-.RACEFLIGHT .pitch_quick3 {
+.RACEFLIGHT .pitch_gyro_q1,
+.RACEFLIGHT .pitch_gyro_q2,
+.RACEFLIGHT .pitch_gyro_q3 {
   order: 4; }
 
-.RACEFLIGHT .yaw_quick1,
-.RACEFLIGHT .yaw_quick2,
-.RACEFLIGHT .yaw_quick3 {
+.RACEFLIGHT .yaw_gyro_q1,
+.RACEFLIGHT .yaw_gyro_q2,
+.RACEFLIGHT .yaw_gyro_q3 {
   order: 5; }
 
-.RACEFLIGHT .roll_rap1,
-.RACEFLIGHT .roll_rap2,
-.RACEFLIGHT .roll_rap3 {
+.RACEFLIGHT .roll_gyro_q1,
+.RACEFLIGHT .roll_gyro_q2,
+.RACEFLIGHT .roll_gyro_q3 {
   order: 6; }
