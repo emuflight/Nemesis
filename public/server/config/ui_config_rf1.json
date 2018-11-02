@@ -17,7 +17,15 @@
   "featurePorts": [],
   "groups": {
     "PFC": ["pfc"],
-    "OSD": ["osd"],
+    "OSD": [
+      "osd_AMPS_pos",
+      "osd_BUG_pos",
+      "osd_CRAFT_NAME_pos",
+      "osd_FTIME_pos",
+      "osd_MAH_pos",
+      "osd_PTIME_pos",
+      "osd_VOLT_pos"
+    ],
     "BLACKBOX": ["blackbox"],
     "MODES": ["modes"],
     "PID": [

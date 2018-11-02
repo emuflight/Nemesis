@@ -5,21 +5,40 @@ import FlareSharp from "@material-ui/icons/FlareSharp";
 import ArrowDropUpSharp from "@material-ui/icons/ArrowDropUpSharp";
 import GpsFixedSharp from "@material-ui/icons/GpsFixedSharp";
 
+const vbat = (
+  <span className="osd-icon-label">
+    <BatteryCharging80Sharp className="osd-icon" />
+    <span>24.8V</span>
+  </span>
+);
+const ptime = <span className="osd-icon-label">&nbsp;1:00</span>;
+const ftime = <span className="osd-icon-label">&nbsp;2:00</span>;
+const amps = (
+  <span className="osd-icon-label">
+    <sub>A</sub>
+    42.00
+  </span>
+);
+const mah = (
+  <span className="osd-icon-label">
+    <span>1337</span>
+    <sub className="mah">
+      <div>mA</div>h
+    </sub>
+  </span>
+);
+const rssi = (
+  <span className="osd-icon-label">
+    <SignalCellularAltSharp className="osd-icon" />
+    <span>99</span>
+  </span>
+);
+const crosshair = <FlareSharp className="osd-icon" />;
 const OSDExamples = {
-  osd_vbat_pos: (
-    <span className="osd-icon-label">
-      <BatteryCharging80Sharp className="osd-icon" />
-      <span>24.8V</span>
-    </span>
-  ),
-  osd_rssi_pos: (
-    <span className="osd-icon-label">
-      <SignalCellularAltSharp className="osd-icon" />
-      <span>99</span>
-    </span>
-  ),
-  osd_tim_1_pos: <span className="osd-icon-label">&nbsp;1:00</span>,
-  osd_tim_2_pos: <span className="osd-icon-label">&nbsp;2:00</span>,
+  osd_vbat_pos: vbat,
+  osd_rssi_pos: rssi,
+  osd_tim_1_pos: ptime,
+  osd_tim_2_pos: ftime,
   osd_remaining_time_estimate_pos: (
     <span className="osd-icon-label">&nbsp;0:42</span>
   ),
@@ -34,7 +53,7 @@ const OSDExamples = {
   osd_vtx_channel_pos: (
     <span className="osd-icon-label">R&nbsp;:&nbsp;5&nbsp;:&nbsp;3</span>
   ),
-  osd_crosshairs_pos: <FlareSharp className="osd-icon" />,
+  osd_crosshairs_pos: crosshair,
   osd_ah_sbar_pos: (
     <div className="ah_sidebar">
       <div className="ah_sidebar-left">--------</div>
@@ -51,20 +70,8 @@ const OSDExamples = {
       </div>
     </div>
   ),
-  osd_current_pos: (
-    <span className="osd-icon-label">
-      <sub>A</sub>
-      42.00
-    </span>
-  ),
-  osd_mah_drawn_pos: (
-    <span className="osd-icon-label">
-      <span>1337</span>
-      <sub className="mah">
-        <div>mA</div>h
-      </sub>
-    </span>
-  ),
+  osd_current_pos: amps,
+  osd_mah_drawn_pos: mah,
   osd_gps_speed_pos: <span className="osd-icon-label">40K</span>,
   osd_gps_lon_pos: <span className="osd-icon-label">&#8680;-000.0000000</span>,
   osd_gps_lat_pos: <span className="osd-icon-label">&#8681;-000.0000000</span>,
@@ -111,6 +118,7 @@ const OSDExamples = {
       YAW&nbsp;&nbsp;42&nbsp;&nbsp;42&nbsp;&nbsp;42
     </span>
   ),
+  osd_anti_gravity_pos: <span className="osd-icon-label">ANTI-GRAVITY</span>,
   osd_debug_pos: (
     <span className="osd-icon-label">
       DBG&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0
@@ -148,15 +156,24 @@ const OSDExamples = {
   osd_adjustment_range_pos: (
     <span className="osd-icon-label">PITCH/ROLL&nbsp;P:&nbsp;42</span>
   ),
-  osd_core_temp_pos: <span className="osd-icon-label">33C</span>
+  osd_core_temp_pos: <span className="osd-icon-label">33C</span>,
+  osd_RSSI_pos: rssi,
+  osd_AMPS_pos: amps,
+  osd_BUG_pos: crosshair,
+  osd_FTIME_pos: ftime,
+  osd_MAH_pos: mah,
+  osd_PTIME_pos: ptime,
+  osd_VOLT_pos: vbat
 };
 
 export default class OSDElement extends Component {
   constructor(props) {
     super(props);
-    OSDExamples.osd_craft_name_pos = (
+    let craftName =
+      this.props.fcConfig.craft_name && this.props.fcConfig.craft_name.current;
+    OSDExamples.osd_CRAFT_NAME_pos = OSDExamples.osd_craft_name_pos = (
       <span className="osd-icon-label craft_name">
-        {this.props.fcConfig.name || "craft_name"}
+        {craftName || this.props.fcConfig.name || "CRAFT_NAME"}
       </span>
     );
   }
