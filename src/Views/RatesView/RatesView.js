@@ -240,7 +240,7 @@ export default class RatesView extends ProfileView {
     let rateFunc =
       config.rates_type.current === "BETAFLIGHT"
         ? this.calcDps
-        : this.calcDpsRf1;
+        : this.calcDpsRf;
     const rates = {
       roll: {
         r: parseFloat(config.roll_rc_rate.current),
@@ -312,7 +312,7 @@ export default class RatesView extends ProfileView {
           {fields.rates_type && (
             <DropdownView
               notifyDirty={(isDirty, state, val) => {
-                this.fields.current = val;
+                fields.current = val;
                 this.forceUpdate();
                 this.props.notifyDirty(isDirty, state, val);
               }}
