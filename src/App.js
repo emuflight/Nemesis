@@ -114,9 +114,9 @@ export class App extends Component {
     } else if (this.state.dfu) {
       return (
         <MuiThemeProvider theme={themes.dark}>
-          <DfuView 
-          firmware={FCConnector.currentFirmware}
-          target={FCConnector.currentTarget} 
+          <DfuView
+            firmware={FCConnector.currentFirmware}
+            target={FCConnector.currentTarget}
           />
         </MuiThemeProvider>
       );

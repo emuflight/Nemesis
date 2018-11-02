@@ -161,9 +161,7 @@ export default class DfuView extends Component {
         this.setState({ note });
       });
   }
-
-  componentDidMount() {
-    this.loadReleaseNotes();
+  loadReleases() {
     let cachedReleases = localStorage.getItem(this.releasesKey);
     if (cachedReleases) {
       let expiry = new Date(
@@ -178,6 +176,11 @@ export default class DfuView extends Component {
     this.fetchReleases();
   }
 
+  componentDidMount() {
+    this.loadReleaseNotes();
+    this.loadReleases();
+  }
+
   render() {
     return (
       <Paper className="dfu-view-root">
@@ -188,6 +191,7 @@ export default class DfuView extends Component {
           onChange={event => {
             this.setState({ firmwareType: event.target.value }, () => {
               this.loadReleaseNotes();
+              this.loadReleases();
             });
           }}
           items={
