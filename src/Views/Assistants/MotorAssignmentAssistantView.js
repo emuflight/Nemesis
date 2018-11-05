@@ -63,6 +63,7 @@ export default class MotorAssignmentAssistantView extends PickerAssistantView {
           <Button
             color="secondary"
             variant="contained"
+            style={{ width: 150 }}
             onClick={() => this.props.onFinish()}
           >
             <FormattedMessage id="common.finished" />
@@ -76,8 +77,8 @@ export default class MotorAssignmentAssistantView extends PickerAssistantView {
         >
           <div
             style={{
-              width: 600,
-              height: 600,
+              width: "100%",
+              height: "100%",
               margin: "0 auto",
               position: "relative",
               backgroundImage: `url("assets/props.png")`,

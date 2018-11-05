@@ -10,6 +10,9 @@ import { FormattedMessage } from "react-intl";
 export default class AuxChannelItemView extends Component {
   constructor(props) {
     super(props);
+    if (props.item.range[0] == props.item.range[1]) {
+      props.item.range[1] += props.scale.step;
+    }
     this.state = props.item;
   }
 
@@ -77,7 +80,7 @@ export default class AuxChannelItemView extends Component {
           style={{
             position: "relative",
             height: 7,
-            margin: "0 25px"
+            margin: "0 60px"
           }}
         >
           <ArrowDropDown

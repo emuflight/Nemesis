@@ -45,7 +45,7 @@
     "express": "^4.16.4",
     "express-fileupload": "^1.0.0",
     "material-ui": "^0.20.2",
-    "material-ui-slider": "^0.1.10",
+    "material-ui-slider": "^3.0.0",
     "node-hid": "^0.7.3",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
