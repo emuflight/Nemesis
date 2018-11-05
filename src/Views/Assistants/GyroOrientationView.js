@@ -21,12 +21,10 @@ export default class GyroOrientationView extends Component {
         id: "assistant.gyro.lay-flat",
         options: [
           {
-            image: "assets/props.png",
+            image: "assets/lay_flat.jpg",
             style: {
-              transform: "rotate3d(-4,3,3, 96deg)",
               backgroundSize: "contain",
-              border: "outset 10px",
-              height: 240
+              height: 325
             },
             title: "lay quad flat",
             headline: "Lay your quad flat. Then, click the image."
@@ -37,11 +35,10 @@ export default class GyroOrientationView extends Component {
         id: "assistant.gyro.on-nose",
         options: [
           {
-            image: "assets/props.png",
+            image: "assets/on_nose.jpg",
             style: {
-              transform: "rotate3d(2, 0, -3, 180deg)",
               backgroundSize: "contain",
-              height: 240
+              height: 325
             },
             title: "on-nose",
             headline: "Position your quad as shown. then, click the image."
@@ -162,7 +159,7 @@ export default class GyroOrientationView extends Component {
         return this.props.handleSave().then(() => {
           setTimeout(() => {
             this.setState({ ready: true });
-          }, 5000);
+          }, 10000);
         });
       });
     }
@@ -174,56 +171,61 @@ export default class GyroOrientationView extends Component {
   };
 
   render() {
-    let step = this.state.calibratedFlat ? this.steps[1] : this.steps[0];
-    return (
-      <div style={{ display: "flex", flex: 1, flexDirection: "column" }}>
-        <div style={{ flex: 1, margin: "0 auto" }}>
-          {this.state.ready ? (
-            <PickerAssistantView
-              disabled={this.state.checking}
-              fcConfig={this.props.fcConfig}
-              title={step.id}
-              style={{ display: "flex" }}
-              type={"GYRO"}
-              items={step.options}
-              onSelect={() =>
-                this.state.calibratedFlat ? this.checkNose() : this.checkFlat()
-              }
+    if (this.state.completed) {
+      return (
+        <div>
+          <Typography variant="h5">
+            <FormattedMessage
+              id="assistant.gyro.success"
+              values={{ orientation: this.state.orientation }}
             />
-          ) : (
-            <Typography variant="h5">
-              <FormattedMessage id="assistant.gyro.reset" />
-            </Typography>
-          )}
-          {this.state.checking && (
-            <Typography variant="h5">
-              <FormattedMessage id="assistant.gyro.checking" />
-            </Typography>
-          )}
-          {this.state.error && (
-            <Typography variant="h5">
-              <FormattedMessage id="assistant.gyro.unable-to-calibrate" />
-            </Typography>
-          )}
-          {this.state.completed && (
-            <div>
-              <Typography variant="h5">
-                <FormattedMessage
-                  id="assistant.gyro.success"
-                  values={{ orientation: this.state.orientation }}
-                />
-              </Typography>
-              <Button
-                color="secondary"
-                variant="contained"
-                onClick={() => this.props.onFinish()}
-              >
-                <FormattedMessage id="common.finished" />
-              </Button>
-            </div>
-          )}
+          </Typography>
+          <Button
+            color="secondary"
+            variant="contained"
+            onClick={() => this.props.onFinish()}
+          >
+            <FormattedMessage id="common.finished" />
+          </Button>
         </div>
-      </div>
-    );
+      );
+    } else {
+      let step = this.state.calibratedFlat ? this.steps[1] : this.steps[0];
+      return (
+        <div style={{ display: "flex", flex: 1, flexDirection: "column" }}>
+          <div style={{ flex: 1, margin: "0 auto" }}>
+            {this.state.ready ? (
+              <PickerAssistantView
+                disabled={this.state.checking}
+                fcConfig={this.props.fcConfig}
+                title={step.id}
+                style={{ display: "flex" }}
+                type={"GYRO"}
+                items={step.options}
+                onSelect={() =>
+                  this.state.calibratedFlat
+                    ? this.checkNose()
+                    : this.checkFlat()
+                }
+              />
+            ) : (
+              <Typography variant="h5">
+                <FormattedMessage id="assistant.gyro.reset" />
+              </Typography>
+            )}
+            {this.state.checking && (
+              <Typography variant="h5">
+                <FormattedMessage id="assistant.gyro.checking" />
+              </Typography>
+            )}
+            {this.state.error && (
+              <Typography variant="h5">
+                <FormattedMessage id="assistant.gyro.unable-to-calibrate" />
+              </Typography>
+            )}
+          </div>
+        </div>
+      );
+    }
   }
 }

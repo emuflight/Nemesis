@@ -7,9 +7,7 @@ import CalibrateMotorsView from "./CalibrateMotorsView";
 import GyroOrientationView from "./GyroOrientationView";
 import FCConnector from "../../utilities/FCConnector";
 import Paper from "@material-ui/core/Paper";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import { FormattedMessage } from "react-intl";
-import Typography from "@material-ui/core/Typography";
+import SavingIndicator from "../SavingIndicator";
 
 export default class AssistantView extends Component {
   constructor(props) {
@@ -56,7 +54,11 @@ export default class AssistantView extends Component {
           motor_pwm_protocol.startsWith("DSHOT") ||
           motor_pwm_protocol.startsWith("PROSHOT")
         ) {
-          return this.setState({ lastChoice, currentStep: nextStep + 1 });
+          return this.setState({
+            lastChoice,
+            currentStep: nextStep + 1,
+            showPropsWarning: true
+          });
         }
       }
       this.setState({ lastChoice, currentStep: nextStep });
@@ -87,24 +89,11 @@ export default class AssistantView extends Component {
         >
           <div style={{ display: "flex", height: 50 }}>
             <div style={{ flexGrow: 1 }} />
-            {this.props.rebooting && (
-              <div style={{ display: "flex" }}>
-                <CircularProgress
-                  className="flex-column-center"
-                  style={{
-                    margin: 10
-                  }}
-                  color="secondary"
-                  thickness={7}
-                />
-                <Typography style={{ flexGrow: 1 }}>
-                  <FormattedMessage id="common.saving" />
-                </Typography>
-              </div>
-            )}
+            {this.props.rebooting && <SavingIndicator />}
           </div>
           {
             <CustomAssistant
+              showPropsWarning={this.state.showPropsWarning}
               rebooting={this.props.rebooting}
               handleSave={this.props.handleSave}
               fcConfig={this.props.fcConfig}

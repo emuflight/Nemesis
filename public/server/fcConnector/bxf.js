@@ -213,7 +213,6 @@ const remapMotor = (device, from, to) => {
         let resourceParts = motorResource.split(" ");
         return resourceParts[2];
       });
-    console.log(mapping);
     let resourceTo = mapping[parseInt(to) - 1];
     let resourceFrom = mapping[parseInt(from) - 1];
     return sendCommand(device, `resource MOTOR ${from} ${resourceTo}`, 20).then(
@@ -372,7 +371,6 @@ const getTelemetry = (device, type) => {
     case "vbat": {
       return sendCommand(device, `msp 130`, 50, false).then(vbatData => {
         let data = new DataView(new Uint8Array(vbatData).buffer, 12);
-        console.log(data);
         return {
           type: "vbat",
           cells: data.getUint8(0),

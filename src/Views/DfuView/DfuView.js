@@ -37,7 +37,7 @@ export default class DfuView extends Component {
       selectedFile: undefined,
       current: "",
       currentTarget: props.target || "",
-      firmwareType: props.firmware || "RACEFLIGHT",
+      firmwareType: props.firmware || "",
       firmwareTypeList: ["RACEFLIGHT", "ButterFlight", "Betaflight"],
       progress: "",
       hasTarget: !!props.target,
@@ -184,26 +184,28 @@ export default class DfuView extends Component {
   render() {
     return (
       <Paper className="dfu-view-root">
-        <HelperSelect
-          label="dfu.target.firmware-type"
-          value={this.state.firmwareType}
-          disabled={this.state.isFlashing}
-          onChange={event => {
-            this.setState({ firmwareType: event.target.value }, () => {
-              this.loadReleaseNotes();
-              this.loadReleases();
-            });
-          }}
-          items={
-            this.state.firmwareTypeList &&
-            this.state.firmwareTypeList.map(target => {
-              return {
-                value: target,
-                label: target
-              };
-            })
-          }
-        />
+        {this.state.firmwareTypeList && (
+          <HelperSelect
+            label="dfu.target.firmware-type"
+            value={this.state.firmwareType}
+            disabled={this.state.isFlashing}
+            onChange={event => {
+              this.setState({ firmwareType: event.target.value }, () => {
+                this.loadReleaseNotes();
+                this.loadReleases();
+              });
+            }}
+            items={
+              this.state.firmwareTypeList &&
+              this.state.firmwareTypeList.map(target => {
+                return {
+                  value: target,
+                  label: target
+                };
+              })
+            }
+          />
+        )}
         <div style={{ display: "flex" }}>
           <Typography paragraph variant="h6">
             <FormattedMessage id="dfu.select.version" />

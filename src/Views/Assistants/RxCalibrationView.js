@@ -6,6 +6,9 @@ import LinearProgress from "@material-ui/core/LinearProgress";
 import List from "@material-ui/core/List";
 import { FormattedMessage } from "react-intl";
 
+const rxAssistantImages = {
+  "1": "assets/receiver_on.jpg"
+};
 export default class RxCalibrationView extends Component {
   constructor(props) {
     super(props);

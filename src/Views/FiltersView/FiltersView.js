@@ -131,22 +131,6 @@ export default class FiltersView extends Component {
               </div>
             </Paper>
             <Paper className="flex-center">
-              {this.props.fcConfig.imuf >= 110 && (
-                <React.Fragment>
-                  <StatelessSelect
-                    id="imuf_roll_af"
-                    notifyDirty={this.props.notifyDirty}
-                  />
-                  <StatelessSelect
-                    id="imuf_pitch_af"
-                    notifyDirty={this.props.notifyDirty}
-                  />
-                  <StatelessSelect
-                    id="imuf_yaw_af"
-                    notifyDirty={this.props.notifyDirty}
-                  />
-                </React.Fragment>
-              )}
               <StatelessInput
                 id="imuf_w"
                 notifyDirty={this.props.notifyDirty}

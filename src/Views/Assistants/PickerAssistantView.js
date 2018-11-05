@@ -9,6 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import FCConnector from "../../utilities/FCConnector";
 import { Button } from "@material-ui/core";
 import { FormattedMessage } from "react-intl";
+import SavingIndicator from "../SavingIndicator";
 
 export default class PickerAssistantView extends Component {
   constructor(props) {
@@ -26,7 +27,7 @@ export default class PickerAssistantView extends Component {
     this.setState({
       saving: true,
       progress: 0,
-      currentMessage: <FormattedMessage id="common.saving" />,
+      currentMessage: <SavingIndicator />,
       currentResponse: ""
     });
     FCConnector.sendBulkCommands(
@@ -87,7 +88,8 @@ export default class PickerAssistantView extends Component {
       } else {
         this.setState({
           saving: false,
-          completed: true
+          completed: true,
+          currentMessage: <FormattedMessage id="common.continue" />
         });
       }
     });
@@ -100,17 +102,18 @@ export default class PickerAssistantView extends Component {
           flex: 1,
           display: "flex",
           flexDirection: "column",
-          padding: 30
+          padding: 10
         }}
       >
         <Typography variant="h5">
           <FormattedMessage id={this.props.title} />
         </Typography>
-        <div style={{ flex: 1 }}>
+        <div>
           <List
             style={{
               flex: 1,
               display: "flex",
+              flexWrap: "wrap",
               alignItems: "center",
               justifyItems: "center",
               alignContent: "center",
@@ -136,8 +139,8 @@ export default class PickerAssistantView extends Component {
                         image={type.image}
                         title={type.title}
                       />
-                      <CardContent>
-                        <Typography gutterBottom variant="h5" component="h2">
+                      <CardContent style={{ padding: 0 }}>
+                        <Typography gutterBottom variant="subheading">
                           {type.headline}
                         </Typography>
                       </CardContent>

@@ -5,6 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import FCConnector from "../../utilities/FCConnector";
 import { Button } from "@material-ui/core";
 import { FormattedMessage } from "react-intl";
+import SafetyView from "../SafetyView/SafetyView";
 
 const motorLayout = [
   { position: "absolute", top: 0, left: 0 },
@@ -28,8 +29,8 @@ export default class MotorAssignmentAssistantView extends PickerAssistantView {
       });
     } else {
       if (!this.props.rebooting) {
+        this.setState({ saving: true, spinning: 0 });
         FCConnector.spinTestMotor(from, 1000).then(() => {
-          this.setState({ saving: true, spinning: 0 });
           FCConnector.remapMotor(from, to).then(() => {
             this.props.handleSave();
           });
@@ -44,7 +45,7 @@ export default class MotorAssignmentAssistantView extends PickerAssistantView {
       }, 6000);
     }
   }
-  render() {
+  get content() {
     return (
       <div
         style={{
@@ -108,5 +109,12 @@ export default class MotorAssignmentAssistantView extends PickerAssistantView {
         </div>
       </div>
     );
+  }
+  render() {
+    if (this.props.showPropsWarning) {
+      return <SafetyView>{this.content}</SafetyView>;
+    } else {
+      return this.content;
+    }
   }
 }

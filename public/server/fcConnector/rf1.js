@@ -127,9 +127,12 @@ const getModes = device => {
 };
 
 const remapMotor = (device, from, to) => {
-  let command = `set mout${to}=${parseInt(from) - 1}`;
-  return sendCommand(device, command).then(resp => {
-    return resp;
+  let commandTo = `set mout${to}=${parseInt(from) - 1}`;
+  let commandFrom = `set mout${from}=${parseInt(to) - 1}`;
+  return sendCommand(device, commandTo).then(resp1 => {
+    return sendCommand(device, commandFrom).then(resp2 => {
+      return resp1 + resp2;
+    });
   });
 };
 const storage = (device, command) => {
