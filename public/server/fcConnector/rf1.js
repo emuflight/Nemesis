@@ -1,4 +1,5 @@
-var HID = require("node-hid");
+const HID = require("node-hid");
+const imufFirmware = require("../firmware/imuf");
 
 const strToBytes = string => {
   var bytes = new Array(64);
@@ -74,8 +75,51 @@ const sendCommand = (device, command) => {
   });
 };
 
-const updateIMUF = (codeviceName, binName, notify, cb, ecb) => {
-  ecb && ecb("not implemented");
+const updateIMUF = (device, binName, notify) => {
+  notify(`Downloading ${binName}...\n`);
+  imufFirmware.load(binName, fileBuffer => {
+    notify("Communicating with IMU-F...\n");
+    let binAsStr = fileBuffer.toString("hex");
+    // let binAsStr = fs.readFileSync(path.join(__dirname, './IMUF_1.1.0_STARBUCK_ALPHA.bin')).toString('hex');
+    sendCommand(device, "imufbootloader").then(bootlresp => {
+      console.log(bootlresp);
+      if (bootlresp.indexOf("BOOTLOADER") > -1) {
+        notify("IMU-F ready to talk...\n");
+        sendCommand(device, "imufloadbin e\n").then(prepResp => {
+          console.log(prepResp);
+          if (prepResp.indexOf("SUCCESS") > -1) {
+            notify(`Loading binary onto IMU-F...\n`);
+            let index = 0;
+            const sendBytes = () => {
+              if (index < binAsStr.length) {
+                let tail = Math.min(binAsStr.length, index + 20);
+                //sending 20 bytes at a time, not sure why we get "CRAP" back when 14 is the hex of 20.
+                let sending = `imufloadbin l00000014${binAsStr.slice(
+                  index,
+                  tail
+                )}\n`;
+                console.log(sending);
+                sendCommand(device, sending).then(res => {
+                  console.log(res);
+                  notify("." + res);
+                  index = tail;
+                  sendBytes();
+                });
+              } else {
+                notify("\nFlashing IMU-F...\n");
+                sendCommand(device, "imufloadbin p\n").then(r => {
+                  console.log(r);
+                  notify(r);
+                  notify("\ndone!\nPlease wait for reboot..\n \n#flyhelio");
+                });
+              }
+            };
+            sendBytes();
+          }
+        });
+      }
+    });
+  });
 };
 const saveEEPROM = (codeviceName, binName, notify, cb, ecb) => {};
 
