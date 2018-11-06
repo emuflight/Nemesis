@@ -651,24 +651,6 @@
     "min": " 0.000",
     "max": " 10.000"
   },
-  "tpa_kp_curve_type1": {
-    "current": "1",
-    "default": " 1.000",
-    "min": " 0.000",
-    "max": " 1.000"
-  },
-  "tpa_ki_curve_type1": {
-    "current": "1",
-    "default": " 1.000",
-    "min": " 0.000",
-    "max": " 1.000"
-  },
-  "tpa_kd_curve_type1": {
-    "current": "1",
-    "default": " 1.000",
-    "min": " 0.000",
-    "max": " 1.000"
-  },
   "pname2": {
     "current": "Profile2",
     "default": "Profile2"
@@ -997,24 +979,6 @@
     "min": " 0.000",
     "max": " 10.000"
   },
-  "tpa_kp_curve_type2": {
-    "current": "1",
-    "default": " 1.000",
-    "min": " 0.000",
-    "max": " 1.000"
-  },
-  "tpa_ki_curve_type2": {
-    "current": "1",
-    "default": " 1.000",
-    "min": " 0.000",
-    "max": " 1.000"
-  },
-  "tpa_kd_curve_type2": {
-    "current": "1",
-    "default": " 1.000",
-    "min": " 0.000",
-    "max": " 1.000"
-  },
   "pname3": {
     "current": "Profile3",
     "default": "Profile3"
@@ -1342,24 +1306,6 @@
     "default": " 25.000",
     "min": " 0.000",
     "max": " 10.000"
-  },
-  "tpa_kp_curve_type3": {
-    "current": "1",
-    "default": " 1.000",
-    "min": " 0.000",
-    "max": " 1.000"
-  },
-  "tpa_ki_curve_type3": {
-    "current": "1",
-    "default": " 1.000",
-    "min": " 0.000",
-    "max": " 1.000"
-  },
-  "tpa_kd_curve_type3": {
-    "current": "1",
-    "default": " 1.000",
-    "min": " 0.000",
-    "max": " 1.000"
   },
   "rx_protocol": {
     "current": "2",

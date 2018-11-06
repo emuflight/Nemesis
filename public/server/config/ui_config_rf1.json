@@ -47,9 +47,6 @@
       "sli1",
       "sla1",
       "sld1",
-      "tpa_kp_curve_type1",
-      "tpa_ki_curve_type1",
-      "tpa_kd_curve_type1",
       "yaw_wc2",
       "roll_wc2",
       "pitch_wc2",
@@ -68,9 +65,6 @@
       "sli2",
       "sla2",
       "sld2",
-      "tpa_kp_curve_type2",
-      "tpa_ki_curve_type2",
-      "tpa_kd_curve_type2",
       "yaw_wc3",
       "roll_wc3",
       "pitch_wc3",
@@ -89,9 +83,6 @@
       "sli3",
       "sla3",
       "sld3",
-      "tpa_kp_curve_type3",
-      "tpa_ki_curve_type3",
-      "tpa_kd_curve_type3",
       "yaw_kd_rap1",
       "roll_kd_rap1",
       "pitch_kd_rap1",
@@ -520,123 +511,6 @@
     "pname3": {
       "type": "string",
       "classes": "pname3"
-    },
-    "tpa_kp_curve_type1": {
-      "mode": "LOOKUP",
-      "values": [
-        {
-          "value": "0",
-          "label": "OLD"
-        },
-        {
-          "value": "1",
-          "label": "NEW"
-        }
-      ]
-    },
-    "tpa_ki_curve_type1": {
-      "mode": "LOOKUP",
-      "values": [
-        {
-          "value": "0",
-          "label": "OLD"
-        },
-        {
-          "value": "1",
-          "label": "NEW"
-        }
-      ]
-    },
-    "tpa_kd_curve_type1": {
-      "mode": "LOOKUP",
-      "values": [
-        {
-          "value": "0",
-          "label": "OLD"
-        },
-        {
-          "value": "1",
-          "label": "NEW"
-        }
-      ]
-    },
-    "tpa_kp_curve_type2": {
-      "mode": "LOOKUP",
-      "values": [
-        {
-          "value": "0",
-          "label": "OLD"
-        },
-        {
-          "value": "1",
-          "label": "NEW"
-        }
-      ]
-    },
-    "tpa_ki_curve_type2": {
-      "mode": "LOOKUP",
-      "values": [
-        {
-          "value": "0",
-          "label": "OLD"
-        },
-        {
-          "value": "1",
-          "label": "NEW"
-        }
-      ]
-    },
-    "tpa_kd_curve_type2": {
-      "mode": "LOOKUP",
-      "values": [
-        {
-          "value": "0",
-          "label": "OLD"
-        },
-        {
-          "value": "1",
-          "label": "NEW"
-        }
-      ]
-    },
-    "tpa_kp_curve_type3": {
-      "mode": "LOOKUP",
-      "values": [
-        {
-          "value": "0",
-          "label": "OLD"
-        },
-        {
-          "value": "1",
-          "label": "NEW"
-        }
-      ]
-    },
-    "tpa_ki_curve_type3": {
-      "mode": "LOOKUP",
-      "values": [
-        {
-          "value": "0",
-          "label": "OLD"
-        },
-        {
-          "value": "1",
-          "label": "NEW"
-        }
-      ]
-    },
-    "tpa_kd_curve_type3": {
-      "mode": "LOOKUP",
-      "values": [
-        {
-          "value": "0",
-          "label": "OLD"
-        },
-        {
-          "value": "1",
-          "label": "NEW"
-        }
-      ]
     },
     "quopa_style": {
       "mode": "LOOKUP",
