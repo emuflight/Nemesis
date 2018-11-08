@@ -240,18 +240,12 @@ const getChannelMap = device => {
       reducer[parts[0]] = parts[1] && parts[1].replace("\n", "");
       return reducer;
     }, {});
-    let channels = [
-      parseInt(params.throttle_map, 10) + 1,
-      parseInt(params.roll_map, 10) + 1,
-      parseInt(params.pitch_map, 10) + 1,
-      parseInt(params.yaw_map, 10) + 1
-    ];
-    let map = {};
-    map[channels[0]] = "T";
-    map[channels[1]] = "A";
-    map[channels[2]] = "E";
-    map[channels[3]] = "R";
-    return `${map[1]}${map[2]}${map[3]}${map[4]}1234`;
+    let map = [];
+    map[parseInt(params.throttle_map, 10)] = "T";
+    map[parseInt(params.roll_map, 10)] = "A";
+    map[parseInt(params.pitch_map, 10)] = "E";
+    map[parseInt(params.yaw_map, 10)] = "R";
+    return `${map[0]}${map[1]}${map[2]}${map[3]}1234`;
   });
 };
 const setChannelMap = (device, newmap) => {

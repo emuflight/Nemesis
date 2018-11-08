@@ -21,9 +21,6 @@ export default class RXView extends Component {
     if (!this.props.fcConfig.channel_map) {
       return FCConnector.getChannelMap().then(mapping => {
         this.props.fcConfig.channel_map = mapping;
-        this.setState({
-          mapping: this.props.fcConfig.isBxF ? "AERT1234" : mapping
-        });
         this.refs.channelMap.setState({ mapping });
       });
     } else {
@@ -31,6 +28,9 @@ export default class RXView extends Component {
         mapping: this.props.fcConfig.channel_map
       });
     }
+    this.setState({
+      mapping: this.props.fcConfig.isBxF ? "AERT1234" : "RAET1234"
+    });
   }
 
   render() {
