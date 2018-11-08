@@ -10,7 +10,7 @@ import { FormattedMessage } from "react-intl";
 export default class AuxChannelItemView extends Component {
   constructor(props) {
     super(props);
-    if (props.item.range[0] == props.item.range[1]) {
+    if (props.item.range[0] === props.item.range[1]) {
       props.item.range[1] += props.scale.step;
     }
     this.state = props.item;
