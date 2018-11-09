@@ -15,20 +15,39 @@ const getConfig = device => {
   if (!connectedDevice) {
     connectedDevice = new HID.HID(device.path);
   }
-  return sendCommand(device, "config\n").then(ret => {
-    try {
-      let data = JSON.parse(ret);
-      data.version = "RACEFLIGHT|HELIOSPRING|HESP|392";
-      data.imuf = "108";
-      return data;
-    } catch (ex) {
-      console.log(ex);
-      return {
-        version: "RACEFLIGHT|HELIOSPRING|HESP|392",
-        error: ret,
-        incompatible: true
-      };
-    }
+  return sendCommand(device, "config\n").then(config => {
+    return sendCommand(device, "version\n").then(version => {
+      try {
+        let data = JSON.parse(config);
+        let versionInfo = version
+          .replace(/#vr\s|#fc\s/gim, "")
+          .split(/;|\n/)
+          .filter(part => part)
+          .reduce((reducer, part) => {
+            let params = part.split(":");
+            reducer[params[0].replace(/\s|\n/gim, "")] = params[1].replace(
+              /^\s|\s$/,
+              ""
+            );
+            return reducer;
+          }, {});
+        data.version = `RACEFLIGHT|${versionInfo.HARDWARE}|RFLT|${
+          versionInfo.VERSION
+        }`;
+        data.imuf = versionInfo.IMUFVERSION;
+        return data;
+      } catch (ex) {
+        console.log(ex);
+        return {
+          version: `RACEFLIGHT|${versionInfo.HARDWARE}|RFLT|${
+            versionInfo.VERSION
+          }`,
+          imuf: versionInfo.IMUFVERSION,
+          error: ret,
+          incompatible: true
+        };
+      }
+    });
   });
 };
 
