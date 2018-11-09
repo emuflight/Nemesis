@@ -111,22 +111,22 @@ const updateIMUF = (device, binName, notify) => {
             let index = 0;
             const sendBytes = () => {
               if (index < binAsStr.length) {
-                let tail = Math.min(binAsStr.length, index + 20);
+                let tail = Math.min(binAsStr.length, index + 38);
                 //sending 20 bytes at a time, not sure why we get "CRAP" back when 14 is the hex of 20.
-                let sending = `imufloadbin l00000014${binAsStr.slice(
+                let sending = `imufloadbin l13000000${binAsStr.slice(
                   index,
                   tail
                 )}\n`;
                 console.log(sending);
                 sendCommand(device, sending).then(res => {
                   console.log(res);
-                  notify("." + res);
+                  notify(".");
                   index = tail;
                   sendBytes();
                 });
               } else {
                 notify("\nFlashing IMU-F...\n");
-                sendCommand(device, "imufloadbin p\n").then(r => {
+                sendCommand(device, "imufflashbin\n").then(r => {
                   console.log(r);
                   notify(r);
                   notify("\ndone!\nPlease wait for reboot..\n \n#flyhelio");
