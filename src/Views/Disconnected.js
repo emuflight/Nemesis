@@ -31,13 +31,16 @@ export default class Disconnected extends Component {
         <Card>
           <CardContent>
             <Avatar
-              alt="Helio RC, LLL"
+              title={`v${this.props.appVersion}`}
               src="assets/icon.png"
               style={{ width: 60, height: 60 }}
               onClick={() => localStorage.clear()}
             />
             <Typography style={{ marginBottom: 12 }} color="textSecondary">
-              <FormattedMessage id="disconnected.title" />
+              <FormattedMessage
+                id="disconnected.title"
+                values={{ version: this.props.appVersion }}
+              />
             </Typography>
             <Typography variant="h5" component="h2">
               <FormattedMessage id="disconnected.headline" />

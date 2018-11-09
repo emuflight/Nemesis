@@ -55,6 +55,7 @@ export class App extends Component {
       .then(device => {
         if (!device.config) {
           this.setState({
+            appVersion: FCConnector.appVersion,
             id: device.comName,
             dfu: device.dfu,
             connected: false,
@@ -69,6 +70,7 @@ export class App extends Component {
             themes[device.config.version.fw] ||
             themes.dark;
           this.setState({
+            appVersion: FCConnector.appVersion,
             connecting: false,
             dfu: device.dfu,
             id: device.comName,
@@ -84,6 +86,7 @@ export class App extends Component {
       })
       .catch(() =>
         this.setState({
+          appVersion: FCConnector.appVersion,
           connecting: false,
           connected: false,
           rebooting: false
@@ -124,6 +127,7 @@ export class App extends Component {
       return (
         <MuiThemeProvider theme={this.state.theme}>
           <Connected
+            appVersion={this.state.appVersion}
             rebooting={this.state.rebooting}
             handleSave={this.handleSave}
             theme={this.state.theme}
@@ -137,6 +141,7 @@ export class App extends Component {
       return (
         <MuiThemeProvider theme={themes.dark}>
           <Disconnected
+            appVersion={this.state.appVersion}
             incompatible={this.state.incompatible}
             connecting={this.state.connecting}
             device={this.state.deviceInfo}

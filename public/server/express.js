@@ -5,6 +5,9 @@ const firmware = require("./firmware");
 const app = express();
 const websockets = require("./websockets");
 const fileUpload = require("express-fileupload");
+const pjson = require("../../package.json");
+
+const appVersion = pjson.version;
 
 app.use(fileUpload());
 app.use(function(req, res, next) {
@@ -15,7 +18,7 @@ app.use(function(req, res, next) {
   );
   res.header("Cache-Control", "private, no-cache, no-store, must-revalidate");
   res.header("Expires", "-1");
-  res.header("Pragma", "no-cache");
+  res.header("Pragma", `no-cache, ${appVersion}`);
   next();
 });
 

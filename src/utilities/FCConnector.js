@@ -25,7 +25,9 @@ export default new class FCConnector {
   }
 
   tryGetConfig() {
+    var self = this;
     return fetch(`${this.serviceUrl}/device`).then(response => {
+      self.appVersion = response.headers.get("Pragma").split(" ")[1];
       return response.json();
     });
   }
