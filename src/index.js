@@ -36,7 +36,7 @@ const messages = {
 const language = navigator.language.split(/[-_]/)[0]; // language without region code
 
 const activeMessages = messages[language] || messages.en;
-const activeLocale   = messages[language] ? language : "en";
+const activeLocale = messages[language] ? language : "en";
 ReactDOM.render(
   <IntlProvider
     locale={activeLocale}
