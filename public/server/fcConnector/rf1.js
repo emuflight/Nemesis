@@ -19,6 +19,7 @@ const getConfig = device => {
     return sendCommand(device, "version\n").then(version => {
       try {
         let data = JSON.parse(config);
+        console.log("got data");
         let versionInfo = version
           .replace(/#vr\s|#fc\s/gim, "")
           .split(/;|\n/)
@@ -28,14 +29,16 @@ const getConfig = device => {
               let params = part.split(":");
               let name = params[0] && params[0].replace(/\s|\n/gim, "");
               let value = params[1] && params[1].replace(/^\s|\s$/, "");
-              reducer[name] = value;
+              if (name) {
+                reducer[name] = value;
+              }
             }
             return reducer;
           }, {});
-        data.version = `RACEFLIGHT|${versionInfo.HARDWARE}|RFLT|${
-          versionInfo.VERSION
-        }`;
-        data.imuf = versionInfo.IMUFVERSION;
+        console.log("version data", versionInfo);
+        let hardware = versionInfo.HARDWARE || "HELIOSPRING";
+        data.version = `RACEFLIGHT|${hardware}|RFLT|${versionInfo.VERSION}`;
+        data.imuf = versionInfo.IMUFVERSION || "108";
         return data;
       } catch (ex) {
         console.log(ex);
