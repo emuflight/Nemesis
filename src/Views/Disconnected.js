@@ -73,7 +73,7 @@ export default class Disconnected extends Component {
             {openCli && (
               <CliView
                 open={openCli}
-                startText={this.incompatibleMessage}
+                startText={`${this.incompatibleMessage}\n\n${device.error}`}
                 stayOpen={openCli}
                 ref="cliView"
               />
