@@ -13,7 +13,7 @@ const setupConnection = device => {
               console.log("OPEN ERROR: ", openError);
               reject(openError);
             } else {
-              openConnection.write("!\n", cliError => {
+              openConnection.write("#\n!\n", cliError => {
                 if (cliError) {
                   console.log("couldn't get into cli mode: ", cliError);
                   reject(cliError);
@@ -26,7 +26,7 @@ const setupConnection = device => {
           });
         } catch (ex) {
           console.log("ALREADY OPEN!!!!!", ex);
-          openConnection.write("!\n", cliError => {
+          openConnection.write("#\n!\n", cliError => {
             if (cliError) {
               console.log("couldn't get into cli mode: ", cliError);
               reject(cliError);

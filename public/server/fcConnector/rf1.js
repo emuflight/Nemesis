@@ -24,11 +24,12 @@ const getConfig = device => {
           .split(/;|\n/)
           .filter(part => part)
           .reduce((reducer, part) => {
-            let params = part.split(":");
-            reducer[params[0].replace(/\s|\n/gim, "")] = params[1].replace(
-              /^\s|\s$/,
-              ""
-            );
+            if (part) {
+              let params = part.split(":");
+              let name = params[0] && params[0].replace(/\s|\n/gim, "");
+              let value = params[1] && params[1].replace(/^\s|\s$/, "");
+              reducer[name] = value;
+            }
             return reducer;
           }, {});
         data.version = `RACEFLIGHT|${versionInfo.HARDWARE}|RFLT|${
@@ -39,10 +40,8 @@ const getConfig = device => {
       } catch (ex) {
         console.log(ex);
         return {
-          version: `RACEFLIGHT|${versionInfo.HARDWARE}|RFLT|${
-            versionInfo.VERSION
-          }`,
-          imuf: versionInfo.IMUFVERSION,
+          version: "RACEFLIGHT|HELIOSPRING|RFLT|0.0.0",
+          imuf: "0000",
           error: ret,
           incompatible: true
         };

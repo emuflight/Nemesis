@@ -11,6 +11,8 @@ import { FormattedMessage, FormattedHTMLMessage } from "react-intl";
 export default class Disconnected extends Component {
   constructor(props) {
     super(props);
+    this.incompatibleMessage =
+      "**********<h1>YOU ARE IN CLI MODE.\nTHIS FIRMWARE IS NOT OFFICIALLY SUPPORTED.\nPLEASE REBOOT INTO DFU AND FLASH A SUPPORTED VERSION.</h1>**********\n";
     this.state = {
       theme: props.theme
     };
@@ -71,14 +73,7 @@ export default class Disconnected extends Component {
             {openCli && (
               <CliView
                 open={openCli}
-                startText={
-                  (
-                    <FormattedHTMLMessage
-                      id="disconnected.cli.incompatible"
-                      values={{ error: device.error }}
-                    />
-                  ).innerHTML
-                }
+                startText={this.incompatibleMessage}
                 stayOpen={openCli}
                 ref="cliView"
               />

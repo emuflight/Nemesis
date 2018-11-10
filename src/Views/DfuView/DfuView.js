@@ -37,7 +37,7 @@ export default class DfuView extends Component {
       selectedFile: undefined,
       current: "",
       currentTarget: props.target || "",
-      firmwareType: props.firmware || "",
+      firmwareType: props.firmware || "RACEFLIGHT",
       firmwareTypeList: ["RACEFLIGHT", "ButterFlight", "Betaflight"],
       progress: "",
       hasTarget: !!props.target,
