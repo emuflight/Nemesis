@@ -22,6 +22,11 @@ export default class AuxChannelView extends Component {
           };
         }
       }),
+      scale: {
+        min: props.fcConfig.isBxF ? props.auxScale.min : -100,
+        max: props.fcConfig.isBxF ? props.auxScale.max : 100,
+        step: props.fcConfig.isBxF ? props.auxScale.steps : 5
+      },
       telemetry: {
         channels: [],
         min: props.auxScale.min,
@@ -68,7 +73,7 @@ export default class AuxChannelView extends Component {
                   telemetry={this.state.telemetry.channels.slice(4)}
                   telemetryMin={this.state.telemetry.min}
                   telemetryMax={this.state.telemetry.max}
-                  scale={this.props.auxScale}
+                  scale={this.state.scale}
                   channels={this.state.channels}
                   auxModeList={this.props.auxModeList}
                   notifyDirty={this.props.notifyDirty}
