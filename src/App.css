@@ -21,3 +21,7 @@
 
 .danger {
   background-color: red; }
+
+.RACEFLIGHT .warning,
+.RACEFLIGHT .danger {
+  background-color: inherit; }
