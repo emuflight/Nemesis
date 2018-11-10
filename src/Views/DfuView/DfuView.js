@@ -186,6 +186,7 @@ export default class DfuView extends Component {
       <Paper className="dfu-view-root">
         {this.state.firmwareTypeList && (
           <HelperSelect
+            labelClassName="dfu-select-firmware"
             label="dfu.target.firmware-type"
             value={this.state.firmwareType}
             disabled={this.state.isFlashing}

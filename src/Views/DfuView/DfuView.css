@@ -6,3 +6,10 @@
   padding: 30px 10px 10px 10px;
   min-height: 100%;
   box-sizing: border-box; }
+
+.dfu-view-root .dfu-select-firmware {
+  font-size: 1.5rem;
+  font-weight: normal;
+  color: white;
+  margin-left: -8px;
+  margin-bottom: -13px; }

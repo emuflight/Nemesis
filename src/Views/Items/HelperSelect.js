@@ -17,6 +17,7 @@ const HelperSelect = class extends Component {
         className={classes.formControl}
       >
         <InputLabel
+          className={this.props.labelClassName}
           shrink
           htmlFor={`${this.props.name}-label-placeholder`}
           style={{ whiteSpace: "nowrap" }}
