@@ -111,6 +111,7 @@ export default class PreFlightCheckView extends Component {
           />
           <Paper style={{ flex: 1 }}>
             <ArmingFlagsView
+              goToImuf={this.props.goToImuf}
               imufVersion={this.props.fcConfig.imuf}
               rcCalibrated={this.props.fcConfig.rc_calibrated}
               boardCalibrated={this.props.fcConfig.board_calibrated}

@@ -38,7 +38,7 @@ const getConfig = device => {
         console.log("version data", versionInfo);
         let hardware = versionInfo.HARDWARE || "HELIOSPRING";
         data.version = `RACEFLIGHT|${hardware}|RFLT|${versionInfo.VERSION}`;
-        data.imuf = versionInfo.IMUFVERSION || "108";
+        data.imuf = versionInfo.IMUFVERSION || "9999";
         return data;
       } catch (ex) {
         console.log(ex);

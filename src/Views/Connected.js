@@ -128,6 +128,7 @@ export default class Connected extends Component {
       case "PFC":
         contents = (
           <PreFlightCheckView
+            goToImuf={this.props.goToImuf}
             fcConfig={mergedProfile}
             handleSave={this.handleSave}
             modelUrl={this.state.theme.modelUrl}

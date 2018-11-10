@@ -33,7 +33,8 @@ export default class ArmingFlagsView extends Component {
     if (props.imufVersion === "9999") {
       flags.push({
         id: "imuf_update",
-        label: "imuf.needs-update"
+        label: "imuf.needs-update",
+        onClick: () => props.goToImuf()
       });
     }
     this.staticFlags = flags;
@@ -83,6 +84,7 @@ export default class ArmingFlagsView extends Component {
         <List>
           {this.state.armingFlags.map(flag => (
             <Chip
+              onClick={flag.onClick}
               key={flag.label}
               style={{ margin: 4 }}
               label={<FormattedMessage id={flag.label} />}
