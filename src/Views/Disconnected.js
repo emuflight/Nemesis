@@ -6,13 +6,13 @@ import Avatar from "@material-ui/core/Avatar";
 import Paper from "@material-ui/core/Paper";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import CliView from "./CliView/CliView";
-import { FormattedMessage, FormattedHTMLMessage } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 export default class Disconnected extends Component {
   constructor(props) {
     super(props);
     this.incompatibleMessage =
-      "**********<h1>YOU ARE IN CLI MODE.\nTHIS FIRMWARE IS NOT OFFICIALLY SUPPORTED.\nPLEASE REBOOT INTO DFU AND FLASH A SUPPORTED VERSION.</h1>**********\n";
+      "**********<h1>YOU ARE IN CLI MODE.\nTHIS FIRMWARE IS NOT OFFICIALLY SUPPORTED.\nPLEASE REBOOT INTO DFU AND FLASH A SUPPORTED VERSION.\n\nTO ENTER DFU, TYPE EITHER 'bl' OR 'rebootDFU' DEPENDING ON EXISTING FIRMWARE AND PRESS ENTER</h1>**********\n";
     this.state = {
       theme: props.theme
     };
