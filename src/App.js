@@ -102,7 +102,7 @@ export class App extends Component {
           FCConnector.startTelemetry();
         });
       } else {
-        setTimeout(()=> {
+        setTimeout(() => {
           FCConnector.startTelemetry();
         }, 7000);
         return this.state.currentConfig;
