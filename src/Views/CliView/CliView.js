@@ -80,18 +80,17 @@ export default class CliView extends Component {
   render() {
     return (
       <div>
-        {!this.state.open &&
-          !this.state.disabled && (
-            <Keyboard
-              style={{
-                position: "fixed",
-                bottom: "20px",
-                right: "20px",
-                color: this.props.theme.palette.primary[500]
-              }}
-              onClick={() => this.toggleCli(true)}
-            />
-          )}
+        {!this.state.open && !this.state.disabled && (
+          <Keyboard
+            style={{
+              position: "fixed",
+              bottom: "20px",
+              right: "20px",
+              color: this.props.theme.palette.primary[500]
+            }}
+            onClick={() => this.toggleCli(true)}
+          />
+        )}
         <SwipeableDrawer
           anchor="bottom"
           onOpen={() => {}}

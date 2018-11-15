@@ -66,13 +66,12 @@ export default class RXView extends Component {
               notifyDirty={this.props.notifyDirty}
             />
           </div>
-          {this.state.showRXTelem &&
-            this.state.mapping && (
-              <RXTelemView
-                scale={this.props.fcConfig.rx_scale}
-                channelMap={this.state.mapping}
-              />
-            )}
+          {this.state.showRXTelem && this.state.mapping && (
+            <RXTelemView
+              scale={this.props.fcConfig.rx_scale}
+              channelMap={this.state.mapping}
+            />
+          )}
         </Paper>
         <Paper>
           <ConfigListView
