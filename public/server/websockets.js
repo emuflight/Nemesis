@@ -11,6 +11,12 @@ const server = http.createServer((request, response) => {
   // server we don't have to implement anything.
 });
 
+const cleanupConnections = () => {
+  bxf.reset();
+  rf1.reset();
+  clearInterval(wsServer.fastTelemetryInterval);
+  clearInterval(wsServer.slowTelemetryInterval);
+};
 server.listen(9002, () => {});
 
 // create the server
@@ -45,10 +51,7 @@ wsServer.on("request", request => {
   // Detect remove
   usb.on(`detach`, device => {
     if (device.deviceDescriptor.idVendor === STM32USB.vendorId) {
-      bxf.reset();
-      rf1.reset();
-      clearInterval(wsServer.fastTelemetryInterval);
-      clearInterval(wsServer.slowTelemetryInterval);
+      cleanupConnections();
       connection.sendUTF(
         JSON.stringify({
           connectionEvent: true,
@@ -63,8 +66,7 @@ wsServer.on("request", request => {
   connection.on("message", message => {});
 
   connection.on("close", connection => {
-    clearInterval(wsServer.fastTelemetryInterval);
-    clearInterval(wsServer.slowTelemetryInterval);
+    cleanupConnections();
   });
 });
 
@@ -91,5 +93,6 @@ module.exports = {
   wsServer: wsServer,
   clients: clients,
   notifyProgress: notifyProgress,
-  notifyTelem: notifyTelem
+  notifyTelem: notifyTelem,
+  cleanup: cleanupConnections
 };

@@ -405,6 +405,7 @@ const getTelemetry = (device, type) => {
 
 const reset = () => {
   if (connectedDevice) {
+    connectedDevice.write(strToBytes("reset\n"));
     connectedDevice.close();
   }
   connectedDevice = undefined;
