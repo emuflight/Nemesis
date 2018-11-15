@@ -17,11 +17,11 @@ export default class CalibrateMotorsView extends Component {
           <div style={{ flex: 1, display: "flex" }}>
             <CalibrateMotorsSteps
               fcConfig={this.props.fcConfig}
-              onFinish={this.props.onFinish}
+              onFinish={() => this.props.onFinish()}
               lastChoice={this.props.lastChoice}
             />
           </div>
-          <Button variant="contained" onClick={this.props.onFinish}>
+          <Button variant="contained" onClick={() => this.props.onFinish()}>
             <FormattedMessage id="assistant.motors.skip-calibration" />
           </Button>
         </div>

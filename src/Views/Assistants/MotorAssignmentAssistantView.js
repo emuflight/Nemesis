@@ -8,17 +8,18 @@ import { FormattedMessage } from "react-intl";
 import SafetyView from "../SafetyView/SafetyView";
 
 const motorLayout = [
-  { position: "absolute", top: 0, left: 0 },
-  { position: "absolute", top: 0, right: 0 },
-  { position: "absolute", bottom: 0, right: 0 },
-  { position: "absolute", bottom: 0, left: 0 }
+  { position: "absolute", top: 0, left: 0, padding: 0, margin: 0 },
+  { position: "absolute", top: 0, right: 0, padding: 0, margin: 0 },
+  { position: "absolute", bottom: 0, right: 0, padding: 0, margin: 0 },
+  { position: "absolute", bottom: 0, left: 0, padding: 0, margin: 0 }
 ];
 export default class MotorAssignmentAssistantView extends PickerAssistantView {
   constructor(props) {
     super(props);
     this.state = {
       saving: false,
-      spinning: 0
+      spinning: 0,
+      isBxF: props.fcConfig.isBxF
     };
   }
 
@@ -46,6 +47,8 @@ export default class MotorAssignmentAssistantView extends PickerAssistantView {
     }
   }
   get content() {
+    let propsReversed =
+      this.props.lastChoice && this.props.lastChoice.title === "Reversed";
     return (
       <div
         style={{
@@ -81,9 +84,12 @@ export default class MotorAssignmentAssistantView extends PickerAssistantView {
               height: "100%",
               margin: "0 auto",
               position: "relative",
-              backgroundImage: `url("assets/props.png")`,
+              backgroundImage: `url("assets/props${
+                propsReversed ? "-reversed" : ""
+              }.jpg")`,
               backgroundPosition: "center",
-              backgroundRepeat: "no-repeat"
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "contain"
             }}
           >
             {this.props.fcConfig &&

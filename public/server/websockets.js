@@ -66,7 +66,8 @@ wsServer.on("request", request => {
   connection.on("message", message => {});
 
   connection.on("close", connection => {
-    cleanupConnections();
+    clearInterval(wsServer.fastTelemetryInterval);
+    clearInterval(wsServer.slowTelemetryInterval);
   });
 });
 

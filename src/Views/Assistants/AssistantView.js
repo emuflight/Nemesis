@@ -40,6 +40,7 @@ export default class AssistantView extends Component {
     this.props.onClose();
   }
   handleNext(lastChoice) {
+    lastChoice = lastChoice || this.state.lastChoice;
     if (this.state.currentStep >= this.state.endStep) {
       this.props.onClose();
     } else {

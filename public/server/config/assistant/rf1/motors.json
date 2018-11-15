@@ -4,22 +4,22 @@
     "headline": "You will need to verify the motor direction in BLHeli Suite!!!",
     "options": [
       {
-        "image": "assets/props.png",
+        "image": "assets/props.jpg",
         "style": {
           "height": 320,
           "width": 280,
-          "backgroundSize": "contain"
+          "backgroundSize": "cover"
         },
         "title": "Normal",
         "headline": "Normal",
         "commands": ["set mixer_type=0", "save"]
       },
       {
-        "image": "assets/props-reversed.png",
+        "image": "assets/props-reversed.jpg",
         "style": {
           "height": 320,
           "width": 280,
-          "backgroundSize": "contain"
+          "backgroundSize": "cover"
         },
         "title": "Reversed",
         "headline": "Reversed",

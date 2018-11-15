@@ -3,22 +3,22 @@
     "id": "assistant.motors.direction",
     "options": [
       {
-        "image": "assets/props.png",
+        "image": "assets/props.jpg",
         "style": {
           "height": 320,
           "width": 280,
-          "backgroundSize": "contain"
+          "backgroundSize": "cover"
         },
         "title": "Normal",
         "headline": "Normal",
         "commands": ["set yaw_motors_reversed=OFF"]
       },
       {
-        "image": "assets/props-reversed.png",
+        "image": "assets/props-reversed.jpg",
         "style": {
           "height": 320,
           "width": 280,
-          "backgroundSize": "contain"
+          "backgroundSize": "cover"
         },
         "title": "Reversed",
         "headline": "Reversed",
