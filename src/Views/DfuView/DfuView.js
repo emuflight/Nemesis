@@ -40,7 +40,6 @@ export default class DfuView extends Component {
       firmwareType: props.firmware || "RACEFLIGHT",
       firmwareTypeList: ["RACEFLIGHT", "ButterFlight", "Betaflight"],
       progress: "",
-      hasTarget: !!props.target,
       firmwares: {}
     };
     let isProgressStarted = false;
@@ -223,11 +222,7 @@ export default class DfuView extends Component {
             style={{ flex: 1 }}
             label="dfu.target.title"
             value={this.state.currentTarget}
-            disabled={
-              this.state.isFlashing ||
-              this.state.hasTarget ||
-              !!this.state.selectedFile
-            }
+            disabled={this.state.isFlashing || !!this.state.selectedFile}
             onChange={event => {
               this.setState({ currentTarget: event.target.value });
             }}
