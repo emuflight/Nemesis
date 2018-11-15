@@ -105,5 +105,11 @@
   "win32Dependencies": {
     "usb": "github:tessel/node-usb#2961e948d93bec0cdd1908c03e3f1f98dfd3fd44",
     "node-hid": "^0.7.3"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }

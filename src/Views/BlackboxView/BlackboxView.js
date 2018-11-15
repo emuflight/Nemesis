@@ -49,7 +49,7 @@ export default class BlackBoxView extends Component {
             />
             <br />
             <Button
-              onClick={() => FCConnector.sendCommand("msc")}
+              onClick={() => FCConnector.sendCommand(this.props.storageCommand)}
               variant="contained"
               color="primary"
             >

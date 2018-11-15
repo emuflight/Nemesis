@@ -266,6 +266,7 @@ export default class Connected extends Component {
       case "BLACKBOX":
         contents = (
           <BlackboxView
+            storageCommand={this.props.fcConfig.isBxF ? "msc" : "msd"}
             items={this.getRouteItems(mergedProfile, true)}
             notifyDirty={(isDirty, item, newValue) =>
               this.notifyDirty(isDirty, item, newValue)
