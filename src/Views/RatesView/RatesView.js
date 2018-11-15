@@ -416,7 +416,7 @@ export default class RatesView extends ProfileView {
               xTicks={0}
               width={450}
               height={350}
-              margin={{ top: 0, left: 0, bottom: 50, right: 50 }}
+              margin={{ top: 10, left: 10, bottom: 50, right: 50 }}
               data={[curves.x, curves.y, curves.z]}
             />
           </Paper>
