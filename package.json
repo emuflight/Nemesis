@@ -44,7 +44,6 @@
     "electron-updater": "^3.1.2",
     "express": "^4.16.4",
     "express-fileupload": "^1.0.0",
-    "material-ui": "^0.20.2",
     "material-ui-slider": "^3.0.0",
     "node-hid": "^0.7.3",
     "react": "^16.5.2",
@@ -87,16 +86,16 @@
     "preelectron-pack": "yarn build && yarn build-css"
   },
   "devDependencies": {
-    "concurrently": "^3.5.0",
-    "electron": "^3.0.5",
-    "electron-builder": "^20.28.4",
-    "electron-packager": "^12.2.0",
-    "electron-rebuild": "^1.8.2",
-    "husky": "^0.14.3",
-    "lint-staged": "^7.3.0",
+    "concurrently": "3.5.0",
+    "electron": "3.0.5",
+    "electron-builder": "20.28.4",
+    "electron-packager": "12.2.0",
+    "electron-rebuild": "1.8.2",
+    "husky": "0.14.3",
+    "lint-staged": "7.3.0",
     "node-sass-chokidar": "0.0.3",
-    "prettier": "^1.14.3",
-    "wait-on": "^3.1.0"
+    "prettier": "1.14.3",
+    "wait-on": "3.1.0"
   },
   "darwinDependencies": {
     "usb": "github:tessel/node-usb#2961e948d93bec0cdd1908c03e3f1f98dfd3fd44",
