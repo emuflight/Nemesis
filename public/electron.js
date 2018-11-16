@@ -101,10 +101,6 @@ app.on("ready", function() {
 app.on("window-all-closed", () => {
   app.quit();
 });
-// on MacOS leave process running also with no windows
-app.on("before-quit", () => {
-  server.cleanup();
-});
 
 // if there are no windows create one
 app.on("activate", () => {

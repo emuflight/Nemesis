@@ -348,6 +348,5 @@ app.listen(9001, () => console.info("usb interface listening on port 9001!"));
 
 module.exports = {
   express,
-  app,
-  cleanup: websockets.cleanup
+  app
 };

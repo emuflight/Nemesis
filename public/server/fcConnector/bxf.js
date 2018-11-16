@@ -410,7 +410,6 @@ const getTelemetry = (device, type) => {
 
 const reset = () => {
   if (openConnection && openConnection.isOpen) {
-    openConnection.write("exit\n");
     openConnection.close();
   }
   openConnection = undefined;
