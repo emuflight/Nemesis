@@ -13,13 +13,11 @@ module.exports = new class {
         try {
           let data = JSON.parse(body);
           cb(
-            data
-              .filter(file => file.name.endsWith(".bin"))
-              .map(file => {
-                file.note =
-                  "See the release notes here: https://github.com/heliorc/imuf-release/blob/master/CHANGELOG.md";
-                return file;
-              })
+            data.filter(file => file.name.endsWith(".bin")).map(file => {
+              file.note =
+                "See the release notes here: https://github.com/heliorc/imuf-release/blob/master/CHANGELOG.md";
+              return file;
+            })
           );
         } catch (ex) {
           cb([]);

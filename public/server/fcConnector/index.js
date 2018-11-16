@@ -342,20 +342,17 @@ module.exports = new class FcConnector {
     clearInterval(websockets.wsServer.slowTelemetryInterval);
     websockets.wsServer.telemetryType = type;
     if (type !== "status") {
-      websockets.wsServer.fastTelemetryInterval = setInterval(
-        () => {
-          if (deviceInfo.hid) {
-            rf1Connector.getTelemetry(deviceInfo, type).then(telemData => {
-              websockets.notifyTelem(telemData);
-            });
-          } else {
-            bxfConnector.getTelemetry(deviceInfo, type).then(telemData => {
-              websockets.notifyTelem(telemData);
-            });
-          }
-        },
-        type === "rx" ? 250 : fastIntervalMs
-      );
+      websockets.wsServer.fastTelemetryInterval = setInterval(() => {
+        if (deviceInfo.hid) {
+          rf1Connector.getTelemetry(deviceInfo, type).then(telemData => {
+            websockets.notifyTelem(telemData);
+          });
+        } else {
+          bxfConnector.getTelemetry(deviceInfo, type).then(telemData => {
+            websockets.notifyTelem(telemData);
+          });
+        }
+      }, type === "rx" ? 250 : fastIntervalMs);
     }
     websockets.wsServer.slowTelemetryInterval = setInterval(() => {
       if (deviceInfo.hid) {

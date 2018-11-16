@@ -202,8 +202,9 @@ export default class OSDView extends Component {
   }
 
   render() {
-    let elementsPositioned = this.state.elementsAvailable.filter(item =>
-      this.props.fcConfig.isBxF ? checkOSDVal(item.current) : item.current
+    let elementsPositioned = this.state.elementsAvailable.filter(
+      item =>
+        this.props.fcConfig.isBxF ? checkOSDVal(item.current) : item.current
     );
     let nonElementSettings = this.props.items.filter(item => {
       return !item.id.endsWith("_pos");
@@ -248,39 +249,40 @@ export default class OSDView extends Component {
               />
             </FormGroup>
           )}
-          {this.props.fcConfig.isBxF && this.state.osdEnabled && (
-            <React.Fragment>
-              <DropdownView
-                item={this.props.fcConfig.vcd_video_system}
-                notifyDirty={(isDirty, item, val) => {
-                  this.setState({ videoMode: val });
-                  this.props.notifyDirty(isDirty, item, val);
-                }}
-              />
-              <HelperSelect
-                name="osd.select-font"
-                label="osd.select-font"
-                value={this.state.selectedFont}
-                onChange={(event, elem) => {
-                  this.setState({ selectedFont: elem.key });
-                }}
-                items={this.fontList}
-              />
-              <Button
-                variant="contained"
-                color="primary"
-                disabled={this.state.uploadingFont}
-                onClick={() => this.handleUpload()}
-              >
-                <FormattedMessage id="osd.upload" />
-              </Button>
-              <LinearProgress
-                style={{ height: 20, flex: 1, marginLeft: 10 }}
-                variant="determinate"
-                value={normalise(this.state.uploadProgress)}
-              />
-            </React.Fragment>
-          )}
+          {this.props.fcConfig.isBxF &&
+            this.state.osdEnabled && (
+              <React.Fragment>
+                <DropdownView
+                  item={this.props.fcConfig.vcd_video_system}
+                  notifyDirty={(isDirty, item, val) => {
+                    this.setState({ videoMode: val });
+                    this.props.notifyDirty(isDirty, item, val);
+                  }}
+                />
+                <HelperSelect
+                  name="osd.select-font"
+                  label="osd.select-font"
+                  value={this.state.selectedFont}
+                  onChange={(event, elem) => {
+                    this.setState({ selectedFont: elem.key });
+                  }}
+                  items={this.fontList}
+                />
+                <Button
+                  variant="contained"
+                  color="primary"
+                  disabled={this.state.uploadingFont}
+                  onClick={() => this.handleUpload()}
+                >
+                  <FormattedMessage id="osd.upload" />
+                </Button>
+                <LinearProgress
+                  style={{ height: 20, flex: 1, marginLeft: 10 }}
+                  variant="determinate"
+                  value={normalise(this.state.uploadProgress)}
+                />
+              </React.Fragment>
+            )}
         </div>
         {this.state.osdEnabled && (
           <div className={this.state.selectedFont} style={{ display: "flex" }}>

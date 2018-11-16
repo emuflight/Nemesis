@@ -29,15 +29,16 @@ export default class PidsView extends ProfileView {
         className="pid-view"
         style={{ display: "flex", flexDirection: "column" }}
       >
-        {!this.state.isBxF && this.state.tpaCurves && (
-          <Paper>
-            <TpaCurveView
-              activeProfile={this.props.active}
-              notifyDirty={this.props.notifyDirty}
-              item={this.state.tpaCurves}
-            />
-          </Paper>
-        )}
+        {!this.state.isBxF &&
+          this.state.tpaCurves && (
+            <Paper>
+              <TpaCurveView
+                activeProfile={this.props.active}
+                notifyDirty={this.props.notifyDirty}
+                item={this.state.tpaCurves}
+              />
+            </Paper>
+          )}
         {this.state.isBxF && (
           <Paper>
             <div>
