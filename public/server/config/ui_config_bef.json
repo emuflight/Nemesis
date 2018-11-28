@@ -48,6 +48,10 @@
       "battery_meter",
       "vbat_divider",
       "vbat_warning_cell_voltage",
+      "vbat_max_cell_voltage",
+      "vbat_min_cell_voltage",
+      "vbat_full_cell_voltage",
+      "vbat_hysteresis",
       "vbat_scale",
       "ibata_scale",
       "ibata_offset",
@@ -292,6 +296,10 @@
       "pad": 2
     },
     "vbat_min_cell_voltage": {
+      "float": true,
+      "pad": 2
+    },
+    "vbat_max_cell_voltage": {
       "float": true,
       "pad": 2
     },
