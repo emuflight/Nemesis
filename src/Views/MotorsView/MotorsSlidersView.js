@@ -39,25 +39,14 @@ export default class MotorsSlidersView extends Component {
   render() {
     return (
       <SafetyView>
-        <div
-          style={{
-            display: "flex",
-            flex: 1,
-            justifyItems: "center",
-            alignItems: "center"
-          }}
-        >
+        <div className="motor-sliders-view">
           {this.state.motors.map((item, i) => {
             return (
               <MotorSliderItemView
                 sliderClassName="motor-control-slider"
                 labelClassName="motor-control-slider-label"
-                style={{ flex: 1 }}
                 textInputProps={{
-                  style: {
-                    width: 60,
-                    textAlign: "right"
-                  }
+                  className: "motor-sliders-input"
                 }}
                 key={`motor ${i}`}
                 inputDisabled={true}

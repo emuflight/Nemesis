@@ -4,7 +4,7 @@ import ConfigListView from "../ConfigListView/ConfigListView";
 import Paper from "@material-ui/core/Paper";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Typography from "@material-ui/core/Typography";
-import { Button } from "@material-ui/core";
+import { Button, Modal } from "@material-ui/core";
 import { FormattedMessage } from "react-intl";
 import "./BlackboxView.css";
 
@@ -12,6 +12,7 @@ export default class BlackBoxView extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      modalOpen: false,
       theme: props.theme,
       storageInfo: {
         totalSize: 1,
@@ -19,11 +20,22 @@ export default class BlackBoxView extends Component {
       }
     };
   }
-  componentDidMount() {
+
+  getStorageInfo() {
     return FCConnector.storage().then(storageInfo => {
       this.setState({ storageInfo });
     });
   }
+
+  componentDidMount() {
+    return this.getStorageInfo();
+  }
+
+  handleModalClose = () => {
+    this.setState({ modalOpen: false }, () => {
+      return this.getStorageInfo();
+    });
+  };
   render() {
     let normalizedPercent =
       ((this.state.storageInfo.usedSize - 0) * 100) /
@@ -56,13 +68,32 @@ export default class BlackBoxView extends Component {
               <FormattedMessage id="blackbox.load-drive" />
             </Button>
             <Button
-              onClick={() => FCConnector.storage("erase")}
+              onClick={() =>
+                FCConnector.storage("erase").then(() => {
+                  this.setState({
+                    modalOpen: true,
+                    modalMessage: "Erase Complete"
+                  });
+                })
+              }
               variant="contained"
               color="secondary"
               style={{ marginLeft: 20 }}
             >
               <FormattedMessage id="blackbox.erase-storage" />
             </Button>
+            <Modal open={this.state.modalOpen} onClose={this.handleModalClose}>
+              <div className="notification-modal">
+                <Typography variant="h6">{this.state.modalMessage}</Typography>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={this.handleModalClose}
+                >
+                  <FormattedMessage id="common.finished" />
+                </Button>
+              </div>
+            </Modal>
           </div>
         </Paper>
         <Paper>

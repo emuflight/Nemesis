@@ -1,7 +1,7 @@
 import React from "react";
 import DfuView from "../DfuView/DfuView";
 import FCConnector from "../../utilities/FCConnector";
-import { FormattedMessage, FormattedHTMLMessage } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 export default class ImufView extends DfuView {
   constructor(props) {
@@ -9,7 +9,8 @@ export default class ImufView extends DfuView {
     this.title = <FormattedMessage id="imuf.title" />;
     this.flText = <FormattedMessage id="imuf.select.version" />;
     this.btnLabel = <FormattedMessage id="common.update" />;
-    this.cliNotice = <FormattedHTMLMessage id="imuf.update.message" />;
+    this.cliNotice =
+      '\n\n**********<h1>YOU ARE IN IMU-F UPDATE MODE.\nDO NOT UNPLUG YOUR DEVICE UNTIL UPDATE IS COMPLETE OR YOU\'RE GONNA HAVE A BAD TIME.</h1><img id="pbjt" src="assets/teehee.png" height="90" width="90"/><br/>**********\n\n';
     this.state = {
       currentTarget: "IMU-F",
       current: "IMU-F",

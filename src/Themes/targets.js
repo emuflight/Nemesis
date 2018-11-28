@@ -36,12 +36,19 @@ const common = {
     MuiSlider: {
       root: {
         padding: 0,
-        width: 150,
         marginTop: 10,
         height: 10
       },
+      track: {
+        "& + $vertical": {
+          left: "0 !important"
+        }
+      },
       vertical: {
-        width: 0
+        left: "0 !important",
+        "& + $track": {
+          left: "0 !important"
+        }
       }
     }
   }

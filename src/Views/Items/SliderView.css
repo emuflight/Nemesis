@@ -17,3 +17,8 @@
 
 .slider-control-label {
   white-space: nowrap; }
+
+.vertical-slider-view {
+  margin: 0 10px;
+  display: flex;
+  flex-direction: column; }

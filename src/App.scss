@@ -33,3 +33,16 @@
     background-color: inherit;
   }
 }
+
+.notification-modal {
+  background-color: wheat;
+  text-align: center;
+  margin: 0 auto;
+  height: 80px;
+  width: 200px;
+  margin-top: 250px;
+  h6 {
+    color: black;
+    margin-bottom: 0;
+  }
+}

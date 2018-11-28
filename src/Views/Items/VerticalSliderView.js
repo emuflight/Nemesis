@@ -24,49 +24,45 @@ export default class VerticalSliderView extends Component {
   }
   render() {
     return (
-      <div style={this.props.style}>
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <Typography
-            variant="caption"
-            className={this.props.labelClassName}
-            style={{ whiteSpace: "nowrap" }}
-          >
-            <FormattedMessage id={this.props.item.id} />
-          </Typography>
-          <Slider
-            className={this.props.sliderClassName}
-            value={this.parser(this.props.item.current)}
-            disabled={!!this.state.isDirty}
-            min={this.parser(this.props.item.min)}
-            max={this.parser(this.props.item.max)}
-            step={this.props.item.step}
-            vertical={this.props.item.axis === "y"}
-            reverse="true"
-            onChange={(event, inputVal) => {
-              this.setState({ inputVal: this.parser(inputVal) });
-              this.props.item.current = this.parser(inputVal);
-              this.props.onChange && this.props.onChange(event, inputVal);
-            }}
-            onDragEnd={() => {
-              this.updateValue(this.state.inputVal);
-            }}
-          />
-        </div>
-        <div>
-          <TextField
-            name={this.props.item.id}
-            inputProps={this.props.textInputProps}
-            type="number"
-            disabled={this.props.inputDisabled}
-            value={this.parser(this.state.inputVal)}
-            onBlur={() => {
-              this.updateValue(this.state.inputVal);
-            }}
-            onChange={event => {
-              this.setState({ inputVal: this.parser(event.target.value) });
-            }}
-          />
-        </div>
+      <div className="vertical-slider-view">
+        <Typography
+          variant="caption"
+          className={this.props.labelClassName}
+          style={{ whiteSpace: "nowrap" }}
+        >
+          <FormattedMessage id={this.props.item.id} />
+        </Typography>
+        <Slider
+          className={this.props.sliderClassName}
+          value={this.parser(this.props.item.current)}
+          disabled={!!this.state.isDirty}
+          min={this.parser(this.props.item.min)}
+          max={this.parser(this.props.item.max)}
+          step={this.props.item.step}
+          vertical={this.props.item.axis === "y"}
+          reverse="true"
+          onChange={(event, inputVal) => {
+            this.setState({ inputVal: this.parser(inputVal) });
+            this.props.item.current = this.parser(inputVal);
+            this.props.onChange && this.props.onChange(event, inputVal);
+          }}
+          onDragEnd={() => {
+            this.updateValue(this.state.inputVal);
+          }}
+        />
+        <TextField
+          name={this.props.item.id}
+          inputProps={this.props.textInputProps}
+          type="number"
+          disabled={this.props.inputDisabled}
+          value={this.parser(this.state.inputVal)}
+          onBlur={() => {
+            this.updateValue(this.state.inputVal);
+          }}
+          onChange={event => {
+            this.setState({ inputVal: this.parser(event.target.value) });
+          }}
+        />
       </div>
     );
   }

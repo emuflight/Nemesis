@@ -25,3 +25,14 @@
 .RACEFLIGHT .warning,
 .RACEFLIGHT .danger {
   background-color: inherit; }
+
+.notification-modal {
+  background-color: wheat;
+  text-align: center;
+  margin: 0 auto;
+  height: 80px;
+  width: 200px;
+  margin-top: 250px; }
+  .notification-modal h6 {
+    color: black;
+    margin-bottom: 0; }
