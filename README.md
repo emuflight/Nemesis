@@ -1,7 +1,7 @@
 # Nemesis - the HelioRC/Pegasus fork
 Death of Sol :(
 
-## Linux, One O.S. to rule them all.
+## Linux, one O.S. to rule them all.
 Edit/create `udev` rules: (use vi, nano, or any text editor)
 ```
 sudo nano /etc/udev/rules.d/50-myusb.rules
@@ -39,6 +39,9 @@ cd sqaush-fs
 ```
 #git clone https://github.com/heliorc/pegasus.git
 git clone https://github.com/nerdCopter/Nemesis.git
+
+#cd pegasus
+cd Nemesis
 
 #purge/reset nodejs packages if you installed updated versions by accident
 git reset HEAD --hard
