@@ -56,6 +56,9 @@ npm install --save --save-exact  #installs exact versions, not updated packages
 npm install electron@~4.0.0
 npm install ajv@~6.9.1
 
+#disable annoying desktop shortcut creation for election apps
+touch $HOME/.local/share/appimagekit/no_desktopintegration
+
 #compile it (nicely so CPU doesn't spike)
 nice -n 19 npm run electron-pack-lin
 
