@@ -12,6 +12,7 @@ import { FormControlLabel, FormGroup, Switch } from "@material-ui/core";
 import "./DfuView.css";
 
 const releaseUrls = {
+  EmuFlight: "https://api.github.com/repos/emuflight/EmuFlight/releases/latest",
   ButterFlight:
     "https://api.github.com/repos/ButterFlight/Butterflight/releases/latest",
   RACEFLIGHT: "https://api.github.com/repos/orneryd/omg/releases/latest",
@@ -19,6 +20,8 @@ const releaseUrls = {
     "https://api.github.com/repos/heliorc/imuf-release-bef/releases/latest"
 };
 const releaseNotesUrls = {
+  EmuFlight:
+    "https://raw.githubusercontent.com/emuflight/EmuFlight/0.1.0/README.md",
   ButterFlight:
     "https://raw.githubusercontent.com/ButterFlight/butterflight/3.6.2/README.md",
   RACEFLIGHT: "https://raw.githubusercontent.com/orneryd/omg/v3.0.33/README.md",
@@ -38,7 +41,12 @@ export default class DfuView extends Component {
       current: "",
       currentTarget: props.target || "",
       firmwareType: props.firmware || "RACEFLIGHT",
-      firmwareTypeList: ["RACEFLIGHT", "ButterFlight", "Betaflight"],
+      firmwareTypeList: [
+        "EmuFlight",
+        "RACEFLIGHT",
+        "ButterFlight",
+        "Betaflight"
+      ],
       progress: "",
       firmwares: {}
     };

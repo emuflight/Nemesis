@@ -25,11 +25,13 @@ export default class ImufView extends DfuView {
     return "imufReleases";
   }
   get releaseUrl() {
-    return "https://api.github.com/repos/heliorc/imuf-release-dev/contents";
+    //return "https://api.github.com/repos/heliorc/imuf-release-dev/contents";
+    return "https://api.github.com/repos/nerdCopter/IMUF_Binaries/contents";
   }
 
   get releaseNotesUrl() {
-    return "https://raw.githubusercontent.com/heliorc/imuf-release/master/CHANGELOG.md";
+    //return "https://raw.githubusercontent.com/heliorc/imuf-release/master/CHANGELOG.md";
+    return "https://raw.githubusercontent.com/nerdCopter/IMUF_Binaries/master/README.md";
   }
 
   setFirmware(data) {
