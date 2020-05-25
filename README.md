@@ -55,12 +55,14 @@ cd Nemesis
 git reset HEAD --hard
 rm -rf node_modules/
 
+#set python2
+npm config set python /usr/bin/python2.7
+
 #install required obsolete packages
 npm install --save --save-exact  #installs exact versions, not updated packages
 
-#npm install electron@~5.0.0  #failed w/ v5
-
 #install peers that are not installed by default
+#npm install electron@~5.0.0  #failed w/ v5
 npm install electron@~4.0.0
 npm install ajv@~6.9.1
 
@@ -68,6 +70,7 @@ npm install ajv@~6.9.1
 touch $HOME/.local/share/appimagekit/no_desktopintegration
 
 #run in dev-mode
+npm run build -l
 npm run electron-dev
 
 #if it fails to run dev-mode, then
