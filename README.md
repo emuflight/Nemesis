@@ -36,7 +36,11 @@ cd sqaush-fs
 ```
 
 ### Linux Development - requires nodejs, npm, and obsolete packages.
+
 ```
+#libudev-dev is essential for USB (nodejs' usb)
+sudo apt-get install build-essential git libudev-dev
+
 #git clone https://github.com/heliorc/pegasus.git
 git clone https://github.com/nerdCopter/Nemesis.git
 
