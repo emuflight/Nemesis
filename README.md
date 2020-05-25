@@ -67,6 +67,10 @@ npm install ajv@~6.9.1
 #disable annoying desktop shortcut creation for election apps
 touch $HOME/.local/share/appimagekit/no_desktopintegration
 
+#run in dev-mode
+npm run electron-dev
+
+#if it fails to run dev-mode, then
 #compile it (nicely so CPU doesn't spike)
 nice -n 19 npm run electron-pack-lin
 
