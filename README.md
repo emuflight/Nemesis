@@ -21,6 +21,10 @@ add yourself to the dialout group for tty/serial permissions
 
 ```
 sudo usermod -a -G dialout $USER
+#logout/login, or:
+
+#temporary group membership for this shell session:
+newgrp dialout
 ```
 
 To use the `AppImage`:
