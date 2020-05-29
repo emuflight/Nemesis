@@ -93,14 +93,39 @@ eject      electron-pack     install            preship           start
 
 ## MacOS, the bastardized O.S. formerly known as BSD
 
-install libusb using brew
+install libusb, npm and yarn using brew
 ```
-brew install libusb
+brew install libusb npm yarn
 ```
-or install libusb using macports
+
+clone the repository
 ```
-sudo port install libusb
+git clone https://github.com/nerdCopter/Nemesis.git
+cd Nemesis
 ```
+
+set up node v12 and set python 2.7
+```
+npm config set python /usr/bin/python2.7
+npm install -g n
+sudo n 12 # sets node version 12
+```
+
+install peer dependencies not automatically installed
+```
+npm install ajv@6.12.2 electron@4.2.12 node-sass@4.14.1 electron-builder@22.7.0 node-hid@0.7.9 electron-updater@4.3.1 usb@1.6.1
+```
+
+install rest of dependencies
+```
+npm install --save --save-exact  #installs exact versions, not updated packages
+```
+
+start development version
+```
+npm run electron-dev
+```
+
 
 ## Windows, meh.
 
