@@ -28,6 +28,7 @@ export default new class FCConnector {
     var self = this;
     return fetch(`${this.serviceUrl}/device`).then(response => {
       self.appVersion = response.headers.get("Pragma").split(" ")[1];
+      console.log("tryGetConfig", self.appVersion);
       return response.json();
     });
   }
@@ -37,6 +38,7 @@ export default new class FCConnector {
   }
 
   setValue(name, newValue) {
+    console.log("setValue", name, newValue);
     return fetch(`${this.serviceUrl}/set/${name}/${newValue}`).then(
       response => {
         return response.arrayBuffer();
@@ -45,6 +47,7 @@ export default new class FCConnector {
   }
 
   sendCommand(commandToSend) {
+    console.log("sendCommand", commandToSend);
     return fetch(
       `${this.serviceUrl}/send/${encodeURIComponent(commandToSend)}`
     );

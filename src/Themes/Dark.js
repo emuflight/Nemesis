@@ -5,7 +5,7 @@ import deepOrange from "@material-ui/core/colors/deepOrange";
 import ButterFlight from "./BuF";
 import RACEFLIGHT from "./RF1";
 import targetThemes from "./targets";
-
+import EmuFlight from "./Emu";
 const dark = createMuiTheme({
   typography: {
     useNextVariants: true
@@ -35,7 +35,8 @@ export default Object.assign(
     dark,
     ButterFlight,
     Betaflight: ButterFlight,
-    RACEFLIGHT
+    RACEFLIGHT,
+    EmuFlight
   },
   targetThemes
 );

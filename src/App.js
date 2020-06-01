@@ -66,9 +66,12 @@ export class App extends Component {
           });
         } else {
           let uiTheme =
-            themes[device.config.version.target] ||
-            themes[device.config.version.fw] ||
-            themes.dark;
+            //TODO: Find out if these other themes are needed
+            //themes[device.config.version.target] ||
+            //themes[device.config.version.fw] ||
+            //themes.dark;
+            
+            themes.EmuFlight;
           this.setState({
             appVersion: FCConnector.appVersion,
             connecting: false,
