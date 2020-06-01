@@ -1,6 +1,23 @@
 import { createMuiTheme } from "@material-ui/core/styles";
 import red from "@material-ui/core/colors/red";
 
+/* 
+    from EmuConfig theme:
+    --accent: #288fda;
+    --subtleAccent: #9c9c9c;
+    --quietHeader: #5e6772b2;
+    --defaultText: #dddddd;
+    --subtleText: #c2c2c2;
+    --mutedText: #d1d1d1;
+    --boxBackground: #393b3a;
+    --alternativeBackground: #4e4e4e;
+    --sideBackground: #404040;
+    --paper: url(../../images/paper-dark.jpg);
+    --ledAccent: #6e6e6e;
+    --ledBackground: #424242;
+
+*/
+
 const EmuPrimary = {
   50: "#fef2e4",
   100: "#fddfbc",
@@ -88,4 +105,3 @@ const theme = createMuiTheme({
 });
 theme.modelUrl = "assets/gatesman.stl";
 export default theme;
-console.log("loaded BuF theme");
