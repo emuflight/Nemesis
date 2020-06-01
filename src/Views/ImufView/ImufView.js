@@ -25,7 +25,7 @@ export default class ImufView extends DfuView {
     return "imufReleases";
   }
   get releaseUrl() {
-    return "https://api.github.com/repos/heliorc/imuf-release-dev/contents";
+    return "https://github.com/emuflight/EmuFlight/releases";
   }
 
   get releaseNotesUrl() {

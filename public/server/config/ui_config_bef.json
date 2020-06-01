@@ -83,21 +83,15 @@
       "gps_rescue_min_sats"
     ],
     "PID": [
-      "f_pitch",
       "p_pitch",
       "i_pitch",
       "d_pitch",
-      "f_roll",
       "p_roll",
       "i_roll",
       "d_roll",
-      "f_yaw",
       "p_yaw",
       "i_yaw",
-      "d_yaw",
-      "feedforward_transition",
-      "vbat_pid_gain",
-      "tpa_type"
+      "d_yaw"
     ],
     "RATES": [
       "thr_expo",
