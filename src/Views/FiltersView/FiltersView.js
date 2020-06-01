@@ -36,6 +36,11 @@ export default class FiltersView extends Component {
           "lowpass",
           parseInt(this.props.fcConfig.imuf_yaw_lpf_cutoff_hz.current, 10),
           freq
+        ).plot,
+        biquad(
+          "lowpass",
+          parseInt(this.props.fcConfig.imuf_acc_lpf_cutoff_hz.current, 10),
+          freq
         ).plot
       ];
     } else {
@@ -88,6 +93,10 @@ export default class FiltersView extends Component {
                 notifyDirty={this.props.notifyDirty}
                 id="imuf_yaw_q"
               />
+              <StatelessInput
+                notifyDirty={this.props.notifyDirty}
+                id="imuf_sharpness"
+              />
             </Paper>
             <Paper className="flex">
               <div className="flex-column">
@@ -111,6 +120,14 @@ export default class FiltersView extends Component {
                   id="imuf_yaw_lpf_cutoff_hz"
                   notifyDirty={(isDirty, state, val) => {
                     this.props.fcConfig.imuf_yaw_lpf_cutoff_hz.current = val;
+                    this.forceUpdate();
+                    this.props.notifyDirty(isDirty, state, val);
+                  }}
+                />
+                <StatelessInput
+                  id="imuf_acc_lpf_cutoff_hz"
+                  notifyDirty={(isDirty, state, val) => {
+                    this.props.fcConfig.imuf_acc_lpf_cutoff_hz.current = val;
                     this.forceUpdate();
                     this.props.notifyDirty(isDirty, state, val);
                   }}

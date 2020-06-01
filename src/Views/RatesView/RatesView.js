@@ -228,7 +228,13 @@ export default class RatesView extends ProfileView {
           pitch_expo: config[`pitch_expo${profNum}`],
           yaw_rc_rate: config[`yaw_rate${profNum}`],
           yaw_srate: config[`yaw_acrop${profNum}`],
-          yaw_expo: config[`yaw_expo${profNum}`]
+          yaw_expo: config[`yaw_expo${profNum}`],
+          rate_center_sensitivity: config[`rate_center_sensitivity${profNum}`],
+          rate_end_sensitivity: config[`rate_end_sensitivity${profNum}`],
+          rate_center_correction: config[`rate_center_correction${profNum}`],
+          rate_end_correction: config[`rate_end_correction${profNum}`],
+          rate_center_weight: config[`rate_center_weight${profNum}`],
+          rate_end_weight: config[`rate_end_weight${profNum}`]
         },
         config
       )
@@ -324,6 +330,9 @@ export default class RatesView extends ProfileView {
         <div style={{ display: "flex" }}>
           <div style={{ display: "flex", flex: 1, flexDirection: "column" }}>
             <Paper>
+              <Typography variant="h6">
+                <FormattedMessage id="rate_paper" />
+              </Typography>
               <Typography>
                 <FormattedMessage id="common.roll" />
               </Typography>
@@ -349,8 +358,6 @@ export default class RatesView extends ProfileView {
                 }
                 value={curves.x[10].y}
               />
-            </Paper>
-            <Paper>
               <Typography>
                 <FormattedMessage id="common.pitch" />
               </Typography>
@@ -376,8 +383,6 @@ export default class RatesView extends ProfileView {
                 }
                 value={curves.y[10].y}
               />
-            </Paper>
-            <Paper>
               <Typography>
                 <FormattedMessage id="common.yaw" />
               </Typography>
@@ -404,7 +409,45 @@ export default class RatesView extends ProfileView {
                 value={curves.z[10].y}
               />
             </Paper>
+            <div style={{ display: "flex", flex: 1, flexDirection: "column" }}>
+              <Paper>
+                <Typography variant="h6">
+                  <FormattedMessage id="rate_dynamics" />
+                </Typography>
+                <Typography>
+                  <FormattedMessage id="rate_center" />
+                </Typography>
+                <StatelessFloat
+                  notifyDirty={this.props.notifyDirty}
+                  item={fields.rate_center_sensitivity}
+                />
+                <StatelessFloat
+                  notifyDirty={this.props.notifyDirty}
+                  item={fields.rate_center_correction}
+                />
+                <StatelessFloat
+                  notifyDirty={this.props.notifyDirty}
+                  item={fields.rate_center_weight}
+                />
+                <Typography>
+                  <FormattedMessage id="rate_end" />
+                </Typography>
+                <StatelessFloat
+                  notifyDirty={this.props.notifyDirty}
+                  item={fields.rate_end_sensitivity}
+                />
+                <StatelessFloat
+                  notifyDirty={this.props.notifyDirty}
+                  item={fields.rate_end_correction}
+                />
+                <StatelessFloat
+                  notifyDirty={this.props.notifyDirty}
+                  item={fields.rate_end_weight}
+                />
+              </Paper>
+            </div>
           </div>
+
           <Paper>
             <AreaChart
               xType={"text"}
