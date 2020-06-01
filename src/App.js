@@ -70,7 +70,7 @@ export class App extends Component {
             //themes[device.config.version.target] ||
             //themes[device.config.version.fw] ||
             //themes.dark;
-            
+
             themes.EmuFlight;
           this.setState({
             appVersion: FCConnector.appVersion,
