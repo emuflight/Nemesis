@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Slider from "@material-ui/lab/Slider";
+import Slider from "@material-ui/core/Slider";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import { FormattedMessage } from "react-intl";

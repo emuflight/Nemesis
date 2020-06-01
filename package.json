@@ -37,9 +37,6 @@
   },
   "dependencies": {
     "@connectedyard/node-intelhex": "^1.2.4",
-    "@material-ui/core": "^3.2.2",
-    "@material-ui/icons": "^3.0.1",
-    "@material-ui/lab": "^3.0.0-alpha.20",
     "ajv": "^6.12.2",
     "electron-context-menu": "^0.10.0",
     "electron-updater": "^4.3.1",
@@ -86,6 +83,9 @@
     "preelectron-pack": "yarn build && yarn build-css"
   },
   "devDependencies": {
+    "@material-ui/core": "^4.10.1",
+    "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.55",
     "concurrently": "3.5.0",
     "electron": "^4.2.12",
     "electron-builder": "^22.7.0",
