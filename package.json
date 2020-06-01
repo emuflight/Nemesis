@@ -38,7 +38,7 @@
   "dependencies": {
     "@connectedyard/node-intelhex": "^1.2.4",
     "ajv": "^6.12.2",
-    "electron-context-menu": "^0.10.0",
+    "electron-context-menu": "^2.0.1",
     "electron-updater": "^4.3.1",
     "express": "^4.16.4",
     "express-fileupload": "^1.0.0",
