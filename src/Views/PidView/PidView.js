@@ -153,8 +153,7 @@ export default class PidsView extends ProfileView {
             />
           </Paper>
         )}
-
-        {this.state.isBxF && (
+        {this.state.isRF1 && (
           <Paper className="flex-center">
             <FCConfigContext.Consumer>
               {config => {

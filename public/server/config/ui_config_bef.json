@@ -132,7 +132,9 @@
       "imuf_w",
       "imuf_pitch_lpf_cutoff_hz",
       "imuf_roll_lpf_cutoff_hz",
-      "imuf_yaw_lpf_cutoff_hz"
+      "imuf_yaw_lpf_cutoff_hz",
+      "imuf_acc_lpf_cutoff_hz",
+      "imuf_sharpness"
     ],
     "MOTORS": [
       "mixer_type",
