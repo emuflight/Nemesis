@@ -103,5 +103,5 @@ const theme = createMuiTheme({
     }
   }
 });
-theme.modelUrl = "assets/gatesman.stl";
+theme.modelUrl = "assets/AndreyCustom.stl";
 export default theme;
