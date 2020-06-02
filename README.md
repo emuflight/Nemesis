@@ -29,12 +29,12 @@ newgrp dialout
 
 To use the `AppImage`:
 ```
-chmod +x Pegasus*.AppImage
-/Pegasus*.AppImage
+chmod +x Nemesis*.AppImage
+/Nemesis*.AppImage
 ```
 If it fails to fully run properly, then extract the contents and run directly:
 ```
-./Pegasus*.AppImage --appimage-extract
+./Nemesis*.AppImage --appimage-extract
 cd sqaush-fs
 ./pegasus
 ```
@@ -78,8 +78,8 @@ npm run electron-dev
 nice -n 19 npm run electron-pack-lin
 
 #run it
-chmod +x dist/Pegasus*.AppImage
-./dist/Pegasus-0.2.1-x86_64.AppImage
+chmod +x dist/Nemesis*.AppImage
+./dist/Nemesis-0.2.1-x86_64.AppImage
 ```
 
 other npm options:
