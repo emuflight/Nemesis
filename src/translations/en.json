@@ -111,7 +111,7 @@
   "route.ADVANCED": "ADVANCED",
   "safety.remove-props": "Please remove the propellers from your quad before proceeding!",
   "safety.accepts-risk": "I ACCEPT",
-  "disconnected.title": "Pegasus multi-firmware UI v{version}",
+  "disconnected.title": "Nemesis multi-firmware UI v{version}",
   "disconnected.headline": "Please connect a compatible FC",
   "disconnected.autodetect": "We will automatically detect it...",
   "disconnected.incompatible": "Incompatible device, there be dragons ahead...",
