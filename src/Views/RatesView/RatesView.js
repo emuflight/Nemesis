@@ -179,11 +179,7 @@ export default class RatesView extends ProfileView {
   }
 
   get children() {
-    if (!this.state.isBxF) {
-      return this.rf1RateView;
-    } else {
-      return this.bxfRateView;
-    }
+    return this.bxfRateView;
   }
 
   get rf1RateView() {

@@ -29,7 +29,7 @@ export default class RXView extends Component {
       });
     }
     this.setState({
-      mapping: this.props.fcConfig.isBxF ? "AERT1234" : "RAET1234"
+      mapping: "AERT1234"
     });
   }
 

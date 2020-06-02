@@ -4,7 +4,7 @@ const devices = require("./devices");
 const http = require("http");
 const STM32USB = require("./devices/STM32USB.json");
 const bxf = require("./fcConnector/bxf");
-const rf1 = require("./fcConnector/rf1");
+//const rf1 = require("./fcConnector/rf1");
 
 const server = http.createServer((request, response) => {
   // process HTTP request. Since we're writing just WebSockets

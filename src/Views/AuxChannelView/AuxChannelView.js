@@ -23,9 +23,9 @@ export default class AuxChannelView extends Component {
         }
       }),
       scale: {
-        min: props.fcConfig.isBxF ? props.auxScale.min : -100,
-        max: props.fcConfig.isBxF ? props.auxScale.max : 100,
-        step: props.fcConfig.isBxF ? props.auxScale.step : 5
+        min: props.auxScale.min,
+        max: props.auxScale.max,
+        step: props.auxScale.step
       },
       telemetry: {
         channels: [],
