@@ -17,23 +17,14 @@ export default class AttitudeView extends Component {
     try {
       let { attitude } = JSON.parse(message.data);
       if (attitude) {
-        if (this.state.isBxF) {
-          //rotate the model on the Y axis so it's oriented correctly
-          this.mesh.rotation.set(
-            attitude.y * 0.017453292519943295 + Math.PI / 2,
-            attitude.x * 0.017453292519943295,
-            0
-          );
-          //rotate Yaw from the scene perspective (y) and not the mesh so when the quad model moves it doesn't mess up p/r
-          this.scene.rotation.set(
-            0,
-            attitude.z * -1.0 * 0.017453292519943295,
-            0
-          );
-        } else {
-          this.mesh.rotation.set(attitude.y + Math.PI / 2, attitude.x, 0);
-          this.scene.rotation.set(0, attitude.z, 0);
-        }
+        //rotate the model on the Y axis so it's oriented correctly
+        this.mesh.rotation.set(
+          attitude.y * 0.017453292519943295 + Math.PI / 2,
+          attitude.x * 0.017453292519943295,
+          0
+        );
+        //rotate Yaw from the scene perspective (y) and not the mesh so when the quad model moves it doesn't mess up p/r
+        this.scene.rotation.set(0, attitude.z * -1.0 * 0.017453292519943295, 0);
         //rotate Yaw from the scene perspective (y) and not the mesh so when the quad model moves it doesn't mess up p/r
         this.renderer.render(this.scene, this.camera);
       }
