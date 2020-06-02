@@ -1,8 +1,9 @@
+//const emuConnector = require("./emu");
 const bxfConnector = require("./bxf");
-const rf1Connector = require("./rf1");
+//const rf1Connector = require("./rf1");
 const websockets = require("../websockets");
 const BxfUiConfig = require("../config/ui_config_bef.json");
-const rf1UiConfig = require("../config/ui_config_rf1.json");
+//const rf1UiConfig = require("../config/ui_config_rf1.json");
 const request = require("request").defaults({ encoding: "utf8" });
 
 const skipprops = [
@@ -192,20 +193,14 @@ const applyUIConfig = (device, config, uiConfig) => {
 
 module.exports = new class FcConnector {
   getConfig(deviceInfo) {
-    if (deviceInfo.hid) {
-      return rf1Connector.getConfig(deviceInfo).then(config => {
-        return applyUIConfig(deviceInfo, config, rf1UiConfig);
-      });
-    } else {
-      return bxfConnector.getConfig(deviceInfo).then(config => {
-        if (config.incompatible) {
-          return Object.assign({ error: config.version }, deviceInfo, config);
-        } else {
-          config.isBxF = true;
-          return applyUIConfig(deviceInfo, config, BxfUiConfig);
-        }
-      });
-    }
+    return bxfConnector.getConfig(deviceInfo).then(config => {
+      if (config.incompatible) {
+        return Object.assign({ error: config.version }, deviceInfo, config);
+      } else {
+        config.isBxF = true;
+        return applyUIConfig(deviceInfo, config, BxfUiConfig);
+      }
+    });
   }
   setValue(deviceInfo, key, value) {
     if (deviceInfo.hid) {
@@ -224,78 +219,38 @@ module.exports = new class FcConnector {
     }
   }
   remapMotor(deviceInfo, from, to) {
-    if (deviceInfo.hid) {
-      return rf1Connector.remapMotor(deviceInfo, from, to);
-    } else {
-      return bxfConnector.remapMotor(deviceInfo, from, to);
-    }
+    return bxfConnector.remapMotor(deviceInfo, from, to);
   }
 
   getMotors(deviceInfo) {
-    if (deviceInfo.hid) {
-      return rf1Connector.getMotors(deviceInfo);
-    } else {
-      return bxfConnector.getMotors(deviceInfo);
-    }
+    return bxfConnector.getMotors(deviceInfo);
   }
 
   getModes(deviceInfo) {
-    if (deviceInfo.hid) {
-      return rf1Connector.getModes(deviceInfo);
-    } else {
-      return bxfConnector.getModes(deviceInfo);
-    }
+    return bxfConnector.getModes(deviceInfo);
   }
   setMode(deviceInfo, modeVals) {
-    if (deviceInfo.hid) {
-      return rf1Connector.setMode(deviceInfo, modeVals);
-    } else {
-      return bxfConnector.setMode(deviceInfo, modeVals);
-    }
+    return bxfConnector.setMode(deviceInfo, modeVals);
   }
 
   getChannelMap(deviceInfo) {
-    if (deviceInfo.hid) {
-      return rf1Connector.getChannelMap(deviceInfo);
-    } else {
-      return bxfConnector.getChannelMap(deviceInfo);
-    }
+    return bxfConnector.getChannelMap(deviceInfo);
   }
 
   setChannelMap(deviceInfo, newMap) {
-    if (deviceInfo.hid) {
-      return rf1Connector.setChannelMap(deviceInfo, newMap);
-    } else {
-      return bxfConnector.setChannelMap(deviceInfo, newMap);
-    }
+    return bxfConnector.setChannelMap(deviceInfo, newMap);
   }
   spinTestMotor(deviceInfo, motor, startStop) {
-    if (deviceInfo.hid) {
-      return rf1Connector.spinTestMotor(deviceInfo, motor, startStop);
-    } else {
-      return bxfConnector.spinTestMotor(deviceInfo, motor, startStop);
-    }
+    return bxfConnector.spinTestMotor(deviceInfo, motor, startStop);
   }
   getTpaCurves(deviceInfo, profile) {
-    if (deviceInfo.hid) {
-      return rf1Connector.getTpaCurves(deviceInfo, profile);
-    } else {
-      return bxfConnector.getTpaCurves(deviceInfo, profile);
-    }
+    return bxfConnector.getTpaCurves(deviceInfo, profile);
   }
   setTpaCurves(deviceInfo, pid, profile, newCurve) {
-    if (deviceInfo.hid) {
-      return rf1Connector.setTpaCurves(deviceInfo, pid, profile, newCurve);
-    } else {
-      return bxfConnector.setTpaCurves(deviceInfo, pid, profile, newCurve);
-    }
+    return bxfConnector.setTpaCurves(deviceInfo, pid, profile, newCurve);
   }
   sendCommand(deviceInfo, command) {
-    if (deviceInfo.hid) {
-      return rf1Connector.sendCommand(deviceInfo, command);
-    } else {
-      return bxfConnector.sendCommand(deviceInfo, command);
-    }
+    return bxfConnector.sendCommand(deviceInfo, command);
   }
   uploadFont(deviceInfo, name = "butterflight") {
     return new Promise((resolve, reject) => {
@@ -343,86 +298,44 @@ module.exports = new class FcConnector {
     websockets.wsServer.telemetryType = type;
     if (type !== "status") {
       websockets.wsServer.fastTelemetryInterval = setInterval(() => {
-        if (deviceInfo.hid) {
-          rf1Connector.getTelemetry(deviceInfo, type).then(telemData => {
-            websockets.notifyTelem(telemData);
-          });
-        } else {
-          bxfConnector.getTelemetry(deviceInfo, type).then(telemData => {
-            websockets.notifyTelem(telemData);
-          });
-        }
+        bxfConnector.getTelemetry(deviceInfo, type).then(telemData => {
+          websockets.notifyTelem(telemData);
+        });
       }, type === "rx" ? 250 : fastIntervalMs);
     }
     websockets.wsServer.slowTelemetryInterval = setInterval(() => {
-      if (deviceInfo.hid) {
-        rf1Connector.getTelemetry(deviceInfo, "status").then(telemData => {
-          websockets.notifyTelem(telemData);
-        });
-      } else {
-        bxfConnector.getTelemetry(deviceInfo, "status").then(telemData => {
-          websockets.notifyTelem(telemData);
-        });
-      }
+      bxfConnector.getTelemetry(deviceInfo, "status").then(telemData => {
+        websockets.notifyTelem(telemData);
+      });
     }, 500);
   }
   stopTelemetry(deviceInfo) {
     clearInterval(websockets.wsServer.fastTelemetryInterval);
   }
   rebootDFU(deviceInfo) {
-    if (deviceInfo.hid) {
-      return rf1Connector.sendCommand(deviceInfo, "rebootDFU");
-    } else {
-      return bxfConnector.sendCommand(deviceInfo, "bl");
-    }
+    return bxfConnector.sendCommand(deviceInfo, "bl");
   }
   storage(deviceInfo, command) {
-    if (deviceInfo.hid) {
-      return rf1Connector.storage(deviceInfo, command);
-    } else {
-      return bxfConnector.storage(deviceInfo, command);
-    }
+    return bxfConnector.storage(deviceInfo, command);
   }
   saveEEPROM(deviceInfo) {
-    if (deviceInfo.hid) {
-      return rf1Connector.saveEEPROM(deviceInfo);
-    } else {
-      return bxfConnector.saveEEPROM(deviceInfo);
-    }
+    return bxfConnector.saveEEPROM(deviceInfo);
   }
   updateIMUF(deviceInfo, binUrl, cb, ecb) {
-    if (deviceInfo.hid) {
-      return rf1Connector.updateIMUF(
-        deviceInfo,
-        binUrl,
-        data => {
-          websockets.clients.forEach(client =>
-            client.sendUTF(
-              JSON.stringify({
-                progress: data
-              })
-            )
-          );
-        },
-        cb,
-        ecb
-      );
-    } else {
-      return bxfConnector.updateIMUF(
-        deviceInfo,
-        binUrl,
-        data => {
-          websockets.clients.forEach(client =>
-            client.sendUTF(
-              JSON.stringify({
-                progress: data
-              })
-            )
-          );
-        },
-        cb,
-        ecb
-      );
-    }
+    return bxfConnector.updateIMUF(
+      deviceInfo,
+      binUrl,
+      data => {
+        websockets.clients.forEach(client =>
+          client.sendUTF(
+            JSON.stringify({
+              progress: data
+            })
+          )
+        );
+      },
+      cb,
+      ecb
+    );
   }
 }();

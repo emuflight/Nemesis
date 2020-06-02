@@ -10,9 +10,7 @@ import { FormattedMessage } from "react-intl";
 export default class InfoBarView extends Component {
   constructor(props) {
     super(props);
-    this.craftName = this.props.fcConfig.isBxF
-      ? props.fcConfig.name
-      : props.fcConfig.craft_name && props.fcConfig.craft_name.current;
+    this.craftName = props.fcConfig.name;
     this.handleDrawerToggle = props.handleDrawerToggle;
     this.state = {
       setupCompleted: -1,
@@ -25,9 +23,6 @@ export default class InfoBarView extends Component {
   updateCraftName = () => {
     if (this.craftName !== this.state.craftName) {
       let command = `name ${this.state.craftName || "-"}`;
-      if (!this.props.fcConfig.isBxF) {
-        command = `set craft_name=${this.state.craftName}`;
-      }
       FCConnector.sendCliCommand(command).then(() => {
         this.props.notifyDirty(true, this.state, this.state.craftName);
       });

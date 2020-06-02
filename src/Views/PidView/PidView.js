@@ -15,30 +15,12 @@ import StatelessInput from "../Items/StatelessInput";
 import { FCConfigContext } from "../../App";
 
 export default class PidsView extends ProfileView {
-  componentDidMount = () => {
-    if (!this.state.isBxF) {
-      return FCConnector.getTpaCurves(this.props.active).then(curves => {
-        this.setState({ tpaCurves: curves });
-      });
-    }
-  };
-
   get children() {
     return (
       <div
         className="pid-view"
         style={{ display: "flex", flexDirection: "column" }}
       >
-        {!this.state.isBxF &&
-          this.state.tpaCurves && (
-            <Paper>
-              <TpaCurveView
-                activeProfile={this.props.active}
-                notifyDirty={this.props.notifyDirty}
-                item={this.state.tpaCurves}
-              />
-            </Paper>
-          )}
         {this.state.isBxF && (
           <Paper>
             <div>
@@ -130,6 +112,7 @@ export default class PidsView extends ProfileView {
             />
           </div>
         </Paper>
+
         {!this.props.fcConfig.imuf && (
           <Paper className="flex-center">
             <DropdownView

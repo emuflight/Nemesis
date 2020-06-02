@@ -11,7 +11,7 @@ import RatesView from "./RatesView/RatesView";
 import AppBarView from "./AppBarView/AppBarView";
 import FCConnector from "../utilities/FCConnector";
 import AssistantView from "./Assistants/AssistantView";
-import ProfileView from "./ProfileView/ProfileView";
+//import ProfileView from "./ProfileView/ProfileView";
 import BlackboxView from "./BlackboxView/BlackboxView";
 import RXView from "./RXView/RXView";
 import MotorsView from "./MotorsView/MotorsView";
@@ -39,7 +39,7 @@ export default class Connected extends Component {
   }
 
   getRouteFeatures(key) {
-    if (this.props.fcConfig.isBxF && this.routeFeatures[key]) {
+    if (this.routeFeatures[key]) {
       return this.props.fcConfig.features.values
         .filter(feat => {
           return this.routeFeatures[key].indexOf(feat.id) > -1;
@@ -266,7 +266,7 @@ export default class Connected extends Component {
       case "BLACKBOX":
         contents = (
           <BlackboxView
-            storageCommand={this.props.fcConfig.isBxF ? "msc" : "msd"}
+            storageCommand="msc"
             items={this.getRouteItems(mergedProfile, true)}
             notifyDirty={(isDirty, item, newValue) =>
               this.notifyDirty(isDirty, item, newValue)
@@ -286,41 +286,15 @@ export default class Connected extends Component {
         );
         break;
       case "FILTERS":
-        if (this.state.isBxF) {
-          contents = (
-            <FiltersView
-              features={this.getRouteFeatures("FILTERS")}
-              fcConfig={mergedProfile}
-              notifyDirty={(isDirty, item, newValue) =>
-                this.notifyDirty(isDirty, item, newValue)
-              }
-            />
-          );
-        } else {
-          let profile = this.props.fcConfig.currentPidProfile;
-          mergedProfile = Object.assign(
-            {},
-            mergedProfile,
-            mergedProfile.pid_profile.values[profile]
-          );
-          contents = (
-            <ProfileView
-              id="pid_profile"
-              active={profile}
-              profileList={mergedProfile.pidProfileList}
-              fcConfig={mergedProfile}
-              notifyDirty={(isDirty, item, newValue) =>
-                this.notifyDirty(isDirty, item, newValue)
-              }
-              changeProfile={newProfile => {
-                FCConnector.changeProfile("pid", newProfile).then(() => {
-                  this.setState({ pid_profile: newProfile });
-                });
-              }}
-              items={this.getRouteItems(mergedProfile)}
-            />
-          );
-        }
+        contents = (
+          <FiltersView
+            features={this.getRouteFeatures("FILTERS")}
+            fcConfig={mergedProfile}
+            notifyDirty={(isDirty, item, newValue) =>
+              this.notifyDirty(isDirty, item, newValue)
+            }
+          />
+        );
         break;
       default:
         contents = (
