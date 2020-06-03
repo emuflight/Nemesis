@@ -203,20 +203,20 @@ module.exports = new class FcConnector {
     });
   }
   setValue(deviceInfo, key, value) {
-    if (deviceInfo.hid) {
+    /*if (deviceInfo.hid) {
       return rf1Connector.setValue(deviceInfo, key, value);
-    } else {
-      return bxfConnector.setValue(deviceInfo, key, value);
-    }
+    } else {*/
+    return bxfConnector.setValue(deviceInfo, key, value);
+    //}
   }
   setProfile(deviceInfo, type, index) {
-    if (deviceInfo.hid) {
+    /*if (deviceInfo.hid) {
       return Promise.resolve();
-      // return rf1Connector.setValue(deviceInfo, key, value);
-    } else {
-      let profileName = type === "pid" ? "profile" : "rateprofile";
-      return bxfConnector.sendCommand(deviceInfo, `${profileName} ${index}`);
-    }
+      return rf1Connector.setValue(deviceInfo, key, value);
+    } else {*/
+    let profileName = type === "pid" ? "profile" : "rateprofile";
+    return bxfConnector.sendCommand(deviceInfo, `${profileName} ${index}`);
+    //}
   }
   remapMotor(deviceInfo, from, to) {
     return bxfConnector.remapMotor(deviceInfo, from, to);

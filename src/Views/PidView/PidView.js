@@ -42,7 +42,7 @@ export default class PidsView extends ProfileView {
                           this.props.fcConfig.gyro_use_32khz.current
                         ).then(() => {
                           this.props.handleSave().then(() => {
-                            this.updatePidValues("1");
+                            //this.updatePidValues("1");
                           });
                         });
                       }}
@@ -112,30 +112,7 @@ export default class PidsView extends ProfileView {
             />
           </div>
         </Paper>
-
-        {!this.props.fcConfig.imuf && (
-          <Paper className="flex-center">
-            <DropdownView
-              notifyDirty={this.props.notifyDirty}
-              item={this.props.fcConfig.dterm_lowpass_hz_type}
-            />
-            <StatelessInput
-              notifyDirty={this.props.notifyDirty}
-              key={this.props.fcConfig.dterm_lowpass_hz.id}
-              item={this.props.fcConfig.dterm_lowpass_hz}
-            />
-            <StatelessInput
-              notifyDirty={this.props.notifyDirty}
-              key={this.props.fcConfig.dterm_notch_hz.id}
-              item={this.props.fcConfig.dterm_notch_hz}
-            />
-            <StatelessInput
-              notifyDirty={this.props.notifyDirty}
-              key={this.props.fcConfig.dterm_notch_cutoff.id}
-              item={this.props.fcConfig.dterm_notch_cutoff}
-            />
-          </Paper>
-        )}
+        {/* RF Style TPA, but leave it for future 
         {this.state.isRF1 && (
           <Paper className="flex-center">
             <FCConfigContext.Consumer>
@@ -162,6 +139,7 @@ export default class PidsView extends ProfileView {
             </FCConfigContext.Consumer>
           </Paper>
         )}
+        */}
       </div>
     );
   }
