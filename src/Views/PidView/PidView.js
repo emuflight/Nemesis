@@ -112,30 +112,34 @@ export default class PidsView extends ProfileView {
             />
           </div>
         </Paper>
-
-        {!this.props.fcConfig.imuf && (
+        {/* RF Style TPA, but leave it for future 
+        {this.state.isRF1 && (
           <Paper className="flex-center">
-            <DropdownView
-              notifyDirty={this.props.notifyDirty}
-              item={this.props.fcConfig.dterm_lowpass_hz_type}
-            />
-            <StatelessInput
-              notifyDirty={this.props.notifyDirty}
-              key={this.props.fcConfig.dterm_lowpass_hz_roll.id}
-              item={this.props.fcConfig.dterm_lowpass_hz_roll}
-            />
-            <StatelessInput
-              notifyDirty={this.props.notifyDirty}
-              key={this.props.fcConfig.dterm_lowpass_hz_pitch.id}
-              item={this.props.fcConfig.dterm_lowpass_hz_pitch}
-            />
-            <StatelessInput
-              notifyDirty={this.props.notifyDirty}
-              key={this.props.fcConfig.dterm_lowpass_hz_yaw.id}
-              item={this.props.fcConfig.dterm_lowpass_hz_yaw}
-            />
+            <FCConfigContext.Consumer>
+              {config => {
+                return config.tpa_type &&
+                  config.tpa_type.current === "RACEFLIGHT" ? (
+                  <TpaCurveView
+                    notifyDirty={this.props.notifyDirty}
+                    item={this.props.fcConfig.tpa_curves}
+                  />
+                ) : (
+                  <div>
+                    <StatelessInput
+                      notifyDirty={this.props.notifyDirty}
+                      item={this.props.fcConfig.tpa_breakpoint}
+                    />
+                    <StatelessInput
+                      notifyDirty={this.props.notifyDirty}
+                      item={this.props.fcConfig.tpa_rate}
+                    />
+                  </div>
+                );
+              }}
+            </FCConfigContext.Consumer>
           </Paper>
         )}
+        */}
       </div>
     );
   }
