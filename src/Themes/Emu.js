@@ -1,38 +1,39 @@
 import { createMuiTheme } from "@material-ui/core/styles";
-import red from "@material-ui/core/colors/red";
-
-/* 
-    from EmuConfig theme:
-    --accent: #288fda;
-    --subtleAccent: #9c9c9c;
-    --quietHeader: #5e6772b2;
-    --defaultText: #dddddd;
-    --subtleText: #c2c2c2;
-    --mutedText: #d1d1d1;
-    --boxBackground: #393b3a;
-    --alternativeBackground: #4e4e4e;
-    --sideBackground: #404040;
-    --paper: url(../../images/paper-dark.jpg);
-    --ledAccent: #6e6e6e;
-    --ledBackground: #424242;
-
-*/
+//import lightBlue from "@material-ui/core/colors/lightBlue";
 
 const EmuPrimary = {
-  50: "#fef2e4",
-  100: "#fddfbc",
-  200: "#fbc98f",
-  300: "#f9b362",
-  400: "#f8a340",
-  500: "#f7931e",
-  600: "#f68b1a",
-  700: "#f58016",
-  800: "#f37612",
-  900: "#f1640a",
-  A100: "#ffffff",
-  A200: "#ffefe7",
-  A400: "#ffceb4",
-  A700: "#ffbd9b",
+  50: "#E5F2FB",
+  100: "#BFDDF4",
+  200: "#94C7ED",
+  300: "#69B1E5",
+  400: "#48A0E0",
+  500: "#288FDA",
+  600: "#2487D6",
+  700: "#1E7CD0",
+  800: "#1872CB",
+  900: "#0F60C2",
+  A100: "#F0F6FF",
+  A200: "#BDD8FF",
+  A400: "#8ABAFF",
+  A700: "#70ABFF",
+  contrastDefaultColor: "dark"
+};
+
+const EmuSecondary = {
+  50: "#FBFBE4",
+  100: "#F5F4BB",
+  200: "#EFED8D",
+  300: "#E8E55F",
+  400: "#E3E03D",
+  500: "#DEDA1B",
+  600: "#DAD618",
+  700: "#D5D014",
+  800: "#D1CB10",
+  900: "#C8C208",
+  A100: "#FFFFF2",
+  A200: "#FFFDBF",
+  A400: "#DEDA1B",
+  A700: "#FFFA73",
   contrastDefaultColor: "dark"
 };
 
@@ -43,7 +44,7 @@ const theme = createMuiTheme({
   palette: {
     type: "dark",
     primary: EmuPrimary,
-    secondary: red
+    secondary: EmuSecondary
   },
   overrides: {
     MuiLinearProgress: {
