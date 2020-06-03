@@ -13,7 +13,7 @@ const server = http.createServer((request, response) => {
 
 const cleanupConnections = () => {
   bxf.reset();
-  rf1.reset();
+  //rf1.reset();
   clearInterval(wsServer.fastTelemetryInterval);
   clearInterval(wsServer.slowTelemetryInterval);
 };

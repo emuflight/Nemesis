@@ -45,22 +45,25 @@ export default class FiltersView extends Component {
       ];
     } else {
       let cutoff1 = parseInt(
-          this.props.fcConfig.gyro_notch1_cutoff.current,
+          this.props.fcConfig.gyro_soft_notch_cutoff_1.current,
           10
         ),
-        cutoff2 = parseInt(this.props.fcConfig.gyro_notch2_cutoff.current, 10),
-        hz1 = parseInt(this.props.fcConfig.gyro_notch1_hz.current, 10),
-        hz2 = parseInt(this.props.fcConfig.gyro_notch2_hz.current, 10);
+        cutoff2 = parseInt(
+          this.props.fcConfig.gyro_soft_notch_cutoff_2.current,
+          10
+        ),
+        hz1 = parseInt(this.props.fcConfig.gyro_soft_notch_hz_1.current, 10),
+        hz2 = parseInt(this.props.fcConfig.gyro_soft_notch_hz_2.current, 10);
       notchDomainMax = Math.floor(Math.min(cutoff1, cutoff2, hz1, hz2) / 2);
       bqData = [
         biquad(
           "lowpass",
-          parseInt(this.props.fcConfig.gyro_lowpass_hz.current, 10),
+          parseInt(this.props.fcConfig.gyro_lowpass_hz_roll.current, 10),
           freq
         ).plot,
         biquad(
           "lowpass",
-          parseInt(this.props.fcConfig.gyro_lowpass2_hz.current, 10),
+          parseInt(this.props.fcConfig.gyro_lowpass2_hz_roll.current, 10),
           freq
         ).plot
       ];
@@ -164,7 +167,7 @@ export default class FiltersView extends Component {
                 />
                 {this.props.fcConfig.gyro_lowpass_type.current !== "KALMAN" && (
                   <StatelessInput
-                    id="gyro_lowpass_hz"
+                    id="gyro_lowpass_hz_roll"
                     notifyDirty={this.props.notifyDirty}
                   />
                 )}
@@ -191,7 +194,7 @@ export default class FiltersView extends Component {
                 />
                 <StatelessInput
                   notifyDirty={this.props.notifyDirty}
-                  item={this.props.fcConfig.gyro_lowpass2_hz}
+                  item={this.props.fcConfig.gyro_lowpass2_hz_roll}
                 />
               </div>
               <div className="area-chart-container">
@@ -211,19 +214,19 @@ export default class FiltersView extends Component {
               <div className="flex-column-start">
                 <StatelessInput
                   notifyDirty={this.props.notifyDirty}
-                  item={this.props.fcConfig.gyro_notch1_hz}
+                  item={this.props.fcConfig.gyro_soft_notch_hz_1}
                 />
                 <StatelessInput
                   notifyDirty={this.props.notifyDirty}
-                  item={this.props.fcConfig.gyro_notch1_cutoff}
+                  item={this.props.fcConfig.gyro_soft_notch_cutoff_1}
                 />
                 <StatelessInput
                   notifyDirty={this.props.notifyDirty}
-                  item={this.props.fcConfig.gyro_notch2_hz}
+                  item={this.props.fcConfig.gyro_soft_notch_hz_2}
                 />
                 <StatelessInput
                   notifyDirty={this.props.notifyDirty}
-                  item={this.props.fcConfig.gyro_notch2_cutoff}
+                  item={this.props.fcConfig.gyro_soft_notch_cutoff_2}
                 />
               </div>
               <div className="area-chart-container">

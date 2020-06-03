@@ -42,7 +42,7 @@ export default class PidsView extends ProfileView {
                           this.props.fcConfig.gyro_use_32khz.current
                         ).then(() => {
                           this.props.handleSave().then(() => {
-                            this.updatePidValues("1");
+                            //this.updatePidValues("1");
                           });
                         });
                       }}
@@ -121,45 +121,19 @@ export default class PidsView extends ProfileView {
             />
             <StatelessInput
               notifyDirty={this.props.notifyDirty}
-              key={this.props.fcConfig.dterm_lowpass_hz.id}
-              item={this.props.fcConfig.dterm_lowpass_hz}
+              key={this.props.fcConfig.dterm_lowpass_hz_roll.id}
+              item={this.props.fcConfig.dterm_lowpass_hz_roll}
             />
             <StatelessInput
               notifyDirty={this.props.notifyDirty}
-              key={this.props.fcConfig.dterm_notch_hz.id}
-              item={this.props.fcConfig.dterm_notch_hz}
+              key={this.props.fcConfig.dterm_lowpass_hz_pitch.id}
+              item={this.props.fcConfig.dterm_lowpass_hz_pitch}
             />
             <StatelessInput
               notifyDirty={this.props.notifyDirty}
-              key={this.props.fcConfig.dterm_notch_cutoff.id}
-              item={this.props.fcConfig.dterm_notch_cutoff}
+              key={this.props.fcConfig.dterm_lowpass_hz_yaw.id}
+              item={this.props.fcConfig.dterm_lowpass_hz_yaw}
             />
-          </Paper>
-        )}
-        {this.state.isRF1 && (
-          <Paper className="flex-center">
-            <FCConfigContext.Consumer>
-              {config => {
-                return config.tpa_type &&
-                  config.tpa_type.current === "RACEFLIGHT" ? (
-                  <TpaCurveView
-                    notifyDirty={this.props.notifyDirty}
-                    item={this.props.fcConfig.tpa_curves}
-                  />
-                ) : (
-                  <div>
-                    <StatelessInput
-                      notifyDirty={this.props.notifyDirty}
-                      item={this.props.fcConfig.tpa_breakpoint}
-                    />
-                    <StatelessInput
-                      notifyDirty={this.props.notifyDirty}
-                      item={this.props.fcConfig.tpa_rate}
-                    />
-                  </div>
-                );
-              }}
-            </FCConfigContext.Consumer>
           </Paper>
         )}
       </div>
