@@ -43,10 +43,10 @@ cd sqaush-fs
 
 ```
 #libudev-dev is essential for USB (nodejs' usb)
-sudo apt-get install build-essential git libudev-dev
+sudo apt-get install build-essential git libudev-dev nodejs npm yarn
 
 #git clone https://github.com/heliorc/pegasus.git
-git clone https://github.com/nerdCopter/Nemesis.git
+git clone https://github.com/emuflight/Nemesis.git
 
 #cd pegasus
 cd Nemesis
@@ -100,7 +100,7 @@ brew install libusb npm yarn
 
 clone the repository
 ```
-git clone https://github.com/nerdCopter/Nemesis.git
+git clone https://github.com/emuflight/Nemesis.git
 cd Nemesis
 ```
 
