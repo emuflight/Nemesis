@@ -2,7 +2,7 @@ import React from "react";
 import ProfileView from "../ProfileView/ProfileView";
 import DropdownView from "../Items/DropdownView";
 import ConfigListView from "../ConfigListView/ConfigListView";
-import TpaCurveView from "../TpaCurveView/TpaCurveView";
+//import TpaCurveView from "../TpaCurveView/TpaCurveView";
 import Paper from "@material-ui/core/Paper";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
@@ -12,7 +12,7 @@ import { FormattedMessage } from "react-intl";
 import PidProcessDenom from "./PidProcessDenom";
 import GyroSyncDenom from "./GyroSyncDenom";
 import StatelessInput from "../Items/StatelessInput";
-import { FCConfigContext } from "../../App";
+//import { FCConfigContext } from "../../App";
 
 export default class PidsView extends ProfileView {
   get children() {
@@ -103,43 +103,52 @@ export default class PidsView extends ProfileView {
             />
           </Paper>
         )}
-        <Paper>
-          <div style={{ margin: "0 auto", width: "800px" }}>
-            <ConfigListView
-              fcConfig={this.props.fcConfig}
-              notifyDirty={this.props.notifyDirty}
-              items={this.props.items}
-            />
+
+        <div style={{ display: "flex" }}>
+          <div style={{ display: "flex", flex: 1, flexDirection: "column" }}>
+            <div style={{ margin: "0 auto", width: "800px" }}>
+              <ConfigListView
+                fcConfig={this.props.fcConfig}
+                notifyDirty={this.props.notifyDirty}
+                items={this.props.items}
+              />
+            </div>
           </div>
-        </Paper>
-        {/* RF Style TPA, but leave it for future 
-        {this.state.isRF1 && (
-          <Paper className="flex-center">
-            <FCConfigContext.Consumer>
-              {config => {
-                return config.tpa_type &&
-                  config.tpa_type.current === "RACEFLIGHT" ? (
-                  <TpaCurveView
-                    notifyDirty={this.props.notifyDirty}
-                    item={this.props.fcConfig.tpa_curves}
-                  />
-                ) : (
-                  <div>
-                    <StatelessInput
-                      notifyDirty={this.props.notifyDirty}
-                      item={this.props.fcConfig.tpa_breakpoint}
-                    />
-                    <StatelessInput
-                      notifyDirty={this.props.notifyDirty}
-                      item={this.props.fcConfig.tpa_rate}
-                    />
-                  </div>
-                );
-              }}
-            </FCConfigContext.Consumer>
-          </Paper>
-        )}
-        */}
+          <div style={{ display: "flex", flex: 1, flexDirection: "column" }}>
+            <Paper>
+              <div className="flex-center-start">
+                <StatelessInput
+                  id="throttle_boost"
+                  notifyDirty={this.props.notifyDirty}
+                />
+                <StatelessInput
+                  id="i_decay"
+                  notifyDirty={this.props.notifyDirty}
+                />
+                <StatelessInput
+                  id="emu_boost"
+                  notifyDirty={this.props.notifyDirty}
+                />
+                <StatelessInput
+                  id="emu_boost_limit"
+                  notifyDirty={this.props.notifyDirty}
+                />
+                <StatelessInput
+                  id="emu_boost_yaw"
+                  notifyDirty={this.props.notifyDirty}
+                />
+                <StatelessInput
+                  id="emu_boost_limit_yaw"
+                  notifyDirty={this.props.notifyDirty}
+                />
+                <StatelessInput
+                  id="feathered_pids"
+                  notifyDirty={this.props.notifyDirty}
+                />
+              </div>
+            </Paper>
+          </div>
+        </div>
       </div>
     );
   }
