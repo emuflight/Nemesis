@@ -344,7 +344,7 @@ export default class Connected extends Component {
               fcConfig={mergedProfile}
               handleSave={this.handleSave}
               theme={this.state.theme}
-              fw={mergedProfile.version.fw.indexOf("B") > -1 ? "bxf" : "rf1"}
+              fw={"bxf"}
               open={this.state.openAssistant}
               onClose={() => this.closeAssistant()}
               type={this.state.assistantType}

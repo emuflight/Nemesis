@@ -41,16 +41,38 @@ export default class AttitudeView extends Component {
   componentDidMount() {
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color(0x424242);
-    this.scene.fog = new THREE.Fog(0x424242, 2, 15);
 
     this.camera = new THREE.PerspectiveCamera(100, 1, 1, 400);
     this.camera.position.set(0, 0, 200);
     this.cameraTarget = new THREE.Vector3(0, 0, 90);
     this.camera.lookAt(this.cameraTarget);
 
+    const ambientColor = 0xffffff;
+    const ambientIntensity = 0.2;
+    const ambientLight = new THREE.AmbientLight(color, intensity);
+    this.scene.add(ambientLight);
+
+    // Add scene direct light
+    const color = 0xffffff;
+    const intensity = 1.2;
+    const light = new THREE.DirectionalLight(color, intensity);
+    light.position.set(0, 0, 400);
+    light.target.position.set(0, 0, 90);
+    this.scene.add(light);
+    this.scene.add(light.target);
+
     var loader = new STLLoader();
     loader.load(this.props.modelUrl, geometry => {
-      var material = new THREE.MeshNormalMaterial();
+      //add Model color
+      var material = new THREE.MeshStandardMaterial({
+        color: 0x2194ce,
+        wireframeLinewidth: 1,
+        reflectivity: 1.2,
+        refractionRatio: 0.98,
+        wireframe: 1,
+        shininess: 150,
+        roughness: 1
+      });
       this.mesh = new THREE.Mesh(geometry, material);
       this.scene.add(this.mesh);
 

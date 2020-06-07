@@ -6,6 +6,8 @@ import Paper from "@material-ui/core/Paper";
 import { AreaChart } from "react-easy-chart";
 import biquad from "./biquad";
 import "./FiltersView.css";
+import { Typography, TextField } from "@material-ui/core";
+import { FormattedMessage } from "react-intl";
 import StatelessSelect from "../Items/StatelessSelect";
 
 export default class FiltersView extends Component {
@@ -213,27 +215,6 @@ export default class FiltersView extends Component {
             </div>
           </Paper>
           <Paper className="flex-center">
-            <DropdownView
-              notifyDirty={this.props.notifyDirty}
-              item={this.props.fcConfig.dterm_lowpass_hz_type}
-            />
-            <StatelessInput
-              notifyDirty={this.props.notifyDirty}
-              key={this.props.fcConfig.dterm_lowpass_hz_roll.id}
-              item={this.props.fcConfig.dterm_lowpass_hz_roll}
-            />
-            <StatelessInput
-              notifyDirty={this.props.notifyDirty}
-              key={this.props.fcConfig.dterm_lowpass_hz_pitch.id}
-              item={this.props.fcConfig.dterm_lowpass_hz_pitch}
-            />
-            <StatelessInput
-              notifyDirty={this.props.notifyDirty}
-              key={this.props.fcConfig.dterm_lowpass_hz_yaw.id}
-              item={this.props.fcConfig.dterm_lowpass_hz_yaw}
-            />
-          </Paper>
-          <Paper className="flex-center">
             <div className="area-chart-container">
               <AreaChart
                 data={bqData}
@@ -247,6 +228,99 @@ export default class FiltersView extends Component {
               />
             </div>
           </Paper>
+          <div style={{ display: "flex" }}>
+            <Paper>
+              <Typography variant="h6">
+                <FormattedMessage id="dterm_lowpass" />
+              </Typography>
+              <div
+                style={{
+                  margin: "0 auto",
+                  width: "260px",
+                  display: "flex",
+                  flex: 1,
+                  flexDirection: "column"
+                }}
+              >
+                <Paper>
+                  <DropdownView
+                    notifyDirty={this.props.notifyDirty}
+                    item={this.props.fcConfig.dterm_lowpass_hz_type}
+                  />
+                </Paper>
+                <div
+                  style={{ Display: "flex", flex: 1, flexDirection: "column" }}
+                >
+                  <Paper>
+                    <StatelessInput
+                      notifyDirty={this.props.notifyDirty}
+                      key={this.props.fcConfig.dterm_lowpass_hz_roll.id}
+                      item={this.props.fcConfig.dterm_lowpass_hz_roll}
+                    />
+                    <StatelessInput
+                      notifyDirty={this.props.notifyDirty}
+                      key={this.props.fcConfig.dterm_lowpass_hz_pitch.id}
+                      item={this.props.fcConfig.dterm_lowpass_hz_pitch}
+                    />
+                    <StatelessInput
+                      notifyDirty={this.props.notifyDirty}
+                      key={this.props.fcConfig.dterm_lowpass_hz_yaw.id}
+                      item={this.props.fcConfig.dterm_lowpass_hz_yaw}
+                    />
+                  </Paper>
+                  <Paper>
+                    <StatelessInput
+                      notifyDirty={this.props.notifyDirty}
+                      key={this.props.fcConfig.dterm_lowpass2_hz_roll.id}
+                      item={this.props.fcConfig.dterm_lowpass2_hz_roll}
+                    />
+                    <StatelessInput
+                      notifyDirty={this.props.notifyDirty}
+                      key={this.props.fcConfig.dterm_lowpass2_hz_pitch.id}
+                      item={this.props.fcConfig.dterm_lowpass2_hz_pitch}
+                    />
+                    <StatelessInput
+                      notifyDirty={this.props.notifyDirty}
+                      key={this.props.fcConfig.dterm_lowpass2_hz_yaw.id}
+                      item={this.props.fcConfig.dterm_lowpass2_hz_yaw}
+                    />
+                  </Paper>
+                </div>
+              </div>
+            </Paper>
+            <Paper className="flex-column-start">
+              <Typography variant="h6">
+                <FormattedMessage id="smart_dterm_smoothing" />
+              </Typography>
+              <StatelessInput
+                id="smart_dterm_smoothing_roll"
+                notifyDirty={this.props.notifyDirty}
+              />
+              <StatelessInput
+                id="smart_dterm_smoothing_pitch"
+                notifyDirty={this.props.notifyDirty}
+              />
+              <StatelessInput
+                id="smart_dterm_smoothing_yaw"
+                notifyDirty={this.props.notifyDirty}
+              />
+              <Typography variant="h6">
+                <FormattedMessage id="witchcraft" />
+              </Typography>
+              <StatelessInput
+                id="witchcraft_roll"
+                notifyDirty={this.props.notifyDirty}
+              />
+              <StatelessInput
+                id="witchcraft_pitch"
+                notifyDirty={this.props.notifyDirty}
+              />
+              <StatelessInput
+                id="witchcraft_yaw"
+                notifyDirty={this.props.notifyDirty}
+              />
+            </Paper>
+          </div>
         </div>
       </div>
     );
