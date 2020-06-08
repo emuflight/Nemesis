@@ -1,9 +1,13 @@
-.flex, .flex-center, .flex-column, .flex-column-center, .flex-column-start {
+.flex, .flex-center, .flex-center-stretch, .flex-column, .flex-column-center, .flex-column-start {
   display: flex; }
 
 .flex-center {
   justify-items: center;
   align-items: center; }
+
+.flex-center-stretch {
+  justify-items: center;
+  align-items: stretch; }
 
 .flex-column, .flex-column-center, .flex-column-start {
   flex-direction: column; }

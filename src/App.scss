@@ -6,6 +6,11 @@
   justify-items: center;
   align-items: center;
 }
+.flex-center-stretch {
+  @extend .flex;
+  justify-items: center;
+  align-items: stretch;
+}
 .flex-column {
   @extend .flex;
   flex-direction: column;

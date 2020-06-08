@@ -46,11 +46,6 @@ export default class FiltersView extends Component {
         ).plot,
         biquad(
           "lowpass",
-          parseInt(this.props.fcConfig.imuf_acc_lpf_cutoff_hz.current, 10),
-          freq
-        ).plot,
-        biquad(
-          "lowpass",
           parseInt(this.props.fcConfig.gyro_lowpass_hz_roll.current, 10),
           freq
         ).plot,
@@ -61,7 +56,7 @@ export default class FiltersView extends Component {
         ).plot,
         biquad(
           "lowpass",
-          parseInt(this.props.fcConfig.gyro_lowpass2_hz_roll.current, 10),
+          parseInt(this.props.fcConfig.gyro_lowpass_hz_yaw.current, 10),
           freq
         ).plot,
         biquad("notch", hz1, freq, cutoff1).plot,
@@ -81,7 +76,22 @@ export default class FiltersView extends Component {
         ).plot,
         biquad(
           "lowpass",
+          parseInt(this.props.fcConfig.gyro_lowpass_hz_yaw.current, 10),
+          freq
+        ).plot,
+        biquad(
+          "lowpass",
           parseInt(this.props.fcConfig.gyro_lowpass2_hz_roll.current, 10),
+          freq
+        ).plot,
+        biquad(
+          "lowpass",
+          parseInt(this.props.fcConfig.gyro_lowpass2_hz_pitch.current, 10),
+          freq
+        ).plot,
+        biquad(
+          "lowpass",
+          parseInt(this.props.fcConfig.gyro_lowpass2_hz_yaw.current, 10),
           freq
         ).plot,
         biquad("notch", hz1, freq, cutoff1).plot,
@@ -119,9 +129,53 @@ export default class FiltersView extends Component {
           </Paper>
         </div>
         <div style={{ flex: 1 }}>
-          <Paper className="flex-center">
+          <Paper className="flex-center-stretch">
+            <div style={{ width: "200px" }} className="flex-column">
+              <Paper>
+                <StatelessSelect
+                  id="gyro_lowpass_type"
+                  notifyDirty={this.props.notifyDirty}
+                />
+              </Paper>
+              <Paper className="flex-column">
+                <StatelessInput
+                  id="gyro_lowpass_hz_roll"
+                  notifyDirty={this.props.notifyDirty}
+                />
+                <StatelessInput
+                  id="gyro_lowpass_hz_pitch"
+                  notifyDirty={this.props.notifyDirty}
+                />
+                <StatelessInput
+                  id="gyro_lowpass_hz_yaw"
+                  notifyDirty={this.props.notifyDirty}
+                />
+              </Paper>
+            </div>
+            <div style={{ width: "200px" }} className="flex-column">
+              <Paper>
+                <StatelessSelect
+                  id="gyro_lowpass2_type"
+                  notifyDirty={this.props.notifyDirty}
+                />
+              </Paper>
+              <Paper className="flex-column">
+                <StatelessInput
+                  id="gyro_lowpass2_hz_roll"
+                  notifyDirty={this.props.notifyDirty}
+                />
+                <StatelessInput
+                  id="gyro_lowpass2_hz_pitch"
+                  notifyDirty={this.props.notifyDirty}
+                />
+                <StatelessInput
+                  id="gyro_lowpass2_hz_yaw"
+                  notifyDirty={this.props.notifyDirty}
+                />
+              </Paper>
+            </div>
             {this.props.fcConfig.imuf && (
-              <div className="flex-column">
+              <Paper className="flex-column-start">
                 <StatelessInput
                   id="imuf_roll_lpf_cutoff_hz"
                   notifyDirty={(isDirty, state, val) => {
@@ -154,48 +208,9 @@ export default class FiltersView extends Component {
                     this.props.notifyDirty(isDirty, state, val);
                   }}
                 />
-              </div>
+              </Paper>
             )}
-            <div className="flex-column-start">
-              <StatelessSelect
-                id="gyro_lowpass_type"
-                notifyDirty={this.props.notifyDirty}
-              />
-              <StatelessInput
-                id="gyro_lowpass_hz_roll"
-                notifyDirty={this.props.notifyDirty}
-              />
-              <StatelessInput
-                id="gyro_lowpass_hz_pitch"
-                notifyDirty={this.props.notifyDirty}
-              />
-              <StatelessInput
-                id="gyro_lowpass_hz_yaw"
-                notifyDirty={this.props.notifyDirty}
-              />
-            </div>
-            <div className="flex-column-start">
-              <DropdownView
-                notifyDirty={this.props.notifyDirty}
-                item={this.props.fcConfig.gyro_lowpass2_type}
-              />
-              <StatelessInput
-                notifyDirty={this.props.notifyDirty}
-                item={this.props.fcConfig.gyro_lowpass2_hz_roll}
-              />
-              <StatelessInput
-                notifyDirty={this.props.notifyDirty}
-                item={this.props.fcConfig.gyro_lowpass2_hz_pitch}
-              />
-              <StatelessInput
-                notifyDirty={this.props.notifyDirty}
-                item={this.props.fcConfig.gyro_lowpass2_hz_yaw}
-              />
-            </div>
-
-            {/* TO-DO: Fix style*/}
-
-            <div className="flex-column-start">
+            <Paper className="flex-column-start">
               <StatelessInput
                 notifyDirty={this.props.notifyDirty}
                 item={this.props.fcConfig.gyro_notch1_hz}
@@ -212,7 +227,7 @@ export default class FiltersView extends Component {
                 notifyDirty={this.props.notifyDirty}
                 item={this.props.fcConfig.gyro_notch2_cutoff}
               />
-            </div>
+            </Paper>
           </Paper>
           <Paper className="flex-center">
             <div className="area-chart-container">
