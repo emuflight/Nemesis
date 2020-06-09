@@ -3,9 +3,9 @@
     "id": "assistant.motors.direction",
     "options": [
       {
-        "image": "assets/props.jpg",
+        "image": "assets/props.png",
         "style": {
-          "height": 320,
+          "height": 280,
           "width": 280,
           "backgroundSize": "cover"
         },
@@ -14,9 +14,9 @@
         "commands": ["set yaw_motors_reversed=OFF"]
       },
       {
-        "image": "assets/props-reversed.jpg",
+        "image": "assets/props-reversed.png",
         "style": {
-          "height": 320,
+          "height": 280,
           "width": 280,
           "backgroundSize": "cover"
         },

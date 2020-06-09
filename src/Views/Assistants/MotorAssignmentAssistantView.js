@@ -86,7 +86,7 @@ export default class MotorAssignmentAssistantView extends PickerAssistantView {
               position: "relative",
               backgroundImage: `url("assets/props${
                 propsReversed ? "-reversed" : ""
-              }.jpg")`,
+              }.png")`,
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
               backgroundSize: "contain"
