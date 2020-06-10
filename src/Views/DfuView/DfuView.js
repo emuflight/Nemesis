@@ -12,19 +12,15 @@ import { FormControlLabel, FormGroup, Switch } from "@material-ui/core";
 import "./DfuView.css";
 
 const releaseUrls = {
-  ButterFlight:
-    "https://api.github.com/repos/ButterFlight/Butterflight/releases/latest",
-  RACEFLIGHT: "https://api.github.com/repos/orneryd/omg/releases/latest",
-  Betaflight:
-    "https://api.github.com/repos/heliorc/imuf-release-bef/releases/latest"
+  EmuFlight: "https://api.github.com/repos/emuflight/EmuFlight/releases"
 };
+
 const releaseNotesUrls = {
-  ButterFlight:
-    "https://raw.githubusercontent.com/ButterFlight/butterflight/3.6.2/README.md",
-  RACEFLIGHT: "https://raw.githubusercontent.com/orneryd/omg/v3.0.33/README.md",
-  Betaflight:
-    "https://raw.githubusercontent.com/Betaflight/Betaflight/3.5.2/README.md"
+  // TODO: remove this and use release notes from github api
+  EmuFlight:
+    "https://raw.githubusercontent.com/emuflight/EmuFlight/0.3.1/README.md"
 };
+
 export default class DfuView extends Component {
   constructor(props) {
     super(props);
@@ -37,8 +33,9 @@ export default class DfuView extends Component {
       selectedFile: undefined,
       current: "",
       currentTarget: props.target || "",
-      firmwareType: props.firmware || "RACEFLIGHT",
-      firmwareTypeList: ["RACEFLIGHT", "ButterFlight", "Betaflight"],
+      currentRelease: props.release || "",
+      firmwareType: props.firmware || "EmuFlight",
+      firmwareTypeList: ["EmuFlight"],
       progress: "",
       firmwares: {}
     };
@@ -109,59 +106,30 @@ export default class DfuView extends Component {
     return releaseNotesUrls[this.state.firmwareType];
   }
 
-  targetRegex = /.*_(\w+)\.bin/;
-
-  setFirmware(data) {
-    let targetList = [];
-    let assets = data.assets || data;
-    let firmwares = assets
-      .filter(file => {
-        return file.name.endsWith(".bin") && !file.name.startsWith("IMUF");
-      })
-      .reduce((reducer, file) => {
-        file.download_url = file.download_url || file.browser_download_url;
-        let match = file.name.match(this.targetRegex);
-        if (match && match[1]) {
-          let targetName = match[1];
-          reducer[targetName] = reducer[targetName] || [];
-          reducer[targetName].push(file);
-          if (targetList.indexOf(targetName) < 0) {
-            targetList.push(targetName);
-          }
-        }
-        return reducer;
-      }, {});
-    targetList.sort();
-    this.setState({
-      firmwares: firmwares,
-      targetList: targetList,
-      isFlashing: false
-    });
-  }
-
   fetchReleases() {
     return fetch(this.releaseUrl)
       .then(response => response.json())
-      .then(releases => {
-        localStorage.setItem(
-          this.releasesKey + "Expires",
-          new Date().getTime() + 1 * 24 * 60 * 60 * 1000
-        );
-        localStorage.setItem(this.releasesKey, JSON.stringify(releases));
-        this.setFirmware(releases);
-        return releases;
-      });
-  }
-  loadReleaseNotes() {
-    fetch(this.releaseNotesUrl)
-      .then(response => response.arrayBuffer())
-      .then(notes => {
-        let note = new TextDecoder("utf-8").decode(notes);
-        this.setState({ note });
+      .then(releaseList => {
+        this.setState({ releaseList: releaseList });
+        /* 
+        // TODO: Set this to cache releaseList instead of firmware, since all data is in releaseList
+        data.map(release => {
+          localStorage.setItem(
+            this.releaseKey + "Expires",
+            new Date().getTime() + 1 * 24 * 60 * 60 * 1000
+          );
+          localStorage.setItem(this.releasesKey, JSON.stringify(releases));
+          this.setFirmware(releases);
+          return release;
+        });
+        */
       });
   }
   loadReleases() {
     let cachedReleases = localStorage.getItem(this.releasesKey);
+    // TEMP disable cached releases
+    cachedReleases = false;
+
     if (cachedReleases) {
       let expiry = new Date(
         parseInt(localStorage.getItem(this.releasesKey + "Expires"), 10)
@@ -176,39 +144,17 @@ export default class DfuView extends Component {
   }
 
   componentDidMount() {
-    this.loadReleaseNotes();
-    this.loadReleases();
+    this.setState({ firmwareType: "EmuFlight" }, () => {
+      this.loadReleases();
+    });
   }
 
   render() {
     return (
       <Paper className="dfu-view-root">
-        {this.state.firmwareTypeList && (
-          <HelperSelect
-            labelClassName="dfu-select-firmware"
-            label="dfu.target.firmware-type"
-            value={this.state.firmwareType}
-            disabled={this.state.isFlashing}
-            onChange={event => {
-              this.setState({ firmwareType: event.target.value }, () => {
-                this.loadReleaseNotes();
-                this.loadReleases();
-              });
-            }}
-            items={
-              this.state.firmwareTypeList &&
-              this.state.firmwareTypeList.map(target => {
-                return {
-                  value: target,
-                  label: target
-                };
-              })
-            }
-          />
-        )}
         <div style={{ display: "flex" }}>
           <Typography paragraph variant="h6">
-            <FormattedMessage id="dfu.select.version" />
+            <FormattedMessage id="dfu.flash.title" />
           </Typography>
           <div style={{ flexGrow: 1 }} />
           {this.props.goBack && (
@@ -220,6 +166,26 @@ export default class DfuView extends Component {
         <div style={{ display: "flex" }}>
           <HelperSelect
             style={{ flex: 1 }}
+            label="dfu.release.title"
+            value={this.state.currentRelease}
+            disabled={this.state.isFlashing || !!this.state.selectedFile}
+            onChange={event => {
+              this.setState({ currentRelease: event.target.value });
+            }}
+            items={
+              this.state.releaseList &&
+              this.state.releaseList.map(release => {
+                return {
+                  value: release,
+                  label: release.tag_name || "Choose One..."
+                };
+              })
+            }
+          />
+        </div>
+        <div style={{ display: "flex" }}>
+          <HelperSelect
+            style={{ flex: 1 }}
             label="dfu.target.title"
             value={this.state.currentTarget}
             disabled={this.state.isFlashing || !!this.state.selectedFile}
@@ -227,11 +193,11 @@ export default class DfuView extends Component {
               this.setState({ currentTarget: event.target.value });
             }}
             items={
-              this.state.targetList &&
-              this.state.targetList.map(target => {
+              this.state.currentRelease &&
+              this.state.currentRelease.assets.map(target => {
                 return {
                   value: target,
-                  label: target || "Choose One..."
+                  label: target.name || "Choose One..."
                 };
               })
             }
@@ -261,25 +227,6 @@ export default class DfuView extends Component {
             />
           )}
         </div>
-        {this.state.currentTarget && (
-          <HelperSelect
-            label="dfu.select.version"
-            value={this.state.current}
-            disabled={this.state.isFlashing || !!this.state.selectedFile}
-            onChange={event => {
-              this.setState({ current: event.target.value });
-            }}
-            items={
-              this.state.firmwares[this.state.currentTarget] &&
-              this.state.firmwares[this.state.currentTarget].map(fw => {
-                return {
-                  value: fw.download_url || "",
-                  label: fw.name || "Choose One..."
-                };
-              })
-            }
-          />
-        )}
         <div className="flex-center">
           {this.state.currentTarget !== "IMU-F" && (
             <FormGroup component="fieldset" style={{ paddingLeft: 10 }}>
