@@ -259,7 +259,7 @@ export default class DfuView extends Component {
         <Paper>
           <Typography>
             <ReactMarkdown
-              source={this.state.note}
+              source={this.state.currentRelease.body}
               classNames={this.state.theme}
             />
           </Typography>
