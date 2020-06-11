@@ -110,6 +110,15 @@ export default class DfuView extends Component {
     return fetch(this.releaseUrl)
       .then(response => response.json())
       .then(releaseList => {
+        releaseList.forEach(function(release) {
+          release.assets.forEach(function(target) {
+            target.label = target.name
+              .split(".hex")[0]
+              .split("_")
+              .slice(2)
+              .join("_");
+          });
+        });
         this.setState({ releaseList: releaseList });
         /* 
         // TODO: Set this to cache releaseList instead of firmware, since all data is in releaseList
@@ -197,7 +206,7 @@ export default class DfuView extends Component {
               this.state.currentRelease.assets.map(target => {
                 return {
                   value: target,
-                  label: target.name || "Choose One..."
+                  label: target.label || "Choose One..."
                 };
               })
             }
