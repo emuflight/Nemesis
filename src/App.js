@@ -124,8 +124,7 @@ export class App extends Component {
       return (
         <MuiThemeProvider theme={themes.dark}>
           <DfuView
-            firmware={FCConnector.currentFirmware}
-            target={FCConnector.currentTarget}
+            version={this.state.currentConfig.version}
           />
         </MuiThemeProvider>
       );
