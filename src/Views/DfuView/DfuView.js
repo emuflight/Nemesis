@@ -177,9 +177,11 @@ export default class DfuView extends Component {
             style={{ flex: 1 }}
             label="dfu.release.title"
             value={this.state.currentRelease}
-            disabled={this.state.isFlashing || !!this.state.selectedFile}
+            disabled={this.state.isFlashing}
             onChange={event => {
               this.setState({ currentRelease: event.target.value });
+              this.setState({ currentTarget: undefined });
+              this.setState({ selectedFile: undefined });
             }}
             items={
               this.state.releaseList &&
@@ -197,9 +199,12 @@ export default class DfuView extends Component {
             style={{ flex: 1 }}
             label="dfu.target.title"
             value={this.state.currentTarget}
-            disabled={this.state.isFlashing || !!this.state.selectedFile}
+            disabled={this.state.isFlashing}
             onChange={event => {
               this.setState({ currentTarget: event.target.value });
+              this.setState({
+                selectedFile: event.target.value.browser_download_url
+              });
             }}
             items={
               this.state.currentRelease &&
