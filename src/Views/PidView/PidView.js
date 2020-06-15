@@ -2,7 +2,7 @@ import React from "react";
 import ProfileView from "../ProfileView/ProfileView";
 import DropdownView from "../Items/DropdownView";
 import ConfigListView from "../ConfigListView/ConfigListView";
-//import TpaCurveView from "../TpaCurveView/TpaCurveView";
+import TpaCurveView from "../TpaCurveView/TpaCurveView";
 import Paper from "@material-ui/core/Paper";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
@@ -13,15 +13,32 @@ import { FormattedMessage } from "react-intl";
 import PidProcessDenom from "./PidProcessDenom";
 import GyroSyncDenom from "./GyroSyncDenom";
 import StatelessInput from "../Items/StatelessInput";
-//import { FCConfigContext } from "../../App";
+import { FCConfigContext } from "../../App";
 
 export default class PidsView extends ProfileView {
+  componentDidMount = () => {
+    if (!this.state.isBxF) {
+      return FCConnector.getTpaCurves(this.props.active).then(curves => {
+        this.setState({ tpaCurves: curves });
+      });
+    }
+  };
   get children() {
     return (
       <div
         className="pid-view"
         style={{ display: "flex", flexDirection: "column" }}
       >
+        {!this.state.isBxF &&
+          this.state.tpaCurves && (
+            <Paper>
+              <TpaCurveView
+                activeProfile={this.props.active}
+                notifyDirty={this.props.notifyDirty}
+                item={this.state.tpaCurves}
+              />
+            </Paper>
+          )}
         {this.state.isBxF && (
           <Paper>
             <div>
@@ -272,7 +289,7 @@ export default class PidsView extends ProfileView {
             </div>
           </Paper>
         </div>
-        <Paper className="flex-center">
+        {/*<Paper className="flex-center">
           <StatelessInput
             notifyDirty={this.props.notifyDirty}
             key={this.props.fcConfig.tpa_rate_p.id}
@@ -293,6 +310,20 @@ export default class PidsView extends ProfileView {
             key={this.props.fcConfig.tpa_breakpoint.id}
             item={this.props.fcConfig.tpa_breakpoint}
           />
+          </Paper>*/}
+        <Paper className="flex-center">
+          <FCConfigContext.Consumer>
+            {config => {
+              return (
+                config.tpa_type && (
+                  <TpaCurveView
+                    notifyDirty={this.props.notifyDirty}
+                    item={this.props.fcConfig.tpa_curves}
+                  />
+                )
+              );
+            }}
+          </FCConfigContext.Consumer>
         </Paper>
       </div>
     );
