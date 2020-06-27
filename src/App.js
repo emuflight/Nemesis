@@ -126,9 +126,8 @@ export class App extends Component {
           <MuiThemeProvider theme={themes.dark}>
             <DfuView version={this.state.currentConfig.version} />
           </MuiThemeProvider>
-        );  
-      }
-      else {
+        );
+      } else {
         return (
           <MuiThemeProvider theme={themes.dark}>
             <DfuView />

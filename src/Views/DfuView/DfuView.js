@@ -29,7 +29,7 @@ export default class DfuView extends Component {
     this.state = {
       theme: props.theme,
       allowUpload: true,
-      chipErase: false,
+      chipErase: true,
       selectedFile: undefined,
       current: "",
       currentTarget: props.target || "",
@@ -120,6 +120,7 @@ export default class DfuView extends Component {
           });
         });
         this.setState({ releaseList: releaseList });
+        this.setState({ currentRelease: releaseList[0] }); // select latest release in select box
         /* 
         // TODO: Set this to cache releaseList instead of firmware, since all data is in releaseList
         data.map(release => {
@@ -185,11 +186,13 @@ export default class DfuView extends Component {
                   event.target.value.assets.find(element => {
                     return element.label === this.props.version.target;
                   }) || undefined;
-                this.setState({ currentTarget: autodetect_target });
-                this.setState({
-                  selectedFile:
-                    autodetect_target.browser_download_url || undefined
-                });
+                if (autodetect_target) {
+                  this.setState({ currentTarget: autodetect_target });
+                  this.setState({
+                    selectedFile:
+                      autodetect_target.browser_download_url || undefined
+                  });
+                }
               }
             }}
             items={
