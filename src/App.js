@@ -121,13 +121,20 @@ export class App extends Component {
         </MuiThemeProvider>
       );
     } else if (this.state.dfu) {
-      return (
-        <MuiThemeProvider theme={themes.dark}>
-          <DfuView
-            version={this.state.currentConfig.version}
-          />
-        </MuiThemeProvider>
-      );
+      if (this.state.currentConfig) {
+        return (
+          <MuiThemeProvider theme={themes.dark}>
+            <DfuView version={this.state.currentConfig.version} />
+          </MuiThemeProvider>
+        );  
+      }
+      else {
+        return (
+          <MuiThemeProvider theme={themes.dark}>
+            <DfuView />
+          </MuiThemeProvider>
+        );
+      }
     } else if (this.state.connected) {
       return (
         <MuiThemeProvider theme={this.state.theme}>

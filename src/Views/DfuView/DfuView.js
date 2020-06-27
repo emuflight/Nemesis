@@ -180,15 +180,17 @@ export default class DfuView extends Component {
             disabled={this.state.isFlashing}
             onChange={event => {
               this.setState({ currentRelease: event.target.value });
-              let autodetect_target =
-                event.target.value.assets.find(element => {
-                  return element.label === this.props.version.target;
-                }) || undefined;
-              this.setState({ currentTarget: autodetect_target });
-              this.setState({
-                selectedFile:
-                  autodetect_target.browser_download_url || undefined
-              });
+              if (this.props.version) {
+                let autodetect_target =
+                  event.target.value.assets.find(element => {
+                    return element.label === this.props.version.target;
+                  }) || undefined;
+                this.setState({ currentTarget: autodetect_target });
+                this.setState({
+                  selectedFile:
+                    autodetect_target.browser_download_url || undefined
+                });
+              }
             }}
             items={
               this.state.releaseList &&
