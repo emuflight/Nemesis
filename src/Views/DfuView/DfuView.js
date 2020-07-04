@@ -11,15 +11,7 @@ import { FormattedMessage } from "react-intl";
 import { FormControlLabel, FormGroup, Switch } from "@material-ui/core";
 import "./DfuView.css";
 
-const releaseUrls = {
-  EmuFlight: "https://api.github.com/repos/emuflight/EmuFlight/releases"
-};
-
-const releaseNotesUrls = {
-  // TODO: remove this and use release notes from github api
-  EmuFlight:
-    "https://raw.githubusercontent.com/emuflight/EmuFlight/0.3.1/README.md"
-};
+const releaseUrl = "https://api.github.com/repos/emuflight/EmuFlight/releases";
 
 export default class DfuView extends Component {
   constructor(props) {
@@ -98,16 +90,9 @@ export default class DfuView extends Component {
   get releasesKey() {
     return `${this.state.firmwareType}.releases`;
   }
-  get releaseUrl() {
-    return releaseUrls[this.state.firmwareType];
-  }
-
-  get releaseNotesUrl() {
-    return releaseNotesUrls[this.state.firmwareType];
-  }
 
   fetchReleases() {
-    return fetch(this.releaseUrl)
+    return fetch(releaseUrl)
       .then(response => response.json())
       .then(releaseList => {
         releaseList.forEach(function(release) {
@@ -119,9 +104,24 @@ export default class DfuView extends Component {
               .join("_");
           });
         });
+        let latestRelease = releaseList[0];
         this.setState({ releaseList: releaseList });
-        this.setState({ currentRelease: releaseList[0] }); // select latest release in select box
-        /* 
+        this.setState({ currentRelease: latestRelease }); // select latest release in select box
+
+        if (this.props.version) {
+          // select autodetected FC target if it has been detected
+          let autodetect_target =
+            latestRelease.assets.find(element => {
+              return element.label === this.props.version.target;
+            }) || undefined;
+          if (autodetect_target) {
+            this.setState({ currentTarget: autodetect_target });
+            this.setState({
+              selectedFile: autodetect_target.browser_download_url || undefined
+            });
+          }
+        }
+        /*
         // TODO: Set this to cache releaseList instead of firmware, since all data is in releaseList
         data.map(release => {
           localStorage.setItem(
@@ -181,19 +181,6 @@ export default class DfuView extends Component {
             disabled={this.state.isFlashing}
             onChange={event => {
               this.setState({ currentRelease: event.target.value });
-              if (this.props.version) {
-                let autodetect_target =
-                  event.target.value.assets.find(element => {
-                    return element.label === this.props.version.target;
-                  }) || undefined;
-                if (autodetect_target) {
-                  this.setState({ currentTarget: autodetect_target });
-                  this.setState({
-                    selectedFile:
-                      autodetect_target.browser_download_url || undefined
-                  });
-                }
-              }
             }}
             items={
               this.state.releaseList &&
@@ -283,7 +270,7 @@ export default class DfuView extends Component {
           </Button>
         </div>
         <Paper>
-          <Typography>
+          <Typography style={{ "max-height": "60vh", overflow: "auto" }}>
             <ReactMarkdown
               source={this.state.currentRelease.body}
               classNames={this.state.theme}
