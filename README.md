@@ -10,7 +10,7 @@ Copy/paste the contents and save it:
 ```
 SUBSYSTEM=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="5742", GROUP="users", MODE="0664"
 SUBSYSTEM=="tty", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="5742", GROUP="users", MODE="0664"
-SUBSYSTEM=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="df11", GROUP="users"  MODE="0664"
+SUBSYSTEM=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="df11", GROUP="users",  MODE="0664"
 ```
 
 Then run
