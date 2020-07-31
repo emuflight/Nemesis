@@ -44,6 +44,7 @@ cd sqaush-fs
 ```
 #libudev-dev is essential for USB (nodejs' usb)
 sudo apt-get install build-essential git libudev-dev nodejs npm yarn
+npm install -g npm  #in some cases may need sudo -- this command updates npm
 
 #git clone https://github.com/heliorc/pegasus.git
 git clone https://github.com/emuflight/Nemesis.git
@@ -58,13 +59,16 @@ rm -rf node_modules/
 #set python2
 npm config set python /usr/bin/python2.7
 
+#set node version 12
+npm install -g n    #in some cases may need sudo
+sudo n 12           #sets node version 12
+
 #install required obsolete packages
 npm install --save --save-exact  #installs exact versions, not updated packages
 
 #install peers that are not installed by default
 #npm install electron@~5.0.0  #failed w/ v5
-npm install electron@~4.0.0
-npm install ajv@~6.9.1
+npm install ajv@6.12.2 electron@4.2.12 node-sass@4.14.1 electron-builder@22.7.0 node-hid@0.7.9 electron-updater@4.3.1 usb@1.6.1
 
 #disable annoying desktop shortcut creation for election apps
 touch $HOME/.local/share/appimagekit/no_desktopintegration
