@@ -12,11 +12,11 @@ import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import InfoBarView from "../InfoBarView";
 import { FormattedMessage } from "react-intl";
-
+import "./AppBarView.css";
 const styles = theme => ({
   root: {
     width: "100%",
-    magin: 0
+    margin: 0
   },
   grow: {
     flexGrow: 1
@@ -82,11 +82,15 @@ class AppBarView extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <div className={classes.root}>
-        <AppBar style={{ paddingTop: 10 }} position="fixed">
+      <div className={`${classes.root}`}>
+        <AppBar
+          className={`appbar-root`}
+          style={{ paddingTop: 10, margin: 0 }}
+          position="absolute"
+        >
           <Toolbar>
             <IconButton
-              className={classes.menuButton}
+              className={`${classes.menuButton} hamburgerButton`}
               color="inherit"
               aria-label="Menu"
               onClick={this.props.handleDrawerToggle}
