@@ -33,7 +33,7 @@ const FloatView = class extends Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.item.current !== this.state.currentRaw) {
       this.setState({
         currentRaw: nextProps.item.current,

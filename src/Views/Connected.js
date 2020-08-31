@@ -19,7 +19,7 @@ import OSDView from "./OSDView/OSDView";
 import "./Connected.css";
 import { FCConfigContext } from "../App";
 import PreFlightCheckView from "./PreFlightCheckView/PreFlightCheckView";
-import DrawerView from "./DrawerView";
+import ResponsiveDrawerView from "./ResponsiveDrawerView";
 
 export default class Connected extends Component {
   constructor(props) {
@@ -33,7 +33,7 @@ export default class Connected extends Component {
       rate_profile: props.fcConfig.currentRateProfile,
       craftName: props.fcConfig.name,
       isDirty: false,
-      drawerOpen: false,
+      mobileOpen: false,
       currentRoute: props.fcConfig.startingRoute
     };
   }
@@ -75,12 +75,18 @@ export default class Connected extends Component {
   };
 
   handleDrawerToggle = () => {
-    if (this.state.drawerOpen) {
+    if (this.state.mobileOpen) {
       FCConnector.pauseTelemetry();
     } else {
       FCConnector.resumeTelemetry();
     }
-    this.setState({ drawerOpen: !this.state.drawerOpen });
+    this.setState({ mobileOpen: !this.state.mobileOpen });
+  };
+
+  handleClickAway = () => {
+    if (this.state.mobileOpen) {
+      this.setState({ mobileOpen: false });
+    }
   };
 
   handleSearch = event => {
@@ -102,7 +108,7 @@ export default class Connected extends Component {
     }
     this.setState({
       filterOn: undefined,
-      drawerOpen: false,
+      mobileOpen: false,
       currentRoute: newRoute
     });
   };
@@ -326,15 +332,17 @@ export default class Connected extends Component {
             fcConfig={mergedProfile}
             isDirty={this.state.isDirty}
           />
-          <DrawerView
+          <ResponsiveDrawerView
             routes={this.routes}
             goToImuf={this.props.goToImuf}
             fcConfig={mergedProfile}
-            open={this.state.drawerOpen}
+            mobileOpen={this.state.mobileOpen}
             onClose={() => {
-              this.setState({ drawerOpen: false });
+              this.setState({ mobileOpen: false });
             }}
             handleMenuItemClick={this.handleMenuItemClick}
+            handleClickAway={this.handleClickAway}
+            appVersion={this.props.appVersion}
           />
           {contents}
           <CliView handleSave={this.handleSave} theme={this.state.theme} />

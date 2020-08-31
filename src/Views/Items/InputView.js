@@ -23,7 +23,7 @@ const InputView = class extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.item.current !== this.state.current) {
       this.setState({ current: nextProps.item.current });
     }
