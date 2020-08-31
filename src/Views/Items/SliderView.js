@@ -26,7 +26,7 @@ export default class SliderView extends Component {
       this.setState({ isDirty: false, inputVal: newVal });
     });
   }
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     this.setState({ inputVal: nextProps.item.current });
   }
   render() {

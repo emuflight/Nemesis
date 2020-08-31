@@ -19,7 +19,7 @@ export default class VerticalSliderView extends Component {
       .updateCurve(newVal)
       .then(() => this.setState({ isDirty: false }));
   }
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     this.setState({ inputVal: nextProps.item.current });
   }
   render() {

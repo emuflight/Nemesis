@@ -39,7 +39,7 @@ export default class MotorAssignmentAssistantView extends PickerAssistantView {
       }
     }
   };
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.state.saving && nextProps.rebooting === false) {
       setTimeout(() => {
         this.setState({ saving: false });
