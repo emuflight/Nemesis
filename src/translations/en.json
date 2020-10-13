@@ -689,6 +689,7 @@
   "horizon_transition": "Horizon Transition",
   "hott_alarm_int": "HOTT Alarm Interval",
   "ibata_offset": "IBat Amp Offset",
+  "ibata_scale": "IBat Amp Scale",
   "ibatv_offset": "IBat Voltage Offset",
   "ibatv_scale": "IBat Voltage Scale",
   "imu_dcm_ki": "imu_dcm_ki",
@@ -909,5 +910,13 @@
   "CUSTOMAIRPLANE": "CUSTOMAIRPLANE",
   "CUSTOMTRI": "CUSTOMTRI",
   "QUADX1234": "QUADX1234",
-  "BEEP": "BEEP"
+  "BEEP": "BEEP",
+  "PRESET": "PRESET",
+  "T": "T",
+  "NMEA": "NMEA",
+  "UBLOX": "UBLOX",
+  "EGNOS": "EGNOS",
+  "WAAS": "WAAS",
+  "MSAS": "MSAS",
+  "GAGAN": "GAGAN"
 }
