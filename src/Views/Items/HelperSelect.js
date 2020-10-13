@@ -39,7 +39,7 @@ const HelperSelect = class extends Component {
           {this.props.items &&
             this.props.items.map(item => {
               return (
-                <MenuItem key={item.id} value={item.value}>
+                <MenuItem key={item.label} value={item.value}>
                   <FormattedMessage id={item.label} />
                 </MenuItem>
               );

@@ -27,7 +27,7 @@ function createWindow() {
     icon: path.join(__dirname, "assets/icons/png/64x64.png"),
     webPreferences: {
       webSecurity: true,
-      nodeIntegration: false,
+      nodeIntegration: false
     },
     node: {
       __dirname: false
