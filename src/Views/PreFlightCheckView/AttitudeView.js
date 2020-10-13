@@ -16,7 +16,7 @@ export default class AttitudeView extends Component {
   handleStatusMessage = message => {
     try {
       let { attitude } = JSON.parse(message.data);
-      if (attitude) {
+      if (attitude && this.mesh) {
         //rotate the model on the Y axis so it's oriented correctly
         this.mesh.rotation.set(
           attitude.y * 0.017453292519943295 + Math.PI / 2,
@@ -49,7 +49,8 @@ export default class AttitudeView extends Component {
 
     const ambientColor = 0xffffff;
     const ambientIntensity = 0.2;
-    const ambientLight = new THREE.AmbientLight(color, intensity);
+    const ambientLight = new THREE.AmbientLight(ambientColor, ambientIntensity);
+
     this.scene.add(ambientLight);
 
     // Add scene direct light
@@ -67,10 +68,8 @@ export default class AttitudeView extends Component {
       var material = new THREE.MeshStandardMaterial({
         color: 0x2194ce,
         wireframeLinewidth: 1,
-        reflectivity: 1.2,
         refractionRatio: 0.98,
         wireframe: 1,
-        shininess: 150,
         roughness: 1
       });
       this.mesh = new THREE.Mesh(geometry, material);
