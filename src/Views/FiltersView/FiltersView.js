@@ -6,7 +6,7 @@ import Paper from "@material-ui/core/Paper";
 import { AreaChart } from "react-easy-chart";
 import biquad from "./biquad";
 import "./FiltersView.css";
-import { Typography, TextField } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { FormattedMessage } from "react-intl";
 import StatelessSelect from "../Items/StatelessSelect";
 

@@ -26,7 +26,8 @@ function createWindow() {
     backgroundColor: "#303030",
     icon: path.join(__dirname, "assets/icons/png/64x64.png"),
     webPreferences: {
-      webSecurity: false
+      webSecurity: true,
+      nodeIntegration: false
     },
     node: {
       __dirname: false

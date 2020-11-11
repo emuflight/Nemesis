@@ -7,9 +7,6 @@ const common = {
   },
   overrides: {
     MuiLinearProgress: {
-      bar: {
-        transition: "transform 0.1s linear"
-      },
       bar1Determinate: {
         transition: "transform 0.1s linear"
       },
@@ -119,10 +116,7 @@ const mode2flux = createMuiTheme(
     MuiSwitch: {
       colorSecondary: {
         "&$checked": {
-          color: mode2Primary[500],
-          "& + $bar": {
-            backgroundColor: mode2Primary[500]
-          }
+          color: mode2Primary[500]
         }
       }
     }

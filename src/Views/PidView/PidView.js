@@ -1,14 +1,13 @@
 import React from "react";
 import ProfileView from "../ProfileView/ProfileView";
 import DropdownView from "../Items/DropdownView";
-import ConfigListView from "../ConfigListView/ConfigListView";
 //import TpaCurveView from "../TpaCurveView/TpaCurveView";
 import Paper from "@material-ui/core/Paper";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import "./PidView.css";
 import FCConnector from "../../utilities/FCConnector";
-import { Typography, TextField } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { FormattedMessage } from "react-intl";
 import PidProcessDenom from "./PidProcessDenom";
 import GyroSyncDenom from "./GyroSyncDenom";
