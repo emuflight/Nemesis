@@ -154,7 +154,7 @@ Install Windows build tools. (run from administrative command prompt)
  npm install -g --production windows-build-tools --vs2015
 ```
 
-Install Yarn, Configure python, install peer dependencies, and install script :
+Install Yarn, Configure python, install peer dependencies, and the installer script :
 ```
 npm install yarn
 npm config set python %USERPROFILE%\.windows-build-tools\python27\python.exe
