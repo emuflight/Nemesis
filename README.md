@@ -133,6 +133,43 @@ npm run electron-dev
 
 ## Windows, meh.
 
+This guide assumes you have git installed and working on your machine: 
+```
+https://git-scm.com/download/win
+```
+
+Install Node.js 12 for Windows.
+This particular Node.js version is required. If you have other versions of Node installed, consider using nvm to manage multiple installs
+```
+https://nodejs.org/dist/latest-v12.x/node-v12.20.0-x64.msi
+```
+
+git clone the repository (or your fork):
+```
+git clone https://github.com/emuflight/Nemesis.git
+cd Nemesis
+```
+
+Install Windows build tools. (run from either administrative command prompt, or powershell with admin rights)
+```
+ npm install -g --production windows-build-tools --vs2015
+```
+
+Install Yarn, Configure python, install peer dependencies, and the installer script (this part can be done from regular command line):
+```
+npm install yarn
+npm config set python %USERPROFILE%\.windows-build-tools\python27\python.exe
+npm install ajv@6.12.2 electron@4.2.12 node-sass@4.14.1 electron-builder@22.7.0 node-hid@0.7.9 electron-updater@4.3.1 usb@1.6.1
+npm install --save --save-exact
+```
+
+start development version
+```
+npm run electron-dev-win
+```
+
+## Previous Windows build notes 
+(these were not needed on fresh install of Windows 10 / x64 as of Dec 3, 2020)
 If your target device is not HID, you _must_ install a driver before you can communicate with it using libusb. Currently, this means installing one of Microsoft's `WinUSB`, [libusb-win32](http://sourceforge.net/apps/trac/libusb-win32/wiki) or [libusbK](http://libusbk.sourceforge.net/UsbK3/index.html) drivers. Two options are available:
 * _Recommended_: Use the most recent version of _[Zadig](http://zadig.akeo.ie)_, an Automated Driver Installer GUI application for `WinUSB`, `libusb-win32` and `libusbK`...
 * Alternatively, if you are only interested in `WinUSB`, you can download the [WinUSB driver files](https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/libusb-winusb-wip/winusb%20driver.zip) and customize the `inf` file for your device.
