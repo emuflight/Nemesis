@@ -138,7 +138,8 @@ This guide assumes you have git installed and working on your machine:
 https://git-scm.com/download/win
 ```
 
-Install Node.js 12 for Windows: 
+Install Node.js 12 for Windows
+This particular version is required. If you have other versions of Node installed, consider using nvm to manage multiple installs
 ```
 https://nodejs.org/dist/latest-v12.x/node-v12.20.0-x64.msi
 ```
@@ -149,12 +150,12 @@ git clone https://github.com/emuflight/Nemesis.git
 cd Nemesis
 ```
 
-Install Windows build tools. (run from administrative command prompt)
+Install Windows build tools. (run from either administrative command prompt, or powershell with admin rights)
 ```
  npm install -g --production windows-build-tools --vs2015
 ```
 
-Install Yarn, Configure python, install peer dependencies, and the installer script :
+Install Yarn, Configure python, install peer dependencies, and the installer script (this part can be done from regular command line):
 ```
 npm install yarn
 npm config set python %USERPROFILE%\.windows-build-tools\python27\python.exe
