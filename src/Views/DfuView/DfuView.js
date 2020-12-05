@@ -23,6 +23,7 @@ export default class DfuView extends Component {
       allowUpload: true,
       chipErase: true,
       selectedFile: undefined,
+      selectedUrl: undefined,
       current: "",
       currentTarget: props.target || "",
       currentRelease: props.release || "",
@@ -64,19 +65,23 @@ export default class DfuView extends Component {
     var data = new FormData();
     data.append("bin", event.target.files[0]);
     this.setState({ currentTarget: "", selectedFile: data });
+    this.setState({ currentTarget: "", selectedUrl: null });
   };
 
   handleFlash() {
     this.refs.cliView.setState({ open: true, stayOpen: true, disabled: true });
     this.setState({ isFlashing: true });
     let promise;
-    if (this.state.selectedFile) {
+    if (this.state.selectedFile && this.state.selectedFile != null) {
       promise = FCConnector.flashDFULocal(
         this.state.selectedFile,
         this.state.chipErase
       );
     } else {
-      promise = FCConnector.flashDFU(this.state.current, this.state.chipErase);
+      promise = FCConnector.flashDFU(
+        this.state.selectedUrl,
+        this.state.chipErase
+      );
     }
     promise
       .then(done => {
@@ -117,7 +122,7 @@ export default class DfuView extends Component {
           if (autodetect_target) {
             this.setState({ currentTarget: autodetect_target });
             this.setState({
-              selectedFile: autodetect_target.browser_download_url || undefined
+              selectedUrl: autodetect_target.browser_download_url || undefined
             });
           }
         }
@@ -202,8 +207,9 @@ export default class DfuView extends Component {
             onChange={event => {
               this.setState({ currentTarget: event.target.value });
               this.setState({
-                selectedFile: event.target.value.browser_download_url
+                selectedUrl: event.target.value.browser_download_url
               });
+              this.setState({ selectedFile: null });
             }}
             items={
               this.state.currentRelease &&
@@ -263,7 +269,8 @@ export default class DfuView extends Component {
             onClick={() => this.handleFlash()}
             disabled={
               this.state.isFlashing ||
-              (!this.state.current && !this.state.selectedFile)
+              (!this.state.current &&
+                (!this.state.selectedFile && !this.state.selectedUrl))
             }
           >
             <FormattedMessage id="common.flash" />
