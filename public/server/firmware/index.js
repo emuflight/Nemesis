@@ -36,10 +36,11 @@ module.exports = new class {
       },
       (error, response, body) => {
         if (response.statusCode >= 400) {
+          console.log("ERROR:", response.statusCode);
           callback({ error: body });
         } else {
           if (name.indexOf(".hex") > -1) {
-            this.verifyBin(body, callback);
+            callback(this.convertToBin(body).bin);
           } else {
             callback(body);
           }
