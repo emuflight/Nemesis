@@ -130,7 +130,11 @@ start development version
 npm run electron-dev
 ```
 
-
+build app (results in ./dist/mac)
+```
+npm install electron-builder --save-dev
+npm run electron-pack
+```
 ## Windows, meh.
 
 This guide assumes you have git installed and working on your machine: 
