@@ -186,6 +186,8 @@ export default class DfuView extends Component {
             disabled={this.state.isFlashing}
             onChange={event => {
               this.setState({ currentRelease: event.target.value });
+              this.setState({ selectedUrl: null });
+              this.setState({ selectedFile: null });
             }}
             items={
               this.state.releaseList &&
