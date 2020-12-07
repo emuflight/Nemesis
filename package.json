@@ -11,7 +11,7 @@
   "npmRebuild": false,
   "build": {
     "extraResources": "public/server/utils/dfu/**/*",
-    "appId": "com.nemesis",
+    "appId": "com.emuflight.nemesis",
     "files": [
       "build/**/*",
       "node_modules/**/*"
@@ -19,11 +19,18 @@
     "directories": {
       "buildResources": "public/assets"
     },
-    "mac": {
-      "category": "public.app-category.lifestyle",
-      "target": [
-        "zip",
-        "dmg"
+    "dmg": {
+      "contents": [
+        {
+          "x": 110,
+          "y": 150
+        },
+        {
+          "x": 240,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        }
       ]
     },
     "linux": {
@@ -32,7 +39,16 @@
       "icon": "./public/assets",
       "desktop": {
         "Encoding": "UTF-8"
-      }
+      },
+      "target": [
+        "AppImage",
+        "deb",
+        "rpm"
+      ]
+    },
+    "win": {
+      "target": "NSIS",
+      "icon": "build/icon.ico"
     }
   },
   "dependencies": {
@@ -84,7 +100,8 @@
     "electron-pack": "electron-builder --dir",
     "electron-pack-win": "electron-builder --dir",
     "electron-pack-lin": "yarn build && build -l",
-    "preelectron-pack": "yarn build && yarn build-css"
+    "preelectron-pack": "yarn build && yarn build-css",
+    "dist": "electron-builder"
   },
   "devDependencies": {
     "concurrently": "3.5.0",
