@@ -77,8 +77,13 @@ touch $HOME/.local/share/appimagekit/no_desktopintegration
 npm run build -l
 npm run electron-dev
 
-#if it fails to run dev-mode, then
-#compile it (nicely so CPU doesn't spike)
+#compile to unpacked binary
+# results in ./dist/linux-unpacked/nemesis
+npm run build
+npm run electron-pack
+
+#compile to AppImage 
+# (nicely so CPU doesn't spike)
 nice -n 19 npm run electron-pack-lin
 
 #run it
