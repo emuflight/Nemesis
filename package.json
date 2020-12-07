@@ -20,14 +20,15 @@
       "buildResources": "public/assets"
     },
     "dmg": {
+      "background": "public/assets/dmg-background.png",
       "contents": [
         {
-          "x": 110,
-          "y": 150
+          "x": 180,
+          "y": 590
         },
         {
-          "x": 240,
-          "y": 150,
+          "x": 570,
+          "y": 570,
           "type": "link",
           "path": "/Applications"
         }
