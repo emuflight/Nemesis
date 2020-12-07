@@ -2,7 +2,7 @@
   "name": "Nemesis",
   "version": "0.1.0",
   "author": "EmuFlight",
-  "homepage": "https://github.com/emuflight",
+  "homepage": "./",
   "description": "Nemesis EmuFlight-UI",
   "main": "public/electron.js",
   "repository": "https://github.com/emuflight/Nemesis",
@@ -11,7 +11,7 @@
   "npmRebuild": false,
   "build": {
     "extraResources": "public/server/utils/dfu/**/*",
-    "appId": "com.pegasus",
+    "appId": "com.nemesis",
     "files": [
       "build/**/*",
       "node_modules/**/*"
@@ -58,7 +58,8 @@
     "react-text-mask": "^5.4.3",
     "serialport": "^7.0.2",
     "usb": "^1.6.1",
-    "websocket": "^1.0.28"
+    "websocket": "^1.0.28",
+    "yarn": "^1.22.10"
   },
   "lint-staged": {
     "{{public,src}/**/*.{scss,js,json},package.json}": [
@@ -80,8 +81,8 @@
     "precommit": "lint-staged",
     "electron-dev": "concurrently \"yarn watch-css\" \"export BROWSER=none && yarn start\" \"wait-on http://localhost:3000 && electron .\"",
     "electron-dev-win": "concurrently \"yarn watch-css\" \"set BROWSER=none&&yarn start\" \"wait-on http://localhost:3000 && electron .\"",
-    "electron-pack": "build --mac",
-    "electron-pack-win": "yarn build && build --win --ia32 --x64",
+    "electron-pack": "electron-builder --dir",
+    "electron-pack-win": "electron-builder --dir",
     "electron-pack-lin": "yarn build && build -l",
     "preelectron-pack": "yarn build && yarn build-css"
   },

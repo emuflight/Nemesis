@@ -96,6 +96,7 @@ app.on("ready", function() {
   createWindow();
   createMenu();
   // autoUpdater.checkForUpdates();
+  mainWindow.webContents.openDevTools(); //enable only to debug production binary with devtools. Disable on production releases. - Risko
 });
 
 // on MacOS leave process running also with no windows
