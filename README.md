@@ -130,11 +130,17 @@ start development version
 npm run electron-dev
 ```
 
-build app (results in ./dist/mac)
+install electron builder to be able to build executable
 ```
 npm install electron-builder --save-dev
+```
+
+build app (results in ./dist/mac)
+```
+npm run build
 npm run electron-pack
 ```
+
 ## Windows, meh.
 
 This guide assumes you have git installed and working on your machine: 
@@ -170,6 +176,17 @@ npm install --save --save-exact
 start development version
 ```
 npm run electron-dev-win
+```
+
+install electron builder to be able to build executable
+```
+npm install electron-builder --save-dev
+```
+
+build app (results in ./dist/win-unpacked)
+```
+npm run build
+npm run electron-pack
 ```
 
 ## Previous Windows build notes 
