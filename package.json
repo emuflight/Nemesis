@@ -1,7 +1,11 @@
 {
   "name": "Nemesis",
   "version": "0.1.0",
-  "author": "EmuFlight",
+  "author": {
+    "name": "EmuFlight",
+    "email": "test-email@emuflight.org",
+    "url": "https://github.com/emuflight/"
+  },
   "homepage": "./",
   "description": "Nemesis EmuFlight-UI",
   "main": "public/electron.js",
