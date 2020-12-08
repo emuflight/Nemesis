@@ -1,7 +1,11 @@
 {
   "name": "Nemesis",
   "version": "0.1.0",
-  "author": "EmuFlight",
+  "author": {
+    "name": "EmuFlight",
+    "email": "emuflightofficial@gmail.com",
+    "url": "https://github.com/emuflight/"
+  },
   "homepage": "./",
   "description": "Nemesis EmuFlight-UI",
   "main": "public/electron.js",
@@ -11,7 +15,7 @@
   "npmRebuild": false,
   "build": {
     "extraResources": "public/server/utils/dfu/**/*",
-    "appId": "com.nemesis",
+    "appId": "com.emuflight.nemesis",
     "files": [
       "build/**/*",
       "node_modules/**/*"
@@ -19,11 +23,19 @@
     "directories": {
       "buildResources": "public/assets"
     },
-    "mac": {
-      "category": "public.app-category.lifestyle",
-      "target": [
-        "zip",
-        "dmg"
+    "dmg": {
+      "background": "public/assets/dmg-background.png",
+      "contents": [
+        {
+          "x": 180,
+          "y": 590
+        },
+        {
+          "x": 570,
+          "y": 570,
+          "type": "link",
+          "path": "/Applications"
+        }
       ]
     },
     "linux": {
@@ -32,7 +44,17 @@
       "icon": "./public/assets",
       "desktop": {
         "Encoding": "UTF-8"
-      }
+      },
+      "target": [
+        "AppImage",
+        "deb",
+        "rpm"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "installerIcon": "build/assets/icon.ico"
     }
   },
   "dependencies": {
@@ -84,7 +106,8 @@
     "electron-pack": "electron-builder --dir",
     "electron-pack-win": "electron-builder --dir",
     "electron-pack-lin": "yarn build && build -l",
-    "preelectron-pack": "yarn build && yarn build-css"
+    "preelectron-pack": "yarn build && yarn build-css",
+    "dist": "electron-builder"
   },
   "devDependencies": {
     "concurrently": "3.5.0",
