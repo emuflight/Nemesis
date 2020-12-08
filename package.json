@@ -51,9 +51,10 @@
         "rpm"
       ]
     },
-    "win": {
-      "target": "NSIS",
-      "icon": "build/icon.ico"
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "installerIcon": "build/assets/icon.ico"
     }
   },
   "dependencies": {
