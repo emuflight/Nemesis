@@ -11,7 +11,7 @@ export default class CliView extends Component {
     this.commandIndex = 0;
     this.prevCommands = [];
     this.state = {
-      cliBuffer: this.props.startText || "#flyhelio\n\n#",
+      cliBuffer: this.props.startText || "#flashEmu\n\n#",
       stayOpen: !!this.props.stayOpen || false,
       disabled: this.props.disabled || false,
       open: this.props.stayOpen || !!this.props.open
@@ -20,7 +20,7 @@ export default class CliView extends Component {
   toggleCli(state) {
     let openState = this.state.stayOpen || state;
     this.setState({
-      cliBuffer: this.props.startText || "#flyhelio\n\n#",
+      cliBuffer: this.props.startText || "#flashEmu\n\n#",
       command: "",
       open: openState
     });
