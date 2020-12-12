@@ -56,11 +56,14 @@ const setupConnection = device => {
     }
   });
 };
-let retry = 5;
+let retry = 50;
 const getConfig = device => {
   return sendCommand(device, "config", 800).then(conf => {
+    console.log(conf);
+
     try {
       //trim off " config\n";
+      //let config = JSON.parse(conf.slice(conf.indexOf("{"), conf.lastIndexOf("}")));
       let config = JSON.parse(conf.slice(conf.indexOf("{"), conf.length - 3));
       retry = 3;
       return sendCommand(device, "mixer").then(mixer => {
@@ -303,6 +306,7 @@ const getTelemetry = (device, type) => {
       return sendCommand(device, `msp 150`, 30, false).then(status => {
         if (status) {
           try {
+            console.log("STATUS DATA :", status);
             let data = new DataView(new Uint8Array(status).buffer, 12);
             let modeFlasCount = data.getUint8(15);
             let modeflags = [];
