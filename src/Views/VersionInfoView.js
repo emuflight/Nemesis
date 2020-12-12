@@ -31,54 +31,43 @@ export default class VersionInfoView extends Component {
   };
   render() {
     return (
-      <MenuItem style={{ display: "flex" }} onClick={this.handleClick}>
-        <FormattedMessage id="common.version-info" />
-        <Popover
-          open={this.state.open}
-          anchorEl={this.state.anchorEl}
-          anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
-          onClose={() => this.setState({ open: false })}
-        >
-          <List>
-            <MenuItem>
-              {
-                <FormattedMessage
-                  id="info.firmware"
-                  values={{ value: this.state.fw }}
-                />
-              }
-            </MenuItem>
-            <MenuItem>
-              {
-                <FormattedMessage
-                  id="info.target"
-                  values={{ value: this.state.target }}
-                />
-              }
-            </MenuItem>
-            <MenuItem style={{ display: "flex" }}>
-              <div style={{ flexGrow: 1 }}>
-                <FormattedMessage
-                  id="info.version"
-                  values={{ value: this.state.version }}
-                />
-              </div>
-              <Launch onClick={() => FCConnector.goToDFU(this.state)} />
-            </MenuItem>
-            {this.state.imuf && (
-              <MenuItem style={{ display: "flex" }}>
-                <div style={{ flexGrow: 1 }}>
-                  <FormattedMessage
-                    id="info.imuf"
-                    values={{ value: this.state.imuf }}
-                  />
-                </div>
-                <Launch onClick={() => this.goToImuf()} />
-              </MenuItem>
-            )}
-          </List>
-        </Popover>
-      </MenuItem>
+      <List>
+        <MenuItem>
+          {
+            <FormattedMessage
+              id="info.firmware"
+              values={{ value: this.state.fw }}
+            />
+          }
+        </MenuItem>
+        <MenuItem>
+          {
+            <FormattedMessage
+              id="info.target"
+              values={{ value: this.state.target }}
+            />
+          }
+        </MenuItem>
+        <MenuItem style={{ display: "flex" }}>
+          <div style={{ flexGrow: 1 }}>
+            <FormattedMessage
+              id="info.version"
+              values={{ value: this.state.version }}
+            />
+          </div>
+        </MenuItem>
+        {this.state.imuf && (
+          <MenuItem style={{ display: "flex" }}>
+            <div style={{ flexGrow: 1 }}>
+              <FormattedMessage
+                id="info.imuf"
+                values={{ value: this.state.imuf }}
+              />
+            </div>
+            <Launch onClick={() => this.goToImuf()} />
+          </MenuItem>
+        )}
+      </List>
     );
   }
 }

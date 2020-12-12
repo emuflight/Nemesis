@@ -4,6 +4,7 @@ import Disconnected from "./Views/Disconnected";
 import ImufView from "./Views/ImufView/ImufView";
 import DfuView from "./Views/DfuView/DfuView";
 import FCConnector from "./utilities/FCConnector";
+import ImufOnly from "./Views/ImufOnly";
 import themes from "./Themes/Dark";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import "./App.css";
@@ -11,15 +12,17 @@ import "./App.css";
 export const FCConfigContext = React.createContext({});
 
 export class App extends Component {
+  
   constructor(props) {
     super(props);
     this.state = {
       deviceInfo: {},
       connected: false,
-      theme: themes.dark
+      theme: themes.dark,
+      imuf_only: true // Set to true to disable other features of Nemesis besides IMUF flasher.
     };
   }
-
+  
   detectFc = device => {
     if (device.progress || device.telemetry) {
       return;
@@ -137,7 +140,22 @@ export class App extends Component {
           </MuiThemeProvider>
         );
       }
-    } else if (this.state.connected) {
+    } else if (this.state.connected && this.state.imuf_only) {
+      return (
+        <MuiThemeProvider theme={this.state.theme}>
+          <ImufOnly
+            appVersion={this.state.appVersion}
+            rebooting={this.state.rebooting}
+            handleSave={this.handleSave}
+            theme={this.state.theme}
+            goToImuf={this.goToImuf}
+            device={this.state.deviceInfo}
+            fcConfig={this.state.currentConfig}
+          />
+        </MuiThemeProvider>
+      );
+    }
+      else if (this.state.connected) {
       return (
         <MuiThemeProvider theme={this.state.theme}>
           <Connected
