@@ -64,7 +64,7 @@ function ResponsiveDrawer(props) {
       <div>
         <CardMedia
           style={{ height: 100, backgroundSize: "contain" }}
-          image="assets/cf_logo_white.svg"
+          image="assets/cf_logo_white.png"
           title="EmuFlight"
         />
         <Typography
