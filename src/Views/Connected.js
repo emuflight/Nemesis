@@ -4,7 +4,6 @@ import AuxChannelView from "./AuxChannelView/AuxChannelView";
 import ConfigListView from "./ConfigListView/ConfigListView";
 import FeaturesView from "./FeaturesView/FeaturesView";
 import PortsView from "./PortsView/PortsView";
-import CliView from "./CliView/CliView";
 import FiltersView from "./FiltersView/FiltersView";
 import PidsView from "./PidView/PidView";
 import RatesView from "./RatesView/RatesView";
@@ -345,7 +344,6 @@ export default class Connected extends Component {
             appVersion={this.props.appVersion}
           />
           {contents}
-          <CliView handleSave={this.handleSave} theme={this.state.theme} />
           {this.state.openAssistant && (
             <AssistantView
               rebooting={this.props.rebooting}
