@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Paper from "@material-ui/core/Paper";
 import ConfigListView from "./ConfigListView/ConfigListView";
-import CliView from "./CliView/CliView";
 import FCConnector from "../utilities/FCConnector";
 import AssistantView from "./Assistants/AssistantView";
 import "./Connected.css";

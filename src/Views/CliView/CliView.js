@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import Keyboard from "@material-ui/icons/Keyboard";
 import TextField from "@material-ui/core/TextField";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import FCConnector from "../../utilities/FCConnector";
+import MenuItem from "@material-ui/core/MenuItem";
 import "./CliView.css";
 
 export default class CliView extends Component {
@@ -82,15 +82,14 @@ export default class CliView extends Component {
       <div>
         {!this.state.open &&
           !this.state.disabled && (
-            <Keyboard
-              style={{
-                position: "fixed",
-                bottom: "20px",
-                right: "20px",
-                color: this.props.theme.palette.primary[500]
+            <MenuItem
+              style={{ display: "flex" }}
+              onClick={() => {
+                this.toggleCli(true);
               }}
-              onClick={() => this.toggleCli(true)}
-            />
+            >
+              <div style={{ flexGrow: 1 }}>CLI</div>
+            </MenuItem>
           )}
         <SwipeableDrawer
           anchor="bottom"

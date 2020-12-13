@@ -79,8 +79,8 @@ function ResponsiveDrawer(props) {
           goToImuf={props.goToImuf}
           version={props.fcConfig.version}
           imuf={props.fcConfig.imuf}
+          theme={props.theme}
         />
-        <Divider />
       </div>
     </ClickAwayListener>
   );
