@@ -64,17 +64,14 @@ function ResponsiveDrawer(props) {
       <div>
         <CardMedia
           style={{ height: 100, backgroundSize: "contain" }}
-          image="assets/cf_logo_white.svg"
+          image="assets/cf_logo_white.png"
           title="EmuFlight"
         />
         <Typography
           style={{ marginBottom: -20, marginLeft: 16 }}
           color="textSecondary"
         >
-          <FormattedMessage
-            id="disconnected.title"
-            values={{ version: props.appVersion }}
-          />
+          IMUF Flasher
         </Typography>
 
         <Divider style={{ marginTop: "30px" }} />
@@ -83,30 +80,6 @@ function ResponsiveDrawer(props) {
           version={props.fcConfig.version}
           imuf={props.fcConfig.imuf}
         />
-        <Divider />
-        <List style={{ display: "block" }}>
-          {props.routes.map(route => {
-            return (
-              <MenuItem
-                style={{ padding: 8 }}
-                id={route.key}
-                key={route.key}
-                onClick={() => props.handleMenuItemClick(route.key)}
-              >
-                <Typography variant="subtitle1" style={{ flexGrow: 1 }}>
-                  <FormattedMessage id={"route." + route.key} />
-                </Typography>
-                {route.incompeteItems && (
-                  <Badge
-                    style={{ top: "12px" }}
-                    badgeContent={route.incompeteItems}
-                    secondary={true}
-                  />
-                )}
-              </MenuItem>
-            );
-          })}
-        </List>
         <Divider />
       </div>
     </ClickAwayListener>

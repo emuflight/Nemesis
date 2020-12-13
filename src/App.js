@@ -18,8 +18,7 @@ export class App extends Component {
     this.state = {
       deviceInfo: {},
       connected: false,
-      theme: themes.dark,
-      imuf_only: true // Set to true to disable other features of Nemesis besides IMUF flasher.
+      theme: themes.dark
     };
   }
   
@@ -140,25 +139,10 @@ export class App extends Component {
           </MuiThemeProvider>
         );
       }
-    } else if (this.state.connected && this.state.imuf_only) {
+    } else if (this.state.connected) {
       return (
         <MuiThemeProvider theme={this.state.theme}>
           <ImufOnly
-            appVersion={this.state.appVersion}
-            rebooting={this.state.rebooting}
-            handleSave={this.handleSave}
-            theme={this.state.theme}
-            goToImuf={this.goToImuf}
-            device={this.state.deviceInfo}
-            fcConfig={this.state.currentConfig}
-          />
-        </MuiThemeProvider>
-      );
-    }
-      else if (this.state.connected) {
-      return (
-        <MuiThemeProvider theme={this.state.theme}>
-          <Connected
             appVersion={this.state.appVersion}
             rebooting={this.state.rebooting}
             handleSave={this.handleSave}

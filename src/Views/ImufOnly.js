@@ -6,7 +6,7 @@ import FCConnector from "../utilities/FCConnector";
 import AssistantView from "./Assistants/AssistantView";
 import "./Connected.css";
 import { FCConfigContext } from "../App";
-import ResponsiveDrawerViewImufOnly from "./ResponsiveDrawerViewImufOnly";
+import ResponsiveDrawerView from "./ResponsiveDrawerView";
 import Typography from "@material-ui/core/Typography";
 
 export default class Connected extends Component {
@@ -145,7 +145,7 @@ export default class Connected extends Component {
     return (
       <Paper className={`connected-root ${mergedProfile.version.fw}`}>
         <FCConfigContext.Provider value={mergedProfile}>
-          <ResponsiveDrawerViewImufOnly
+          <ResponsiveDrawerView
             routes={this.routes}
             goToImuf={this.props.goToImuf}
             fcConfig={mergedProfile}
