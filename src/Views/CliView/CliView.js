@@ -3,6 +3,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@material-ui/core/TextField";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import FCConnector from "../../utilities/FCConnector";
+import MenuItem from "@material-ui/core/MenuItem";
 import "./CliView.css";
 
 export default class CliView extends Component {
@@ -83,7 +84,7 @@ export default class CliView extends Component {
         {!this.state.open &&
           !this.state.disabled && (
             <MenuItem
-              style={{ display: "flex", padding: 8 }}
+              style={{ display: "flex" }}
               onClick={() => {
                 this.toggleCli(true);
               }}

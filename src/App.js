@@ -4,6 +4,7 @@ import Disconnected from "./Views/Disconnected";
 import ImufView from "./Views/ImufView/ImufView";
 import DfuView from "./Views/DfuView/DfuView";
 import FCConnector from "./utilities/FCConnector";
+import ImufOnly from "./Views/ImufOnly";
 import themes from "./Themes/Dark";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import "./App.css";
@@ -11,6 +12,7 @@ import "./App.css";
 export const FCConfigContext = React.createContext({});
 
 export class App extends Component {
+  
   constructor(props) {
     super(props);
     this.state = {
@@ -19,7 +21,7 @@ export class App extends Component {
       theme: themes.dark
     };
   }
-
+  
   detectFc = device => {
     if (device.progress || device.telemetry) {
       return;
@@ -140,7 +142,7 @@ export class App extends Component {
     } else if (this.state.connected) {
       return (
         <MuiThemeProvider theme={this.state.theme}>
-          <Connected
+          <ImufOnly
             appVersion={this.state.appVersion}
             rebooting={this.state.rebooting}
             handleSave={this.handleSave}

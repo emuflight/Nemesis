@@ -72,10 +72,7 @@ function ResponsiveDrawer(props) {
           style={{ marginBottom: -20, marginLeft: 16 }}
           color="textSecondary"
         >
-          <FormattedMessage
-            id="disconnected.title"
-            values={{ version: props.appVersion }}
-          />
+          IMUF Flasher
         </Typography>
 
         <Divider style={{ marginTop: "30px" }} />
@@ -83,6 +80,7 @@ function ResponsiveDrawer(props) {
           goToImuf={props.goToImuf}
           version={props.fcConfig.version}
           imuf={props.fcConfig.imuf}
+          theme={props.theme}
         />
         <Divider />
         <List style={{ display: "block" }}>
