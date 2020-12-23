@@ -1,5 +1,6 @@
 const SerialPort = require("serialport");
 const imufFirmware = require("../firmware/imuf");
+fs = require("fs"); // temp for debugging json output
 let openConnection;
 
 const setupConnection = device => {
@@ -58,10 +59,17 @@ const setupConnection = device => {
 };
 let retry = 50;
 const getConfig = device => {
-  return sendCommand(device, "config", 800).then(conf => {
+  return sendCommand(device, "config", 1800).then(conf => {
     console.log(conf);
 
     try {
+      if (conf.length == 0) {
+        console.log("CONF LENGTH IS ZERO");
+      }
+      fs.writeFile("debug.txt", conf, function(err) {
+        if (err) return console.log(err);
+        console.log("wrote to file");
+      });
       //trim off " config\n";
       //let config = JSON.parse(conf.slice(conf.indexOf("{"), conf.lastIndexOf("}")));
       let config = JSON.parse(conf.slice(conf.indexOf("{"), conf.length - 3));
