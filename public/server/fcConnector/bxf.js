@@ -14,7 +14,9 @@ const setupConnection = device => {
               console.log("OPEN ERROR: ", openError);
               reject(openError);
             } else {
-              openConnection.write("!\n", cliError => {
+              /*
+              openConnection.write("#", cliError => {
+                console.log("Sent # and carriage - 1");
                 if (cliError) {
                   console.log("couldn't get into cli mode: ", cliError);
                   reject(cliError);
@@ -23,11 +25,16 @@ const setupConnection = device => {
                   resolve(openConnection);
                 }
               });
+              */
+              //sendCommand(device, "#");
+              openConnection.read();
+              resolve(openConnection);
             }
           });
         } catch (ex) {
           console.log("ALREADY OPEN!!!!!", ex);
-          openConnection.write("!\n", cliError => {
+          openConnection.write("#\n", cliError => {
+            console.log("sent # and carriage - 2");
             if (cliError) {
               console.log("couldn't get into cli mode: ", cliError);
               reject(cliError);
@@ -59,7 +66,10 @@ const setupConnection = device => {
 };
 let retry = 50;
 const getConfig = device => {
-  return sendCommand(device, "config", 1800).then(conf => {
+  if (retry == 50) {
+    sendCommand(device, "#");
+  }
+  return sendCommand(device, "config", 1500).then(conf => {
     console.log(conf);
 
     try {
