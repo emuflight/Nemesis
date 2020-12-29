@@ -11,8 +11,6 @@ import { FormattedMessage } from "react-intl";
 import { FormControlLabel, FormGroup, Switch } from "@material-ui/core";
 import "./DfuView.css";
 
-const releaseUrl = "https://api.github.com/repos/emuflight/EmuFlight/releases";
-
 export default class DfuView extends Component {
   constructor(props) {
     super(props);
@@ -96,8 +94,12 @@ export default class DfuView extends Component {
     return `${this.state.firmwareType}.releases`;
   }
 
+  releaseUrl() {
+    return "https://api.github.com/repos/emuflight/EmuFlight/releases";
+  }
+
   fetchReleases() {
-    return fetch(releaseUrl)
+    return fetch(this.releaseUrl())
       .then(response => response.json())
       .then(releaseList => {
         releaseList.forEach(function(release) {
@@ -110,6 +112,7 @@ export default class DfuView extends Component {
           });
         });
         let latestRelease = releaseList[0];
+        console.log("latest release:", latestRelease);
         this.setState({ releaseList: releaseList });
         this.setState({ currentRelease: latestRelease }); // select latest release in select box
 
@@ -169,7 +172,12 @@ export default class DfuView extends Component {
       <Paper className="dfu-view-root">
         <div style={{ display: "flex" }}>
           <Typography paragraph variant="h6">
-            <FormattedMessage id="dfu.flash.title" />
+            {this.state.currentTarget !== "IMU-F" && (
+              <FormattedMessage id="dfu.flash.title" />
+            )}
+            {this.state.currentTarget === "IMU-F" && (
+              <FormattedMessage id="imuf.title" />
+            )}
           </Typography>
           <div style={{ flexGrow: 1 }} />
           {this.props.goBack && (
@@ -201,28 +209,30 @@ export default class DfuView extends Component {
           />
         </div>
         <div style={{ display: "flex" }}>
-          <HelperSelect
-            style={{ flex: 1 }}
-            label="dfu.target.title"
-            value={this.state.currentTarget}
-            disabled={this.state.isFlashing}
-            onChange={event => {
-              this.setState({ currentTarget: event.target.value });
-              this.setState({
-                selectedUrl: event.target.value.browser_download_url
-              });
-              this.setState({ selectedFile: null });
-            }}
-            items={
-              this.state.currentRelease &&
-              this.state.currentRelease.assets.map(target => {
-                return {
-                  value: target,
-                  label: target.label || "Choose One..."
-                };
-              })
-            }
-          />
+          {this.state.currentTarget !== "IMU-F" && (
+            <HelperSelect
+              style={{ flex: 1 }}
+              label="dfu.target.title"
+              value={this.state.currentTarget}
+              disabled={this.state.isFlashing}
+              onChange={event => {
+                this.setState({ currentTarget: event.target.value });
+                this.setState({
+                  selectedUrl: event.target.value.browser_download_url
+                });
+                this.setState({ selectedFile: null });
+              }}
+              items={
+                this.state.currentRelease &&
+                this.state.currentRelease.assets.map(target => {
+                  return {
+                    value: target,
+                    label: target.label || "Choose One..."
+                  };
+                })
+              }
+            />
+          )}
           {this.state.allowUpload && (
             <div
               style={{
@@ -279,12 +289,14 @@ export default class DfuView extends Component {
           </Button>
         </div>
         <Paper>
-          <Typography style={{ "max-height": "60vh", overflow: "auto" }}>
-            <ReactMarkdown
-              source={this.state.currentRelease.body}
-              classNames={this.state.theme}
-            />
-          </Typography>
+          {this.state.currentTarget === "IMU-F" && (
+            <Typography style={{ "max-height": "60vh", overflow: "auto" }}>
+              <ReactMarkdown
+                source={this.state.currentRelease.body}
+                classNames={this.state.theme}
+              />
+            </Typography>
+          )}
         </Paper>
         <CliView disabled={true} startText={this.cliNotice} ref="cliView" />
       </Paper>
