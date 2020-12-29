@@ -43,10 +43,19 @@ export default class ImufView extends DfuView {
 
     this.refs.cliView.setState({ open: true, stayOpen: true, disabled: true });
     this.setState({ isFlashing: true });
-    FCConnector.flashIMUF(this.state.selectedUrl, progress => {
-      this.setState({ progress });
-    }).then(done => {
-      this.setState({ isFlashing: false, note: done });
-    });
+
+    if (this.state.selectedFile && this.state.selectedFile != null) {
+      FCConnector.flashIMUFLocal(this.state.selectedFile, progress => {
+        this.setState({ progress });
+      }).then(done => {
+        this.setState({ isFlashing: false, note: done });
+      });
+    } else {
+      FCConnector.flashIMUF(this.state.selectedUrl, progress => {
+        this.setState({ progress });
+      }).then(done => {
+        this.setState({ isFlashing: false, note: done });
+      });
+    }
   }
 }
