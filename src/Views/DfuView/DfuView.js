@@ -112,10 +112,13 @@ export default class DfuView extends Component {
           });
         });
         let latestRelease = releaseList[0];
-        console.log("latest release:", latestRelease);
         this.setState({ releaseList: releaseList });
         this.setState({ currentRelease: latestRelease }); // select latest release in select box
-
+        if (this.state.imuf) {
+          this.setState({
+            selectedUrl: latestRelease.assets[0].browser_download_url
+          });
+        }
         if (this.props.version) {
           // select autodetected FC target if it has been detected
           let autodetect_target =
@@ -194,8 +197,16 @@ export default class DfuView extends Component {
             disabled={this.state.isFlashing}
             onChange={event => {
               this.setState({ currentRelease: event.target.value });
-              this.setState({ selectedUrl: null });
-              this.setState({ selectedFile: null });
+
+              if (this.state.dfu) {
+                this.setState({ selectedUrl: null });
+                this.setState({ selectedFile: null });
+              } else if (this.state.imuf) {
+                this.setState({
+                  selectedUrl: event.target.value.assets[0].browser_download_url
+                });
+                this.setState({ selectedFile: null });
+              }
             }}
             items={
               this.state.releaseList &&

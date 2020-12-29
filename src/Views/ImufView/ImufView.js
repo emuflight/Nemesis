@@ -39,9 +39,11 @@ export default class ImufView extends DfuView {
     });
   }
   handleFlash() {
+    // needs local and url
+
     this.refs.cliView.setState({ open: true, stayOpen: true, disabled: true });
     this.setState({ isFlashing: true });
-    FCConnector.flashIMUF(this.state.current, progress => {
+    FCConnector.flashIMUF(this.state.selectedUrl, progress => {
       this.setState({ progress });
     }).then(done => {
       this.setState({ isFlashing: false, note: done });
