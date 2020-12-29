@@ -184,7 +184,7 @@ const updateIMUFLocal = (device, binBuffer, notify) => {
             } else {
               notify("\nFlashing IMU-F...\n");
               sendCommand(device, "imufflashbin\n", 5000).then(() => {
-                notify("\ndone!\nPlease wait for reboot..\n \n#flyhelio");
+                notify("\ndone!\nPlease wait for reboot..\n \n#flashEmu");
               });
             }
           };
@@ -223,7 +223,7 @@ const updateIMUF = (device, binName, notify) => {
               } else {
                 notify("\nFlashing IMU-F...\n");
                 sendCommand(device, "imufflashbin\n", 5000).then(() => {
-                  notify("\ndone!\nPlease wait for reboot..\n \n#flyhelio");
+                  notify("\ndone!\nPlease wait for reboot..\n \n#flashEmu");
                 });
               }
             };

@@ -131,7 +131,7 @@ const updateIMUF = (device, binName, notify) => {
                 sendCommand(device, "imufflashbin\n").then(r => {
                   console.log(r);
                   notify(r);
-                  notify("\ndone!\nPlease wait for reboot..\n \n#flyhelio");
+                  notify("\ndone!\nPlease wait for reboot..\n \n#flashEmu");
                 });
               }
             };
