@@ -17,7 +17,7 @@ export default class ImufView extends DfuView {
       current: "IMU-F",
       progress: "",
       hasTarget: true,
-      allowUpload: false,
+      allowUpload: true,
       targetList: ["IMU-F"],
       firmwares: {},
       imuf: true

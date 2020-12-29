@@ -66,6 +66,11 @@ export default class DfuView extends Component {
     this.setState({ currentTarget: "", selectedUrl: null });
   };
 
+  clearLocalFile() {
+    var data = new FormData();
+    this.setState({ currentTarget: "", selectedFile: null });
+  }
+
   handleFlash() {
     this.refs.cliView.setState({ open: true, stayOpen: true, disabled: true });
     this.setState({ isFlashing: true });
@@ -118,6 +123,7 @@ export default class DfuView extends Component {
           this.setState({
             selectedUrl: latestRelease.assets[0].browser_download_url
           });
+          this.clearLocalFile();
         }
         if (this.props.version) {
           // select autodetected FC target if it has been detected
@@ -175,12 +181,8 @@ export default class DfuView extends Component {
       <Paper className="dfu-view-root">
         <div style={{ display: "flex" }}>
           <Typography paragraph variant="h6">
-            {this.state.currentTarget !== "IMU-F" && (
-              <FormattedMessage id="dfu.flash.title" />
-            )}
-            {this.state.currentTarget === "IMU-F" && (
-              <FormattedMessage id="imuf.title" />
-            )}
+            {this.state.dfu && <FormattedMessage id="dfu.flash.title" />}
+            {this.state.imuf && <FormattedMessage id="imuf.title" />}
           </Typography>
           <div style={{ flexGrow: 1 }} />
           {this.props.goBack && (
@@ -205,7 +207,7 @@ export default class DfuView extends Component {
                 this.setState({
                   selectedUrl: event.target.value.assets[0].browser_download_url
                 });
-                this.setState({ selectedFile: null });
+                this.clearLocalFile();
               }
             }}
             items={
@@ -220,7 +222,7 @@ export default class DfuView extends Component {
           />
         </div>
         <div style={{ display: "flex" }}>
-          {this.state.currentTarget !== "IMU-F" && (
+          {this.state.current !== "IMU-F" && (
             <HelperSelect
               style={{ flex: 1 }}
               label="dfu.target.title"
@@ -265,12 +267,15 @@ export default class DfuView extends Component {
               inputProps={{
                 accept: "bin"
               }}
-              onChange={event => this.loadLocalFile(event)}
+              onChange={event => {
+                this.loadLocalFile(event);
+                this.setState({ currentRelease: null });
+              }}
             />
           )}
         </div>
         <div className="flex-center">
-          {this.state.currentTarget !== "IMU-F" && (
+          {this.state.dfu && (
             <FormGroup component="fieldset" style={{ paddingLeft: 10 }}>
               <FormControlLabel
                 control={
