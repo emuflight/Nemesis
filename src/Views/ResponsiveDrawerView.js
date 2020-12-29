@@ -14,6 +14,7 @@ import "./Connected.css";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import CardMedia from "@material-ui/core/CardMedia";
+import CliView from "./CliView/CliView";
 
 const drawerWidth = 240;
 
@@ -81,6 +82,7 @@ function ResponsiveDrawer(props) {
           imuf={props.fcConfig.imuf}
           theme={props.theme}
         />
+        <Divider />
       </div>
     </ClickAwayListener>
   );

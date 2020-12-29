@@ -11,8 +11,6 @@ import { FormattedMessage } from "react-intl";
 import { FormControlLabel, FormGroup, Switch } from "@material-ui/core";
 import "./DfuView.css";
 
-const releaseUrl = "https://api.github.com/repos/emuflight/EmuFlight/releases";
-
 export default class DfuView extends Component {
   constructor(props) {
     super(props);
@@ -68,6 +66,11 @@ export default class DfuView extends Component {
     this.setState({ currentTarget: "", selectedUrl: null });
   };
 
+  clearLocalFile() {
+    var data = new FormData();
+    this.setState({ currentTarget: "", selectedFile: null });
+  }
+
   handleFlash() {
     this.refs.cliView.setState({ open: true, stayOpen: true, disabled: true });
     this.setState({ isFlashing: true });
@@ -96,8 +99,12 @@ export default class DfuView extends Component {
     return `${this.state.firmwareType}.releases`;
   }
 
+  releaseUrl() {
+    return "https://api.github.com/repos/emuflight/EmuFlight/releases";
+  }
+
   fetchReleases() {
-    return fetch(releaseUrl)
+    return fetch(this.releaseUrl())
       .then(response => response.json())
       .then(releaseList => {
         releaseList.forEach(function(release) {
@@ -112,7 +119,12 @@ export default class DfuView extends Component {
         let latestRelease = releaseList[0];
         this.setState({ releaseList: releaseList });
         this.setState({ currentRelease: latestRelease }); // select latest release in select box
-
+        if (this.state.imuf) {
+          this.setState({
+            selectedUrl: latestRelease.assets[0].browser_download_url
+          });
+          this.clearLocalFile();
+        }
         if (this.props.version) {
           // select autodetected FC target if it has been detected
           let autodetect_target =
@@ -169,7 +181,8 @@ export default class DfuView extends Component {
       <Paper className="dfu-view-root">
         <div style={{ display: "flex" }}>
           <Typography paragraph variant="h6">
-            <FormattedMessage id="dfu.flash.title" />
+            {this.state.dfu && <FormattedMessage id="dfu.flash.title" />}
+            {this.state.imuf && <FormattedMessage id="imuf.title" />}
           </Typography>
           <div style={{ flexGrow: 1 }} />
           {this.props.goBack && (
@@ -186,8 +199,16 @@ export default class DfuView extends Component {
             disabled={this.state.isFlashing}
             onChange={event => {
               this.setState({ currentRelease: event.target.value });
-              this.setState({ selectedUrl: null });
-              this.setState({ selectedFile: null });
+
+              if (this.state.dfu) {
+                this.setState({ selectedUrl: null });
+                this.setState({ selectedFile: null });
+              } else if (this.state.imuf) {
+                this.setState({
+                  selectedUrl: event.target.value.assets[0].browser_download_url
+                });
+                this.clearLocalFile();
+              }
             }}
             items={
               this.state.releaseList &&
@@ -201,28 +222,30 @@ export default class DfuView extends Component {
           />
         </div>
         <div style={{ display: "flex" }}>
-          <HelperSelect
-            style={{ flex: 1 }}
-            label="dfu.target.title"
-            value={this.state.currentTarget}
-            disabled={this.state.isFlashing}
-            onChange={event => {
-              this.setState({ currentTarget: event.target.value });
-              this.setState({
-                selectedUrl: event.target.value.browser_download_url
-              });
-              this.setState({ selectedFile: null });
-            }}
-            items={
-              this.state.currentRelease &&
-              this.state.currentRelease.assets.map(target => {
-                return {
-                  value: target,
-                  label: target.label || "Choose One..."
-                };
-              })
-            }
-          />
+          {this.state.current !== "IMU-F" && (
+            <HelperSelect
+              style={{ flex: 1 }}
+              label="dfu.target.title"
+              value={this.state.currentTarget}
+              disabled={this.state.isFlashing}
+              onChange={event => {
+                this.setState({ currentTarget: event.target.value });
+                this.setState({
+                  selectedUrl: event.target.value.browser_download_url
+                });
+                this.setState({ selectedFile: null });
+              }}
+              items={
+                this.state.currentRelease &&
+                this.state.currentRelease.assets.map(target => {
+                  return {
+                    value: target,
+                    label: target.label || "Choose One..."
+                  };
+                })
+              }
+            />
+          )}
           {this.state.allowUpload && (
             <div
               style={{
@@ -244,12 +267,15 @@ export default class DfuView extends Component {
               inputProps={{
                 accept: "bin"
               }}
-              onChange={event => this.loadLocalFile(event)}
+              onChange={event => {
+                this.loadLocalFile(event);
+                this.setState({ currentRelease: null });
+              }}
             />
           )}
         </div>
         <div className="flex-center">
-          {this.state.currentTarget !== "IMU-F" && (
+          {this.state.dfu && (
             <FormGroup component="fieldset" style={{ paddingLeft: 10 }}>
               <FormControlLabel
                 control={
@@ -279,12 +305,14 @@ export default class DfuView extends Component {
           </Button>
         </div>
         <Paper>
-          <Typography style={{ "max-height": "60vh", overflow: "auto" }}>
-            <ReactMarkdown
-              source={this.state.currentRelease.body}
-              classNames={this.state.theme}
-            />
-          </Typography>
+          {this.state.currentTarget === "IMU-F" && (
+            <Typography style={{ "max-height": "60vh", overflow: "auto" }}>
+              <ReactMarkdown
+                source={this.state.currentRelease.body}
+                classNames={this.state.theme}
+              />
+            </Typography>
+          )}
         </Paper>
         <CliView disabled={true} startText={this.cliNotice} ref="cliView" />
       </Paper>

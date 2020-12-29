@@ -158,9 +158,46 @@ const sendCommand = (device, command, waitMs = 30, encode = "utf8") => {
   });
 };
 
+const updateIMUFLocal = (device, binBuffer, notify) => {
+  notify("Communicating with IMU-F...\n");
+  let binAsStr = binBuffer.toString("hex");
+
+  sendCommand(device, "imufbootloader", 5000).then(bootlresp => {
+    if (bootlresp.indexOf("BOOTLOADER") > -1) {
+      notify("IMU-F ready to talk...\n");
+      sendCommand(device, "imufloadbin !").then(prepResp => {
+        if (prepResp.indexOf("SUCCESS") > -1) {
+          notify(`Loading binary onto IMU-F...\n`);
+          let index = 0;
+          const sendBytes = () => {
+            if (index < binAsStr.length) {
+              let tail = Math.min(binAsStr.length, index + 200);
+              let sending = `imufloadbin l64000000${binAsStr.slice(
+                index,
+                tail
+              )}\n`;
+              sendCommand(device, sending, 50).then(() => {
+                notify(".");
+                index = tail;
+                sendBytes();
+              });
+            } else {
+              notify("\nFlashing IMU-F...\n");
+              sendCommand(device, "imufflashbin\n", 5000).then(() => {
+                notify("\ndone!\nPlease wait for reboot..\n \n#flyhelio");
+              });
+            }
+          };
+          sendBytes();
+        }
+      });
+    }
+  });
+};
 const updateIMUF = (device, binName, notify) => {
   notify(`Downloading ${binName}...\n`);
   imufFirmware.load(binName, fileBuffer => {
+    //loads url to fileBuffer
     notify("Communicating with IMU-F...\n");
     let binAsStr = fileBuffer.toString("hex");
     // let binAsStr = fs.readFileSync(path.join(__dirname, './IMUF_1.1.0_STARBUCK_ALPHA.bin')).toString('hex');
@@ -417,6 +454,7 @@ const reset = () => {
 
 module.exports = {
   sendCommand: sendCommand,
+  updateIMUFLocal: updateIMUFLocal,
   updateIMUF: updateIMUF,
   getConfig: getConfig,
   getTelemetry: getTelemetry,

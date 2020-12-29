@@ -338,4 +338,21 @@ module.exports = new class FcConnector {
       ecb
     );
   }
+  updateIMUFLocal(deviceInfo, binUrl, cb, ecb) {
+    return bxfConnector.updateIMUFLocal(
+      deviceInfo,
+      binUrl,
+      data => {
+        websockets.clients.forEach(client =>
+          client.sendUTF(
+            JSON.stringify({
+              progress: data
+            })
+          )
+        );
+      },
+      cb,
+      ecb
+    );
+  }
 }();
