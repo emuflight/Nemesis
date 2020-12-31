@@ -1,5 +1,6 @@
 const SerialPort = require("serialport");
 const imufFirmware = require("../firmware/imuf");
+const imufCaesar = require("../firmware/imuf/caesar");
 let openConnection;
 
 const setupConnection = device => {
@@ -162,6 +163,17 @@ const updateIMUFLocal = (device, binBuffer, notify) => {
   notify("Communicating with IMU-F...\n");
   let binAsStr = binBuffer.toString("hex");
 
+  //Decide whether to encrypt binary based on first bytes:
+  //  26f32612 <- helio imuf
+  //  00400020 <- compiled imuf
+
+  if (binAsStr.slice(0, 8) == "00400020") {
+    //is un-caesared compiled imuf ie. emu release
+    notify("Caesar encrypting IMU-F Binary... ");
+    binAsStr = imufCaesar.caesarBin(binAsStr); //caesar binary before flashing
+    notify("Done.\n");
+  }
+
   sendCommand(device, "imufbootloader", 5000).then(bootlresp => {
     if (bootlresp.indexOf("BOOTLOADER") > -1) {
       notify("IMU-F ready to talk...\n");
@@ -200,7 +212,18 @@ const updateIMUF = (device, binName, notify) => {
     //loads url to fileBuffer
     notify("Communicating with IMU-F...\n");
     let binAsStr = fileBuffer.toString("hex");
-    // let binAsStr = fs.readFileSync(path.join(__dirname, './IMUF_1.1.0_STARBUCK_ALPHA.bin')).toString('hex');
+
+    //Decide whether to encrypt binary based on first bytes:
+    //  26f32612 <- helio imuf
+    //  00400020 <- compiled imuf
+
+    if (binAsStr.slice(0, 8) == "00400020") {
+      //is un-caesared compiled imuf ie. emu release
+      notify("Caesar encrypting IMU-F Binary... ");
+      binAsStr = imufCaesar.caesarBin(binAsStr); //caesar binary before flashing
+      notify("Done.\n");
+    }
+
     sendCommand(device, "imufbootloader", 5000).then(bootlresp => {
       if (bootlresp.indexOf("BOOTLOADER") > -1) {
         notify("IMU-F ready to talk...\n");
