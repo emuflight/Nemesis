@@ -67,7 +67,7 @@ export default class DfuView extends Component {
   };
 
   clearLocalFile() {
-    var data = new FormData();
+    document.getElementById("file_input").value = null;
     this.setState({ currentTarget: "", selectedFile: null });
   }
 
@@ -261,6 +261,7 @@ export default class DfuView extends Component {
           )}
           {this.state.allowUpload && (
             <Input
+              id="file_input"
               style={{ flex: 1, marginBottom: 8 }}
               type="file"
               name="fileUpload"
