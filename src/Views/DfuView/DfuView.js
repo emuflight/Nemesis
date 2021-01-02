@@ -67,7 +67,7 @@ export default class DfuView extends Component {
   };
 
   clearLocalFile() {
-    var data = new FormData();
+    document.getElementById("file_input").value = null;
     this.setState({ currentTarget: "", selectedFile: null });
   }
 
@@ -115,6 +115,14 @@ export default class DfuView extends Component {
               .slice(2)
               .join("_");
           });
+        });
+        //sort releases by created_at date. (if use published_at date, imuf release order will be wrong)
+        releaseList.sort(function(a, b) {
+          var keyA = new Date(a.created_at),
+            keyB = new Date(b.created_at);
+          if (keyA < keyB) return 1;
+          if (keyA > keyB) return -1;
+          return 0;
         });
         let latestRelease = releaseList[0];
         this.setState({ releaseList: releaseList });
@@ -261,6 +269,7 @@ export default class DfuView extends Component {
           )}
           {this.state.allowUpload && (
             <Input
+              id="file_input"
               style={{ flex: 1, marginBottom: 8 }}
               type="file"
               name="fileUpload"
@@ -305,14 +314,19 @@ export default class DfuView extends Component {
           </Button>
         </div>
         <Paper>
-          {this.state.currentTarget === "IMU-F" && (
-            <Typography style={{ "max-height": "60vh", overflow: "auto" }}>
-              <ReactMarkdown
-                source={this.state.currentRelease.body}
-                classNames={this.state.theme}
-              />
-            </Typography>
-          )}
+          <Typography style={{ "max-height": "60vh", overflow: "auto" }}>
+            <ReactMarkdown
+              renderers={{
+                link: props => (
+                  <a href={props.href} target="_blank">
+                    {props.children}
+                  </a>
+                )
+              }}
+              source={this.state.currentRelease.body}
+              classNames={this.state.theme}
+            />
+          </Typography>
         </Paper>
         <CliView disabled={true} startText={this.cliNotice} ref="cliView" />
       </Paper>
