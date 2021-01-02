@@ -314,14 +314,19 @@ export default class DfuView extends Component {
           </Button>
         </div>
         <Paper>
-          {this.state.currentTarget === "IMU-F" && (
-            <Typography style={{ "max-height": "60vh", overflow: "auto" }}>
-              <ReactMarkdown
-                source={this.state.currentRelease.body}
-                classNames={this.state.theme}
-              />
-            </Typography>
-          )}
+          <Typography style={{ "max-height": "60vh", overflow: "auto" }}>
+            <ReactMarkdown
+              renderers={{
+                link: props => (
+                  <a href={props.href} target="_blank">
+                    {props.children}
+                  </a>
+                )
+              }}
+              source={this.state.currentRelease.body}
+              classNames={this.state.theme}
+            />
+          </Typography>
         </Paper>
         <CliView disabled={true} startText={this.cliNotice} ref="cliView" />
       </Paper>
