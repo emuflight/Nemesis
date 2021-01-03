@@ -117,13 +117,15 @@ export default class DfuView extends Component {
           });
         });
         //sort releases by created_at date. (if use published_at date, imuf release order will be wrong)
-        releaseList.sort(function(a, b) {
-          var keyA = new Date(a.created_at),
-            keyB = new Date(b.created_at);
-          if (keyA < keyB) return 1;
-          if (keyA > keyB) return -1;
-          return 0;
-        });
+        if (this.state.imuf) {
+          releaseList.sort(function(a, b) {
+            var keyA = a.tag_name, //new Date(a.published_at),
+              keyB = b.tag_name; //new Date(b.published_at);
+            if (keyA < keyB) return 1;
+            if (keyA > keyB) return -1;
+            return 0;
+          });
+        }
         let latestRelease = releaseList[0];
         this.setState({ releaseList: releaseList });
         this.setState({ currentRelease: latestRelease }); // select latest release in select box
@@ -223,7 +225,7 @@ export default class DfuView extends Component {
               this.state.releaseList.map(release => {
                 return {
                   value: release,
-                  label: release.tag_name || "Choose One..."
+                  label: release.name || "Choose One..."
                 };
               })
             }
