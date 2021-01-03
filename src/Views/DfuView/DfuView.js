@@ -116,7 +116,7 @@ export default class DfuView extends Component {
               .join("_");
           });
         });
-        //sort releases by created_at date. (if use published_at date, imuf release order will be wrong)
+        //sort IMUF releases by tag_name. EMUF releases by default sort from API
         if (this.state.imuf) {
           releaseList.sort(function(a, b) {
             var keyA = a.tag_name, //new Date(a.published_at),
