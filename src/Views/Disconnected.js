@@ -12,7 +12,7 @@ export default class Disconnected extends Component {
   constructor(props) {
     super(props);
     this.incompatibleMessage =
-      "**********<h1>YOU ARE IN CLI MODE.\nTHIS FIRMWARE IS NOT OFFICIALLY SUPPORTED.\nPLEASE REBOOT INTO DFU AND FLASH A SUPPORTED VERSION.\n\nTO ENTER DFU, TYPE EITHER 'bl' OR 'rebootDFU' DEPENDING ON EXISTING FIRMWARE AND PRESS ENTER</h1>**********\n";
+      "**********<h1>THIS FIRMWARE IS NOT OFFICIALLY SUPPORTED.\nPLEASE DISCONNECT AND SEE THE SUPPORTED FIRWMARE VERSIONS.</h1>**********\n";
     this.state = {
       theme: props.theme
     };
@@ -57,6 +57,19 @@ export default class Disconnected extends Component {
               />
               <br />
             </Typography>
+            <div>
+              <p>
+                <Typography variant="h6">
+                  This tool will connect to the following firmware versions:
+                </Typography>
+                <ul>
+                  <li>EmuFlight 0.4.x</li>
+                  <li>EmuFlight 0.3.x</li>
+                  <li>EmuFlight 0.1</li>
+                  <li>ButterFlight 3.6.0 to 3.6.6</li>
+                </ul>
+              </p>
+            </div>
           </CardContent>
           <CardContent>
             {this.props.connecting && (
