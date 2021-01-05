@@ -5,6 +5,7 @@ import ImufView from "./Views/ImufView/ImufView";
 import DfuView from "./Views/DfuView/DfuView";
 import FCConnector from "./utilities/FCConnector";
 import ImufOnly from "./Views/ImufOnly";
+import DFUErrorView from "./Views/DFUErrorView";
 import themes from "./Themes/Dark";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import "./App.css";
@@ -122,22 +123,11 @@ export class App extends Component {
         </MuiThemeProvider>
       );
     } else if (this.state.dfu) {
-      if (this.state.currentConfig) {
         return (
           <MuiThemeProvider theme={themes.dark}>
-            <DfuView
-              version={this.state.currentConfig.version}
-              goBack={() => this.setState({ dfu: false })}
-            />
+            <DFUErrorView />
           </MuiThemeProvider>
         );
-      } else {
-        return (
-          <MuiThemeProvider theme={themes.dark}>
-            <DfuView />
-          </MuiThemeProvider>
-        );
-      }
     } else if (this.state.connected) {
       return (
         <MuiThemeProvider theme={this.state.theme}>
