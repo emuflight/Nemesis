@@ -67,8 +67,6 @@ export default class VersionInfoView extends Component {
             <Launch onClick={() => this.goToImuf()} />
           </MenuItem>
         )}
-        <Divider style={{ marginTop: "10px", marginBottom: "10px" }} />
-        <CliView theme={this.state.theme} />
       </List>
     );
   }

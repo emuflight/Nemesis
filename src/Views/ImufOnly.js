@@ -122,7 +122,25 @@ export default class Connected extends Component {
         contents = (
           <Paper>
             <div>
-              <Typography variant="h5">IMUF only version</Typography>
+              <Typography variant="h5">EmuFlight IMUF Flasher</Typography>
+            </div>
+            <div>
+              <p>
+                <Typography variant="h6">
+                  This tool will connect to the following firmware versions:
+                </Typography>
+                <ul>
+                  <li>EmuFlight 0.4.x</li>
+                  <li>EmuFlight 0.3.x</li>
+                  <li>EmuFlight 0.1</li>
+                  <li>ButterFlight 3.6.0 to 3.6.6</li>
+                </ul>
+              </p>
+              <Typography variant="h6">
+                Flash IMUF by pressing the button next to the IMUF version
+                number. Select a release to flash EmuFlight IMUF releases, or
+                browse to flash a local file.{" "}
+              </Typography>
             </div>
           </Paper>
         );
