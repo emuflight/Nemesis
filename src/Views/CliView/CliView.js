@@ -106,19 +106,6 @@ export default class CliView extends Component {
                 dangerouslySetInnerHTML={{ __html: this.state.cliBuffer }}
               />
             </div>
-            <TextField
-              className="cli-input"
-              inputRef={input => (this.refs.cliInput = input)}
-              name="cli-input"
-              variant="outlined"
-              helperText="Enter cli commands..."
-              multiline
-              autoFocus
-              disabled={this.state.disabled}
-              rowsMax="1"
-              onChange={event => this.setState({ command: event.target.value })}
-              onKeyDown={e => this.handleKeyDown(e)}
-            />
           </div>
         </SwipeableDrawer>
       </div>

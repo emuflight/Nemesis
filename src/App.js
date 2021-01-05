@@ -12,7 +12,6 @@ import "./App.css";
 export const FCConfigContext = React.createContext({});
 
 export class App extends Component {
-  
   constructor(props) {
     super(props);
     this.state = {
@@ -21,7 +20,7 @@ export class App extends Component {
       theme: themes.dark
     };
   }
-  
+
   detectFc = device => {
     if (device.progress || device.telemetry) {
       return;
