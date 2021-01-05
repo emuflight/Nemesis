@@ -1,5 +1,5 @@
 {
-  "name": "Nemesis",
+  "name": "emuflight-imuf-flasher",
   "version": "0.1.0",
   "author": {
     "name": "EmuFlight",
@@ -7,7 +7,7 @@
     "url": "https://github.com/emuflight/"
   },
   "homepage": "./",
-  "description": "Nemesis EmuFlight-UI",
+  "description": "EmuFlight IMUF Flasher",
   "main": "public/electron.js",
   "repository": "https://github.com/emuflight/Nemesis",
   "buildDependenciesFromSource": true,
@@ -15,7 +15,7 @@
   "npmRebuild": false,
   "build": {
     "extraResources": "public/server/utils/dfu/**/*",
-    "appId": "com.emuflight.nemesis",
+    "appId": "com.emuflight.imuf-flasher",
     "files": [
       "build/**/*",
       "node_modules/**/*"

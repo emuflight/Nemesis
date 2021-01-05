@@ -34,8 +34,8 @@ export default class Disconnected extends Component {
           <CardContent>
             <Avatar
               title={`v${this.props.appVersion}`}
-              src="assets/icon.png"
-              style={{ width: 60, height: 60 }}
+              src="assets/cf_logo_white.png"
+              style={{ width: 200, height: 100 }}
               onClick={() => localStorage.clear()}
             />
             <Typography style={{ marginBottom: 12 }} color="textSecondary">
