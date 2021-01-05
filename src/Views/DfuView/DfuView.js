@@ -316,15 +316,17 @@ export default class DfuView extends Component {
           </Button>
         </div>
         <Paper>
-          <Typography style={{ "max-height": "60vh", overflow: "auto" }}>
-            <ReactMarkdown
-              renderers={{
-                link: props => <p>{props.children}</p>
-              }}
-              source={this.state.currentRelease.body}
-              classNames={this.state.theme}
-            />
-          </Typography>
+          {!this.state.selectedFile && (
+            <Typography style={{ "max-height": "60vh", overflow: "auto" }}>
+              <ReactMarkdown
+                renderers={{
+                  link: props => <p>{props.children}</p>
+                }}
+                source={this.state.currentRelease.body}
+                classNames={this.state.theme}
+              />
+            </Typography>
+          )}
         </Paper>
         <CliView disabled={true} startText={this.cliNotice} ref="cliView" />
       </Paper>
