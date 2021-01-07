@@ -66,15 +66,17 @@ export default class CliView extends Component {
       e.stopPropagation();
       e.target.value = "";
       this.setState({ disabled: true });
-      let commands = this.state.command.split(/\r|\n/gim).filter(com => com);
-      FCConnector.sendBulkCommands(
-        commands.filter(line => !line.startsWith("#")),
-        notifyResp => {
-          this.appendCliBuffer(notifyResp);
-        }
-      ).then(() => {
-        this.setState({ disabled: false });
-      });
+      if (this.state.command) {
+        let commands = this.state.command.split(/\r|\n/gim).filter(com => com);
+        FCConnector.sendBulkCommands(
+          commands.filter(line => !line.startsWith("#")),
+          notifyResp => {
+            this.appendCliBuffer(notifyResp);
+          }
+        ).then(() => {
+          this.setState({ disabled: false });
+        });
+      }
     }
   };
   render() {

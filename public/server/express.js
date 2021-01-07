@@ -164,7 +164,7 @@ app.post("/flash", (req, res) => {
   }
   let fileObj = req.files.bin;
   let binBuffer = req.files.bin.data;
-  let message = `Recieved ${binBuffer.length} bytes from ${fileObj.name}...\n`;
+  let message = `Received ${binBuffer.length} bytes from ${fileObj.name}...\n`;
   if (fileObj.name.endsWith(".hex")) {
     let converted = firmware.convertToBin(binBuffer);
     binBuffer = converted.bin;
@@ -201,6 +201,33 @@ app.get("/flash/:binUrl", (req, res) => {
         websockets.notifyProgress,
         req.query.erase === "true"
       );
+      res.sendStatus(202);
+    }
+  });
+});
+
+app.post("/imuf", (req, res) => {
+  if (!req.files) {
+    return res.sendStatus(400);
+  }
+  let fileObj = req.files.bin;
+  let binBuffer = req.files.bin.data;
+  let message = `Received ${binBuffer.length} bytes from ${fileObj.name}...\n`;
+  if (fileObj.name.endsWith(".hex")) {
+    let converted = firmware.convertToBin(binBuffer);
+    binBuffer = converted.bin;
+    message = `Converted ${fileObj.name} size: ${
+      converted.hex.length
+    } to .bin ...\n`;
+  }
+  console.log(message);
+  websockets.notifyProgress(message);
+
+  devices.get((err, connectedDevice) => {
+    if (err) return res.status(400).send(err);
+
+    if (connectedDevice) {
+      fcConnector.updateIMUFLocal(connectedDevice, binBuffer);
       res.sendStatus(202);
     }
   });

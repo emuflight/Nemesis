@@ -13,23 +13,21 @@ export default class ImufView extends DfuView {
       '\n\n**********<h1>YOU ARE IN IMU-F UPDATE MODE.\nDO NOT UNPLUG YOUR DEVICE UNTIL UPDATE IS COMPLETE OR YOU\'RE GONNA HAVE A BAD TIME.</h1><img id="pbjt" src="assets/teehee.png" height="90" width="90"/><br/>**********\n\n';
     this.state = {
       currentTarget: "IMU-F",
+      currentRelease: {},
       current: "IMU-F",
       progress: "",
       hasTarget: true,
-      allowUpload: false,
+      allowUpload: true,
       targetList: ["IMU-F"],
-      firmwares: {}
+      firmwares: {},
+      imuf: true
     };
   }
   get releasesKey() {
     return "imufReleases";
   }
-  get releaseUrl() {
-    return "https://github.com/emuflight/EmuFlight/releases";
-  }
-
-  get releaseNotesUrl() {
-    return "https://raw.githubusercontent.com/heliorc/imuf-release/master/CHANGELOG.md";
+  releaseUrl() {
+    return "https://api.github.com/repos/emuflight/imu-f/releases";
   }
 
   setFirmware(data) {
@@ -43,10 +41,19 @@ export default class ImufView extends DfuView {
   handleFlash() {
     this.refs.cliView.setState({ open: true, stayOpen: true, disabled: true });
     this.setState({ isFlashing: true });
-    FCConnector.flashIMUF(this.state.current, progress => {
-      this.setState({ progress });
-    }).then(done => {
-      this.setState({ isFlashing: false, note: done });
-    });
+
+    if (this.state.selectedFile && this.state.selectedFile != null) {
+      FCConnector.flashIMUFLocal(this.state.selectedFile, progress => {
+        this.setState({ progress });
+      }).then(done => {
+        this.setState({ isFlashing: false, note: done });
+      });
+    } else {
+      FCConnector.flashIMUF(this.state.selectedUrl, progress => {
+        this.setState({ progress });
+      }).then(done => {
+        this.setState({ isFlashing: false, note: done });
+      });
+    }
   }
 }
