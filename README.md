@@ -79,16 +79,18 @@ npm run electron-dev
 
 #compile to unpacked binary
 # results in ./dist/linux-unpacked/nemesis
+rm -rf ./build/
 npm run build
 npm run electron-pack
 
 #compile to AppImage 
-# (nicely so CPU doesn't spike)
-nice -n 19 npm run electron-pack-lin
+rm -rf ./build/
+rm -rf ./dist/
+npm run build && npm run electron-pack && npm run dist
 
 #run it
 chmod +x dist/Nemesis*.AppImage
-./dist/Nemesis-0.2.1-x86_64.AppImage
+./dist/Nemesis-*.AppImage
 ```
 
 other npm options:
