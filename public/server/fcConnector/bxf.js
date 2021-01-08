@@ -3,6 +3,7 @@ const imufFirmware = require("../firmware/imuf");
 fs = require("fs"); // temp for debugging json output
 const imufCaesar = require("../firmware/imuf/caesar");
 let openConnection;
+const log_serial_commands = false; // enable to console.log each command request port, disable for less log output
 
 const setupConnection = device => {
   return new Promise((resolve, reject) => {
@@ -15,8 +16,7 @@ const setupConnection = device => {
               console.log("OPEN ERROR: ", openError);
               reject(openError);
             } else {
-              /*
-              openConnection.write("#", cliError => {
+              openConnection.write("#\n", cliError => {
                 console.log("Sent # and carriage - 1");
                 if (cliError) {
                   console.log("couldn't get into cli mode: ", cliError);
@@ -26,7 +26,7 @@ const setupConnection = device => {
                   resolve(openConnection);
                 }
               });
-              */
+
               //sendCommand(device, "#");
               openConnection.read();
               resolve(openConnection);
@@ -50,7 +50,8 @@ const setupConnection = device => {
     if (!openConnection) {
       console.log("creating new port port: ", device.comName);
       openConnection = new SerialPort(device.comName, {
-        autoOpen: false
+        autoOpen: false,
+        baudRate: 115200
       });
       openConnection.on("error", err => {
         console.log("ERROR: ", err);
@@ -60,27 +61,32 @@ const setupConnection = device => {
       // openConnection.setEncoding('utf8');
       setTimeout(() => connect(), 300);
     } else {
-      console.log("using open port: ", device.comName);
+      if (log_serial_commands) {
+        console.log("using open port: ", device.comName);
+      }
       resolve(openConnection);
     }
   });
 };
-let retry = 50;
+let retry = 3;
 const getConfig = device => {
-  if (retry == 50) {
-    sendCommand(device, "#");
+  if (retry == 3) {
+    //sendCommand(device, "#");
   }
-  return sendCommand(device, "config", 1500).then(conf => {
+  return sendCommand(device, "#\nconfig", 1500).then(conf => {
     console.log(conf);
 
     try {
       if (conf.length == 0) {
         console.log("CONF LENGTH IS ZERO");
+        sendCommand(device, "\n#\n");
       }
+      /*
       fs.writeFile("debug.txt", conf, function(err) {
         if (err) return console.log(err);
         console.log("wrote to file");
       });
+      */
       //trim off " config\n";
       //let config = JSON.parse(conf.slice(conf.indexOf("{"), conf.lastIndexOf("}")));
       let config = JSON.parse(conf.slice(conf.indexOf("{"), conf.length - 3));
@@ -130,9 +136,11 @@ const runQueue = next => {
   currentCommand = next;
   setupConnection(next.device)
     .then(port => {
-      console.log(
-        `sending command: ${next.command} on port ${next.device.comName}`
-      );
+      if (log_serial_commands) {
+        console.log(
+          `sending command: ${next.command} on port ${next.device.comName}`
+        );
+      }
       port.write(`${next.command}\n`, err => {
         if (err) {
           console.log("WRITE ERROR: ", err);
