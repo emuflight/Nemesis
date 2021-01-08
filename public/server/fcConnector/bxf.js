@@ -5,7 +5,7 @@ const imufCaesar = require("../firmware/imuf/caesar");
 let openConnection;
 const log_serial_commands = false; // enable to console.log each command request port, disable for less log output
 const log_config_to_file = false; //enable to console.log the config command response and save it to debug.txt
-
+const log_accelerometer_attitude = false; // enable to console.log the x,y,z and buffer length of the accelerometer reading (msp 108)
 const setupConnection = device => {
   return new Promise((resolve, reject) => {
     const connect = () => {
@@ -151,7 +151,7 @@ const runQueue = next => {
               let msg = more.toString(next.encode);
               currentRecBuffer += msg;
             } else {
-              currentRecBuffer = more;
+              currentRecBuffer = cleanRecBuffer(more);
             }
           } else {
             interval && clearInterval(interval);
@@ -379,13 +379,26 @@ const storage = (device, command) => {
   }
 };
 
+const cleanRecBuffer = buffer => {
+  //Clear LF (line feed, 0x0a) from MSP response buffers
+  //This is a workaround to fix the \r\n coming back from MSP responses after new CLI initialization for 1.0.0
+  let bufferAsStr = buffer.toString("hex");
+  let bufferCleaned = "";
+  for (var i = 0; i < bufferAsStr.length; i += 2) {
+    var hexByteStr = bufferAsStr.slice(i, i + 2);
+    if (hexByteStr != "0a") {
+      bufferCleaned += hexByteStr;
+    }
+  }
+  return Buffer.from(bufferCleaned, "hex");
+};
+
 const getTelemetry = (device, type) => {
   switch (type) {
     case "status": {
       return sendCommand(device, `msp 150`, 30, false).then(status => {
         if (status) {
           try {
-            //console.log("STATUS DATA :", status);
             let data = new DataView(new Uint8Array(status).buffer, 12);
             let modeFlasCount = data.getUint8(15);
             let modeflags = [];
@@ -409,18 +422,19 @@ const getTelemetry = (device, type) => {
     case "attitude": {
       return sendCommand(device, `msp 108`, 40, false).then(telem => {
         if (telem) {
-          console.log(telem);
           try {
             let data = new DataView(new Uint8Array(telem).buffer, 12);
-            console.log(
-              "attitude: ",
-              data.getInt16(0, 1) / 10,
-              data.getInt16(2, 1) / 10,
-              data.getInt16(4, 1),
-              " (",
-              telem.length,
-              ")"
-            );
+            if (log_accelerometer_attitude) {
+              console.log(
+                "attitude: ",
+                data.getInt16(0, 1) / 10,
+                data.getInt16(2, 1) / 10,
+                data.getInt16(4, 1),
+                " (",
+                telem.length,
+                ")"
+              );
+            }
             return {
               attitude: {
                 x: data.getInt16(0, 1) / 10,
