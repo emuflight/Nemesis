@@ -27,9 +27,6 @@ const setupConnection = device => {
                   resolve(openConnection);
                 }
               });
-
-              openConnection.read();
-              resolve(openConnection);
             }
           });
         } catch (ex) {
@@ -50,8 +47,7 @@ const setupConnection = device => {
     if (!openConnection) {
       console.log("creating new port port: ", device.comName);
       openConnection = new SerialPort(device.comName, {
-        autoOpen: false,
-        baudRate: 115200
+        autoOpen: false
       });
       openConnection.on("error", err => {
         console.log("ERROR: ", err);
@@ -389,7 +385,7 @@ const getTelemetry = (device, type) => {
       return sendCommand(device, `msp 150`, 30, false).then(status => {
         if (status) {
           try {
-            console.log("STATUS DATA :", status);
+            //console.log("STATUS DATA :", status);
             let data = new DataView(new Uint8Array(status).buffer, 12);
             let modeFlasCount = data.getUint8(15);
             let modeflags = [];
