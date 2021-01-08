@@ -409,6 +409,7 @@ const getTelemetry = (device, type) => {
     case "attitude": {
       return sendCommand(device, `msp 108`, 40, false).then(telem => {
         if (telem) {
+          console.log(telem);
           try {
             let data = new DataView(new Uint8Array(telem).buffer, 12);
             console.log(
