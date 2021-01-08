@@ -400,10 +400,10 @@ const getTelemetry = (device, type) => {
         if (status) {
           try {
             let data = new DataView(new Uint8Array(status).buffer, 12);
-            let modeFlasCount = data.getUint8(15);
+            let modeFlagsCount = data.getUint8(15);
             let modeflags = [];
             let offset = 16;
-            for (var i = 0; i < modeFlasCount; i++) {
+            for (var i = 0; i < modeFlagsCount; i++) {
               modeflags.push(data.getUint8(offset++));
             }
             return {
