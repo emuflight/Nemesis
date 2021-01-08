@@ -193,4 +193,14 @@ export default new class FCConnector {
       }
     );
   }
+
+  flashIMUFLocal(binUrl, notifyProgress) {
+    return fetch(`${this.serviceUrl}/imuf`, {
+      method: "POST",
+      mode: "cors",
+      body: binUrl
+    }).then(response => {
+      return response.json();
+    });
+  }
 }();
