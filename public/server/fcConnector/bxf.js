@@ -415,7 +415,10 @@ const getTelemetry = (device, type) => {
               "attitude: ",
               data.getInt16(0, 1) / 10,
               data.getInt16(2, 1) / 10,
-              data.getInt16(4, 1)
+              data.getInt16(4, 1),
+              " (",
+              telem.length,
+              ")"
             );
             return {
               attitude: {
