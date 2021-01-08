@@ -4,6 +4,7 @@ fs = require("fs"); // temp for debugging json output
 const imufCaesar = require("../firmware/imuf/caesar");
 let openConnection;
 const log_serial_commands = false; // enable to console.log each command request port, disable for less log output
+const log_config_to_file = false; //enable to console.log the config command response and save it to debug.txt
 
 const setupConnection = device => {
   return new Promise((resolve, reject) => {
@@ -17,7 +18,7 @@ const setupConnection = device => {
               reject(openError);
             } else {
               openConnection.write("#\n", cliError => {
-                console.log("Sent # and carriage - 1");
+                // send # and carriage return, attempt to open CLI. If this doesn't initialize it, the getConfig command will send another #\n
                 if (cliError) {
                   console.log("couldn't get into cli mode: ", cliError);
                   reject(cliError);
@@ -27,7 +28,6 @@ const setupConnection = device => {
                 }
               });
 
-              //sendCommand(device, "#");
               openConnection.read();
               resolve(openConnection);
             }
@@ -68,27 +68,24 @@ const setupConnection = device => {
     }
   });
 };
-let retry = 3;
+let retry = 5;
 const getConfig = device => {
-  if (retry == 3) {
-    //sendCommand(device, "#");
-  }
   return sendCommand(device, "#\nconfig", 1500).then(conf => {
-    console.log(conf);
-
+    // send # and carriage return before config command to help initialize the CLI - fix trouble with 1.0.0
     try {
       if (conf.length == 0) {
         console.log("CONF LENGTH IS ZERO");
         sendCommand(device, "\n#\n");
       }
-      /*
-      fs.writeFile("debug.txt", conf, function(err) {
-        if (err) return console.log(err);
-        console.log("wrote to file");
-      });
-      */
-      //trim off " config\n";
-      //let config = JSON.parse(conf.slice(conf.indexOf("{"), conf.lastIndexOf("}")));
+      if (log_config_to_file) {
+        fs.writeFile("debug.txt", conf, function(err) {
+          if (err) return console.log(err);
+          console.log("wrote config to file");
+        });
+        console.log(conf); // also console.log the config
+      }
+
+      //trim off " config\n" from incoming json config;
       let config = JSON.parse(conf.slice(conf.indexOf("{"), conf.length - 3));
       retry = 3;
       return sendCommand(device, "mixer").then(mixer => {
