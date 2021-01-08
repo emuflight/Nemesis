@@ -411,6 +411,12 @@ const getTelemetry = (device, type) => {
         if (telem) {
           try {
             let data = new DataView(new Uint8Array(telem).buffer, 12);
+            console.log(
+              "attitude: ",
+              data.getInt16(0, 1) / 10,
+              data.getInt16(2, 1) / 10,
+              data.getInt16(4, 1)
+            );
             return {
               attitude: {
                 x: data.getInt16(0, 1) / 10,
