@@ -396,22 +396,19 @@ const cleanRecBuffer = buffer => {
 const getTelemetry = (device, type) => {
   switch (type) {
     case "status": {
-      return sendCommand(device, `msp 150`, 30, false).then(status => {
-        if (status) {
+      return sendCommand(device, "nemesis_status", 30).then(response => {
+        if (response) {
           try {
-            let data = new DataView(new Uint8Array(status).buffer, 12);
-            let modeFlagsCount = data.getUint8(15);
-            let modeflags = [];
-            let offset = 16;
-            for (var i = 0; i < modeFlagsCount; i++) {
-              modeflags.push(data.getUint8(offset++));
-            }
+            telem = JSON.parse(
+              response.slice(response.indexOf("{"), response.length - 3)
+            );
+            let modeFlagsCount = telem.arming_disable_flags_count;
             return {
               type: "status",
-              cpu: data.getUint16(11, 1),
-              modeflags: modeflags,
-              flagCount: data.getUint8(offset++),
-              armingFlags: data.getUint32(offset, 1)
+              cpu: telem.cpu,
+              modeflags: "",
+              flagCount: telem.arming_disable_flags_count,
+              armingFlags: telem.arming_disable_flags
             };
           } catch (ex) {
             console.log(ex);
@@ -420,26 +417,25 @@ const getTelemetry = (device, type) => {
       });
     }
     case "attitude": {
-      return sendCommand(device, `msp 108`, 40, false).then(telem => {
-        if (telem) {
+      return sendCommand(device, "nemesis_attitude", 40).then(response => {
+        if (response) {
           try {
-            let data = new DataView(new Uint8Array(telem).buffer, 12);
+            telem = JSON.parse(
+              response.slice(response.indexOf("{"), response.length - 3)
+            );
             if (log_accelerometer_attitude) {
               console.log(
                 "attitude: ",
-                data.getInt16(0, 1) / 10,
-                data.getInt16(2, 1) / 10,
-                data.getInt16(4, 1),
-                " (",
-                telem.length,
-                ")"
+                telem.attitude[0] / 10,
+                telem.attitude[1] / 10,
+                telem.attitude[2]
               );
             }
             return {
               attitude: {
-                x: data.getInt16(0, 1) / 10,
-                y: data.getInt16(2, 1) / 10,
-                z: data.getInt16(4, 1)
+                x: telem.attitude[0] / 10,
+                y: telem.attitude[1] / 10,
+                z: telem.attitude[2]
               }
             };
           } catch (ex) {
