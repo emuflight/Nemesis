@@ -49,6 +49,11 @@ const InputView = class extends Component {
         }
         value={this.state.current}
         onBlur={() => this.updateValue()}
+        onKeyPress={event => {
+          if (event.key === "Enter") {
+            event.target.blur();
+          }
+        }}
         onChange={event => {
           this.setState({ current: event.target.value });
         }}

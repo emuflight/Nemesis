@@ -13,7 +13,6 @@ function TextMaskCustom(props) {
   return (
     <MaskedInput
       {...other}
-      ref={inputRef}
       mask={[/\d/, ".", /\d/, /\d/]}
       keepCharPositions
       guide={false}
@@ -65,7 +64,7 @@ const FloatView = class extends Component {
         classes={{ root: this.props.item.id }}
         key={this.props.item.id}
       >
-        <InputLabel style={{ whiteSpace: "nowrap" }}>
+        <InputLabel style={{ whiteSpace: "nowrap" }} shrink={true}>
           <FormattedMessage id={this.props.item.id} />
         </InputLabel>
         <Input
@@ -76,6 +75,11 @@ const FloatView = class extends Component {
             this.setState({ current: val.replace(".", "") });
           }}
           onBlur={() => this.updateValue()}
+          onKeyPress={event => {
+            if (event.key === "Enter") {
+              event.target.blur();
+            }
+          }}
           value={this.state.current}
           inputComponent={TextMaskCustom}
         />
