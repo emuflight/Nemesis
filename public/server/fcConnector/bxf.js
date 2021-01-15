@@ -5,7 +5,7 @@ const imufCaesar = require("../firmware/imuf/caesar");
 let openConnection;
 const log_serial_commands = false; // enable to console.log each command request port, disable for less log output
 const log_config_to_file = false; //enable to console.log the config command response and save it to debug.txt
-const log_accelerometer_attitude = false; // enable to console.log the x,y,z and buffer length of the accelerometer reading (msp 108)
+const log_accelerometer_attitude = false; // enable to console.log the x,y,z and buffer length of the accelerometer reading
 const setupConnection = device => {
   return new Promise((resolve, reject) => {
     const connect = () => {
@@ -408,10 +408,12 @@ const getTelemetry = (device, type) => {
               cpu: telem.cpu,
               modeflags: "",
               flagCount: telem.arming_disable_flags_count,
-              armingFlags: telem.arming_disable_flags
+              armingFlags: telem.arming_disable_flags,
+              vbat: telem.vbat / 10
             };
           } catch (ex) {
             console.log(ex);
+            console.log(response);
           }
         }
       });
@@ -439,32 +441,35 @@ const getTelemetry = (device, type) => {
               }
             };
           } catch (ex) {
+            console.log(response);
             console.log(ex);
           }
         }
       });
     }
     case "gyro": {
-      return sendCommand(device, `msp 102`, 50, false).then(telem => {
-        if (telem) {
+      return sendCommand(device, "nemesis_gyro", 50).then(response => {
+        if (response) {
           try {
-            let data = new DataView(new Uint8Array(telem).buffer, 12);
+            telem = JSON.parse(
+              response.slice(response.indexOf("{"), response.length - 3)
+            );
             return {
               type: "gyro",
               acc: {
-                x: data.getInt16(0, 1) / 512,
-                y: data.getInt16(2, 1) / 512,
-                z: data.getInt16(4, 1) / 512
+                x: telem.acc[0],
+                y: telem.acc[1],
+                z: telem.acc[2]
               },
               gyro: {
-                x: data.getInt16(6, 1) * (4 / 16.4),
-                y: data.getInt16(8, 1) * (4 / 16.4),
-                z: data.getInt16(10, 1) * (4 / 16.4)
+                x: telem.gyro[0],
+                y: telem.gyro[1],
+                z: telem.gyro[2]
               },
               mag: {
-                x: data.getInt16(12, 1) / 1090,
-                y: data.getInt16(14, 1) / 1090,
-                z: data.getInt16(16, 1) / 1090
+                x: telem.mag[0],
+                y: telem.mag[1],
+                z: telem.mag[2]
               }
             };
           } catch (ex) {
@@ -474,38 +479,42 @@ const getTelemetry = (device, type) => {
       });
     }
     case "vbat": {
-      return sendCommand(device, `msp 130`, 50, false).then(vbatData => {
-        let data = new DataView(new Uint8Array(vbatData).buffer, 12);
+      return sendCommand(device, "nemesis_vbat", 50).then(response => {
+        if (response) {
+          telem = JSON.parse(
+            response.slice(response.indexOf("{"), response.length - 3)
+          );
+        }
         return {
           type: "vbat",
-          cells: data.getUint8(0),
-          cap: data.getUint16(1, 1),
-          volts: data.getUint8(3) / 10.0,
-          mah: data.getUint16(4, 1),
-          amps: data.getUint16(6, 1) / 100
+          cells: telem.cells,
+          cap: telem.cap,
+          volts: telem.volts,
+          mah: telem.mah,
+          amps: telem.amps
         };
       });
     }
     default:
     case "rx": {
-      return sendCommand(device, `msp 105`, 50, false).then(rcData => {
-        let channels = [];
-        try {
-          let data = new DataView(new Uint8Array(rcData).buffer, 12);
-          let active = (data.byteLength - 4) / 2;
-          for (var i = 0; i < active; i++) {
-            channels[i] = data.getUint16(i * 2, 1);
+      return sendCommand(device, "nemesis_rx", 40).then(response => {
+        if (response) {
+          try {
+            telem = JSON.parse(
+              response.slice(response.indexOf("{"), response.length - 3)
+            );
+          } catch (ex) {
+            console.log(ex);
           }
-        } catch (ex) {
-          console.log(ex);
+          return {
+            rx: {
+              min: 800,
+              max: 2200,
+              channels: telem.rx, //channels
+              rcCommand: telem.rcCommand
+            }
+          };
         }
-        return {
-          rx: {
-            min: 800,
-            max: 2200,
-            channels
-          }
-        };
       });
     }
   }

@@ -22,6 +22,7 @@ export default class RXView extends Component {
       return FCConnector.getChannelMap().then(mapping => {
         this.props.fcConfig.channel_map = mapping;
         this.refs.channelMap.setState({ mapping });
+        this.setState({ mapping: mapping });
       });
     } else {
       this.refs.channelMap.setState({
@@ -70,7 +71,7 @@ export default class RXView extends Component {
             this.state.mapping && (
               <RXTelemView
                 scale={this.props.fcConfig.rx_scale}
-                channelMap={this.state.mapping}
+                channelMap={this.refs.channelMap.state.mapping}
               />
             )}
         </Paper>

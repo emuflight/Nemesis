@@ -72,7 +72,7 @@ export default class RXTelemView extends Component {
                 </Typography>
                 <LinearProgress
                   variant="determinate"
-                  style={{ height: 20, margin: 10 }}
+                  style={{ height: 10, margin: 5 }}
                   value={this.normalize(channel)}
                 />
               </div>

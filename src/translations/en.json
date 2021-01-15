@@ -148,6 +148,7 @@
   "info.imuf": "IMU-F Version: {value}",
   "info.connected-to": "Connected to:",
   "info.cpu-load": "CPU: {percent}%",
+  "info.vbat": "Vbat: {vbat}V",
   "info.loop-time": "LOOPTIME: {time}",
   "info.loop-speed": "{khz}kHz",
   "info.show-debug": "Show Debug",
