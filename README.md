@@ -74,19 +74,20 @@ npm install ajv@6.12.2 electron@4.2.12 node-sass@4.14.1 electron-builder@22.7.0 
 touch $HOME/.local/share/appimagekit/no_desktopintegration
 
 #run in dev-mode
-npm run build -l
-npm run electron-dev
+rm -rf ./build/
+npm run build && npm run electron-dev
 
 #compile to unpacked binary
 # results in ./dist/linux-unpacked/nemesis
 rm -rf ./build/
-npm run build
-npm run electron-pack
+npm run build && npm run electron-pack
+ls -lh ./build/
 
 #compile to AppImage 
 rm -rf ./build/
 rm -rf ./dist/
 npm run build && npm run electron-pack && npm run dist
+ls -h ./dist/
 
 #run it
 chmod +x dist/Nemesis*.AppImage
