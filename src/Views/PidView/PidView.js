@@ -76,29 +76,33 @@ export default class PidsView extends ProfileView {
                 }
                 label={<FormattedMessage id="iterm_rotation" />}
               />
-              <FormControlLabel
-                control={
-                  <Switch
-                    id={this.props.fcConfig.nfe_racermode.id}
-                    checked={this.props.fcConfig.nfe_racermode.current === "ON"}
-                    onChange={(event, isInputChecked) => {
-                      this.props.fcConfig.nfe_racermode.current = isInputChecked
-                        ? "ON"
-                        : "OFF";
-                      this.forceUpdate();
-                      FCConnector.setValue(
-                        "nfe_racermode",
-                        this.props.fcConfig.nfe_racermode.current
-                      ).then(() => {
-                        this.props.handleSave().then(() => {
-                          //this.updatePidValues("1");
+              {this.props.fcConfig.nfe_racermode && (
+                <FormControlLabel
+                  control={
+                    <Switch
+                      id={this.props.fcConfig.nfe_racermode.id}
+                      checked={
+                        this.props.fcConfig.nfe_racermode.current === "ON"
+                      }
+                      onChange={(event, isInputChecked) => {
+                        this.props.fcConfig.nfe_racermode.current = isInputChecked
+                          ? "ON"
+                          : "OFF";
+                        this.forceUpdate();
+                        FCConnector.setValue(
+                          "nfe_racermode",
+                          this.props.fcConfig.nfe_racermode.current
+                        ).then(() => {
+                          this.props.handleSave().then(() => {
+                            //this.updatePidValues("1");
+                          });
                         });
-                      });
-                    }}
-                  />
-                }
-                label={<FormattedMessage id="nfe_racermode" />}
-              />
+                      }}
+                    />
+                  }
+                  label={<FormattedMessage id="nfe_racermode" />}
+                />
+              )}
               <FormControlLabel
                 control={
                   <Switch
