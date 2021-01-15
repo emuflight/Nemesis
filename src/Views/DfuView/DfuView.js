@@ -15,7 +15,7 @@ export default class DfuView extends Component {
   constructor(props) {
     super(props);
     this.cliNotice =
-      '\n\n**********<h1>YOU ARE IN DFU MODE.\nDO NOT UNPLUG YOUR DEVICE UNTIL FLASHING IS COMPLETE OR YOU\'RE GONNA HAVE A BAD TIME.</h1><img id="pbjt" src="assets/dfu.gif" height="90" width="90"/><br/>#flashEmu\n**********\n\n';
+      '\n\n**********<h1>YOU ARE IN DFU MODE.\nDO NOT UNPLUG YOUR DEVICE UNTIL FLASHING IS COMPLETE OR YOU\'RE GONNA HAVE A BAD TIME.</h1><img id="pbjt" src="assets/teehee.png" height="90" width="90"/><br/>#flashEmu\n**********\n\n';
     this.state = {
       theme: props.theme,
       allowUpload: true,
@@ -210,15 +210,16 @@ export default class DfuView extends Component {
             onChange={event => {
               this.setState({ currentRelease: event.target.value });
 
-              if (this.state.dfu) {
-                this.setState({ selectedUrl: null });
-                this.setState({ selectedFile: null });
-              } else if (this.state.imuf) {
+              if (this.state.imuf) {
                 this.setState({
                   selectedUrl: event.target.value.assets[0].browser_download_url
                 });
-                this.clearLocalFile();
+              } else {
+                console.log("dfu");
+                this.setState({ selectedUrl: null });
+                this.setState({ selectedFile: null });
               }
+              this.clearLocalFile();
             }}
             items={
               this.state.releaseList &&
@@ -308,8 +309,7 @@ export default class DfuView extends Component {
             onClick={() => this.handleFlash()}
             disabled={
               this.state.isFlashing ||
-              (!this.state.current &&
-                (!this.state.selectedFile && !this.state.selectedUrl))
+              (!this.state.selectedFile && !this.state.selectedUrl)
             }
           >
             <FormattedMessage id="common.flash" />
