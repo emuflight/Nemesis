@@ -19,13 +19,13 @@ export default class FiltersView extends Component {
       this.props.fcConfig.version.imuf ||
       (this.props.fcConfig.gyro_use_32khz &&
         this.props.fcConfig.gyro_use_32khz.current === "ON");
-    let freq =
-        (use32K ? 32000 : 8000) /
-        parseInt(this.props.fcConfig.gyro_sync_denom.current, 10),
+    let freq = 8000,
+      //(use32K ? 32000 : 8000) /
+      //parseInt(this.props.fcConfig.gyro_sync_denom.current, 10),
       cutoff1 = parseInt(this.props.fcConfig.gyro_notch1_cutoff.current, 10),
-      cutoff2 = parseInt(this.props.fcConfig.gyro_notch2_cutoff.current, 10),
-      hz1 = parseInt(this.props.fcConfig.gyro_notch1_hz.current, 10),
-      hz2 = parseInt(this.props.fcConfig.gyro_notch2_hz.current, 10);
+      //cutoff2 = parseInt(this.props.fcConfig.gyro_notch2_cutoff.current, 10),
+      hz1 = parseInt(this.props.fcConfig.gyro_notch1_hz.current, 10);
+    //hz2 = parseInt(this.props.fcConfig.gyro_notch2_hz.current, 10);
 
     if (this.props.fcConfig.imuf) {
       bqData = [
@@ -46,12 +46,12 @@ export default class FiltersView extends Component {
         ).plot,
         biquad(
           "lowpass",
-          parseInt(this.props.fcConfig.gyro_lowpass_hz_roll.current, 10),
+          parseInt(this.props.fcConfig.gyro_lowpass_hz.current, 10),
           freq
         ).plot,
         biquad(
           "lowpass",
-          parseInt(this.props.fcConfig.gyro_lowpass_hz_pitch.current, 10),
+          parseInt(this.props.fcConfig.gyro_lowpass_hz.current, 10),
           freq
         ).plot,
         biquad(
@@ -59,26 +59,17 @@ export default class FiltersView extends Component {
           parseInt(this.props.fcConfig.gyro_lowpass_hz_yaw.current, 10),
           freq
         ).plot,
-        biquad("notch", hz1, freq, cutoff1).plot,
-        biquad("notch", hz2, freq, cutoff2).plot
+        biquad("notch", hz1, freq, cutoff1).plot
+        //biquad("notch", hz2, freq, cutoff2).plot
       ];
     } else {
       bqData = [
         biquad(
           "lowpass",
-          parseInt(this.props.fcConfig.gyro_lowpass_hz_roll.current, 10),
+          parseInt(this.props.fcConfig.gyro_lowpass_hz.current, 10),
           freq
         ).plot,
-        biquad(
-          "lowpass",
-          parseInt(this.props.fcConfig.gyro_lowpass_hz_pitch.current, 10),
-          freq
-        ).plot,
-        biquad(
-          "lowpass",
-          parseInt(this.props.fcConfig.gyro_lowpass_hz_yaw.current, 10),
-          freq
-        ).plot,
+        /*
         biquad(
           "lowpass",
           parseInt(this.props.fcConfig.gyro_lowpass2_hz_roll.current, 10),
@@ -94,8 +85,9 @@ export default class FiltersView extends Component {
           parseInt(this.props.fcConfig.gyro_lowpass2_hz_yaw.current, 10),
           freq
         ).plot,
-        biquad("notch", hz1, freq, cutoff1).plot,
-        biquad("notch", hz2, freq, cutoff2).plot
+        */
+        biquad("notch", hz1, freq, cutoff1).plot
+        //biquad("notch", hz2, freq, cutoff2).plot
       ];
     }
     return (
@@ -121,10 +113,12 @@ export default class FiltersView extends Component {
               notifyDirty={this.props.notifyDirty}
               id="imuf_yaw_q"
             />
-            <StatelessInput
-              notifyDirty={this.props.notifyDirty}
-              id="imuf_sharpness"
-            />
+            {this.props.fcConfig.imuf_sharpness && (
+              <StatelessInput
+                notifyDirty={this.props.notifyDirty}
+                id="imuf_sharpness"
+              />
+            )}
             <StatelessInput notifyDirty={this.props.notifyDirty} id="imuf_w" />
           </Paper>
         </div>
@@ -137,43 +131,47 @@ export default class FiltersView extends Component {
                   notifyDirty={this.props.notifyDirty}
                 />
               </Paper>
-              <Paper className="flex-column">
-                <StatelessInput
-                  id="gyro_lowpass_hz_roll"
-                  notifyDirty={this.props.notifyDirty}
-                />
-                <StatelessInput
-                  id="gyro_lowpass_hz_pitch"
-                  notifyDirty={this.props.notifyDirty}
-                />
-                <StatelessInput
-                  id="gyro_lowpass_hz_yaw"
-                  notifyDirty={this.props.notifyDirty}
-                />
-              </Paper>
+              {this.props.fcConfig.gyro_lowpass_hz_roll && (
+                <Paper className="flex-column">
+                  <StatelessInput
+                    id="gyro_lowpass_hz_roll"
+                    notifyDirty={this.props.notifyDirty}
+                  />
+                  <StatelessInput
+                    id="gyro_lowpass_hz_pitch"
+                    notifyDirty={this.props.notifyDirty}
+                  />
+                  <StatelessInput
+                    id="gyro_lowpass_hz_yaw"
+                    notifyDirty={this.props.notifyDirty}
+                  />
+                </Paper>
+              )}
             </div>
-            <div style={{ width: "200px" }} className="flex-column">
-              <Paper>
-                <StatelessSelect
-                  id="gyro_lowpass2_type"
-                  notifyDirty={this.props.notifyDirty}
-                />
-              </Paper>
-              <Paper className="flex-column">
-                <StatelessInput
-                  id="gyro_lowpass2_hz_roll"
-                  notifyDirty={this.props.notifyDirty}
-                />
-                <StatelessInput
-                  id="gyro_lowpass2_hz_pitch"
-                  notifyDirty={this.props.notifyDirty}
-                />
-                <StatelessInput
-                  id="gyro_lowpass2_hz_yaw"
-                  notifyDirty={this.props.notifyDirty}
-                />
-              </Paper>
-            </div>
+            {this.props.fcConfig.gyro_lowpass2_type && (
+              <div style={{ width: "200px" }} className="flex-column">
+                <Paper>
+                  <StatelessSelect
+                    id="gyro_lowpass2_type"
+                    notifyDirty={this.props.notifyDirty}
+                  />
+                </Paper>
+                <Paper className="flex-column">
+                  <StatelessInput
+                    id="gyro_lowpass2_hz_roll"
+                    notifyDirty={this.props.notifyDirty}
+                  />
+                  <StatelessInput
+                    id="gyro_lowpass2_hz_pitch"
+                    notifyDirty={this.props.notifyDirty}
+                  />
+                  <StatelessInput
+                    id="gyro_lowpass2_hz_yaw"
+                    notifyDirty={this.props.notifyDirty}
+                  />
+                </Paper>
+              </div>
+            )}
             {this.props.fcConfig.imuf && (
               <Paper className="flex-column-start">
                 <StatelessInput
@@ -219,14 +217,18 @@ export default class FiltersView extends Component {
                 notifyDirty={this.props.notifyDirty}
                 item={this.props.fcConfig.gyro_notch1_cutoff}
               />
-              <StatelessInput
-                notifyDirty={this.props.notifyDirty}
-                item={this.props.fcConfig.gyro_notch2_hz}
-              />
-              <StatelessInput
-                notifyDirty={this.props.notifyDirty}
-                item={this.props.fcConfig.gyro_notch2_cutoff}
-              />
+              {this.props.fcConfig.gyro_notch2_hz && (
+                <StatelessInput
+                  notifyDirty={this.props.notifyDirty}
+                  item={this.props.fcConfig.gyro_notch2_hz}
+                />
+              )}
+              {this.props.fcConfig.gyro_notch2_cutoff && (
+                <StatelessInput
+                  notifyDirty={this.props.notifyDirty}
+                  item={this.props.fcConfig.gyro_notch2_cutoff}
+                />
+              )}
             </Paper>
           </Paper>
           <Paper className="flex-center">
@@ -266,75 +268,105 @@ export default class FiltersView extends Component {
                 <div
                   style={{ Display: "flex", flex: 1, flexDirection: "column" }}
                 >
-                  <Paper>
-                    <StatelessInput
-                      notifyDirty={this.props.notifyDirty}
-                      key={this.props.fcConfig.dterm_lowpass_hz_roll.id}
-                      item={this.props.fcConfig.dterm_lowpass_hz_roll}
-                    />
-                    <StatelessInput
-                      notifyDirty={this.props.notifyDirty}
-                      key={this.props.fcConfig.dterm_lowpass_hz_pitch.id}
-                      item={this.props.fcConfig.dterm_lowpass_hz_pitch}
-                    />
-                    <StatelessInput
-                      notifyDirty={this.props.notifyDirty}
-                      key={this.props.fcConfig.dterm_lowpass_hz_yaw.id}
-                      item={this.props.fcConfig.dterm_lowpass_hz_yaw}
-                    />
-                  </Paper>
-                  <Paper>
-                    <StatelessInput
-                      notifyDirty={this.props.notifyDirty}
-                      key={this.props.fcConfig.dterm_lowpass2_hz_roll.id}
-                      item={this.props.fcConfig.dterm_lowpass2_hz_roll}
-                    />
-                    <StatelessInput
-                      notifyDirty={this.props.notifyDirty}
-                      key={this.props.fcConfig.dterm_lowpass2_hz_pitch.id}
-                      item={this.props.fcConfig.dterm_lowpass2_hz_pitch}
-                    />
-                    <StatelessInput
-                      notifyDirty={this.props.notifyDirty}
-                      key={this.props.fcConfig.dterm_lowpass2_hz_yaw.id}
-                      item={this.props.fcConfig.dterm_lowpass2_hz_yaw}
-                    />
-                  </Paper>
+                  {this.props.fcConfig.dterm_lowpass_hz_roll && (
+                    <Paper>
+                      <StatelessInput
+                        notifyDirty={this.props.notifyDirty}
+                        key={this.props.fcConfig.dterm_lowpass_hz_roll.id}
+                        item={this.props.fcConfig.dterm_lowpass_hz_roll}
+                      />
+                      <StatelessInput
+                        notifyDirty={this.props.notifyDirty}
+                        key={this.props.fcConfig.dterm_lowpass_hz_pitch.id}
+                        item={this.props.fcConfig.dterm_lowpass_hz_pitch}
+                      />
+                      <StatelessInput
+                        notifyDirty={this.props.notifyDirty}
+                        key={this.props.fcConfig.dterm_lowpass_hz_yaw.id}
+                        item={this.props.fcConfig.dterm_lowpass_hz_yaw}
+                      />
+                    </Paper>
+                  )}
+                  {this.props.fcConfig.dterm_lowpass_hz && (
+                    <Paper>
+                      <StatelessInput
+                        notifyDirty={this.props.notifyDirty}
+                        key={this.props.fcConfig.dterm_lowpass_hz.id}
+                        item={this.props.fcConfig.dterm_lowpass_hz}
+                      />
+                    </Paper>
+                  )}
+                  {this.props.fcConfig.dterm_lowpass2_hz_roll && (
+                    <Paper>
+                      <StatelessInput
+                        notifyDirty={this.props.notifyDirty}
+                        key={this.props.fcConfig.dterm_lowpass2_hz_roll.id}
+                        item={this.props.fcConfig.dterm_lowpass2_hz_roll}
+                      />
+                      <StatelessInput
+                        notifyDirty={this.props.notifyDirty}
+                        key={this.props.fcConfig.dterm_lowpass2_hz_pitch.id}
+                        item={this.props.fcConfig.dterm_lowpass2_hz_pitch}
+                      />
+                      <StatelessInput
+                        notifyDirty={this.props.notifyDirty}
+                        key={this.props.fcConfig.dterm_lowpass2_hz_yaw.id}
+                        item={this.props.fcConfig.dterm_lowpass2_hz_yaw}
+                      />
+                    </Paper>
+                  )}
+                  {this.props.fcConfig.dterm_lowpass2_hz && (
+                    <Paper>
+                      <StatelessInput
+                        notifyDirty={this.props.notifyDirty}
+                        key={this.props.fcConfig.dterm_lowpass2_hz.id}
+                        item={this.props.fcConfig.dterm_lowpass2_hz}
+                      />
+                    </Paper>
+                  )}
                 </div>
               </div>
             </Paper>
-            <Paper className="flex-column-start">
-              <Typography variant="h6">
-                <FormattedMessage id="smart_dterm_smoothing" />
-              </Typography>
-              <StatelessInput
-                id="smart_dterm_smoothing_roll"
-                notifyDirty={this.props.notifyDirty}
-              />
-              <StatelessInput
-                id="smart_dterm_smoothing_pitch"
-                notifyDirty={this.props.notifyDirty}
-              />
-              <StatelessInput
-                id="smart_dterm_smoothing_yaw"
-                notifyDirty={this.props.notifyDirty}
-              />
-              <Typography variant="h6">
-                <FormattedMessage id="witchcraft" />
-              </Typography>
-              <StatelessInput
-                id="witchcraft_roll"
-                notifyDirty={this.props.notifyDirty}
-              />
-              <StatelessInput
-                id="witchcraft_pitch"
-                notifyDirty={this.props.notifyDirty}
-              />
-              <StatelessInput
-                id="witchcraft_yaw"
-                notifyDirty={this.props.notifyDirty}
-              />
-            </Paper>
+            {this.props.fcConfig.smart_dterm_smoothing_roll && (
+              <Paper className="flex-column-start">
+                <Typography variant="h6">
+                  <FormattedMessage id="smart_dterm_smoothing" />
+                </Typography>
+                {this.props.fcConfig.smart_dterm_smoothing_roll && (
+                  <StatelessInput
+                    id="smart_dterm_smoothing_roll"
+                    notifyDirty={this.props.notifyDirty}
+                  />
+                )}
+                {this.props.fcConfig.smart_dterm_smoothing_pitch && (
+                  <StatelessInput
+                    id="smart_dterm_smoothing_pitch"
+                    notifyDirty={this.props.notifyDirty}
+                  />
+                )}
+                {this.props.fcConfig.smart_dterm_smoothing_yaw && (
+                  <StatelessInput
+                    id="smart_dterm_smoothing_yaw"
+                    notifyDirty={this.props.notifyDirty}
+                  />
+                )}
+                <Typography variant="h6">
+                  <FormattedMessage id="witchcraft" />
+                </Typography>
+                <StatelessInput
+                  id="witchcraft_roll"
+                  notifyDirty={this.props.notifyDirty}
+                />
+                <StatelessInput
+                  id="witchcraft_pitch"
+                  notifyDirty={this.props.notifyDirty}
+                />
+                <StatelessInput
+                  id="witchcraft_yaw"
+                  notifyDirty={this.props.notifyDirty}
+                />
+              </Paper>
+            )}
           </div>
         </div>
       </div>
