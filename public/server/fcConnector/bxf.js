@@ -334,7 +334,7 @@ const setChannelMap = (device, newmap) => {
   return sendCommand(device, `map ${newmap}`);
 };
 const getModes = device => {
-  // return sendCommand(device, `map`);
+  return sendCommand(device, `aux`);
 };
 const setMode = (device, modeVals) => {
   return sendCommand(device, `aux ${modeVals.split("|").join(" ")}`, 20);
