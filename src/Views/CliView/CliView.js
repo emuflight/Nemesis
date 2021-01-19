@@ -14,20 +14,23 @@ export default class CliView extends Component {
       cliBuffer: this.props.startText || "#flashEmu\n\n#",
       stayOpen: !!this.props.stayOpen || false,
       disabled: this.props.disabled || false,
-      open: this.props.stayOpen || !!this.props.open
+      open: this.props.stayOpen || !!this.props.open,
+      allowClose: true
     };
   }
   toggleCli(state) {
     let openState = this.state.stayOpen || state;
-    this.setState({
-      cliBuffer: this.props.startText || "#flashEmu\n\n#",
-      command: "",
-      open: openState
-    });
-    if (openState) {
-      FCConnector.pauseTelemetry();
-    } else {
-      FCConnector.resumeTelemetry();
+    if (openState || this.state.allowClose) {
+      this.setState({
+        cliBuffer: this.props.startText || "#flashEmu\n\n#",
+        command: "",
+        open: openState
+      });
+      if (openState) {
+        FCConnector.pauseTelemetry();
+      } else {
+        FCConnector.resumeTelemetry();
+      }
     }
   }
   replaceLast(update) {
@@ -64,6 +67,7 @@ export default class CliView extends Component {
       this.setState({ disabled: true });
       if (this.state.command) {
         let commands = this.state.command.split(/\r|\n/gim).filter(com => com);
+        this.setState({ allowClose: false });
         FCConnector.sendBulkCommands(
           commands.filter(line => !line.startsWith("#")),
           notifyResp => {
@@ -71,6 +75,7 @@ export default class CliView extends Component {
           }
         ).then(() => {
           this.setState({ disabled: false });
+          this.setState({ allowClose: true });
         });
       }
     }
