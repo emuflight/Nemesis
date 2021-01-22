@@ -297,6 +297,19 @@ app.get("/telem/stop", (req, res) => {
 
     if (connectedDevice) {
       fcConnector.stopTelemetry(connectedDevice);
+      console.log("stopped telemetry");
+      res.sendStatus(200);
+    }
+  });
+});
+
+app.get("/telem/stopFast", (req, res) => {
+  devices.get((err, connectedDevice) => {
+    if (err) return res.status(400).send(err);
+
+    if (connectedDevice) {
+      fcConnector.stopFastTelemetry(connectedDevice);
+      console.log("stopped fast telemetry");
       res.sendStatus(200);
     }
   });

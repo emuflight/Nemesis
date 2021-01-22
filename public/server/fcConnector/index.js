@@ -311,6 +311,10 @@ module.exports = new class FcConnector {
   }
   stopTelemetry(deviceInfo) {
     clearInterval(websockets.wsServer.fastTelemetryInterval);
+    clearInterval(websockets.wsServer.slowTelemetryInterval);
+  }
+  stopFastTelemetry(deviceInfo) {
+    clearInterval(websockets.wsServer.fastTelemetryInterval);
   }
   rebootDFU(deviceInfo) {
     return bxfConnector.sendCommand(deviceInfo, "bl");

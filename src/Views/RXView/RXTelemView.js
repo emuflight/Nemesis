@@ -38,7 +38,7 @@ export default class RXTelemView extends Component {
 
   componentWillUnmount() {
     FCConnector.webSockets.removeEventListener("message", this.handleRXData);
-    FCConnector.stopTelemetry();
+    FCConnector.stopFastTelemetry();
   }
   render() {
     return (
