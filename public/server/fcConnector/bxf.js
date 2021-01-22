@@ -396,6 +396,7 @@ const cleanRecBuffer = buffer => {
 const getTelemetry = (device, type) => {
   switch (type) {
     case "status": {
+      console.log("nemesis_status");
       return sendCommand(device, "nemesis_status", 30).then(response => {
         if (response) {
           try {
