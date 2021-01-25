@@ -362,6 +362,7 @@ const getTelemetry = (device, type) => {
     case "status": {
       return sendCommand(device, `msp 150`, 30, false).then(status => {
         if (status) {
+          console.log("nemesis_status");
           try {
             let data = new DataView(new Uint8Array(status).buffer, 12);
             let modeFlasCount = data.getUint8(15);

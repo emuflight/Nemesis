@@ -91,7 +91,7 @@ export default class AttitudeView extends Component {
 
   componentWillUnmount() {
     window.removeEventListener("resize", this.onWindowResize);
-    FCConnector.stopTelemetry();
+    FCConnector.stopFastTelemetry();
     FCConnector.webSockets.removeEventListener(
       "message",
       this.handleStatusMessage

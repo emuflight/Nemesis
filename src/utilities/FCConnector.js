@@ -137,6 +137,7 @@ export default new class FCConnector {
   }
   pauseTelemetry() {
     this.paused = true;
+    console.log("paused telemetry");
     this.stopTelemetry();
   }
   resumeTelemetry() {
@@ -162,6 +163,10 @@ export default new class FCConnector {
   }
   stopTelemetry() {
     return fetch(`${this.serviceUrl}/telem/stop`);
+  }
+
+  stopFastTelemetry() {
+    return fetch(`${this.serviceUrl}/telem/stopFast`);
   }
 
   uploadFont(name = "butterflight") {
