@@ -25,7 +25,7 @@ export default class RXTelemView extends Component {
     try {
       let { rx } = JSON.parse(message.data);
       if (rx) {
-        this.setState({ channels: rx.channels });
+        this.setState({ channels: rx.channels.slice(4) });
       }
     } catch (ex) {
       console.warn("unable to parse telemetry", ex);
@@ -33,7 +33,7 @@ export default class RXTelemView extends Component {
   };
   componentDidMount() {
     FCConnector.webSockets.addEventListener("message", this.handleRXData);
-    FCConnector.startTelemetry("rx");
+    //FCConnector.startTelemetry("rx"); //RxStickView will also be active and has already started telemetry
   }
 
   componentWillUnmount() {
@@ -42,7 +42,7 @@ export default class RXTelemView extends Component {
   }
   render() {
     return (
-      <List>
+      <List style={{ width: "200px" }}>
         {this.state.channels &&
           this.state.channels.map((channel, i) => {
             return (
@@ -62,17 +62,13 @@ export default class RXTelemView extends Component {
                 </Typography>
                 <Typography variant="caption">
                   <FormattedMessage
-                    id={
-                      i < 4
-                        ? `rx.channel.${this.state.mapping[i]}`
-                        : "rx.channel.aux-label"
-                    }
-                    values={i > 3 && { number: i - 3 }}
+                    id={"rx.channel.aux-label"}
+                    values={i > -1 && { number: i }}
                   />
                 </Typography>
                 <LinearProgress
                   variant="determinate"
-                  style={{ height: 10, margin: 5 }}
+                  style={{ height: 5, margin: 2 }}
                   value={this.normalize(channel)}
                 />
               </div>

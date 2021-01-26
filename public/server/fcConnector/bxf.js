@@ -393,6 +393,16 @@ const cleanRecBuffer = buffer => {
   return Buffer.from(bufferCleaned, "hex");
 };
 
+const clean_comments = response => {
+  let output = "";
+  lines = response.split("\n");
+  lines.forEach(function(line) {
+    if (line.charAt(0) != "#") {
+      output += line; // + '\n';
+    }
+  });
+  return output;
+};
 const getTelemetry = (device, type) => {
   switch (type) {
     case "status": {
@@ -401,7 +411,9 @@ const getTelemetry = (device, type) => {
         if (response) {
           try {
             telem = JSON.parse(
-              response.slice(response.indexOf("{"), response.length - 3)
+              clean_comments(
+                response.slice(response.indexOf("{"), response.length - 3)
+              )
             );
             let modeFlagsCount = telem.arming_disable_flags_count;
             return {
@@ -424,7 +436,9 @@ const getTelemetry = (device, type) => {
         if (response) {
           try {
             telem = JSON.parse(
-              response.slice(response.indexOf("{"), response.length - 3)
+              clean_comments(
+                response.slice(response.indexOf("{"), response.length - 3)
+              )
             );
             if (log_accelerometer_attitude) {
               console.log(
@@ -453,7 +467,9 @@ const getTelemetry = (device, type) => {
         if (response) {
           try {
             telem = JSON.parse(
-              response.slice(response.indexOf("{"), response.length - 3)
+              clean_comments(
+                response.slice(response.indexOf("{"), response.length - 3)
+              )
             );
             return {
               type: "gyro",
@@ -483,7 +499,9 @@ const getTelemetry = (device, type) => {
       return sendCommand(device, "nemesis_vbat", 50).then(response => {
         if (response) {
           telem = JSON.parse(
-            response.slice(response.indexOf("{"), response.length - 3)
+            clean_comments(
+              response.slice(response.indexOf("{"), response.length - 3)
+            )
           );
         }
         return {
@@ -502,10 +520,13 @@ const getTelemetry = (device, type) => {
         if (response) {
           try {
             telem = JSON.parse(
-              response.slice(response.indexOf("{"), response.length - 3)
+              clean_comments(
+                response.slice(response.indexOf("{"), response.length - 3)
+              )
             );
           } catch (ex) {
             console.log(ex);
+            console.log(response);
           }
           return {
             rx: {

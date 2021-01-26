@@ -61,6 +61,12 @@ export default class RXView extends Component {
               channelMap={this.refs.channelMap.state.mapping}
             />
           )}
+          {this.state.mapping && (
+            <RXTelemView
+              scale={this.props.fcConfig.rx_scale}
+              channelMap={this.refs.channelMap.state.mapping}
+            />
+          )}
         </Paper>
         <Paper>
           <ConfigListView

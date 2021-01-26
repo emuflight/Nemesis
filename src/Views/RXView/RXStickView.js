@@ -23,22 +23,41 @@ export default class RXStickView extends Component {
       right_rccommand_y: 0
     };
   }
-
+  /*
+  //was from old RXTelemView
   normalize(value) {
     return (
       ((value - this.state.scale.min) * 100) /
       (this.state.scale.max - this.state.scale.min)
     );
   }
+  */
+  map_rx_sticks(x, in_min, in_max, out_min, out_max) {
+    return ((x - in_min) * (out_max - out_min)) / (in_max - in_min) + out_min;
+  }
+
+  normalizeRaw(value) {
+    return this.map_rx_sticks(value, 1000, 2000, -69, 69);
+  }
+
+  normalizeRcCommand(value) {
+    return this.map_rx_sticks(value, -500, 500, -69, 69);
+  }
+
+  normalizeRcCommandThrottle(value) {
+    return this.map_rx_sticks(value, 1000, 2000, -69, 69);
+  }
+
   handleRXData = message => {
     try {
       let { rx } = JSON.parse(message.data);
-      console.log("test");
       if (rx) {
-        this.setState({ channels: rx.channels });
-        this.setState({ rcCommand: rx.rcCommand });
-        //console.log(rx.rcCommand[2]);
-        //this.refs.left_rcCommand.left = 69 + rx.rcCommand[2];
+        if (rx.channels) {
+          this.setState({ channels: rx.channels });
+        }
+        if (rx.rcCommand) {
+          this.setState({ rcCommand: rx.rcCommand });
+        }
       }
     } catch (ex) {
       console.warn("unable to parse telemetry", ex);
@@ -72,8 +91,8 @@ export default class RXStickView extends Component {
             width: "15px",
             height: "15px",
             margin: "0 auto",
-            left: 69 + this.state.left_raw_x,
-            bottom: 91 + this.state.left_raw_y,
+            left: 69 + this.normalizeRaw(this.state.channels[2]),
+            bottom: 91 + this.normalizeRaw(this.state.channels[3]),
             position: "absolute",
             backgroundImage: `url("assets/rx-reticule-raw.png")`,
             backgroundPosition: "center",
@@ -87,8 +106,8 @@ export default class RXStickView extends Component {
             height: "15px",
             margin: "0 auto",
             position: "absolute",
-            left: 69 + this.state.right_raw_x,
-            bottom: 91 + this.state.right_raw_y,
+            left: 216 + this.normalizeRaw(this.state.channels[0]),
+            bottom: 91 + this.normalizeRaw(this.state.channels[1]),
             backgroundImage: `url("assets/rx-reticule-raw.png")`,
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
@@ -102,8 +121,9 @@ export default class RXStickView extends Component {
             height: "15px",
             margin: "0 auto",
             position: "absolute",
-            left: 69 + this.state.rcCommand[2],
-            bottom: 91 + this.state.left_rccommand_y,
+            left: 69 + this.normalizeRcCommand(-this.state.rcCommand[2]),
+            bottom:
+              91 + this.normalizeRcCommandThrottle(this.state.rcCommand[3]),
             backgroundImage: `url("assets/rx-reticule-rccommand.png")`,
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
@@ -116,8 +136,8 @@ export default class RXStickView extends Component {
             height: "15px",
             margin: "0 auto",
             position: "absolute",
-            left: this.state.right_rccommand_x,
-            bottom: this.state.right_rccommand_y,
+            left: 216 + this.normalizeRcCommand(this.state.rcCommand[0]),
+            bottom: 91 + this.normalizeRcCommand(this.state.rcCommand[1]),
             backgroundImage: `url("assets/rx-reticule-rccommand.png")`,
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
