@@ -3,6 +3,7 @@ import Button from "@material-ui/core/Button";
 import ConfigListView from "../ConfigListView/ConfigListView";
 import Paper from "@material-ui/core/Paper";
 import RXTelemView from "./RXTelemView";
+import RXStickView from "./RXStickView";
 import ChannelMapView from "./ChannelMapView";
 import FCConnector from "../../utilities/FCConnector";
 import { FormattedMessage } from "react-intl";
@@ -12,7 +13,6 @@ export default class RXView extends Component {
     super(props);
     this.state = {
       theme: props.theme,
-      showRXTelem: false,
       mapping: this.props.fcConfig.channel_map
     };
   }
@@ -40,18 +40,6 @@ export default class RXView extends Component {
         <Paper>
           <div style={{ display: "flex" }}>
             <Button
-              onClick={() =>
-                this.setState({ showRXTelem: !this.state.showRXTelem })
-              }
-              variant="contained"
-              color="primary"
-            >
-              <FormattedMessage
-                id="rx.hide-show"
-                values={{ hideShow: this.state.showRXTelem ? "Hide" : "Show" }}
-              />
-            </Button>
-            <Button
               style={{ marginLeft: 20 }}
               color="secondary"
               variant="contained"
@@ -67,13 +55,12 @@ export default class RXView extends Component {
               notifyDirty={this.props.notifyDirty}
             />
           </div>
-          {this.state.showRXTelem &&
-            this.state.mapping && (
-              <RXTelemView
-                scale={this.props.fcConfig.rx_scale}
-                channelMap={this.refs.channelMap.state.mapping}
-              />
-            )}
+          {this.state.mapping && (
+            <RXStickView
+              scale={this.props.fcConfig.rx_scale}
+              channelMap={this.refs.channelMap.state.mapping}
+            />
+          )}
         </Paper>
         <Paper>
           <ConfigListView

@@ -287,6 +287,7 @@ app.get("/telem/:type/start", (req, res) => {
 
     if (connectedDevice) {
       fcConnector.startTelemetry(connectedDevice, req.params.type);
+      console.log("started telemetry: ", req.params.type);
       res.sendStatus(202);
     }
   });
