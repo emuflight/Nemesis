@@ -76,8 +76,8 @@ export default class RXStickView extends Component {
     return (
       <div
         style={{
-          width: "300px",
-          height: "200px",
+          width: "350px",
+          height: "220px",
           margin: "0 auto",
           position: "relative",
           backgroundImage: `url("assets/rx-sticks.png")`,
@@ -91,7 +91,7 @@ export default class RXStickView extends Component {
             width: "15px",
             height: "15px",
             margin: "0 auto",
-            left: 69 + this.normalizeRaw(this.state.channels[2]),
+            left: 86 + this.normalizeRaw(this.state.channels[2]),
             bottom: 91 + this.normalizeRaw(this.state.channels[3]),
             position: "absolute",
             backgroundImage: `url("assets/rx-reticule-raw.png")`,
@@ -106,7 +106,7 @@ export default class RXStickView extends Component {
             height: "15px",
             margin: "0 auto",
             position: "absolute",
-            left: 216 + this.normalizeRaw(this.state.channels[0]),
+            left: 245 + this.normalizeRaw(this.state.channels[0]),
             bottom: 91 + this.normalizeRaw(this.state.channels[1]),
             backgroundImage: `url("assets/rx-reticule-raw.png")`,
             backgroundPosition: "center",
@@ -121,7 +121,7 @@ export default class RXStickView extends Component {
             height: "15px",
             margin: "0 auto",
             position: "absolute",
-            left: 69 + this.normalizeRcCommand(-this.state.rcCommand[2]),
+            left: 86 + this.normalizeRcCommand(-this.state.rcCommand[2]),
             bottom:
               91 + this.normalizeRcCommandThrottle(this.state.rcCommand[3]),
             backgroundImage: `url("assets/rx-reticule-rccommand.png")`,
@@ -136,7 +136,7 @@ export default class RXStickView extends Component {
             height: "15px",
             margin: "0 auto",
             position: "absolute",
-            left: 216 + this.normalizeRcCommand(this.state.rcCommand[0]),
+            left: 245 + this.normalizeRcCommand(this.state.rcCommand[0]),
             bottom: 91 + this.normalizeRcCommand(this.state.rcCommand[1]),
             backgroundImage: `url("assets/rx-reticule-rccommand.png")`,
             backgroundPosition: "center",
@@ -144,6 +144,46 @@ export default class RXStickView extends Component {
             backgroundSize: "contain"
           }}
         />
+        <Typography
+          variant="caption"
+          style={{
+            position: "absolute",
+            bottom: "100px",
+            left: "-23px"
+          }}
+        >
+          {this.state.channels[2]}
+        </Typography>
+        <Typography
+          variant="caption"
+          style={{
+            position: "absolute",
+            bottom: "-20px",
+            left: "80px"
+          }}
+        >
+          {this.state.channels[3]}
+        </Typography>
+        <Typography
+          variant="caption"
+          style={{
+            position: "absolute",
+            bottom: "100px",
+            left: "344px"
+          }}
+        >
+          {this.state.channels[0]}
+        </Typography>
+        <Typography
+          variant="caption"
+          style={{
+            position: "absolute",
+            bottom: "-20px",
+            left: "243px"
+          }}
+        >
+          {this.state.channels[1]}
+        </Typography>
       </div>
     );
   }

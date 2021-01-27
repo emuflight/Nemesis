@@ -432,6 +432,7 @@ const getTelemetry = (device, type) => {
       });
     }
     case "attitude": {
+      console.log("nemesis_attitude");
       return sendCommand(device, "nemesis_attitude", 40).then(response => {
         if (response) {
           try {
@@ -516,6 +517,7 @@ const getTelemetry = (device, type) => {
     }
     default:
     case "rx": {
+      console.log("nemesis_rx");
       return sendCommand(device, "nemesis_rx", 40).then(response => {
         if (response) {
           try {

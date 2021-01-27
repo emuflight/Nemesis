@@ -1,5 +1,6 @@
 export default new class FCConnector {
   serviceUrl = `http://${window.location.hostname}:9001`;
+  lastTelemetry = [];
   startDetect(onFcConnect) {
     this.webSockets = new WebSocket(`ws://${window.location.hostname}:9002`);
 
@@ -132,20 +133,33 @@ export default new class FCConnector {
   }
 
   startTelemetry(type = "status") {
-    this.lastTelemetry = type;
-    return fetch(`${this.serviceUrl}/telem/${this.lastTelemetry}/start`);
+    console.log("Started telemetry: ", type);
+    if (!this.lastTelemetry.includes(type)) {
+      this.lastTelemetry.push(type);
+    }
+    return fetch(`${this.serviceUrl}/telem/${type}/start`);
   }
+
   pauseTelemetry() {
     this.paused = true;
     console.log("paused telemetry");
     this.stopTelemetry();
   }
+
   resumeTelemetry() {
-    if (this.paused && this.lastTelemetry) {
+    // not being called
+    if (this.paused) {
+      //console.log('resuming: ', this.lastTelemetry);
       this.paused = false;
-      return fetch(`${this.serviceUrl}/telem/${this.lastTelemetry}/start`);
+      for (var i = 0; i < this.lastTelemetry.length; i++) {
+        fetch(`${this.serviceUrl}/telem/${this.lastTelemetry[i]}/start`);
+      }
+      //fetch(`${this.serviceUrl}/telem/status/start`); // always resume status
+      this.lastTelemetry = []; //resumed all, so clear list
+      return true;
     }
   }
+
   storage(command = "info") {
     return fetch(`${this.serviceUrl}/storage/${command}`).then(res =>
       res.json()
