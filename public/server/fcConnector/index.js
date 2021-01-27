@@ -292,16 +292,16 @@ module.exports = new class FcConnector {
       );
     });
   }
-  startTelemetry(deviceInfo, type, fastIntervalMs = 500) {
-    //clearInterval(websockets.wsServer.fastTelemetryInterval);
-    //clearInterval(websockets.wsServer.slowTelemetryInterval);
+  startTelemetry(deviceInfo, type, fastIntervalMs = 100) {
+    clearInterval(websockets.wsServer.fastTelemetryInterval);
+    clearInterval(websockets.wsServer.slowTelemetryInterval);
     websockets.wsServer.telemetryType = type;
     if (type !== "status") {
       websockets.wsServer.fastTelemetryInterval = setInterval(() => {
         bxfConnector.getTelemetry(deviceInfo, type).then(telemData => {
           websockets.notifyTelem(telemData);
         });
-      }, type === "rx" ? 500 : fastIntervalMs);
+      }, type === "rx" ? 60 : fastIntervalMs);
     }
     websockets.wsServer.slowTelemetryInterval = setInterval(() => {
       bxfConnector.getTelemetry(deviceInfo, "status").then(telemData => {

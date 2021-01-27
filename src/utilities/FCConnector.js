@@ -135,7 +135,7 @@ export default new class FCConnector {
   startTelemetry(type = "status") {
     console.log("Started telemetry: ", type);
     if (!this.lastTelemetry.includes(type)) {
-      this.lastTelemetry.push(type);
+      this.lastTelemetry.push(type); // save this telemetry type to resume after pause
     }
     return fetch(`${this.serviceUrl}/telem/${type}/start`);
   }
@@ -143,20 +143,18 @@ export default new class FCConnector {
   pauseTelemetry() {
     this.paused = true;
     console.log("paused telemetry");
-    this.stopTelemetry();
+    // calling stop telemetry endpoint directly, because stopTelemetry() will also clear the paused telemetry list.
+    // this is better behavior because pauseTelemetry() keeps the list intact. stopTelemetry() clears the list.
+    return fetch(`${this.serviceUrl}/telem/stop`);
   }
 
   resumeTelemetry() {
-    // not being called
     if (this.paused) {
-      //console.log('resuming: ', this.lastTelemetry);
       this.paused = false;
       for (var i = 0; i < this.lastTelemetry.length; i++) {
         fetch(`${this.serviceUrl}/telem/${this.lastTelemetry[i]}/start`);
       }
-      //fetch(`${this.serviceUrl}/telem/status/start`); // always resume status
-      this.lastTelemetry = []; //resumed all, so clear list
-      return true;
+      return;
     }
   }
 
@@ -176,10 +174,12 @@ export default new class FCConnector {
     );
   }
   stopTelemetry() {
+    this.lastTelemetry = ["status"]; //clear telemetry, leaving status only so resumeTelemetry() will not restart the types. we are done with the telemetry needed for the page
     return fetch(`${this.serviceUrl}/telem/stop`);
   }
 
   stopFastTelemetry() {
+    this.lastTelemetry = ["status"]; //clear telemetry, leaving status only so resumeTelemetry() will not restart the types. we are done with the telemetry needed for the page
     return fetch(`${this.serviceUrl}/telem/stopFast`);
   }
 

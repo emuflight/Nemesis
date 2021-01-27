@@ -6,6 +6,7 @@ let openConnection;
 const log_serial_commands = false; // enable to console.log each command request port, disable for less log output
 const log_config_to_file = false; //enable to console.log the config command response and save it to debug.txt
 const log_accelerometer_attitude = false; // enable to console.log the x,y,z and buffer length of the accelerometer reading
+const log_all_telemetry_requests = false; //enable to console.log every request, for debugging pause/resume telemetry. caution: set telemetry speed to very slow (500ms) to not overload console
 const setupConnection = device => {
   return new Promise((resolve, reject) => {
     const connect = () => {
@@ -406,7 +407,7 @@ const clean_comments = response => {
 const getTelemetry = (device, type) => {
   switch (type) {
     case "status": {
-      console.log("nemesis_status");
+      if (log_all_telemetry_requests) console.log("nemesis_status");
       return sendCommand(device, "nemesis_status", 30).then(response => {
         if (response) {
           try {
@@ -432,7 +433,7 @@ const getTelemetry = (device, type) => {
       });
     }
     case "attitude": {
-      console.log("nemesis_attitude");
+      if (log_all_telemetry_requests) console.log("nemesis_attitude");
       return sendCommand(device, "nemesis_attitude", 40).then(response => {
         if (response) {
           try {
@@ -464,6 +465,7 @@ const getTelemetry = (device, type) => {
       });
     }
     case "gyro": {
+      if (log_all_telemetry_requests) console.log("nemesis_gyro");
       return sendCommand(device, "nemesis_gyro", 50).then(response => {
         if (response) {
           try {
@@ -497,6 +499,7 @@ const getTelemetry = (device, type) => {
       });
     }
     case "vbat": {
+      if (log_all_telemetry_requests) console.log("nemesis_vbat");
       return sendCommand(device, "nemesis_vbat", 50).then(response => {
         if (response) {
           telem = JSON.parse(
@@ -517,7 +520,7 @@ const getTelemetry = (device, type) => {
     }
     default:
     case "rx": {
-      console.log("nemesis_rx");
+      if (log_all_telemetry_requests) console.log("nemesis_rx");
       return sendCommand(device, "nemesis_rx", 40).then(response => {
         if (response) {
           try {
