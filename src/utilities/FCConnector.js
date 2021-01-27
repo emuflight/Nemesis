@@ -1,5 +1,6 @@
 export default new class FCConnector {
   serviceUrl = `http://${window.location.hostname}:9001`;
+  lastTelemetry = [];
   startDetect(onFcConnect) {
     this.webSockets = new WebSocket(`ws://${window.location.hostname}:9002`);
 
@@ -132,18 +133,26 @@ export default new class FCConnector {
   }
 
   startTelemetry(type = "status") {
-    this.lastTelemetry = type;
-    return fetch(`${this.serviceUrl}/telem/${this.lastTelemetry}/start`);
+    console.log("Started telemetry: ", type);
+    if (!this.lastTelemetry.includes(type)) {
+      this.lastTelemetry.push(type); // save this telemetry type to resume after pause
+    }
+    return fetch(`${this.serviceUrl}/telem/${type}/start`);
   }
   pauseTelemetry() {
     this.paused = true;
     console.log("paused telemetry");
-    this.stopTelemetry();
+    // calling stop telemetry endpoint directly, because stopTelemetry() will also clear the paused telemetry list.
+    // this is better behavior because pauseTelemetry() keeps the list intact. stopTelemetry() clears the list.
+    return fetch(`${this.serviceUrl}/telem/stop`);
   }
   resumeTelemetry() {
-    if (this.paused && this.lastTelemetry) {
+    if (this.paused) {
       this.paused = false;
-      return fetch(`${this.serviceUrl}/telem/${this.lastTelemetry}/start`);
+      for (var i = 0; i < this.lastTelemetry.length; i++) {
+        fetch(`${this.serviceUrl}/telem/${this.lastTelemetry[i]}/start`);
+      }
+      return;
     }
   }
   storage(command = "info") {
@@ -162,10 +171,12 @@ export default new class FCConnector {
     );
   }
   stopTelemetry() {
+    this.lastTelemetry = ["status"]; //clear telemetry, leaving status only so resumeTelemetry() will not restart the types. we are done with the telemetry needed for the page
     return fetch(`${this.serviceUrl}/telem/stop`);
   }
 
   stopFastTelemetry() {
+    this.lastTelemetry = ["status"]; //clear telemetry, leaving status only so resumeTelemetry() will not restart the types. we are done with the telemetry needed for the page
     return fetch(`${this.serviceUrl}/telem/stopFast`);
   }
 
