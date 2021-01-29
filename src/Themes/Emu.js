@@ -67,6 +67,9 @@ const theme = createMuiTheme({
         margin: 10,
         padding: 10,
         backgroundColor: "transparent"
+      },
+      elevation1: {
+        boxShadow: 0
       }
     },
     MuiAppBar: {
