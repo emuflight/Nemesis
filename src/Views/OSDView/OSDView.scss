@@ -1,3 +1,9 @@
+.osd-view {
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  position: absolute;
+}
 .osd-element {
   color: white;
   font-family: monospace;
