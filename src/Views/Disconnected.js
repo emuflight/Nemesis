@@ -30,7 +30,11 @@ export default class Disconnected extends Component {
           boxSizing: "border-box"
         }}
       >
-        <Card>
+        <Card
+          style={{
+            backgroundImage: "none"
+          }}
+        >
           <CardContent>
             <Avatar
               title={`v${this.props.appVersion}`}
