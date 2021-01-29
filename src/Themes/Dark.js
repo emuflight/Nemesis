@@ -8,7 +8,8 @@ import targetThemes from "./targets";
 import EmuFlight from "./Emu";
 const dark = createMuiTheme({
   typography: {
-    useNextVariants: true
+    useNextVariants: true,
+    fontFamily: "altehaasgroteskregular"
   },
   palette: {
     type: "dark",
