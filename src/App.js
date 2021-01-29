@@ -141,6 +141,7 @@ export class App extends Component {
     } else if (this.state.connected) {
       return (
         <MuiThemeProvider theme={this.state.theme}>
+          <CssBaseline />
           <Connected
             appVersion={this.state.appVersion}
             rebooting={this.state.rebooting}
