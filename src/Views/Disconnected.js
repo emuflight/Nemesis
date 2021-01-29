@@ -32,7 +32,9 @@ export default class Disconnected extends Component {
       >
         <Card
           style={{
-            backgroundImage: "none"
+            backgroundImage: "none",
+            background:
+              "radial-gradient(circle at 50% -50%, rgba(61,61,61,1) 0%, rgba(32,32,32,1) 100%)"
           }}
         >
           <CardContent>
