@@ -78,8 +78,7 @@ export default class AttitudeView extends Component {
       this.renderer.render(this.scene, this.camera);
     });
     this.renderer = new THREE.WebGLRenderer({ alpha: true });
-    //this.renderer.clearColor(0, 0, 0, 0);
-    this.renderer.setClearColor(0x000000, 0); // the default
+    this.renderer.setClearColor(0x000000, 0); // transparent background
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setSize(this.state.size, this.state.size);
     this.refs.modelContainer.appendChild(this.renderer.domElement);
