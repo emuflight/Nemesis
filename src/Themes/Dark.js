@@ -14,7 +14,10 @@ const dark = createMuiTheme({
   palette: {
     type: "dark",
     primary: cyan,
-    secondary: deepOrange
+    secondary: deepOrange,
+    background: {
+      paper: "#000000"
+    }
   },
   overrides: {
     MuiInput: {

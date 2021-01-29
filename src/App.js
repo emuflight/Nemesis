@@ -6,6 +6,7 @@ import DfuView from "./Views/DfuView/DfuView";
 import FCConnector from "./utilities/FCConnector";
 import themes from "./Themes/Dark";
 import { MuiThemeProvider } from "@material-ui/core/styles";
+import CssBaseline from "@material-ui/core/CssBaseline";
 import "./App.css";
 
 export const FCConfigContext = React.createContext({});
@@ -154,6 +155,7 @@ export class App extends Component {
     } else {
       return (
         <MuiThemeProvider theme={themes.dark}>
+          <CssBaseline />
           <Disconnected
             appVersion={this.state.appVersion}
             incompatible={this.state.incompatible}
