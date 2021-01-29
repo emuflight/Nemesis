@@ -65,7 +65,8 @@ const theme = createMuiTheme({
     MuiPaper: {
       root: {
         margin: 10,
-        padding: 10
+        padding: 10,
+        backgroundColor: "transparent"
       }
     },
     MuiAppBar: {
