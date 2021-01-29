@@ -40,7 +40,7 @@ export default class AttitudeView extends Component {
   }
   componentDidMount() {
     this.scene = new THREE.Scene();
-    this.scene.background = new THREE.Color(0x424242);
+    //this.scene.background = new THREE.Color(0x424242);
 
     this.camera = new THREE.PerspectiveCamera(100, 1, 1, 400);
     this.camera.position.set(0, 0, 200);
@@ -77,8 +77,9 @@ export default class AttitudeView extends Component {
 
       this.renderer.render(this.scene, this.camera);
     });
-    this.renderer = new THREE.WebGLRenderer();
-    this.renderer.clearColor(0, 0, 0, 0);
+    this.renderer = new THREE.WebGLRenderer({ alpha: true });
+    //this.renderer.clearColor(0, 0, 0, 0);
+    this.renderer.setClearColor(0x000000, 0); // the default
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setSize(this.state.size, this.state.size);
     this.refs.modelContainer.appendChild(this.renderer.domElement);
