@@ -5,7 +5,7 @@ import Popover from "@material-ui/core/Popover";
 import Launch from "@material-ui/icons/Launch";
 import FCConnector from "../utilities/FCConnector";
 import { FormattedMessage } from "react-intl";
-
+import "./VersionInfoView.css";
 export default class VersionInfoView extends Component {
   constructor(props) {
     super(props);
@@ -38,8 +38,9 @@ export default class VersionInfoView extends Component {
           anchorEl={this.state.anchorEl}
           anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
           onClose={() => this.setState({ open: false })}
+          style={{ top: "-7px", left: "-2px" }}
         >
-          <List>
+          <List className="VersionInfoViewList">
             <MenuItem>
               {
                 <FormattedMessage

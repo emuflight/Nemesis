@@ -44,38 +44,14 @@ export default class Disconnected extends Component {
               style={{ width: 60, height: 60 }}
               onClick={() => localStorage.clear()}
             />
-            <Typography style={{ marginBottom: 12 }} color="textSecondary">
+            <Typography style={{ marginBottom: "12" }} color="textSecondary">
               <FormattedMessage
                 id="disconnected.title"
                 values={{ version: this.props.appVersion }}
               />
             </Typography>
-            <Typography variant="h5" component="h2">
-              <FormattedMessage id="disconnected.headline" />
-            </Typography>
-            <Typography component="p">
-              <FormattedMessage
-                id={
-                  openCli
-                    ? "disconnected.incompatible"
-                    : "disconnected.autodetect"
-                }
-              />
-              <br />
-            </Typography>
           </CardContent>
           <CardContent>
-            {this.props.connecting && (
-              <div
-                style={{
-                  justifyContent: "center",
-                  display: "flex",
-                  padding: "20px"
-                }}
-              >
-                <CircularProgress size={80} thickness={5} />
-              </div>
-            )}
             {openCli && (
               <CliView
                 open={openCli}
@@ -86,6 +62,32 @@ export default class Disconnected extends Component {
             )}
           </CardContent>
         </Card>
+        <Typography
+          variant="h5"
+          component="h2"
+          style={{ marginLeft: "5%", marginTop: "2%" }}
+        >
+          <FormattedMessage id="disconnected.headline" />
+        </Typography>
+        <Typography component="p" style={{ marginLeft: "5%" }}>
+          <FormattedMessage
+            id={
+              openCli ? "disconnected.incompatible" : "disconnected.autodetect"
+            }
+          />
+          <br />
+        </Typography>
+        {this.props.connecting && (
+          <div
+            style={{
+              justifyContent: "center",
+              display: "flex",
+              padding: "20px"
+            }}
+          >
+            <CircularProgress size={80} thickness={5} />
+          </div>
+        )}
       </Paper>
     );
   }
