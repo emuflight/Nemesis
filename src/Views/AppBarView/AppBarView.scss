@@ -3,3 +3,10 @@
     display: none !important;
   }
 }
+.MuiAppBar-colorPrimary {
+  background: radial-gradient(
+    circle at 50% -100%,
+    rgb(61, 61, 61) 0%,
+    rgb(32, 32, 32) 100%
+  );
+}
