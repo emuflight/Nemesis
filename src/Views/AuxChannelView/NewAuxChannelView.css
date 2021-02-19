@@ -1,2 +1,14 @@
 .column {
   flex-basis: 33.33%; }
+
+.heading {
+  font-size: 15px; }
+
+.secondaryHeading {
+  font-size: 14px !important; }
+
+.link {
+  text-decoration: "none"; }
+
+.details {
+  align-items: "center"; }

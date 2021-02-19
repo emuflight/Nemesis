@@ -7,18 +7,13 @@
 }
 
 .secondaryHeading {
-  fontsize: 15px;
-  //color: theme.palette.text.secondary
+  font-size: 14px !important;
 }
 
 .link {
-  //color: theme.palette.primary.main,
   text-decoration: "none";
-  //&:hover: {
-  //  text-decoration: "underline"
-  //}
 }
 
-.details: {
+.details {
   align-items: "center";
 }

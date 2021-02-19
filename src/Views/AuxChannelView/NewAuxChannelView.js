@@ -6,10 +6,9 @@ import FCConnector from "../../utilities/FCConnector";
 import { FormattedMessage } from "react-intl";
 import Typography from "@material-ui/core/Typography";
 import "./NewAuxChannelView.css";
-//==============
-import { makeStyles } from "@material-ui/core/styles";
-import { withStyles } from "@material-ui/styles";
-import Accordion from "@material-ui/core/Accordion"; // move this to component
+
+//============== move to component
+import Accordion from "@material-ui/core/Accordion";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionActions from "@material-ui/core/AccordionActions";
@@ -17,7 +16,6 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Chip from "@material-ui/core/Chip";
 import Divider from "@material-ui/core/Divider";
 import Button from "@material-ui/core/Button";
-import clsx from "clsx";
 
 //==============
 
@@ -41,14 +39,6 @@ export default class NewAuxChannelView extends Component {
     };
   }
 
-  //state
-  /*
-  const [channels, setChannels] = useState([]);
-  const [modes, setModes] = useState([]);
-  const [modeMappings, setModeMappings] = useState([]);
-  */
-  //const classes = useStyles(); // move to component
-
   handleRXData = message => {
     try {
       let { rx } = JSON.parse(message.data);
@@ -60,15 +50,14 @@ export default class NewAuxChannelView extends Component {
     }
   };
 
-  //TODO: rename processedModes to something else.
-  //function to create map of each mode, and its config
+  //function to create map of each mode, and its mapping config
   mapModes = () => {
     let mappedAuxModes = this.props.auxModeList;
-    let modes = this.state.modes;
+    let modes = this.props.modes;
     for (var i = 0; i < modes.length; i++) {
       let mode = modes[i];
       let auxModeID = mode["auxId"] + 1;
-      //TODO support multiple mappings?
+
       mappedAuxModes[auxModeID]["mappings"] = {
         id: mode["id"],
         channel: mode["channel"],
