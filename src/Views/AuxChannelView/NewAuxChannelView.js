@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import List from "@material-ui/core/List";
 import AuxChannelItemView from "./AuxChannelItemView";
 import Paper from "@material-ui/core/Paper";
@@ -51,7 +51,7 @@ const useStyles = makeStyles(theme => ({
     }
   }
 }));
-const classes = useStyles(); // move to component
+
 //==============
 
 // <AuxChannelView
@@ -64,101 +64,122 @@ const classes = useStyles(); // move to component
 // }
 // />
 
-export default class NewAuxChannelView extends Component {
+export default function NewAuxChannelView(props) {
+  /*
   constructor(props) {
     super(props);
-    this.state = {
-      channels: []
-    };
-  }
+    //this.state = {
+    //  channels: []
+    //};
+    
+  };
+  */
 
-  handleRXData = message => {
+  //state
+  const [channels, setChannels] = useState([]);
+  const [modes, setModes] = useState([]);
+  const [modeMappings, setModeMappings] = useState([]);
+
+  const classes = useStyles(); // move to component
+  const handleRXData = message => {
     try {
       let { rx } = JSON.parse(message.data);
       if (rx) {
-        this.setState({ channels: rx.channels });
+        setChannels(rx.channels);
       }
     } catch (ex) {
       console.warn("unable to parse telemetry", ex);
     }
   };
 
-  componentDidMount() {
-    if (!this.state.modes) {
+  //TODO: rename processedModes to something else.
+  //function to create map of each mode, and its config
+  const mapModes = (auxModeList, modes) => {
+    let mappedAuxModes = auxModeList;
+
+    for (var i = 0; i < modes.length; i++) {
+      let mode = modes[i];
+      let auxModeID = mode["auxId"] + 1;
+      //TODO support multiple mappings?
+      mappedAuxModes[auxModeID]["mappings"] = {
+        id: mode["id"],
+        channel: mode["channel"],
+        range: mode["range"]
+      };
+    }
+
+    setModeMappings(mappedAuxModes);
+  };
+
+  useEffect(() => {
+    // code to run on component mount
+    if (!modes) {
       FCConnector.getModes().then(modes => {
-        this.setState({ modes: modes });
+        setModes(modes);
       });
     }
-    FCConnector.webSockets.addEventListener("message", this.handleRXData);
+    mapModes(props.auxModeList, modes);
+    FCConnector.webSockets.addEventListener("message", handleRXData);
     //temp disabled for debugging - allows modes in react view to not refresh constantly
     //FCConnector.startTelemetry("rx");
-  }
+    return function cleanup() {
+      FCConnector.webSockets.removeEventListener("message", handleRXData);
+      FCConnector.stopFastTelemetry();
+    };
+  }, []);
 
-  componentWillUnmount() {
-    FCConnector.webSockets.removeEventListener("message", this.handleRXData);
-    FCConnector.stopFastTelemetry();
-  }
-
-  render() {
-    return (
-      <Paper>
-        <List>
-          {this.props.auxModeList &&
-            this.props.auxModeList.map((mode, i) => {
-              return (
-                <Accordion defaultExpanded>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1c-content"
-                    id="panel1c-header"
-                  >
-                    <div className={classes.column}>
-                      <Typography className={classes.heading}>
-                        Location
-                      </Typography>
-                    </div>
-                    <div className={classes.column}>
-                      <Typography className={classes.secondaryHeading}>
-                        Select trip destination
-                      </Typography>
-                    </div>
-                  </AccordionSummary>
-                  <AccordionDetails className={classes.details}>
-                    <div className={classes.column} />
-                    <div className={classes.column}>
-                      <Chip label="Barbados" onDelete={() => {}} />
-                    </div>
-                    <div className={clsx(classes.column, classes.helper)}>
-                      <Typography variant="caption">
-                        Select your destination of choice
-                        <br />
-                        <a
-                          href="#secondary-heading-and-columns"
-                          className={classes.link}
-                        >
-                          Learn more
-                        </a>
-                      </Typography>
-                    </div>
-                  </AccordionDetails>
-                  <Divider />
-                  <AccordionActions>
-                    <Button size="small">Cancel</Button>
-                    <Button size="small" color="primary">
-                      Save
-                    </Button>
-                  </AccordionActions>
-                  <Typography
-                    style={{ marginBottom: 12 }}
-                    color="textSecondary"
-                  >
-                    <FormattedMessage id={mode.label} />
-                  </Typography>
-                </Accordion>
-              );
-            })}
-        </List>
-      </Paper>
-    );
-  }
+  return (
+    <Paper>
+      <List>
+        {modeMappings &&
+          modeMappings.slice(1).map((auxMode, i) => {
+            return (
+              <Accordion>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1c-content"
+                  id="panel1c-header"
+                >
+                  <div className={classes.column}>
+                    <Typography className={classes.heading}>
+                      <FormattedMessage id={auxMode.label} />
+                    </Typography>
+                  </div>
+                  <div className={classes.column}>
+                    <Typography className={classes.secondaryHeading}>
+                      <FormattedMessage id="aux.select.channel" />
+                    </Typography>
+                  </div>
+                </AccordionSummary>
+                <AccordionDetails className={classes.details}>
+                  <div className={classes.column} />
+                  <div className={classes.column}>
+                    <Chip label="{mode.channel}" onDelete={() => {}} />
+                  </div>
+                  <div className={clsx(classes.column, classes.helper)}>
+                    <Typography variant="caption">
+                      Explanation of flight mode
+                      <br />
+                      <a
+                        href="#secondary-heading-and-columns"
+                        className={classes.link}
+                      >
+                        Learn more
+                      </a>
+                    </Typography>
+                  </div>
+                </AccordionDetails>
+                <Divider />
+                <AccordionActions>
+                  <Button size="small">Cancel</Button>
+                  <Button size="small" color="primary">
+                    Save
+                  </Button>
+                </AccordionActions>
+              </Accordion>
+            );
+          })}
+      </List>
+    </Paper>
+  );
 }
