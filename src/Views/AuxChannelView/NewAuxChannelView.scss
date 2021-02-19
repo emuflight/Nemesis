@@ -1,0 +1,24 @@
+.column {
+  flex-basis: 33.33%;
+}
+
+.heading {
+  font-size: 15px;
+}
+
+.secondaryHeading {
+  fontsize: 15px;
+  //color: theme.palette.text.secondary
+}
+
+.link {
+  //color: theme.palette.primary.main,
+  text-decoration: "none";
+  //&:hover: {
+  //  text-decoration: "underline"
+  //}
+}
+
+.details: {
+  align-items: "center";
+}
