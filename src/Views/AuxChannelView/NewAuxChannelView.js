@@ -16,7 +16,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Chip from "@material-ui/core/Chip";
 import Divider from "@material-ui/core/Divider";
 import Button from "@material-ui/core/Button";
-
+import { Slider } from "@material-ui/core";
 //==============
 
 // <AuxChannelView
@@ -98,23 +98,30 @@ export default class NewAuxChannelView extends Component {
                     aria-controls="panel1c-content"
                     id="panel1c-header"
                   >
-                    <div className="column">
+                    <div className="three-column">
                       <Typography className="heading">
                         <FormattedMessage id={auxMode.label} />
                       </Typography>
                     </div>
-                    <div className="column">
+                    <div className="three-column">
                       <Typography className="secondaryHeading">
                         <FormattedMessage id="aux.select.channel" />
                       </Typography>
                     </div>
                   </AccordionSummary>
                   <AccordionDetails className="details">
-                    <div className="column" />
-                    <div className="column">
-                      <Chip label="{mode.channel}" onDelete={() => {}} />
+                    <div style={{ width: "180rem" }}>
+                      channel (auto)
+                      <Slider
+                        style={{ width: 300 }}
+                        value="0" //{value}
+                        //onChange={handleChange}
+                        valueLabelDisplay="auto"
+                        aria-labelledby="range-slider"
+                        //getAriaValueText={valuetext}
+                      />
                     </div>
-                    <div className="column helper">
+                    <div className="helper">
                       <Typography variant="caption">
                         Explanation of flight mode
                         <br />
@@ -129,9 +136,8 @@ export default class NewAuxChannelView extends Component {
                   </AccordionDetails>
                   <Divider />
                   <AccordionActions>
-                    <Button size="small">Cancel</Button>
-                    <Button size="small" color="primary">
-                      Save
+                    <Button size="small" color="red">
+                      Reset
                     </Button>
                   </AccordionActions>
                 </Accordion>
