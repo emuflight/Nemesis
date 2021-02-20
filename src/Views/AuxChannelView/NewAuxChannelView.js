@@ -77,7 +77,17 @@ export default class NewAuxChannelView extends Component {
         <List>
           {this.state.modeMappings &&
             this.state.modeMappings.slice(1).map((auxMode, i) => {
-              return <NewChannelItemView auxMode={auxMode} />;
+              return (
+                <NewChannelItemView
+                  auxMode={auxMode}
+                  telemetry={this.state.channels.slice(4)}
+                  channels={this.state.channels}
+                  min={props.auxScale.min}
+                  max={props.auxScale.max}
+                  step={props.auxScale.step}
+                  notifyDirty={this.props.notifyDirty}
+                />
+              );
             })}
         </List>
       </Paper>
