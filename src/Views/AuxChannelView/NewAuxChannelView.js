@@ -82,9 +82,9 @@ export default class NewAuxChannelView extends Component {
                   auxMode={auxMode}
                   telemetry={this.state.channels.slice(4)}
                   channels={this.state.channels}
-                  min={props.auxScale.min}
-                  max={props.auxScale.max}
-                  step={props.auxScale.step}
+                  min={this.props.auxScale.min}
+                  max={this.props.auxScale.max}
+                  step={this.props.auxScale.step}
                   notifyDirty={this.props.notifyDirty}
                 />
               );

@@ -14,7 +14,6 @@ import Button from "@material-ui/core/Button";
 import { Slider } from "@material-ui/core";
 import HelperSelect from "../Items/HelperSelect";
 import DeleteIcon from "@material-ui/icons/Delete";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import { IconButton } from "@material-ui/core";
 
@@ -39,11 +38,11 @@ export default class NewChannelItemView extends Component {
   }
   */
   addRange() {
-    this.state.mappings.append([
-      (id: 0), //set to auxmode ID
-      (channel: -1),
-      (range: { min: 0, max: 0 })
-    ]);
+    this.state.mappings.append({
+      id: this.props.auxMode.id, //set to auxmode ID
+      channel: -1,
+      range: { min: 0, max: 0 }
+    });
   }
   render() {
     let sliderLeft = 0;
