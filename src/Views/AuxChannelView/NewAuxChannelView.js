@@ -1,23 +1,9 @@
 import React, { Component } from "react";
 import List from "@material-ui/core/List";
-import AuxChannelItemView from "./AuxChannelItemView";
+import NewChannelItemView from "./NewChannelItemView";
 import Paper from "@material-ui/core/Paper";
 import FCConnector from "../../utilities/FCConnector";
-import { FormattedMessage } from "react-intl";
-import Typography from "@material-ui/core/Typography";
 import "./NewAuxChannelView.css";
-
-//============== move to component
-import Accordion from "@material-ui/core/Accordion";
-import AccordionDetails from "@material-ui/core/AccordionDetails";
-import AccordionSummary from "@material-ui/core/AccordionSummary";
-import AccordionActions from "@material-ui/core/AccordionActions";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import Chip from "@material-ui/core/Chip";
-import Divider from "@material-ui/core/Divider";
-import Button from "@material-ui/core/Button";
-import { Slider } from "@material-ui/core";
-//==============
 
 // <AuxChannelView
 // fcConfig={mergedProfile}
@@ -91,57 +77,7 @@ export default class NewAuxChannelView extends Component {
         <List>
           {this.state.modeMappings &&
             this.state.modeMappings.slice(1).map((auxMode, i) => {
-              return (
-                <Accordion>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1c-content"
-                    id="panel1c-header"
-                  >
-                    <div className="three-column">
-                      <Typography className="heading">
-                        <FormattedMessage id={auxMode.label} />
-                      </Typography>
-                    </div>
-                    <div className="three-column">
-                      <Typography className="secondaryHeading">
-                        <FormattedMessage id="aux.select.channel" />
-                      </Typography>
-                    </div>
-                  </AccordionSummary>
-                  <AccordionDetails className="details">
-                    <div style={{ width: "180rem" }}>
-                      channel (auto)
-                      <Slider
-                        style={{ width: 300 }}
-                        value="0" //{value}
-                        //onChange={handleChange}
-                        valueLabelDisplay="auto"
-                        aria-labelledby="range-slider"
-                        //getAriaValueText={valuetext}
-                      />
-                    </div>
-                    <div className="helper">
-                      <Typography variant="caption">
-                        Explanation of flight mode
-                        <br />
-                        <a
-                          href="#secondary-heading-and-columns"
-                          className="link"
-                        >
-                          Learn more
-                        </a>
-                      </Typography>
-                    </div>
-                  </AccordionDetails>
-                  <Divider />
-                  <AccordionActions>
-                    <Button size="small" color="red">
-                      Reset
-                    </Button>
-                  </AccordionActions>
-                </Accordion>
-              );
+              return <NewChannelItemView auxMode={auxMode} />;
             })}
         </List>
       </Paper>
