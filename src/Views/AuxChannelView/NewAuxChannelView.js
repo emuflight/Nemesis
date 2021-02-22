@@ -20,8 +20,8 @@ export default class NewAuxChannelView extends Component {
     super(props);
     this.state = {
       channels: [],
-      modes: [],
-      modeMappings: []
+      modeMappings: [],
+      modes: []
     };
   }
 
@@ -35,6 +35,12 @@ export default class NewAuxChannelView extends Component {
       console.warn("unable to parse telemetry", ex);
     }
   };
+
+  //******************
+
+  // NOTE: modes not coming through correctly from config command. Also not reading from CLI into state.
+
+  //******************
 
   //function to create map of each mode, and its mapping config
   mapModes = () => {
@@ -50,7 +56,9 @@ export default class NewAuxChannelView extends Component {
 
     for (var i = 0; i < modes.length; i++) {
       let mode = modes[i];
-      let auxModeID = mode["auxId"] + 1;
+      let auxModeID = mode["auxId"] + 1; //points to which FLIGHT MODE (arm, angle, etc)
+
+      //for each 'aux mode' for that flight mode, add it to mappings
 
       mappedAuxModes[auxModeID]["mappings"].push({
         key: mappedAuxModes[auxModeID]["mappings"].length, // create an "index" containing which position this element is in.
@@ -65,11 +73,14 @@ export default class NewAuxChannelView extends Component {
   };
 
   componentDidMount() {
-    if (!this.state.modes) {
-      FCConnector.getModes().then(modes => {
-        this.setState({ modes: modes });
-      });
-    }
+    FCConnector.getModes().then(modes => {
+      this.setState({ modes: modes });
+    });
+    // if (!this.state.modes) {
+    //   FCConnector.getModes().then(modes => {
+    //     this.setState({ modes: modes });
+    //   });
+    // }
     this.mapModes();
     FCConnector.webSockets.addEventListener("message", this.handleRXData);
     //temp disabled for debugging - allows modes in react view to not refresh constantly
