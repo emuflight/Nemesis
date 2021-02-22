@@ -28,6 +28,10 @@ export default class NewChannelItemView extends Component {
       props.item.range[1] += props.scale.step;
     }
   }
+
+  //run by bxf.js:
+  //return sendCommand(device, `aux ${modeVals.split("|").join(" ")}`, 20);
+
   /*
   updateValue() {
     this.setState({ isDirty: true });
@@ -37,6 +41,7 @@ export default class NewChannelItemView extends Component {
     });
   }
   */
+
   addRange() {
     this.state.mappings.append({
       id: this.props.auxMode.id, //set to auxmode ID
