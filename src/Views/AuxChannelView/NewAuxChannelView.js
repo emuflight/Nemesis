@@ -40,15 +40,25 @@ export default class NewAuxChannelView extends Component {
   mapModes = () => {
     let mappedAuxModes = this.props.auxModeList;
     let modes = this.props.modes;
+
+    //create empty array for each mode titled mappings - this holds one element per channel, and range
+    for (var i = 0; i < modes.length; i++) {
+      let mode = modes[i];
+      let auxModeID = mode["auxId"] + 1;
+      mappedAuxModes[auxModeID]["mappings"] = [];
+    }
+
     for (var i = 0; i < modes.length; i++) {
       let mode = modes[i];
       let auxModeID = mode["auxId"] + 1;
 
-      mappedAuxModes[auxModeID]["mappings"] = {
+      mappedAuxModes[auxModeID]["mappings"].push({
+        key: mappedAuxModes[auxModeID]["mappings"].length, // create an "index" containing which position this element is in.
+        //this may fail in the future. because if we remove #3 and add #4. use auto increment?
         id: mode["id"],
         channel: mode["channel"],
         range: mode["range"]
-      };
+      });
     }
 
     this.setState({ modeMappings: mappedAuxModes });

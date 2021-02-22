@@ -21,14 +21,18 @@ export default class NewChannelItemView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      mappings: props.mappings
+      mappings: this.props.auxMode.mappings
     };
-    if (props.item.range[0] === props.item.range[1]) {
-      // handle multiple mappings
-      props.item.range[1] += props.scale.step;
-    }
+    // if (props.mappings.range[0] === props.mappings.range[1]) {
+    //   // handle multiple mappings
+    //   props.mappings.range[1] += props.step;
+    // }
   }
-
+  // componentDidMount () {
+  //   if (!this.state.mappings) {
+  //     this.setState({ mappings: this.props.auxMode.mappings });
+  //   }
+  // }
   //run by bxf.js:
   //return sendCommand(device, `aux ${modeVals.split("|").join(" ")}`, 20);
 
@@ -43,22 +47,27 @@ export default class NewChannelItemView extends Component {
   */
 
   addRange() {
-    this.state.mappings.append({
-      id: this.props.auxMode.id, //set to auxmode ID
-      channel: -1,
+    var newmappings = this.state.mappings;
+    console.log("addRange");
+    console.log(this.state.mappings);
+    console.log(this.props.auxMode.value);
+    newmappings.push({
+      key: newmappings.length,
+      id: this.props.auxMode.value, //set to auxmode ID
+      channel: 0,
       range: { min: 0, max: 0 }
     });
+    this.setState({ mappings: newmappings.slice() });
   }
-  render() {
-    let sliderLeft = 0;
 
+  render() {
     //set telemetry min and max
-    if (this.state.channel > -1 && this.props.telemetry) {
-      sliderLeft =
-        ((this.props.telemetry[this.state.channel] - this.props.telemetryMin) *
-          100) /
-        (this.props.telemetryMax - this.props.telemetryMin);
-    }
+    // if (this.state.channel > -1 && this.props.telemetry) {
+    //   sliderLeft =
+    //     ((this.props.telemetry[this.state.channel] - this.props.telemetryMin) *
+    //       100) /
+    //     (this.props.telemetryMax - this.props.telemetryMin);
+    // }
 
     return (
       <Accordion>
@@ -73,64 +82,75 @@ export default class NewChannelItemView extends Component {
             </Typography>
           </div>
           <div className="three-column">
-            {}
             <Typography className="secondaryHeading">
               <FormattedMessage id="aux.select.channel" />
             </Typography>
           </div>
         </AccordionSummary>
         <AccordionDetails className="details">
-          <div style={{ width: "180rem" }}>
-            <HelperSelect
-              id={this.props.id}
-              className={this.props.id}
-              label="Channel"
-              //value={//{this.props.auxMode.mappings..channel}
-              //onChange={event => this.props.changeProfile(event.target.value)}
-              //items={}
-            />
-            <Typography style={{ margin: "20px", fontFamily: "inherit" }}>
-              {this.props.min}
-            </Typography>
-            <ExpandMoreIcon
-              style={{
-                position: "absolute",
-                left: `${sliderLeft}%`
-              }}
-              color="secondary"
-              fontSize="large"
-            />
-            <Slider
-              style={{
-                width: 300,
-                marginTop: 40,
-                marginLeft: 20,
-                width: "70%"
-              }}
-              value="0" //{value}
-              //onChange={handleChange}
-              valueLabelDisplay="auto"
-              aria-labelledby="range-slider"
-              value={this.state.range}
-              min={this.props.min}
-              max={this.props.max}
-              scaleLength={this.props.step}
-              //getAriaValueText={valuetext}
-            />
-          </div>
-          <Typography style={{ margin: "20px" }}>{this.props.max}</Typography>
-          <IconButton aria-label="delete">
-            <DeleteIcon />
-          </IconButton>
-          <div className="helper">
-            <Typography variant="caption">
-              Explanation of flight mode
-              <br />
-              <a href="#secondary-heading-and-columns" className="link">
-                Learn more
-              </a>
-            </Typography>
-          </div>
+          {this.state.mappings &&
+            this.state.mappings.map((mapping, i) => {
+              let sliderLeft = 0;
+              return (
+                <div key={i}>
+                  <div style={{ width: "180rem" }}>
+                    <HelperSelect
+                      id={this.props.id}
+                      className={this.props.id}
+                      label="Channel"
+                      //value={//{this.props.auxMode.mappings..channel}
+                      //onChange={event => this.props.changeProfile(event.target.value)}
+                      //items={}
+                    />
+                    <Typography
+                      style={{ margin: "20px", fontFamily: "inherit" }}
+                    >
+                      {this.props.min}
+                    </Typography>
+                    <ExpandMoreIcon
+                      style={{
+                        position: "absolute",
+                        left: `${sliderLeft}%`
+                      }}
+                      color="secondary"
+                      fontSize="large"
+                    />
+                    <Slider
+                      style={{
+                        width: 300,
+                        marginTop: 40,
+                        marginLeft: 20,
+                        width: "70%"
+                      }}
+                      value="0" //{value}
+                      //onChange={handleChange}
+                      valueLabelDisplay="auto"
+                      aria-labelledby="range-slider"
+                      value={mapping.range[0]}
+                      min={this.props.min}
+                      max={this.props.max}
+                      scaleLength={this.props.step}
+                      //getAriaValueText={valuetext}
+                    />
+                  </div>
+                  <Typography style={{ margin: "20px" }}>
+                    {this.props.max}
+                  </Typography>
+                  <IconButton aria-label="delete">
+                    <DeleteIcon />
+                  </IconButton>
+                  <div className="helper">
+                    <Typography variant="caption">
+                      Explanation of flight mode
+                      <br />
+                      <a href="#secondary-heading-and-columns" className="link">
+                        Learn more
+                      </a>
+                    </Typography>
+                  </div>
+                </div>
+              );
+            })}
         </AccordionDetails>
         <Divider />
         <AccordionActions>
@@ -143,9 +163,7 @@ export default class NewChannelItemView extends Component {
           >
             <AddCircleOutlineIcon />
           </IconButton>
-          <Button size="small" color="red">
-            Reset
-          </Button>
+          <Button size="small">Reset</Button>
         </AccordionActions>
       </Accordion>
     );
