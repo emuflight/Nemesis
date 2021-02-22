@@ -55,7 +55,7 @@ export default class NewChannelItemView extends Component {
       key: newmappings.length,
       id: this.props.auxMode.value, //set to auxmode ID
       channel: 0,
-      range: { min: 0, max: 0 }
+      range: [0, 0]
     });
     this.setState({ mappings: newmappings.slice() });
   }
@@ -129,7 +129,7 @@ export default class NewChannelItemView extends Component {
                       value={mapping.range[0]}
                       min={this.props.min}
                       max={this.props.max}
-                      scaleLength={this.props.step}
+                      //scaleLength={this.props.step}
                       //getAriaValueText={valuetext}
                     />
                   </div>
