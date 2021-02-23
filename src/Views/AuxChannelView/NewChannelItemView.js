@@ -16,6 +16,7 @@ import HelperSelect from "../Items/HelperSelect";
 import DeleteIcon from "@material-ui/icons/Delete";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import { IconButton } from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
 
 export default class NewChannelItemView extends Component {
   constructor(props) {
@@ -76,82 +77,82 @@ export default class NewChannelItemView extends Component {
           aria-controls="panel1c-content"
           id="panel1c-header"
         >
-          <div className="three-column">
-            <Typography className="heading">
-              <FormattedMessage id={this.props.auxMode.label} />
-            </Typography>
-          </div>
-          <div className="three-column">
-            <Typography className="secondaryHeading">
-              <FormattedMessage id="aux.select.channel" />
-            </Typography>
-          </div>
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <Typography className="heading">
+                <FormattedMessage id={this.props.auxMode.label} />
+              </Typography>
+            </Grid>
+            <Grid item xs={12} style={{ marginTop: "-24px" }}>
+              <Typography className="secondaryHeading">
+                <FormattedMessage
+                  id={`aux.explanation.${this.props.auxMode.label}`}
+                />
+              </Typography>
+            </Grid>
+          </Grid>
         </AccordionSummary>
-        <AccordionDetails className="details">
-          {this.state.mappings &&
-            this.state.mappings.map((mapping, i) => {
-              let sliderLeft = 0;
-              return (
-                <div key={i}>
-                  <div style={{ width: "180rem" }}>
-                    <HelperSelect
-                      id={this.props.id}
-                      className={this.props.id}
-                      label="Channel"
-                      //value={//{this.props.auxMode.mappings..channel}
-                      //onChange={event => this.props.changeProfile(event.target.value)}
-                      //items={}
-                    />
-                    <Typography
-                      style={{ margin: "20px", fontFamily: "inherit" }}
-                    >
-                      {this.props.min}
-                    </Typography>
-                    <ExpandMoreIcon
-                      style={{
-                        position: "absolute",
-                        left: `${sliderLeft}%`
-                      }}
-                      color="secondary"
-                      fontSize="large"
-                    />
-                    <Slider
-                      style={{
-                        width: 300,
-                        marginTop: 40,
-                        marginLeft: 20,
-                        width: "70%"
-                      }}
-                      value="0" //{value}
-                      //onChange={handleChange}
-                      valueLabelDisplay="auto"
-                      aria-labelledby="range-slider"
-                      value={mapping.range[0]}
-                      min={this.props.min}
-                      max={this.props.max}
-                      //scaleLength={this.props.step}
-                      //getAriaValueText={valuetext}
-                    />
-                  </div>
-                  <Typography style={{ margin: "20px" }}>
-                    {this.props.max}
+        {this.state.mappings &&
+          this.state.mappings.map((mapping, i) => {
+            let sliderLeft = 0;
+            return (
+              <AccordionDetails className="details" key={mapping.key}>
+                <div style={{ width: "180rem" }}>
+                  <HelperSelect
+                    id={this.props.id}
+                    className={this.props.id}
+                    label="Channel"
+                    //value={//{this.props.auxMode.mappings..channel}
+                    //onChange={event => this.props.changeProfile(event.target.value)}
+                    //items={}
+                  />
+                  <Typography style={{ margin: "20px", fontFamily: "inherit" }}>
+                    {this.props.min}
                   </Typography>
-                  <IconButton aria-label="delete">
-                    <DeleteIcon />
-                  </IconButton>
-                  <div className="helper">
-                    <Typography variant="caption">
-                      Explanation of flight mode
-                      <br />
-                      <a href="#secondary-heading-and-columns" className="link">
-                        Learn more
-                      </a>
-                    </Typography>
-                  </div>
+                  <ExpandMoreIcon
+                    style={{
+                      position: "absolute",
+                      left: `${sliderLeft}%`
+                    }}
+                    color="secondary"
+                    fontSize="large"
+                  />
+                  <Slider
+                    style={{
+                      width: 300,
+                      marginTop: 40,
+                      marginLeft: 20,
+                      width: "70%"
+                    }}
+                    value="0" //{value}
+                    //onChange={handleChange}
+                    valueLabelDisplay="auto"
+                    aria-labelledby="range-slider"
+                    value={mapping.range[0]}
+                    min={this.props.min}
+                    max={this.props.max}
+                    //scaleLength={this.props.step}
+                    //getAriaValueText={valuetext}
+                  />
                 </div>
-              );
-            })}
-        </AccordionDetails>
+                <Typography style={{ margin: "20px" }}>
+                  {this.props.max}
+                </Typography>
+                <IconButton aria-label="delete">
+                  <DeleteIcon />
+                </IconButton>
+                <div className="helper">
+                  <Typography variant="caption">
+                    Explanation of flight mode
+                    <br />
+                    <a href="#secondary-heading-and-columns" className="link">
+                      Learn more
+                    </a>
+                  </Typography>
+                </div>
+              </AccordionDetails>
+            );
+          })}
         <Divider />
         <AccordionActions>
           <IconButton
