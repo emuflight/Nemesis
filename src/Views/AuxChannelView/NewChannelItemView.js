@@ -105,7 +105,9 @@ export default class NewChannelItemView extends Component {
           <Grid container spacing={3}>
             <Grid item xs={9}>
               <Typography className="heading">
-                <FormattedMessage id={this.props.auxMode.label} />
+                <FormattedMessage
+                  id={`aux.title.${this.props.auxMode.label}`}
+                />
                 <Chip
                   size="small"
                   color="primary"
