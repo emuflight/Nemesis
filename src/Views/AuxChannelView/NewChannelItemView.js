@@ -81,7 +81,7 @@ export default class NewChannelItemView extends Component {
 
     return (
       <Accordion
-        expanded={this.state.mappings && this.state.mappings.length > 0}
+        defaultExpanded={this.state.mappings && this.state.mappings.length > 0}
       >
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
