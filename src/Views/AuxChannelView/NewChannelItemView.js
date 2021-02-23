@@ -47,24 +47,28 @@ export default class NewChannelItemView extends Component {
   }
   */
 
+  // *** to save:
+  // need to prepare a {} to give to FCConnector.setMode
+  // then look at updateValue() above
+
   addRange() {
     var newmappings = this.state.mappings;
-    console.log("addRange");
-    console.log(this.state.mappings);
-    console.log(this.props.auxMode.value);
     newmappings.push({
       key: newmappings.length,
-      id: this.props.auxMode.value, //set to auxmode ID
+      id: this.props.auxMode.value, //***** need to find a way to leave this blank, and set it to an available ID on save */
       channel: 0,
-      range: [0, 0]
+      range: [900, 900]
     });
     this.setState({ mappings: newmappings.slice() });
+    this.setState({ isDirty: true }); // also set info changed here
+    this.props.notifyDirty(true, this.state);
   }
 
   deleteRange(i) {
     var newmappings = this.state.mappings;
     newmappings.splice(i, 1);
     this.setState({ mappings: newmappings.slice() });
+    this.setState({ isDirty: true }); // also set info changed here
   }
   render() {
     //set telemetry min and max
@@ -76,7 +80,9 @@ export default class NewChannelItemView extends Component {
     // }
 
     return (
-      <Accordion>
+      <Accordion
+        expanded={this.state.mappings && this.state.mappings.length > 0}
+      >
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1c-content"
@@ -118,8 +124,10 @@ export default class NewChannelItemView extends Component {
                       className={this.props.id}
                       label="Channel"
                       //value={//{this.props.auxMode.mappings..channel}
-                      //onChange={event => this.props.changeProfile(event.target.value)}
                       //items={}
+                      onChange={event => {
+                        this.setState({ isDirty: true }); // also set info changed here
+                      }}
                     />
                   </Grid>
                   <Grid item xs>
@@ -151,6 +159,9 @@ export default class NewChannelItemView extends Component {
                       max={this.props.max}
                       //scaleLength={this.props.step}
                       //getAriaValueText={valuetext}
+                      onChange={event => {
+                        this.setState({ isDirty: true }); // also set info changed here
+                      }}
                     />
                   </Grid>
                   <Grid item xs>
