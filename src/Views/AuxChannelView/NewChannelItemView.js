@@ -70,6 +70,19 @@ export default class NewChannelItemView extends Component {
     this.setState({ mappings: newmappings.slice() });
     this.setState({ isDirty: true }); // also set info changed here
   }
+
+  sliderChange = (index, value) => {
+    //console.log(index, value);
+    if (value[0] > value[1]) {
+      [value[1], value[0]] = [value[0], value[1]]; //swap them, ensuring first number is the lower one
+    }
+    this.setState(previousState => {
+      const mappings = [...previousState.mappings];
+      mappings[index].range = value;
+      return { mappings };
+    });
+  };
+
   render() {
     //set telemetry min and max
     // if (this.state.channel > -1 && this.props.telemetry) {
@@ -92,6 +105,12 @@ export default class NewChannelItemView extends Component {
             <Grid item xs={9}>
               <Typography className="heading">
                 <FormattedMessage id={this.props.auxMode.label} />
+                <Chip
+                  size="small"
+                  color="primary"
+                  label="Active"
+                  style={{ marginLeft: "10px" }}
+                />
               </Typography>
             </Grid>
             <Grid item xs={1} />
@@ -115,6 +134,7 @@ export default class NewChannelItemView extends Component {
         {this.state.mappings &&
           this.state.mappings.map((mapping, i) => {
             let sliderLeft = 0;
+
             return (
               <AccordionDetails className="details" key={mapping.key}>
                 <Grid container spacing={1}>
@@ -147,21 +167,20 @@ export default class NewChannelItemView extends Component {
                       fontSize="large"
                     />
                     <Slider
-                      style={{
-                        marginTop: 40
-                      }}
-                      value="0" //{value}
+                      //value="0" //{value}
                       //onChange={handleChange}
                       valueLabelDisplay="auto"
                       aria-labelledby="range-slider"
-                      value={mapping.range[0]}
+                      value={[mapping.range[0], mapping.range[1]]}
                       min={this.props.min}
                       max={this.props.max}
+                      marks
+                      step={this.props.step}
                       //scaleLength={this.props.step}
                       //getAriaValueText={valuetext}
-                      onChange={event => {
-                        this.setState({ isDirty: true }); // also set info changed here
-                      }}
+
+                      valueLabelDisplay="on"
+                      onChange={(event, value) => this.sliderChange(i, value)}
                     />
                   </Grid>
                   <Grid item xs>
