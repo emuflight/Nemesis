@@ -38,11 +38,11 @@ export default class NewAuxChannelView extends Component {
 
   //******************
 
-  // NOTE: modes not coming through correctly from config command. Also not reading from CLI into state.
+  // NOTE: modes in config command output are parsed and modified by index.js:104
 
   //******************
 
-  //function to create map of each mode, and its mapping config
+  //Append each aux range from fcConfig into a the list of modes, so the component layout can be Modes->Mappings
   mapModes = () => {
     let mappedAuxModes = this.props.auxModeList;
     let modes = this.props.modes;
@@ -56,17 +56,18 @@ export default class NewAuxChannelView extends Component {
 
     for (var i = 0; i < modes.length; i++) {
       let mode = modes[i];
-      let auxModeID = mode["auxId"] + 1; //points to which FLIGHT MODE (arm, angle, etc)
+      let auxModeID = mode["mode"] + 1; //points to which FLIGHT MODE (arm, angle, etc)
 
-      //for each 'aux mode' for that flight mode, add it to mappings
-
-      mappedAuxModes[auxModeID]["mappings"].push({
-        key: mappedAuxModes[auxModeID]["mappings"].length, // create an "index" containing which position this element is in.
-        //this may fail in the future. because if we remove #3 and add #4. use auto increment?
-        id: mode["id"],
-        channel: mode["channel"],
-        range: mode["range"]
-      });
+      if (mode["range"][0] !== 900 && mode["range"][1] !== 900) {
+        // only add mapping if range is not "900", "900". This is how BF ignores multiple mappings to ARM.
+        //for each 'aux mode' for that flight mode, add it to mappings
+        mappedAuxModes[auxModeID]["mappings"].push({
+          key: mode["id"], // use the aux command id as key for react list
+          id: mode["id"],
+          channel: mode["channel"],
+          range: mode["range"]
+        });
+      }
     }
 
     this.setState({ modeMappings: mappedAuxModes });
