@@ -78,78 +78,84 @@ export default class NewChannelItemView extends Component {
           id="panel1c-header"
         >
           <Grid container spacing={3}>
-            <Grid item xs={12}>
+            <Grid item xs={9}>
               <Typography className="heading">
                 <FormattedMessage id={this.props.auxMode.label} />
               </Typography>
             </Grid>
+            <Grid item xs={1} />
             <Grid item xs={12} style={{ marginTop: "-24px" }}>
               <Typography className="secondaryHeading">
                 <FormattedMessage
                   id={`aux.explanation.${this.props.auxMode.label}`}
                 />
+                <a
+                  href="#secondary-heading-and-columns"
+                  style={{ color: "#288FDA", marginLeft: "10px" }}
+                  className="link"
+                >
+                  Learn more
+                </a>
               </Typography>
             </Grid>
           </Grid>
         </AccordionSummary>
+
         {this.state.mappings &&
           this.state.mappings.map((mapping, i) => {
             let sliderLeft = 0;
             return (
               <AccordionDetails className="details" key={mapping.key}>
-                <div style={{ width: "180rem" }}>
-                  <HelperSelect
-                    id={this.props.id}
-                    className={this.props.id}
-                    label="Channel"
-                    //value={//{this.props.auxMode.mappings..channel}
-                    //onChange={event => this.props.changeProfile(event.target.value)}
-                    //items={}
-                  />
-                  <Typography style={{ margin: "20px", fontFamily: "inherit" }}>
-                    {this.props.min}
-                  </Typography>
-                  <ExpandMoreIcon
-                    style={{
-                      position: "absolute",
-                      left: `${sliderLeft}%`
-                    }}
-                    color="secondary"
-                    fontSize="large"
-                  />
-                  <Slider
-                    style={{
-                      width: 300,
-                      marginTop: 40,
-                      marginLeft: 20,
-                      width: "70%"
-                    }}
-                    value="0" //{value}
-                    //onChange={handleChange}
-                    valueLabelDisplay="auto"
-                    aria-labelledby="range-slider"
-                    value={mapping.range[0]}
-                    min={this.props.min}
-                    max={this.props.max}
-                    //scaleLength={this.props.step}
-                    //getAriaValueText={valuetext}
-                  />
-                </div>
-                <Typography style={{ margin: "20px" }}>
-                  {this.props.max}
-                </Typography>
-                <IconButton aria-label="delete">
-                  <DeleteIcon />
-                </IconButton>
-                <div className="helper">
-                  <Typography variant="caption">
-                    Explanation of flight mode
-                    <br />
-                    <a href="#secondary-heading-and-columns" className="link">
-                      Learn more
-                    </a>
-                  </Typography>
-                </div>
+                <Grid container spacing={3}>
+                  <Grid item xs={3}>
+                    <HelperSelect
+                      id={this.props.id}
+                      className={this.props.id}
+                      label="Channel"
+                      //value={//{this.props.auxMode.mappings..channel}
+                      //onChange={event => this.props.changeProfile(event.target.value)}
+                      //items={}
+                    />
+                  </Grid>
+                  <Grid item xs={3}>
+                    <Typography
+                      style={{ margin: "20px", fontFamily: "inherit" }}
+                    >
+                      {this.props.min}
+                    </Typography>
+                    <ExpandMoreIcon
+                      style={{
+                        position: "absolute",
+                        left: `${sliderLeft}%`
+                      }}
+                      color="secondary"
+                      fontSize="large"
+                    />
+                    <Slider
+                      style={{
+                        width: 300,
+                        marginTop: 40,
+                        marginLeft: 20,
+                        width: "70%"
+                      }}
+                      value="0" //{value}
+                      //onChange={handleChange}
+                      valueLabelDisplay="auto"
+                      aria-labelledby="range-slider"
+                      value={mapping.range[0]}
+                      min={this.props.min}
+                      max={this.props.max}
+                      //scaleLength={this.props.step}
+                      //getAriaValueText={valuetext}
+                    />
+                    <Typography style={{ margin: "20px" }}>
+                      {this.props.max}
+                    </Typography>
+                  </Grid>
+                  <IconButton aria-label="delete">
+                    <DeleteIcon />
+                  </IconButton>
+                </Grid>
               </AccordionDetails>
             );
           })}
