@@ -61,6 +61,11 @@ export default class NewChannelItemView extends Component {
     this.setState({ mappings: newmappings.slice() });
   }
 
+  deleteRange(i) {
+    var newmappings = this.state.mappings;
+    newmappings.splice(i, 1);
+    this.setState({ mappings: newmappings.slice() });
+  }
   render() {
     //set telemetry min and max
     // if (this.state.channel > -1 && this.props.telemetry) {
@@ -106,8 +111,8 @@ export default class NewChannelItemView extends Component {
             let sliderLeft = 0;
             return (
               <AccordionDetails className="details" key={mapping.key}>
-                <Grid container spacing={3}>
-                  <Grid item xs={3}>
+                <Grid container spacing={1}>
+                  <Grid item xs>
                     <HelperSelect
                       id={this.props.id}
                       className={this.props.id}
@@ -117,13 +122,15 @@ export default class NewChannelItemView extends Component {
                       //items={}
                     />
                   </Grid>
-                  <Grid item xs={3}>
+                  <Grid item xs>
                     <Typography
                       style={{ margin: "20px", fontFamily: "inherit" }}
                     >
                       {this.props.min}
                     </Typography>
-                    <ExpandMoreIcon
+                  </Grid>
+                  <Grid item xs={6}>
+                    <ExpandMoreIcon //should not be grid item
                       style={{
                         position: "absolute",
                         left: `${sliderLeft}%`
@@ -133,10 +140,7 @@ export default class NewChannelItemView extends Component {
                     />
                     <Slider
                       style={{
-                        width: 300,
-                        marginTop: 40,
-                        marginLeft: 20,
-                        width: "70%"
+                        marginTop: 40
                       }}
                       value="0" //{value}
                       //onChange={handleChange}
@@ -148,28 +152,53 @@ export default class NewChannelItemView extends Component {
                       //scaleLength={this.props.step}
                       //getAriaValueText={valuetext}
                     />
+                  </Grid>
+                  <Grid item xs>
                     <Typography style={{ margin: "20px" }}>
                       {this.props.max}
                     </Typography>
                   </Grid>
-                  <IconButton aria-label="delete">
-                    <DeleteIcon />
-                  </IconButton>
+                  <Grid item xs>
+                    <IconButton
+                      aria-label="delete"
+                      size="small"
+                      style={{ marginTop: "20px" }}
+                      onClick={() => this.deleteRange(i)}
+                    >
+                      <DeleteIcon style={{ fontSize: 18 }} />
+                    </IconButton>
+                    {i == this.state.mappings.length - 1 && (
+                      <IconButton
+                        aria-label="add"
+                        size="small"
+                        style={{ marginTop: "20px" }}
+                        name="add_range"
+                        onClick={() => this.addRange()}
+                        color="primary"
+                        variant="contained"
+                      >
+                        <AddCircleOutlineIcon />
+                      </IconButton>
+                    )}
+                  </Grid>
                 </Grid>
               </AccordionDetails>
             );
           })}
         <Divider />
         <AccordionActions>
-          <IconButton
-            aria-label="add"
-            name="add_range"
-            onClick={() => this.addRange()}
-            color="primary"
-            variant="contained"
-          >
-            <AddCircleOutlineIcon />
-          </IconButton>
+          {this.state.mappings &&
+            this.state.mappings.length == 0 && (
+              <IconButton
+                aria-label="add"
+                name="add_range"
+                onClick={() => this.addRange()}
+                color="primary"
+                variant="contained"
+              >
+                <AddCircleOutlineIcon />
+              </IconButton>
+            )}
           <Button size="small">Reset</Button>
         </AccordionActions>
       </Accordion>
