@@ -17,6 +17,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import { IconButton } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
+import Tooltip from "@material-ui/core/Tooltip";
 
 export default class NewChannelItemView extends Component {
   constructor(props) {
@@ -189,26 +190,30 @@ export default class NewChannelItemView extends Component {
                     </Typography>
                   </Grid>
                   <Grid item xs>
-                    <IconButton
-                      aria-label="delete"
-                      size="small"
-                      style={{ marginTop: "20px" }}
-                      onClick={() => this.deleteRange(i)}
-                    >
-                      <DeleteIcon style={{ fontSize: 18 }} />
-                    </IconButton>
-                    {i == this.state.mappings.length - 1 && (
+                    <Tooltip title="Delete range">
                       <IconButton
-                        aria-label="add"
+                        aria-label="delete"
                         size="small"
                         style={{ marginTop: "20px" }}
-                        name="add_range"
-                        onClick={() => this.addRange()}
-                        color="primary"
-                        variant="contained"
+                        onClick={() => this.deleteRange(i)}
                       >
-                        <AddCircleOutlineIcon />
+                        <DeleteIcon style={{ fontSize: 18 }} />
                       </IconButton>
+                    </Tooltip>
+                    {i == this.state.mappings.length - 1 && (
+                      <Tooltip title="Add another range">
+                        <IconButton
+                          aria-label="add"
+                          size="small"
+                          style={{ marginTop: "20px" }}
+                          name="add_range"
+                          onClick={() => this.addRange()}
+                          color="primary"
+                          variant="contained"
+                        >
+                          <AddCircleOutlineIcon />
+                        </IconButton>
+                      </Tooltip>
                     )}
                   </Grid>
                 </Grid>
@@ -219,17 +224,21 @@ export default class NewChannelItemView extends Component {
         <AccordionActions>
           {this.state.mappings &&
             this.state.mappings.length == 0 && (
-              <IconButton
-                aria-label="add"
-                name="add_range"
-                onClick={() => this.addRange()}
-                color="primary"
-                variant="contained"
-              >
-                <AddCircleOutlineIcon />
-              </IconButton>
+              <Tooltip title="Add a range to start using this mode.">
+                <IconButton
+                  aria-label="add"
+                  name="add_range"
+                  onClick={() => this.addRange()}
+                  color="primary"
+                  variant="contained"
+                >
+                  <AddCircleOutlineIcon />
+                </IconButton>
+              </Tooltip>
             )}
-          <Button size="small">Reset</Button>
+          <Tooltip title="Bring mode back to saved state">
+            <Button size="small">Reset</Button>
+          </Tooltip>
         </AccordionActions>
       </Accordion>
     );

@@ -16,7 +16,9 @@
 .details {
   align-items: "center"; }
 
-.MuiSlider-rail, .MuiSlider-track, .MuiSlider-mark {
+.MuiSlider-rail,
+.MuiSlider-track,
+.MuiSlider-mark {
   height: 10px !important; }
 
 .MuiSlider-thumb {
