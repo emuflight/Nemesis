@@ -123,10 +123,11 @@ export default new class FCConnector {
       return resp.json();
     });
   }
-  setMode(state) {
-    let modeVals = `${state.id}|${state.mode}|${state.channel}|${
-      state.range[0]
-    }|${state.range[1]}|0`;
+  setMode(mapping) {
+    console.log("mapping: ", mapping);
+    let modeVals = `${mapping.id}|${mapping.mode}|${mapping.channel}|${
+      mapping.range[0]
+    }|${mapping.range[1]}|0`;
     return fetch(`${this.serviceUrl}/modes/${modeVals}`).then(resp => {
       return resp.text();
     });

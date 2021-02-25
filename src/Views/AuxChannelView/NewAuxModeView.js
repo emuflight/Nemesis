@@ -45,6 +45,11 @@ export default class NewAuxModeView extends Component {
     }
   };
 
+  getAvailableAuxID = () => {
+    let available_auxID = 10;
+    console.log("hit getAvailableAuxID, returning ", available_auxID);
+    return available_auxID;
+  };
   //******************
 
   // NOTE: modes in config command output are parsed and modified by index.js:104
@@ -117,6 +122,7 @@ export default class NewAuxModeView extends Component {
                   min={this.props.auxScale.min}
                   max={this.props.auxScale.max}
                   step={this.props.auxScale.step}
+                  getAvailableAuxID={this.getAvailableAuxID}
                   notifyDirty={this.props.notifyDirty}
                 />
               );

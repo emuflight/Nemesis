@@ -18,6 +18,7 @@ import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import { IconButton } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import Tooltip from "@material-ui/core/Tooltip";
+import FCConnector from "../../utilities/FCConnector";
 
 export default class NewModeItemView extends Component {
   constructor(props) {
@@ -38,46 +39,83 @@ export default class NewModeItemView extends Component {
   //run by bxf.js:
   //return sendCommand(device, `aux ${modeVals.split("|").join(" ")}`, 20);
 
-  /*
-  updateValue() {
+  updateValue(index) {
+    // i == mapping index to update
     this.setState({ isDirty: true });
-    FCConnector.setMode(this.state).then(() => {
-      this.setState({ isDirty: false });
-      this.props.notifyDirty(true, this.state);
+    console.log(
+      "mapping index: ",
+      index,
+      "mapping:",
+      this.state.mappings[index]
+    );
+
+    let mapping = this.state.mappings[index];
+    mapping["mode"] = this.props.auxMode.value; // mode id
+    FCConnector.setMode(this.state.mappings[index]).then(() => {
+      //this.setState({ isDirty: false });
+      this.props.notifyDirty(true, this.state.mappings[index]);
     });
   }
-  */
 
   // *** to save:
   // need to prepare a {} to give to FCConnector.setMode
   // then look at updateValue() above
 
   addRange() {
-    var newmappings = this.state.mappings;
-    newmappings.push({
-      key: newmappings.length,
-      id: this.props.auxMode.value, //***** need to find a way to leave this blank, and set it to an available ID on save */
+    let available_auxID = this.props.getAvailableAuxID();
+
+    let created_mapping = {
+      key: available_auxID, // find best way to set a new key. available aux_id?
+      id: available_auxID,
+      mode: this.props.auxMode.value,
       channel: 0,
       range: [900, 900]
+    };
+
+    FCConnector.setMode(created_mapping).then(() => {
+      //push created mapping, then run state update code
+      var newmappings = this.state.mappings;
+      newmappings.push();
+      this.setState({ mappings: newmappings.slice() });
+      this.setState({ isDirty: true }); // also set info changed here
+      this.props.notifyDirty(true, this.state);
+      this.updateValue(); // what will the index be??
     });
-    this.setState({ mappings: newmappings.slice() });
-    this.setState({ isDirty: true }); // also set info changed here
-    this.props.notifyDirty(true, this.state);
   }
 
-  deleteRange(i) {
-    var newmappings = this.state.mappings;
-    newmappings.splice(i, 1);
-    this.setState({ mappings: newmappings.slice() });
-    this.setState({ isDirty: true }); // also set info changed here
+  deleteRange(index) {
+    //get id of mapping (index)
+    //find a command to set this aux id back to default
+    let default_mapping = {
+      id: this.state.mappings[index].id,
+      mode: 0,
+      channel: 0,
+      range: [900, 900]
+    }; //prepare mapping that matches default
+
+    FCConnector.setMode(default_mapping).then(() => {
+      //push default mapping, effectively deleting the mapping
+      //this.setState({ isDirty: false });
+      this.props.notifyDirty(true, this.state.mappings[index]);
+      var newmappings = this.state.mappings;
+      newmappings.splice(index, 1);
+      this.setState({ mappings: newmappings.slice() });
+      this.setState({ isDirty: true }); // also set info changed here
+    });
   }
 
   channelChange = (index, value) => {
-    this.setState(previousState => {
-      const mappings = [...previousState.mappings];
-      mappings[index].channel = value;
-      return { mappings };
-    });
+    this.setState(
+      previousState => {
+        const mappings = [...previousState.mappings];
+        mappings[index].channel = value;
+        return { mappings };
+      },
+      () => {
+        //callback
+        this.updateValue(index);
+      }
+    );
   };
 
   sliderChange = (index, value) => {
@@ -85,11 +123,17 @@ export default class NewModeItemView extends Component {
     if (value[0] > value[1]) {
       [value[1], value[0]] = [value[0], value[1]]; //swap them, ensuring first number is the lower one
     }
-    this.setState(previousState => {
-      const mappings = [...previousState.mappings];
-      mappings[index].range = value;
-      return { mappings };
-    });
+    this.setState(
+      previousState => {
+        const mappings = [...previousState.mappings];
+        mappings[index].range = value;
+        return { mappings };
+      },
+      () => {
+        //callback
+        this.updateValue(index);
+      }
+    );
   };
 
   render() {
