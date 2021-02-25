@@ -1,7 +1,9 @@
 # Nemesis - the HelioRC/Pegasus fork
-Death of Sol :(
+* Death of Sol :( 
+* Nemesis is EmuFlight's future configurator that is stull under develpment.
 
-## Linux, one O.S. to rule them all.
+
+## Linux Serial/USB requirements for both running and development:
 Edit/create `udev` rules: (use vi, nano, or any text editor)
 ```
 sudo nano /etc/udev/rules.d/50-myusb.rules
@@ -39,8 +41,16 @@ cd sqaush-fs
 ./nemesis
 ```
 
-### Linux Development - requires nodejs, npm, and obsolete packages.
+#  Development - requires nodejs, npm, and obsolete packages.
 
+## Global `git` Tips for development.
+```
+git config --global core.autocrlf input
+git config --global core.whitespace cr-at-eol
+git config --global core.filemode false
+```
+
+## Linux, one O.S. to rule them all.
 ```
 #install build tools
 #libudev-dev is essential for USB (nodejs' usb)
@@ -99,7 +109,7 @@ eject      electron-pack     install            preship           start
 ```
 
 
-## MacOS, the bastardized O.S. formerly known as BSD
+## MacOS, the bastardized O.S. formerly known as BSD.
 
 install libusb, npm and yarn using brew
 ```
@@ -197,10 +207,4 @@ If your target device is not HID, you _must_ install a driver before you can com
 libusb_context * ctx = NULL;
 libusb_init(&ctx);
 libusb_set_option(ctx, LIBUSB_OPTION_USE_USBDK);
-```
-
-## Global `git` Tips
-```
-git config --global core.autocrlf input
-git config --global core.whitespace cr-at-eol
 ```
