@@ -3,7 +3,7 @@ import List from "@material-ui/core/List";
 import NewModeItemView from "./NewModeItemView";
 import Paper from "@material-ui/core/Paper";
 import FCConnector from "../../utilities/FCConnector";
-import "./NewAuxChannelView.css";
+import "./NewAuxModeView.css";
 
 // <AuxChannelView
 // fcConfig={mergedProfile}
@@ -15,7 +15,7 @@ import "./NewAuxChannelView.css";
 // }
 // />
 
-export default class NewAuxChannelView extends Component {
+export default class NewAuxModeView extends Component {
   constructor(props) {
     super(props);
     this.state = {

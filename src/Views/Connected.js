@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Paper from "@material-ui/core/Paper";
-import NewAuxChannelView from "./AuxChannelView/NewAuxChannelView";
+import NewAuxModeView from "./AuxChannelView/NewAuxModeView";
 import ConfigListView from "./ConfigListView/ConfigListView";
 import FeaturesView from "./FeaturesView/FeaturesView";
 import PortsView from "./PortsView/PortsView";
@@ -209,7 +209,7 @@ export default class Connected extends Component {
       }
       case "MODES":
         contents = (
-          <NewAuxChannelView
+          <NewAuxModeView
             fcConfig={mergedProfile}
             auxScale={mergedProfile.rx_scale}
             auxModeList={mergedProfile.aux_channel_modes}
