@@ -72,6 +72,14 @@ export default class NewChannelItemView extends Component {
     this.setState({ isDirty: true }); // also set info changed here
   }
 
+  channelChange = (index, value) => {
+    this.setState(previousState => {
+      const mappings = [...previousState.mappings];
+      mappings[index].channel = value;
+      return { mappings };
+    });
+  };
+
   sliderChange = (index, value) => {
     //console.log(index, value);
     if (value[0] > value[1]) {
@@ -148,7 +156,9 @@ export default class NewChannelItemView extends Component {
                       label="Channel"
                       //value={//{this.props.auxMode.mappings..channel}
                       //items={}
-                      onChange={event => {
+                      items={this.props.channels}
+                      onChange={(event, value) => {
+                        this.channelChange(i, value.props.value); // the channel object has the channel number in its value
                         this.setState({ isDirty: true }); // also set info changed here
                       }}
                     />

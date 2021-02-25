@@ -19,7 +19,15 @@ export default class NewAuxChannelView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      channels: [],
+      //channels: [],
+      //channels: new Array(14).fill(0),
+      channels: new Array(4).fill(undefined).map((k, i) => {
+        return {
+          label: `AUX ${i + 1}`,
+          value: i
+        };
+      }),
+      telemetry: [],
       modeMappings: [],
       modes: []
     };
@@ -29,7 +37,8 @@ export default class NewAuxChannelView extends Component {
     try {
       let { rx } = JSON.parse(message.data);
       if (rx) {
-        this.setState({ channels: rx.channels });
+        //console.log(rx.channels);
+        this.setState({ telemetry: rx.channels });
       }
     } catch (ex) {
       console.warn("unable to parse telemetry", ex);
@@ -103,7 +112,7 @@ export default class NewAuxChannelView extends Component {
                 <NewChannelItemView
                   key={i}
                   auxMode={auxMode}
-                  telemetry={this.state.channels.slice(4)}
+                  telemetry={this.state.telemetry}
                   channels={this.state.channels}
                   min={this.props.auxScale.min}
                   max={this.props.auxScale.max}
