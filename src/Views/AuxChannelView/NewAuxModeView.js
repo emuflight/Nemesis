@@ -53,14 +53,14 @@ export default class NewAuxModeView extends Component {
 
   //Append each aux range from fcConfig into a the list of modes, so the component layout can be Modes->Mappings
   mapModes = () => {
-    let mappedAuxModes = this.props.auxModeList;
+    let modeMappings = this.props.auxModeList;
     let modes = this.props.modes;
 
     //create empty array for each mode titled mappings - this holds one element per channel, and range
     for (var i = 0; i < modes.length; i++) {
       let mode = modes[i];
       let auxModeID = mode["auxId"] + 1;
-      mappedAuxModes[auxModeID]["mappings"] = [];
+      modeMappings[auxModeID]["mappings"] = [];
     }
 
     for (var i = 0; i < modes.length; i++) {
@@ -70,7 +70,7 @@ export default class NewAuxModeView extends Component {
       if (mode["range"][0] !== 900 && mode["range"][1] !== 900) {
         // only add mapping if range is not "900", "900". This is how BF ignores multiple mappings to ARM.
         //for each 'aux mode' for that flight mode, add it to mappings
-        mappedAuxModes[auxModeID]["mappings"].push({
+        modeMappings[auxModeID]["mappings"].push({
           key: mode["id"], // use the aux command id as key for react list
           id: mode["id"],
           channel: mode["channel"],
@@ -79,7 +79,7 @@ export default class NewAuxModeView extends Component {
       }
     }
 
-    this.setState({ modeMappings: mappedAuxModes });
+    this.setState({ modeMappings: modeMappings });
   };
 
   componentDidMount() {
