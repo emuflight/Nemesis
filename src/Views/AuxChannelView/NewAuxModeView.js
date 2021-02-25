@@ -27,7 +27,7 @@ export default class NewAuxModeView extends Component {
           value: i
         };
       }),
-      telemetry: [],
+      telemetry: [], //test data would be [1000,2000,1800,1200]
       modeMappings: [],
       modes: []
     };

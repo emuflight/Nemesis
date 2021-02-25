@@ -73,9 +73,6 @@ export default class NewModeItemView extends Component {
   }
 
   channelChange = (index, value) => {
-    console.log(
-      this.props.channels.filter(option => option.value === 0)[0].value
-    );
     this.setState(previousState => {
       const mappings = [...previousState.mappings];
       mappings[index].channel = value;
@@ -96,14 +93,6 @@ export default class NewModeItemView extends Component {
   };
 
   render() {
-    //set telemetry min and max
-    // if (this.state.channel > -1 && this.props.telemetry) {
-    //   sliderLeft =
-    //     ((this.props.telemetry[this.state.channel] - this.props.telemetryMin) *
-    //       100) /
-    //     (this.props.telemetryMax - this.props.telemetryMin);
-    // }
-
     return (
       <Accordion
         defaultExpanded={this.state.mappings && this.state.mappings.length > 0}
@@ -149,6 +138,14 @@ export default class NewModeItemView extends Component {
           this.state.mappings.map((mapping, i) => {
             let sliderLeft = 0;
 
+            //set telemetry min and max
+            if (mapping.channel > -1 && this.props.telemetry) {
+              sliderLeft =
+                ((this.props.telemetry[mapping.channel] - this.props.min) *
+                  100) /
+                (this.props.max - this.props.min);
+            }
+
             return (
               <AccordionDetails className="details" key={mapping.key}>
                 <Grid container spacing={1}>
@@ -179,7 +176,7 @@ export default class NewModeItemView extends Component {
                   <Grid item xs={6}>
                     <ExpandMoreIcon //should not be grid item
                       style={{
-                        position: "absolute",
+                        position: "relative",
                         left: `${sliderLeft}%`
                       }}
                       color="secondary"
