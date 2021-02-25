@@ -73,6 +73,9 @@ export default class NewModeItemView extends Component {
   }
 
   channelChange = (index, value) => {
+    console.log(
+      this.props.channels.filter(option => option.value === 0)[0].value
+    );
     this.setState(previousState => {
       const mappings = [...previousState.mappings];
       mappings[index].channel = value;
@@ -154,8 +157,11 @@ export default class NewModeItemView extends Component {
                       id={this.props.id}
                       className={this.props.id}
                       label="Channel"
-                      //value={//{this.props.auxMode.mappings..channel}
-                      //items={}
+                      value={
+                        this.props.channels.filter(
+                          c => c.value === mapping.channel
+                        )[0].value
+                      }
                       items={this.props.channels}
                       onChange={(event, value) => {
                         this.channelChange(i, value.props.value); // the channel object has the channel number in its value
@@ -180,8 +186,6 @@ export default class NewModeItemView extends Component {
                       fontSize="large"
                     />
                     <Slider
-                      //value="0" //{value}
-                      //onChange={handleChange}
                       valueLabelDisplay="auto"
                       aria-labelledby="range-slider"
                       value={[mapping.range[0], mapping.range[1]]}
@@ -189,9 +193,6 @@ export default class NewModeItemView extends Component {
                       max={this.props.max}
                       marks
                       step={this.props.step}
-                      //scaleLength={this.props.step}
-                      //getAriaValueText={valuetext}
-
                       valueLabelDisplay="on"
                       onChange={(event, value) => this.sliderChange(i, value)}
                     />
