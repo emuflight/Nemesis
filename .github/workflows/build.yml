@@ -90,10 +90,7 @@ jobs:
           name: Nemesis-${{ github.ACTOR }}-${{ github.RUN_NUMBER }}
           path: |
             dist/Nemesis*.AppImage
-            dist/Nemesis*.rpm
-            dist/Nemesis*.deb
             dist/Nemesis*.dmg
-            dist/Nemesis*.zip
             dist/Nemesis*.exe
 
   draft:
