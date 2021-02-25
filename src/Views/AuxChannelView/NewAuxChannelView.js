@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import List from "@material-ui/core/List";
-import NewChannelItemView from "./NewChannelItemView";
+import NewModeItemView from "./NewModeItemView";
 import Paper from "@material-ui/core/Paper";
 import FCConnector from "../../utilities/FCConnector";
 import "./NewAuxChannelView.css";
@@ -109,7 +109,7 @@ export default class NewAuxChannelView extends Component {
           {this.state.modeMappings &&
             this.state.modeMappings.slice(1).map((auxMode, i) => {
               return (
-                <NewChannelItemView
+                <NewModeItemView
                   key={i}
                   auxMode={auxMode}
                   telemetry={this.state.telemetry}
