@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import List from "@material-ui/core/List";
 import { FormattedMessage } from "react-intl";
 import Typography from "@material-ui/core/Typography";
 import "./NewAuxModeView.css";
@@ -65,7 +64,7 @@ export default class NewModeItemView extends Component {
   addRange() {
     let available_auxID = this.props.getAvailableAuxID();
     //console.log("got available aux id: ", available_auxID);
-    if (available_auxID == -1) {
+    if (available_auxID === -1) {
       this.props.openNoAvailableAuxIDError();
       return 0;
     }
@@ -236,7 +235,6 @@ export default class NewModeItemView extends Component {
                       fontSize="large"
                     />
                     <Slider
-                      valueLabelDisplay="auto"
                       aria-labelledby="range-slider"
                       value={[mapping.range[0], mapping.range[1]]}
                       min={this.props.min}
@@ -263,7 +261,7 @@ export default class NewModeItemView extends Component {
                         <DeleteIcon style={{ fontSize: 18 }} />
                       </IconButton>
                     </Tooltip>
-                    {i == this.state.mappings.length - 1 && (
+                    {i === this.state.mappings.length - 1 && (
                       <Tooltip title="Add another range">
                         <IconButton
                           aria-label="add"
@@ -286,7 +284,7 @@ export default class NewModeItemView extends Component {
         <Divider />
         <AccordionActions>
           {this.state.mappings &&
-            this.state.mappings.length == 0 && (
+            this.state.mappings.length === 0 && (
               <Tooltip title="Add a range to start using this mode.">
                 <IconButton
                   aria-label="add"

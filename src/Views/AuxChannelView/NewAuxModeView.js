@@ -6,7 +6,6 @@ import FCConnector from "../../utilities/FCConnector";
 import "./NewAuxModeView.css";
 
 // for snackbar
-import Button from "@material-ui/core/Button";
 import Snackbar from "@material-ui/core/Snackbar";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
@@ -69,10 +68,10 @@ export default class NewAuxModeView extends Component {
       let mode = modes[i];
       //console.log("available: ", mode);
       if (
-        mode["range"][0] == 900 &&
-        mode["range"][1] == 900 &&
-        mode["mode"] == 0 &&
-        mode["channel"] == 0 &&
+        mode["range"][0] === 900 &&
+        mode["range"][1] === 900 &&
+        mode["mode"] === 0 &&
+        mode["channel"] === 0 &&
         !this.state.usedModes.includes(i)
       ) {
         let usedModes = this.state.usedModes;
@@ -114,8 +113,8 @@ export default class NewAuxModeView extends Component {
       modeMappings[auxModeID]["mappings"] = [];
     }
 
-    for (var i = 0; i < modes.length; i++) {
-      let mode = modes[i];
+    for (var k = 0; k < modes.length; k++) {
+      let mode = modes[k];
       let auxModeID = mode["mode"] + 1; //points to which FLIGHT MODE (arm, angle, etc)
       if (mode["range"][0] !== 900 || mode["range"][1] !== 900) {
         // only add mapping if range is not "900", "900". This is how BF ignores multiple mappings to ARM.
