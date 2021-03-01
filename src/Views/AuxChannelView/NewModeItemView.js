@@ -25,41 +25,15 @@ export default class NewModeItemView extends Component {
     this.state = {
       mappings: this.props.auxMode.mappings
     };
-    // if (props.mappings.range[0] === props.mappings.range[1]) {
-    //   // handle multiple mappings
-    //   props.mappings.range[1] += props.step;
-    // }
   }
-  // componentDidMount () {
-  //   if (!this.state.mappings) {
-  //     this.setState({ mappings: this.props.auxMode.mappings });
-  //   }
-  // }
-  //run by bxf.js:
-  //return sendCommand(device, `aux ${modeVals.split("|").join(" ")}`, 20);
 
   updateValue(index) {
-    // i == mapping index to update
     this.setState({ isDirty: true });
-    /*
-    console.log(
-      "mapping index: ",
-      index,
-      "mapping:",
-      this.state.mappings[index]
-    );
-    */
     let mapping = this.state.mappings[index];
     mapping["mode"] = this.props.auxMode.value; // mode id
-    FCConnector.setMode(this.state.mappings[index]).then(() => {
-      //this.setState({ isDirty: false });
-      this.props.notifyDirty(true, this.state.mappings[index]);
-    });
+    this.props.updateMapping(this.state.mappings[index]);
+    this.props.notifyDirty(true, this.state.mappings[index]);
   }
-
-  // *** to save:
-  // need to prepare a {} to give to FCConnector.setMode
-  // then look at updateValue() above
 
   addRange() {
     let available_auxID = this.props.getAvailableAuxID();
@@ -127,7 +101,6 @@ export default class NewModeItemView extends Component {
   };
 
   sliderChange = (index, value) => {
-    //console.log(index, value);
     if (value[0] > value[1]) {
       [value[1], value[0]] = [value[0], value[1]]; //swap them, ensuring first number is the lower one
     }

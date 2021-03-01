@@ -3,29 +3,16 @@ import List from "@material-ui/core/List";
 import NewModeItemView from "./NewModeItemView";
 import Paper from "@material-ui/core/Paper";
 import FCConnector from "../../utilities/FCConnector";
-import "./NewAuxModeView.css";
-
-// for snackbar
 import Snackbar from "@material-ui/core/Snackbar";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 
-// <AuxChannelView
-// fcConfig={mergedProfile}
-// auxScale={mergedProfile.rx_scale}
-// auxModeList={mergedProfile.aux_channel_modes}
-// modes={mergedProfile.modes && mergedProfile.modes.values}
-// notifyDirty={(isDirty, item, newValue) =>
-//   this.notifyDirty(isDirty, item, newValue)
-// }
-// />
+import "./NewAuxModeView.css";
 
 export default class NewAuxModeView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      //channels: [],
-      //channels: new Array(14).fill(0),
       channels: new Array(4).fill(undefined).map((k, i) => {
         return {
           label: `AUX ${i + 1}`,
@@ -34,17 +21,17 @@ export default class NewAuxModeView extends Component {
       }),
       telemetry: [], //test data would be [1000,2000,1800,1200]
       modeMappings: [],
-      modes: [],
-      usedModes: [], // keeps track of added modes that have not yet been saved, to consistently give an available aux id or show error if past 20.
-      snackBarOpen: false
+      usedModeIDs: [], // keeps track of list of added mode IDs that have not yet been saved, to consistently give an available aux id or show error if past 20.
+      snackBarOpen: false,
+      updatedModes: this.props.modes // keeps a list of updated aux modes to be eventually saved to CLI upon save. Same format as this.props.modes, like the aux command output.
     };
   }
 
   handleSnackBarClose = (event, reason) => {
+    // for too many aux modes error
     if (reason === "clickaway") {
       return;
     }
-
     this.setState({ snackBarOpen: false });
   };
 
@@ -52,7 +39,6 @@ export default class NewAuxModeView extends Component {
     try {
       let { rx } = JSON.parse(message.data);
       if (rx) {
-        //console.log(rx.channels);
         this.setState({ telemetry: rx.channels });
       }
     } catch (ex) {
@@ -61,22 +47,20 @@ export default class NewAuxModeView extends Component {
   };
 
   getAvailableAuxID = () => {
-    let modes = this.props.modes; // each aux command
+    let modes = this.props.modes; // use updated modes to keep it current, may  not need usedModeIDs list.
     for (var i = 0; i < modes.length; i++) {
-      // see if it is the default mapping
-      //if so, break and return id
+      // go through configured aux modes and look for available/default one. if found return index. if none found return -1
       let mode = modes[i];
-      //console.log("available: ", mode);
       if (
         mode["range"][0] === 900 &&
         mode["range"][1] === 900 &&
         mode["mode"] === 0 &&
         mode["channel"] === 0 &&
-        !this.state.usedModes.includes(i)
+        !this.state.usedModeIDs.includes(i)
       ) {
-        let usedModes = this.state.usedModes;
-        usedModes.push(i);
-        this.setState({ usedModes: usedModes });
+        let usedModeIDs = this.state.usedModeIDs;
+        usedModeIDs.push(i);
+        this.setState({ usedModeIDs: usedModeIDs });
         return i;
       }
     }
@@ -84,13 +68,27 @@ export default class NewAuxModeView extends Component {
   };
 
   removeUsedAuxID = id_was => {
-    // when an unconfigured aux mode is removed, remove it from usedModes list to make it available again to getAvailableAuxID
-    let usedModes = this.state.usedModes;
-    const index = usedModes.indexOf(id_was);
+    // when an unconfigured aux mode is removed, remove it from usedModeIDs list to make it available again to getAvailableAuxID
+    let usedModeIDs = this.state.usedModeIDs;
+    const index = usedModeIDs.indexOf(id_was);
     if (index > -1) {
-      usedModes.splice(index, 1);
+      usedModeIDs.splice(index, 1);
     }
-    this.setState({ usedModes: usedModes });
+    this.setState({ usedModeIDs: usedModeIDs });
+  };
+
+  updateMapping = mapping => {
+    // takes incoming changes from ModeItemView and applies to list ready to save to CLI.
+    this.setState(previousState => {
+      const updatedModes = [...previousState.updatedModes];
+      updatedModes[mapping.id].auxId = mapping.id;
+      updatedModes[mapping.id].channel = mapping.channel;
+      updatedModes[mapping.id].id = mapping.id;
+      updatedModes[mapping.id].mode = mapping.mode;
+      updatedModes[mapping.id].range = mapping.range;
+
+      return { updatedModes };
+    });
   };
 
   openNoAvailableAuxIDError = () => {
@@ -127,21 +125,14 @@ export default class NewAuxModeView extends Component {
         });
       }
     }
-
-    this.setState({ modeMappings: modeMappings });
+    console.log("mapModes ran");
+    this.setState({ modeMappings: modeMappings }); //save duplicate list called updatedMappings to handle incoming changes, as well as be able to reset unsaved changes later.
   };
 
   componentDidMount() {
-    FCConnector.getModes().then(modes => {
-      this.setState({ modes: modes });
-    });
-    // if (!this.state.modes) {
-    //   FCConnector.getModes().then(modes => {
-    //     this.setState({ modes: modes });
-    //   });
-    // }
     this.mapModes();
     FCConnector.webSockets.addEventListener("message", this.handleRXData);
+
     //temp disabled for debugging - allows modes in react view to not refresh constantly
     //FCConnector.startTelemetry("rx");
   }
@@ -168,6 +159,7 @@ export default class NewAuxModeView extends Component {
                   step={this.props.auxScale.step}
                   getAvailableAuxID={this.getAvailableAuxID}
                   removeUsedAuxID={this.removeUsedAuxID}
+                  updateMapping={this.updateMapping}
                   openNoAvailableAuxIDError={this.openNoAvailableAuxIDError}
                   notifyDirty={this.props.notifyDirty}
                 />
