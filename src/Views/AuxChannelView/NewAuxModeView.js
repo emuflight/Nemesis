@@ -46,8 +46,10 @@ export default class NewAuxModeView extends Component {
   };
 
   getAvailableAuxID = () => {
+    //console.log('getAvailableAuxID: ', this.state.modes);
+
     let available_auxID = 10;
-    console.log("hit getAvailableAuxID, returning ", available_auxID);
+    //console.log("hit getAvailableAuxID, returning ", available_auxID);
     return available_auxID;
   };
   //******************
@@ -60,7 +62,6 @@ export default class NewAuxModeView extends Component {
   mapModes = () => {
     let modeMappings = this.props.auxModeList;
     let modes = this.props.modes;
-
     //create empty array for each mode titled mappings - this holds one element per channel, and range
     for (var i = 0; i < modes.length; i++) {
       let mode = modes[i];
@@ -71,8 +72,7 @@ export default class NewAuxModeView extends Component {
     for (var i = 0; i < modes.length; i++) {
       let mode = modes[i];
       let auxModeID = mode["mode"] + 1; //points to which FLIGHT MODE (arm, angle, etc)
-
-      if (mode["range"][0] !== 900 && mode["range"][1] !== 900) {
+      if (mode["range"][0] !== 900 || mode["range"][1] !== 900) {
         // only add mapping if range is not "900", "900". This is how BF ignores multiple mappings to ARM.
         //for each 'aux mode' for that flight mode, add it to mappings
         modeMappings[auxModeID]["mappings"].push({
