@@ -29,7 +29,8 @@ export default class NewAuxModeView extends Component {
       }),
       telemetry: [], //test data would be [1000,2000,1800,1200]
       modeMappings: [],
-      modes: []
+      modes: [],
+      usedModes: [] // keeps track of added modes that have not yet been saved, to consistently give an available aux id or show error if past 20.
     };
   }
 
@@ -51,18 +52,33 @@ export default class NewAuxModeView extends Component {
       // see if it is the default mapping
       //if so, break and return id
       let mode = modes[i];
-      console.log("available: ", mode);
+      //console.log("available: ", mode);
       if (
         mode["range"][0] == 900 &&
         mode["range"][1] == 900 &&
         mode["mode"] == 0 &&
-        mode["channel"] == 0
+        mode["channel"] == 0 &&
+        !this.state.usedModes.includes(i)
       ) {
+        let usedModes = this.state.usedModes;
+        usedModes.push(i);
+        this.setState({ usedModes: usedModes });
         return i;
       }
     }
     return -1; // no available aux id found
   };
+
+  removeUsedAuxID = id_was => {
+    // when an unconfigured aux mode is removed, remove it from usedModes list to make it available again to getAvailableAuxID
+    let usedModes = this.state.usedModes;
+    const index = usedModes.indexOf(id_was);
+    if (index > -1) {
+      usedModes.splice(index, 1);
+    }
+    this.setState({ usedModes: usedModes });
+  };
+
   //******************
 
   // NOTE: modes in config command output are parsed and modified by index.js:104
@@ -134,6 +150,7 @@ export default class NewAuxModeView extends Component {
                   max={this.props.auxScale.max}
                   step={this.props.auxScale.step}
                   getAvailableAuxID={this.getAvailableAuxID}
+                  removeUsedAuxID={this.removeUsedAuxID}
                   notifyDirty={this.props.notifyDirty}
                 />
               );

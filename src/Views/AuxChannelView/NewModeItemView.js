@@ -64,6 +64,11 @@ export default class NewModeItemView extends Component {
   addRange() {
     let available_auxID = this.props.getAvailableAuxID();
     console.log("got available aux id: ", available_auxID);
+    if (available_auxID == 1) {
+      // test with 1
+      return 0;
+    }
+
     let key = this.state.mappings.length; // set React key to list length. ie, fourth item = 4.
     let created_mapping = {
       key: key, // find best way to set a new key. available aux_id?
@@ -86,9 +91,10 @@ export default class NewModeItemView extends Component {
 
   deleteRange(index) {
     //get id of mapping (index)
+    let id_was = this.state.mappings[index].id;
     //find a command to set this aux id back to default
     let default_mapping = {
-      id: this.state.mappings[index].id,
+      id: id_was,
       mode: 0,
       channel: 0,
       range: [900, 900]
@@ -102,6 +108,7 @@ export default class NewModeItemView extends Component {
       newmappings.splice(index, 1);
       this.setState({ mappings: newmappings.slice() });
       this.setState({ isDirty: true }); // also set info changed here
+      this.props.removeUsedAuxID(id_was);
     });
   }
 
