@@ -124,7 +124,7 @@ export default new class FCConnector {
     });
   }
   setMode(mapping) {
-    console.log("mapping: ", mapping);
+    //console.log("mapping: ", mapping);
     let modeVals = `${mapping.id}|${mapping.mode}|${mapping.channel}|${
       mapping.range[0]
     }|${mapping.range[1]}|0`;

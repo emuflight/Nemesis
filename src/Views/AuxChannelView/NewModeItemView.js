@@ -63,6 +63,7 @@ export default class NewModeItemView extends Component {
 
   addRange() {
     let available_auxID = this.props.getAvailableAuxID();
+    console.log("got available aux id: ", available_auxID);
     let key = this.state.mappings.length; // set React key to list length. ie, fourth item = 4.
     let created_mapping = {
       key: key, // find best way to set a new key. available aux_id?

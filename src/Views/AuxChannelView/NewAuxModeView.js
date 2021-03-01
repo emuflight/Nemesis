@@ -46,11 +46,22 @@ export default class NewAuxModeView extends Component {
   };
 
   getAvailableAuxID = () => {
-    //console.log('getAvailableAuxID: ', this.state.modes);
-
-    let available_auxID = 10;
-    //console.log("hit getAvailableAuxID, returning ", available_auxID);
-    return available_auxID;
+    let modes = this.props.modes; // each aux command
+    for (var i = 0; i < modes.length; i++) {
+      // see if it is the default mapping
+      //if so, break and return id
+      let mode = modes[i];
+      console.log("available: ", mode);
+      if (
+        mode["range"][0] == 900 &&
+        mode["range"][1] == 900 &&
+        mode["mode"] == 0 &&
+        mode["channel"] == 0
+      ) {
+        return i;
+      }
+    }
+    return -1; // no available aux id found
   };
   //******************
 
