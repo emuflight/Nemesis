@@ -64,8 +64,8 @@ export default class NewModeItemView extends Component {
   addRange() {
     let available_auxID = this.props.getAvailableAuxID();
     console.log("got available aux id: ", available_auxID);
-    if (available_auxID == 1) {
-      // test with 1
+    if (available_auxID == -1) {
+      this.props.openNoAvailableAuxIDError();
       return 0;
     }
 

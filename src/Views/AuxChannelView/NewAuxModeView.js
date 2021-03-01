@@ -5,6 +5,12 @@ import Paper from "@material-ui/core/Paper";
 import FCConnector from "../../utilities/FCConnector";
 import "./NewAuxModeView.css";
 
+// for snackbar
+import Button from "@material-ui/core/Button";
+import Snackbar from "@material-ui/core/Snackbar";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
+
 // <AuxChannelView
 // fcConfig={mergedProfile}
 // auxScale={mergedProfile.rx_scale}
@@ -30,9 +36,18 @@ export default class NewAuxModeView extends Component {
       telemetry: [], //test data would be [1000,2000,1800,1200]
       modeMappings: [],
       modes: [],
-      usedModes: [] // keeps track of added modes that have not yet been saved, to consistently give an available aux id or show error if past 20.
+      usedModes: [], // keeps track of added modes that have not yet been saved, to consistently give an available aux id or show error if past 20.
+      snackBarOpen: false
     };
   }
+
+  handleSnackBarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    this.setState({ snackBarOpen: false });
+  };
 
   handleRXData = message => {
     try {
@@ -79,6 +94,9 @@ export default class NewAuxModeView extends Component {
     this.setState({ usedModes: usedModes });
   };
 
+  openNoAvailableAuxIDError = () => {
+    this.setState({ snackBarOpen: true });
+  };
   //******************
 
   // NOTE: modes in config command output are parsed and modified by index.js:104
@@ -151,11 +169,36 @@ export default class NewAuxModeView extends Component {
                   step={this.props.auxScale.step}
                   getAvailableAuxID={this.getAvailableAuxID}
                   removeUsedAuxID={this.removeUsedAuxID}
+                  openNoAvailableAuxIDError={this.openNoAvailableAuxIDError}
                   notifyDirty={this.props.notifyDirty}
                 />
               );
             })}
         </List>
+        <div>
+          <Snackbar
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "left"
+            }}
+            open={this.state.snackBarOpen}
+            autoHideDuration={6000}
+            onClose={this.handleSnackBarClose}
+            message="Maximum of 20 available modes reached."
+            action={
+              <React.Fragment>
+                <IconButton
+                  size="small"
+                  aria-label="close"
+                  color="inherit"
+                  onClick={this.handleSnackBarClose}
+                >
+                  <CloseIcon fontSize="small" />
+                </IconButton>
+              </React.Fragment>
+            }
+          />
+        </div>
       </Paper>
     );
   }
