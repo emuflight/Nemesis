@@ -63,9 +63,9 @@ export default class NewModeItemView extends Component {
 
   addRange() {
     let available_auxID = this.props.getAvailableAuxID();
-
+    let key = this.state.mappings.length; // set React key to list length. ie, fourth item = 4.
     let created_mapping = {
-      key: available_auxID, // find best way to set a new key. available aux_id?
+      key: key, // find best way to set a new key. available aux_id?
       id: available_auxID,
       mode: this.props.auxMode.value,
       channel: 0,
@@ -75,11 +75,11 @@ export default class NewModeItemView extends Component {
     FCConnector.setMode(created_mapping).then(() => {
       //push created mapping, then run state update code
       var newmappings = this.state.mappings;
-      newmappings.push();
+      newmappings.push(created_mapping);
       this.setState({ mappings: newmappings.slice() });
       this.setState({ isDirty: true }); // also set info changed here
       this.props.notifyDirty(true, this.state);
-      this.updateValue(); // what will the index be??
+      this.updateValue(key); // what will the index be??
     });
   }
 
