@@ -42,13 +42,14 @@ export default class NewModeItemView extends Component {
   updateValue(index) {
     // i == mapping index to update
     this.setState({ isDirty: true });
+    /*
     console.log(
       "mapping index: ",
       index,
       "mapping:",
       this.state.mappings[index]
     );
-
+    */
     let mapping = this.state.mappings[index];
     mapping["mode"] = this.props.auxMode.value; // mode id
     FCConnector.setMode(this.state.mappings[index]).then(() => {
@@ -63,7 +64,7 @@ export default class NewModeItemView extends Component {
 
   addRange() {
     let available_auxID = this.props.getAvailableAuxID();
-    console.log("got available aux id: ", available_auxID);
+    //console.log("got available aux id: ", available_auxID);
     if (available_auxID == -1) {
       this.props.openNoAvailableAuxIDError();
       return 0;
