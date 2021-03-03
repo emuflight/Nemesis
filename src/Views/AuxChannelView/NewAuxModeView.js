@@ -22,8 +22,8 @@ export default class NewAuxModeView extends Component {
       telemetry: [], //test data would be [1000,2000,1800,1200]
       modeMappings: [],
       usedModeIDs: [], // keeps track of list of added mode IDs that have not yet been saved, to consistently give an available aux id or show error if past 20.
-      snackBarOpen: false,
-      updatedModes: this.props.modes // keeps a list of updated aux modes to be eventually saved to CLI upon save. Same format as this.props.modes, like the aux command output.
+      snackBarOpen: false
+      //updatedModes: this.props.modes // keeps a list of updated aux modes to be eventually saved to CLI upon save. Same format as this.props.modes, like the aux command output.
     };
   }
 
@@ -77,6 +77,7 @@ export default class NewAuxModeView extends Component {
     this.setState({ usedModeIDs: usedModeIDs });
   };
 
+  //note: this is not used unless use_cli_directly is true in ModeItemView.js
   updateMapping = mapping => {
     // takes incoming changes from ModeItemView and applies to list ready to save to CLI.
     this.setState(previousState => {
@@ -159,7 +160,7 @@ export default class NewAuxModeView extends Component {
                   step={this.props.auxScale.step}
                   getAvailableAuxID={this.getAvailableAuxID}
                   removeUsedAuxID={this.removeUsedAuxID}
-                  updateMapping={this.updateMapping}
+                  updateMapping={this.updateMapping} // not used unless use_cli_directly is enabled in ModeItemView.js
                   openNoAvailableAuxIDError={this.openNoAvailableAuxIDError}
                   notifyDirty={this.props.notifyDirty}
                 />

@@ -19,6 +19,10 @@ import Grid from "@material-ui/core/Grid";
 import Tooltip from "@material-ui/core/Tooltip";
 import FCConnector from "../../utilities/FCConnector";
 
+const use_cli_directly = true; // enable this to write any changes (move slider, channel) directly to the cli. set to false to use a list in parent component state to later be saved to the CLI (not working)
+// this means any changes in this tab will be written to CLI, even if save is not pressed on this tab. They will save the next time save is pressed.
+// this is the functionality of every other page as well
+
 export default class NewModeItemView extends Component {
   constructor(props) {
     super(props);
@@ -31,8 +35,16 @@ export default class NewModeItemView extends Component {
     this.setState({ isDirty: true });
     let mapping = this.state.mappings[index];
     mapping["mode"] = this.props.auxMode.value; // mode id
-    this.props.updateMapping(this.state.mappings[index]);
-    this.props.notifyDirty(true, this.state.mappings[index]);
+
+    if (use_cli_directly) {
+      FCConnector.setMode(this.state.mappings[index]).then(() => {
+        //this.setState({ isDirty: false });
+        this.props.notifyDirty(true, this.state.mappings[index]);
+      });
+    } else {
+      this.props.updateMapping(this.state.mappings[index]);
+      this.props.notifyDirty(true, this.state.mappings[index]);
+    }
   }
 
   addRange() {
