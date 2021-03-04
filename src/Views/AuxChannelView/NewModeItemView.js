@@ -157,12 +157,14 @@ export default class NewModeItemView extends Component {
                 <FormattedMessage
                   id={`aux.title.${this.props.auxMode.label}`}
                 />
-                <Chip
-                  size="small"
-                  color="primary"
-                  label="Active"
-                  style={{ marginLeft: "10px" }}
-                />
+                {false && (
+                  <Chip
+                    size="small"
+                    color="primary"
+                    label="Active"
+                    style={{ marginLeft: "10px" }}
+                  />
+                )}
               </Typography>
             </Grid>
             <Grid item xs={1} />
