@@ -116,6 +116,17 @@ export default class NewModeItemView extends Component {
     if (value[0] > value[1]) {
       [value[1], value[0]] = [value[0], value[1]]; //swap them, ensuring first number is the lower one
     }
+    this.setState(previousState => {
+      const mappings = [...previousState.mappings];
+      mappings[index].range = value;
+      return { mappings };
+    });
+  };
+
+  sliderChangeCommitted = (index, value) => {
+    if (value[0] > value[1]) {
+      [value[1], value[0]] = [value[0], value[1]]; //swap them, ensuring first number is the lower one
+    }
     this.setState(
       previousState => {
         const mappings = [...previousState.mappings];
@@ -228,6 +239,9 @@ export default class NewModeItemView extends Component {
                       step={this.props.step}
                       valueLabelDisplay="on"
                       onChange={(event, value) => this.sliderChange(i, value)}
+                      onChangeCommitted={(event, value) =>
+                        this.sliderChangeCommitted(i, value)
+                      } // onChangeCommitted == mouseUp
                     />
                   </Grid>
                   <Grid item xs>
