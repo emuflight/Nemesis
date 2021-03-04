@@ -135,7 +135,7 @@ export default class NewAuxModeView extends Component {
     FCConnector.webSockets.addEventListener("message", this.handleRXData);
 
     //temp disabled for debugging - allows modes in react view to not refresh constantly
-    FCConnector.startTelemetry("rx");
+    //FCConnector.startTelemetry("rx");
   }
 
   componentWillUnmount() {
