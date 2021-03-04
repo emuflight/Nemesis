@@ -113,6 +113,7 @@ export default class NewModeItemView extends Component {
   };
 
   sliderChange = (index, value) => {
+    // TODO: combine these so that no code is repeated
     if (value[0] > value[1]) {
       [value[1], value[0]] = [value[0], value[1]]; //swap them, ensuring first number is the lower one
     }
