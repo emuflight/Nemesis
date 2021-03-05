@@ -219,6 +219,14 @@ export default class PidsView extends ProfileView {
                 id="emuboost_yaw"
                 notifyDirty={this.props.notifyDirty}
               />
+              <StatelessInput
+                id="axis_lock_multiplier"
+                notifyDirty={this.props.notifyDirty}
+              />
+              <StatelessInput
+                id="axis_lock_hz"
+                notifyDirty={this.props.notifyDirty}
+              />
             </div>
           </Paper>
         </div>

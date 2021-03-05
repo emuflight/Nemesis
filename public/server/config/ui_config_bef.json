@@ -46,6 +46,7 @@
       "use_vbat_alerts",
       "vbat_pid_gain",
       "battery_meter",
+      "vbat_detect_cell_voltage",
       "vbat_divider",
       "vbat_warning_cell_voltage",
       "vbat_max_cell_voltage",
@@ -56,7 +57,8 @@
       "ibata_scale",
       "ibata_offset",
       "current_meter",
-      "esc_sensor_current_offset"
+      "esc_sensor_current_offset",
+      "vbat_sag_compensation"
     ],
     "MODES": ["modes"],
     "GPS": [
@@ -97,7 +99,11 @@
       "d_yaw",
       "feedforward_transition",
       "vbat_pid_gain",
-      "tpa_type"
+      "tpa_type",
+      "emuboost",
+      "emuboost_yaw",
+      "axis_lock_multiplier",
+      "axis_lock_hz"
     ],
     "RATES": [
       "thr_expo",
@@ -116,7 +122,9 @@
       "yaw_deadband",
       "roll_rate_limit",
       "pitch_rate_limit",
-      "yaw_rate_limit"
+      "yaw_rate_limit",
+      "add_roll_to_yaw",
+      "add_yaw_to_roll"
     ],
     "FILTERS": [
       "gyro_hardware_lpf",
@@ -134,7 +142,20 @@
       "imuf_roll_lpf_cutoff_hz",
       "imuf_yaw_lpf_cutoff_hz",
       "imuf_acc_lpf_cutoff_hz",
-      "imuf_sharpness"
+      "imuf_sharpness",
+      "gyro_abg_alpha",
+      "gyro_abg_boost",
+      "gyro_abg_half_life",
+      "dyn_matrix_q",
+      "dyn_matrix_min_hz",
+      "dyn_lpf_dterm_min_hz",
+      "dyn_lpf_dterm_width",
+      "dyn_lpf_dterm_curve_expo",
+      "dterm_lowpass2_hz",
+      "dterm_abg_alpha",
+      "dyn_lpf_gyro_min_hz",
+      "dyn_lpf_gyro_width",
+      "dyn_lpf2_gain"
     ],
     "MOTORS": [
       "mixer_type",
@@ -276,7 +297,8 @@
       "blackbox_p_ratio",
       "blackbox_device",
       "blackbox_record_acc",
-      "blackbox_mode"
+      "blackbox_mode",
+      "debug_mode"
     ],
     "ADVANCED": ["advanced"]
   },
