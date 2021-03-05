@@ -103,7 +103,8 @@
       "emuboost",
       "emuboost_yaw",
       "axis_lock_multiplier",
-      "axis_lock_hz"
+      "axis_lock_hz",
+      "anti_gravity_gain"
     ],
     "RATES": [
       "thr_expo",
