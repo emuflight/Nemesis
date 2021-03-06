@@ -6,6 +6,7 @@ import RXTelemView from "./RXTelemView";
 import ChannelMapView from "./ChannelMapView";
 import FCConnector from "../../utilities/FCConnector";
 import { FormattedMessage } from "react-intl";
+import "./RXView.css";
 
 export default class RXView extends Component {
   constructor(props) {
@@ -36,7 +37,7 @@ export default class RXView extends Component {
 
   render() {
     return (
-      <div>
+      <div className="rx-view">
         <Paper>
           <div style={{ display: "flex" }}>
             <Button
