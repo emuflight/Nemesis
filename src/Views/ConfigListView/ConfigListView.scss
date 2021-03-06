@@ -1,6 +1,10 @@
 .config-list-view {
   margin: 10px;
   padding: 10px;
+  height: 90%;
+  width: 100%;
+  overflow-y: auto;
+  position: absolute;
 }
 .config-list-view-sliders {
   display: grid;
