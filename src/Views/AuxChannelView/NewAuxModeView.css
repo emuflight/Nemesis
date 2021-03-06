@@ -31,3 +31,9 @@
 
 .MuiSlider-root {
   margin-top: 27px !important; }
+
+.modes-view {
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  position: absolute; }

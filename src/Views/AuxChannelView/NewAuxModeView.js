@@ -145,7 +145,7 @@ export default class NewAuxModeView extends Component {
 
   render() {
     return (
-      <Paper>
+      <Paper className="modes-view">
         <List>
           {this.state.modeMappings &&
             this.state.modeMappings.slice(1).map((auxMode, i) => {
