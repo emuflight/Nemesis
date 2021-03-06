@@ -46,6 +46,7 @@
       "use_vbat_alerts",
       "vbat_pid_gain",
       "battery_meter",
+      "vbat_detect_cell_voltage",
       "vbat_divider",
       "vbat_warning_cell_voltage",
       "vbat_max_cell_voltage",
@@ -56,7 +57,8 @@
       "ibata_scale",
       "ibata_offset",
       "current_meter",
-      "esc_sensor_current_offset"
+      "esc_sensor_current_offset",
+      "vbat_sag_compensation"
     ],
     "MODES": ["modes"],
     "GPS": [
@@ -97,7 +99,12 @@
       "d_yaw",
       "feedforward_transition",
       "vbat_pid_gain",
-      "tpa_type"
+      "tpa_type",
+      "emuboost",
+      "emuboost_yaw",
+      "axis_lock_multiplier",
+      "axis_lock_hz",
+      "anti_gravity_gain"
     ],
     "RATES": [
       "thr_expo",
@@ -116,7 +123,9 @@
       "yaw_deadband",
       "roll_rate_limit",
       "pitch_rate_limit",
-      "yaw_rate_limit"
+      "yaw_rate_limit",
+      "add_roll_to_yaw",
+      "add_yaw_to_roll"
     ],
     "FILTERS": [
       "gyro_hardware_lpf",
@@ -134,7 +143,20 @@
       "imuf_roll_lpf_cutoff_hz",
       "imuf_yaw_lpf_cutoff_hz",
       "imuf_acc_lpf_cutoff_hz",
-      "imuf_sharpness"
+      "imuf_sharpness",
+      "gyro_abg_alpha",
+      "gyro_abg_boost",
+      "gyro_abg_half_life",
+      "dyn_matrix_q",
+      "dyn_matrix_min_hz",
+      "dyn_lpf_dterm_min_hz",
+      "dyn_lpf_dterm_width",
+      "dyn_lpf_dterm_curve_expo",
+      "dterm_lowpass2_hz",
+      "dterm_abg_alpha",
+      "dyn_lpf_gyro_min_hz",
+      "dyn_lpf_gyro_width",
+      "dyn_lpf2_gain"
     ],
     "MOTORS": [
       "mixer_type",
@@ -276,7 +298,8 @@
       "blackbox_p_ratio",
       "blackbox_device",
       "blackbox_record_acc",
-      "blackbox_mode"
+      "blackbox_mode",
+      "debug_mode"
     ],
     "ADVANCED": ["advanced"]
   },
@@ -748,48 +771,48 @@
     },
     {
       "value": 3,
-      "label": "BARO"
+      "label": "MAG"
     },
     {
       "value": 4,
-      "label": "ANTIGRAVITY"
+      "label": "HEADFREE"
     },
     {
       "value": 5,
-      "label": "MAG"
+      "label": "PASSTHRU"
     },
 
     {
       "value": 6,
-      "label": "HEADFREE"
+      "label": "FAILSAFE"
     },
     {
       "value": 7,
-      "label": "HEADADJ"
+      "label": "GPSRESCUE"
     },
     {
       "value": 8,
-      "label": "CAMSTAB"
+      "label": "NFE"
     },
     {
       "value": 10,
-      "label": "GPSHOME"
+      "label": "ANTIGRAVITY"
     },
     {
       "value": 11,
-      "label": "GPSHOLD"
+      "label": "HEADADJ"
     },
     {
       "value": 12,
-      "label": "PASSTHU"
+      "label": "CAMSTAB"
     },
     {
       "value": 13,
-      "label": "BEEPER"
+      "label": "BEEPERON"
     },
     {
       "value": 15,
-      "label": "LEDMAX"
+      "label": "LEDLOW"
     },
     {
       "value": 17,
@@ -821,47 +844,47 @@
     },
     {
       "value": 27,
-      "label": "FAILSAFE"
-    },
-    {
-      "value": 28,
       "label": "AIRMODE"
     },
     {
-      "value": 29,
-      "label": "SWITCH3D"
+      "value": 28,
+      "label": "3D"
     },
     {
-      "value": 30,
+      "value": 29,
       "label": "FPVANGLEMIX"
     },
     {
-      "value": 31,
+      "value": 30,
       "label": "BLACKBOXERASE"
     },
     {
-      "value": 32,
+      "value": 31,
       "label": "CAMERA1"
     },
     {
-      "value": 33,
+      "value": 32,
       "label": "CAMERA2"
     },
     {
-      "value": 34,
+      "value": 33,
       "label": "CAMERA3"
     },
     {
-      "value": 35,
+      "value": 34,
       "label": "FLIPOVERAFTERCRASH"
     },
     {
-      "value": 36,
+      "value": 35,
       "label": "PREARM"
     },
     {
-      "value": 37,
+      "value": 36,
       "label": "BEEPGPSCOUNT"
+    },
+    {
+      "value": 37,
+      "label": "VTXPITMODE"
     },
     {
       "value": 39,
@@ -869,35 +892,47 @@
     },
     {
       "value": 40,
-      "label": "USER1"
-    },
-    {
-      "value": 41,
-      "label": "USER2"
-    },
-    {
-      "value": 42,
-      "label": "USER3"
-    },
-    {
-      "value": 43,
-      "label": "USER4"
-    },
-    {
-      "value": 44,
-      "label": "PIDAUDIO"
-    },
-    {
-      "value": 45,
       "label": "PARALYZE"
     },
     {
+      "value": 41,
+      "label": "USER1"
+    },
+    {
+      "value": 42,
+      "label": "USER2"
+    },
+    {
+      "value": 43,
+      "label": "USER3"
+    },
+    {
+      "value": 44,
+      "label": "USER4"
+    },
+    {
+      "value": 45,
+      "label": "PIDAUDIO"
+    },
+    {
       "value": 46,
-      "label": "GPSRESCUE"
+      "label": "VTXCONTROLDISABLE"
     },
     {
       "value": 47,
-      "label": "ACROTRAINER"
+      "label": "LAUNCHCONTROL"
+    },
+    {
+      "value": 48,
+      "label": "MSPOVERRIDE"
+    },
+    {
+      "value": 49,
+      "label": "STICKCOMMANDDISABLE"
+    },
+    {
+      "value": 50,
+      "label": "BEEPERMUTE"
     }
   ]
 }

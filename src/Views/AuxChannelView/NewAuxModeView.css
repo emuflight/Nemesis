@@ -1,0 +1,33 @@
+.three-column {
+  flex-basis: 33.33%; }
+
+.two-column {
+  flex-basis: 50%; }
+
+.heading {
+  font-size: 15px; }
+
+.secondaryHeading {
+  font-size: 14px !important; }
+
+.link {
+  text-decoration: "none"; }
+
+.details {
+  align-items: "center"; }
+
+.MuiSlider-rail,
+.MuiSlider-track,
+.MuiSlider-mark {
+  height: 10px !important; }
+
+.MuiSlider-thumb {
+  height: 20px !important;
+  width: 20px !important;
+  margin-left: -10px !important; }
+
+.MuiSlider-valueLabel {
+  left: calc(-50% - -4px) !important; }
+
+.MuiSlider-root {
+  margin-top: 27px !important; }

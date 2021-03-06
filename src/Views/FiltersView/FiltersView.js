@@ -64,12 +64,12 @@ export default class FiltersView extends Component {
       ];
     } else {
       bqData = [
+        /*
         biquad(
           "lowpass",
           parseInt(this.props.fcConfig.gyro_lowpass_hz.current, 10),
           freq
         ).plot,
-        /*
         biquad(
           "lowpass",
           parseInt(this.props.fcConfig.gyro_lowpass2_hz_roll.current, 10),

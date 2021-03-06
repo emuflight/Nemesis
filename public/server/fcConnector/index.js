@@ -103,6 +103,7 @@ const applyUIConfig = (device, config, uiConfig) => {
   config.currentRateProfile = parseInt(config.rate_profile.current, 10);
   if (config.modes) {
     let hasArmMode = false;
+    console.log("config modes: ", config.modes.values);
     config.modes.values = config.modes.values.map((mode, i) => {
       let parts = mode.split("|");
 
@@ -113,12 +114,12 @@ const applyUIConfig = (device, config, uiConfig) => {
         start = parseInt(parts[3], 10),
         end = parseInt(parts[4], 10);
 
-      if (!hasArmMode && auxMode === 0) {
-        auxMode = 0;
-        hasArmMode = true;
-      } else if (auxMode === 0) {
-        auxMode = -1;
-      }
+      // if (!hasArmMode && auxMode === 0) {
+      //   auxMode = 0;
+      //   hasArmMode = true;
+      // } else if (auxMode === 0) {
+      //   auxMode = -1;
+      // }
       return {
         id: id,
         auxId: auxId,
@@ -301,7 +302,7 @@ module.exports = new class FcConnector {
         bxfConnector.getTelemetry(deviceInfo, type).then(telemData => {
           websockets.notifyTelem(telemData);
         });
-      }, type === "rx" ? 40 : fastIntervalMs);
+      }, type === "rx" ? 60 : fastIntervalMs);
     }
     websockets.wsServer.slowTelemetryInterval = setInterval(() => {
       bxfConnector.getTelemetry(deviceInfo, "status").then(telemData => {

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Slider from "@material-ui/lab/Slider";
+import { Slider } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import FCConnector from "../../utilities/FCConnector";
 import Typography from "@material-ui/core/Typography";
