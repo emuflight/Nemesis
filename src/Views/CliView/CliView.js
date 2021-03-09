@@ -50,8 +50,6 @@ export default class CliView extends Component {
   handleKeyDown = e => {
     if (e.keyCode === 38) {
       // ARROW UP key
-      console.log("prev commands: ", this.prevCommands);
-      console.log("command index: ", this.commandIndex);
       let oldVal = this.prevCommands[this.commandIndex];
       e.target.value = oldVal || e.target.value;
       this.setState({ command: e.target.value });
@@ -60,8 +58,6 @@ export default class CliView extends Component {
       }
     } else if (e.keyCode === 40) {
       // ARROW DOWN key
-      console.log("prev commands: ", this.prevCommands);
-      console.log("command index: ", this.commandIndex);
       if (this.commandIndex < this.prevCommands.length - 1) {
         ++this.commandIndex;
       }
