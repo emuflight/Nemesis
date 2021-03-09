@@ -49,14 +49,17 @@ export default class CliView extends Component {
   }
   handleKeyDown = e => {
     if (e.keyCode === 38) {
+      // ARROW UP key
       let oldVal = this.prevCommands[Math.min(--this.commandIndex, 0)];
       e.target.value = oldVal || e.target.value;
     } else if (e.keyCode === 40) {
+      // ARROW DOWN key
       let oldVal = this.prevCommands[
         Math.min(++this.commandIndex, this.prevCommands.length)
       ];
       e.target.value = oldVal || e.target.value;
     } else if (e.keyCode === 13) {
+      // ENTER key
       if (e.target.value !== this.prevCommands[this.prevCommands.length]) {
         this.prevCommands.push(e.target.value);
         this.commandIndex = this.prevCommands.length;
