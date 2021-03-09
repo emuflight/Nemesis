@@ -130,6 +130,7 @@ const applyUIConfig = (device, config, uiConfig) => {
     });
   }
   if (config.ports) {
+    console.log("PORTS: ", config.ports.values);
     config.ports.values = config.ports.values.map(port => {
       let parts = port.split("|");
       return {

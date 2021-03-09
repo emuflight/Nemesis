@@ -105,28 +105,36 @@ export default class NewAuxModeView extends Component {
   mapModes = () => {
     let modeMappings = this.props.auxModeList;
     let modes = this.props.modes;
+
     //create empty array for each mode titled mappings - this holds one element per channel, and range
-    for (var i = 0; i < modes.length; i++) {
-      let mode = modes[i];
-      let auxModeID = mode["auxId"] + 1;
-      modeMappings[auxModeID]["mappings"] = [];
+    for (var i = 0; i < modeMappings.length; i++) {
+      modeMappings[i]["mappings"] = [];
     }
 
+    //must map by value not index. the value of each mode id does not match the index.
     for (var k = 0; k < modes.length; k++) {
       let mode = modes[k];
-      let auxModeID = mode["mode"] + 1; //points to which FLIGHT MODE (arm, angle, etc)
+      let auxModeID = mode["mode"]; //points to which FLIGHT MODE (arm, angle, etc)
       if (mode["range"][0] !== 900 || mode["range"][1] !== 900) {
         // only add mapping if range is not "900", "900". This is how BF ignores multiple mappings to ARM.
         //for each 'aux mode' for that flight mode, add it to mappings
-        modeMappings[auxModeID]["mappings"].push({
-          key: mode["id"], // use the aux command id as key for react list
-          id: mode["id"],
-          channel: mode["channel"],
-          range: mode["range"]
-        });
+        let index = -1;
+        for (var i = 0; i < modeMappings.length; i += 1) {
+          if (modeMappings[i]["value"] === auxModeID) {
+            index = i;
+            break;
+          }
+        }
+        if (index != -1) {
+          modeMappings[index]["mappings"].push({
+            key: mode["id"], // use the aux command id as key for react list
+            id: mode["id"],
+            channel: mode["channel"],
+            range: mode["range"]
+          });
+        }
       }
     }
-    console.log("mapModes ran");
     this.setState({ modeMappings: modeMappings }); //save duplicate list called updatedMappings to handle incoming changes, as well as be able to reset unsaved changes later.
   };
 
