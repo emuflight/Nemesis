@@ -160,7 +160,7 @@ export default class OSDView extends Component {
     });
     let maxRows = this.state.videoMode === "NTSC" ? 13 : 18;
     return (
-      <Paper>
+      <Paper className="osd-view">
         <div className="flex-center">
           {this.osdFeature && (
             <FeatureItemView

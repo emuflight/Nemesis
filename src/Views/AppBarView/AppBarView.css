@@ -1,3 +1,6 @@
 @media (min-width: 576px) {
   .hamburgerButton {
     display: none !important; } }
+
+.MuiAppBar-colorPrimary {
+  background: radial-gradient(circle at 50% -100%, #3d3d3d 0%, #202020 100%); }

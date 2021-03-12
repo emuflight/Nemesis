@@ -25,7 +25,7 @@ export default class RXTelemView extends Component {
     try {
       let { rx } = JSON.parse(message.data);
       if (rx) {
-        this.setState({ channels: rx.channels.slice(4) });
+        this.setState({ channels: rx.channels }); //.slice(4)
       }
     } catch (ex) {
       console.warn("unable to parse telemetry", ex);
@@ -42,7 +42,7 @@ export default class RXTelemView extends Component {
   }
   render() {
     return (
-      <List style={{ width: "200px" }}>
+      <List>
         {this.state.channels &&
           this.state.channels.map((channel, i) => {
             return (
@@ -61,10 +61,16 @@ export default class RXTelemView extends Component {
                   {channel}
                 </Typography>
                 <Typography variant="caption">
-                  <FormattedMessage
-                    id={"rx.channel.aux-label"}
-                    values={i > -1 && { number: i }}
-                  />
+                  {i === 0 && <FormattedMessage id={"rx.channel.A"} />}
+                  {i === 1 && <FormattedMessage id={"rx.channel.E"} />}
+                  {i === 2 && <FormattedMessage id={"rx.channel.R"} />}
+                  {i === 3 && <FormattedMessage id={"rx.channel.T"} />}
+                  {i > 3 && (
+                    <FormattedMessage
+                      id={"rx.channel.aux-label"}
+                      values={i > -1 && { number: i }}
+                    />
+                  )}
                 </Typography>
                 <LinearProgress
                   variant="determinate"

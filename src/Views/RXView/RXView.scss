@@ -1,0 +1,6 @@
+.rx-view {
+  height: 90%; // allows scrollable all the way, with top bar.
+  width: 100%;
+  overflow-y: auto;
+  position: absolute;
+}

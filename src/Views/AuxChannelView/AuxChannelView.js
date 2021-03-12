@@ -27,11 +27,9 @@ export default class AuxChannelView extends Component {
         max: props.auxScale.max,
         step: props.auxScale.step
       },
-      telemetry: {
-        channels: [],
-        min: props.auxScale.min,
-        max: props.auxScale.max
-      }
+      channels: [],
+      telemetry_min: props.auxScale.min,
+      telemetry_max: props.auxScale.max
     };
   }
 
@@ -39,7 +37,7 @@ export default class AuxChannelView extends Component {
     try {
       let { rx } = JSON.parse(message.data);
       if (rx) {
-        this.setState({ telemetry: rx });
+        this.setState({ channels: rx.channels });
       }
     } catch (ex) {
       console.warn("unable to parse telemetry", ex);
@@ -70,9 +68,9 @@ export default class AuxChannelView extends Component {
               <Paper key={mode.id}>
                 <AuxChannelItemView
                   modeDisabled={!this.props.fcConfig.isBxF}
-                  telemetry={this.state.telemetry.channels.slice(4)}
-                  telemetryMin={this.state.telemetry.min}
-                  telemetryMax={this.state.telemetry.max}
+                  telemetry={this.state.channels.slice(4)}
+                  telemetryMin={this.state.telemetry_min}
+                  telemetryMax={this.state.telemetry_max}
                   scale={this.state.scale}
                   channels={this.state.channels}
                   auxModeList={this.props.auxModeList}

@@ -26,6 +26,10 @@
   }
 }
 .rates-view {
+  height: 90%;
+  width: 100%;
+  overflow-y: auto;
+  position: absolute;
   display: flex;
   flex: 1;
   flex-direction: column;

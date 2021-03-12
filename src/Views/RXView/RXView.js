@@ -7,6 +7,9 @@ import RXStickView from "./RXStickView";
 import ChannelMapView from "./ChannelMapView";
 import FCConnector from "../../utilities/FCConnector";
 import { FormattedMessage } from "react-intl";
+import Grid from "@material-ui/core/Grid";
+import { Typography } from "@material-ui/core";
+import "./RXView.css";
 
 export default class RXView extends Component {
   constructor(props) {
@@ -36,9 +39,9 @@ export default class RXView extends Component {
 
   render() {
     return (
-      <div>
-        <Paper>
-          <div style={{ display: "flex" }}>
+      <div className="rx-view">
+        <Grid container spacing={3}>
+          <Grid item xs={9}>
             <Button
               style={{ marginLeft: 20 }}
               color="secondary"
@@ -47,35 +50,50 @@ export default class RXView extends Component {
             >
               <FormattedMessage id="assistant.rx" />
             </Button>
-            <div style={{ flexGrow: 1 }} />
+          </Grid>
+          <Grid item xs={3}>
             <ChannelMapView
               ref="channelMap"
               mapping={this.props.fcConfig.channel_map}
               openAssistant={this.props.openAssistant}
               notifyDirty={this.props.notifyDirty}
             />
-          </div>
+          </Grid>
+        </Grid>
+        <Grid container spacing={3}>
           {this.state.mapping && (
-            <RXStickView
-              scale={this.props.fcConfig.rx_scale}
-              channelMap={this.props.fcConfig.channel_map}
-            />
+            <Grid item xs={6}>
+              <Typography variant="h6" style={{ marginLeft: "17%" }}>
+                <FormattedMessage id="RXSticks" />
+              </Typography>
+              <RXStickView
+                scale={this.props.fcConfig.rx_scale}
+                channelMap={this.props.fcConfig.channel_map}
+              />
+            </Grid>
           )}
           {this.state.mapping && (
-            <RXTelemView
-              scale={this.props.fcConfig.rx_scale}
-              channelMap={this.props.fcConfig.channel_map}
-            />
+            <Grid item xs={4}>
+              <Typography variant="h6">
+                <FormattedMessage id="RXChannels" />
+              </Typography>
+              <RXTelemView
+                scale={this.props.fcConfig.rx_scale}
+                channelMap={this.props.fcConfig.channel_map}
+              />
+            </Grid>
           )}
-        </Paper>
-        <Paper>
-          <ConfigListView
-            fcConfig={this.props.fcConfig}
-            features={this.props.features}
-            notifyDirty={this.props.notifyDirty}
-            items={this.props.items}
-          />
-        </Paper>
+        </Grid>
+        <Grid container spacing={3}>
+          <Paper>
+            <ConfigListView
+              fcConfig={this.props.fcConfig}
+              features={this.props.features}
+              notifyDirty={this.props.notifyDirty}
+              items={this.props.items}
+            />
+          </Paper>
+        </Grid>
       </div>
     );
   }
