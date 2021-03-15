@@ -29,7 +29,7 @@ export default class CliView extends Component {
       if (openState) {
         FCConnector.pauseTelemetry();
       } else {
-        FCConnector.resumeTelemetry();
+        FCConnector.sendCommand("exit");
       }
     }
   }
