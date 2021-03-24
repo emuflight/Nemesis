@@ -36,9 +36,7 @@ export default class Connected extends Component {
       currentRoute: props.fcConfig.startingRoute
     };
   }
-  componentWillUnmount() {
-    console.log("test");
-  }
+
   getRouteFeatures(key) {
     if (this.routeFeatures[key]) {
       return this.props.fcConfig.features.values
@@ -129,6 +127,9 @@ export default class Connected extends Component {
     FCConnector.resumeTelemetry();
   }
   render() {
+    window.addEventListener("beforeunload", function(e) {
+      FCConnector.sendCommand("exit");
+    });
     let contents;
     let mergedProfile = this.props.fcConfig;
     switch (this.state.currentRoute.key) {
