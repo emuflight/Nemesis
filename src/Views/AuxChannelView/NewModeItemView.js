@@ -18,7 +18,7 @@ import { IconButton } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import Tooltip from "@material-ui/core/Tooltip";
 import FCConnector from "../../utilities/FCConnector";
-
+import "./NewModeItemView.css";
 const use_cli_directly = true; // enable this to write any changes (move slider, channel) directly to the cli. set to false to use a list in parent component state to later be saved to the CLI (not working)
 // this means any changes in this tab will be written to CLI, even if save is not pressed on this tab. They will save the next time save is pressed.
 // this is the functionality of every other page as well
@@ -188,7 +188,7 @@ export default class NewModeItemView extends Component {
         {this.state.mappings &&
           this.state.mappings.map((mapping, i) => {
             let sliderLeft = 0;
-
+            var active_mode = false;
             //set telemetry min and max
 
             if (mapping.channel > -1 && this.props.telemetry) {
@@ -196,10 +196,20 @@ export default class NewModeItemView extends Component {
                 ((this.props.telemetry[mapping.channel] - this.props.min) *
                   100) /
                 (this.props.max - this.props.min);
+              if (
+                this.props.telemetry[mapping.channel] > mapping.range[0] &&
+                this.props.telemetry[mapping.channel] < mapping.range[1]
+              ) {
+                active_mode = true;
+              } else {
+                active_mode = false;
+              }
             }
-
             return (
-              <AccordionDetails className="details" key={mapping.key}>
+              <AccordionDetails
+                className={active_mode ? "active-mode details" : "details"}
+                key={mapping.key}
+              >
                 <Grid container spacing={1}>
                   <Grid item xs>
                     <HelperSelect
