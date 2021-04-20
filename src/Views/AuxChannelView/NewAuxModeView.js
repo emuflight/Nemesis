@@ -38,9 +38,9 @@ export default class NewAuxModeView extends Component {
   handleRXData = message => {
     try {
       let { rx } = JSON.parse(message.data);
-      if (rx.channels) {
-        //console.log(rx.channels[0]);
-        this.setState({ telemetry: rx.channels });
+      if (rx) {
+        console.log(rx.channels.slice(4));
+        this.setState({ telemetry: rx.channels.slice(4) });
       }
     } catch (ex) {
       console.warn("unable to parse telemetry", ex);
@@ -144,12 +144,12 @@ export default class NewAuxModeView extends Component {
     FCConnector.webSockets.addEventListener("message", this.handleRXData);
 
     //temp disabled for debugging - allows modes in react view to not refresh constantly
-    FCConnector.startTelemetry("rx");
+    FCConnector.startTelemetry("rxslow");
   }
 
   componentWillUnmount() {
     FCConnector.webSockets.removeEventListener("message", this.handleRXData);
-    FCConnector.stopFastTelemetry();
+    FCConnector.stopTelemetry();
   }
 
   render() {

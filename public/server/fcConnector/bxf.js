@@ -519,7 +519,8 @@ const getTelemetry = (device, type) => {
       });
     }
     default:
-    case "rx": {
+    case "rx":
+    case "rxslow": {
       if (log_all_telemetry_requests) console.log("nemesis_rx");
       return sendCommand(device, "nemesis_rx", 40).then(response => {
         if (response) {
