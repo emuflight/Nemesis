@@ -190,13 +190,14 @@ export default class NewModeItemView extends Component {
             let sliderLeft = 0;
 
             //set telemetry min and max
+            /*
             if (mapping.channel > -1 && this.props.telemetry) {
               sliderLeft =
                 ((this.props.telemetry[mapping.channel] - this.props.min) *
                   100) /
                 (this.props.max - this.props.min);
             }
-
+            */
             return (
               <AccordionDetails className="details" key={mapping.key}>
                 <Grid container spacing={1}>

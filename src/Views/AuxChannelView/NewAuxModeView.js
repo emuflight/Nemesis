@@ -38,7 +38,8 @@ export default class NewAuxModeView extends Component {
   handleRXData = message => {
     try {
       let { rx } = JSON.parse(message.data);
-      if (rx) {
+      if (rx.channels) {
+        //console.log(rx.channels[0]);
         this.setState({ telemetry: rx.channels });
       }
     } catch (ex) {
@@ -119,13 +120,13 @@ export default class NewAuxModeView extends Component {
         // only add mapping if range is not "900", "900". This is how BF ignores multiple mappings to ARM.
         //for each 'aux mode' for that flight mode, add it to mappings
         let index = -1;
-        for (var i = 0; i < modeMappings.length; i += 1) {
-          if (modeMappings[i]["value"] === auxModeID) {
-            index = i;
+        for (var j = 0; j < modeMappings.length; j += 1) {
+          if (modeMappings[j]["value"] === auxModeID) {
+            index = j;
             break;
           }
         }
-        if (index != -1) {
+        if (index !== -1) {
           modeMappings[index]["mappings"].push({
             key: mode["id"], // use the aux command id as key for react list
             id: mode["id"],
@@ -143,7 +144,7 @@ export default class NewAuxModeView extends Component {
     FCConnector.webSockets.addEventListener("message", this.handleRXData);
 
     //temp disabled for debugging - allows modes in react view to not refresh constantly
-    //FCConnector.startTelemetry("rx");
+    FCConnector.startTelemetry("rx");
   }
 
   componentWillUnmount() {

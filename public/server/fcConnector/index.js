@@ -303,7 +303,7 @@ module.exports = new class FcConnector {
         bxfConnector.getTelemetry(deviceInfo, type).then(telemData => {
           websockets.notifyTelem(telemData);
         });
-      }, type === "rx" ? 60 : fastIntervalMs);
+      }, type === "rx" ? 600 : fastIntervalMs);
     }
     websockets.wsServer.slowTelemetryInterval = setInterval(() => {
       bxfConnector.getTelemetry(deviceInfo, "status").then(telemData => {
