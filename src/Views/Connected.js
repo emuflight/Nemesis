@@ -127,6 +127,9 @@ export default class Connected extends Component {
     FCConnector.resumeTelemetry();
   }
   render() {
+    window.addEventListener("beforeunload", function(e) {
+      FCConnector.sendCommand("exit");
+    });
     let contents;
     let mergedProfile = this.props.fcConfig;
     switch (this.state.currentRoute.key) {
