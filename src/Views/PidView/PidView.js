@@ -227,6 +227,14 @@ export default class PidsView extends ProfileView {
                 id="axis_lock_hz"
                 notifyDirty={this.props.notifyDirty}
               />
+              <DropdownView
+                notifyDirty={this.props.notifyDirty}
+                item={this.props.fcConfig.anti_gravity_mode}
+              />
+              <StatelessInput
+                id="anti_gravity_threshold"
+                notifyDirty={this.props.notifyDirty}
+              />
               <StatelessInput
                 id="anti_gravity_gain"
                 notifyDirty={this.props.notifyDirty}

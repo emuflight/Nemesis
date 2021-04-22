@@ -665,6 +665,8 @@
   "acc_unarmedcal": "Acc Unarmed Calibration",
   "acro_trainer_debug_axis": "Acro Trainer Debug Axis",
   "anti_gravity_mode": "Anti-gravity Mode",
+  "anti_gravity_threshold": "Anti-gravity Threshold",
+  "anti_gravity_gain": "Anti-gravity Gain",
   "battery_meter": "Voltage Sensor Source",
   "vbat_pid_gain": "VBAT PID Gain",
   "vbat_warning_cell_voltage": "Cell Warning Voltage",

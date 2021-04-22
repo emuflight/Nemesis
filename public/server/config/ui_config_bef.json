@@ -104,6 +104,8 @@
       "emuboost_yaw",
       "axis_lock_multiplier",
       "axis_lock_hz",
+      "anti_gravity_mode",
+      "anti_gravity_threshold",
       "anti_gravity_gain"
     ],
     "RATES": [
