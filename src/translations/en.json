@@ -33,6 +33,7 @@
   "calibration.board": "Run Orientation Assistant",
   "pfc.armingflags.title": "Arming Prevention Flags",
   "RX_FAILSAFE": "No RX Signal",
+  "ORIENTATION": "Gyro Orientation",
   "CLI": "USB Connected",
   "LOAD": "CPU Load",
   "NOPREARM": "Prearm Not Engaged",
