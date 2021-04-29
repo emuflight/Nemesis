@@ -284,8 +284,8 @@ app.get("/dfu", (req, res) => {
 app.get("/telem/:type/start", (req, res) => {
   devices.get((err, connectedDevice) => {
     if (err) return res.status(400).send(err);
-
     if (connectedDevice) {
+      console.log("started telemetry: ", req.params.type);
       fcConnector.startTelemetry(connectedDevice, req.params.type);
       res.sendStatus(202);
     }

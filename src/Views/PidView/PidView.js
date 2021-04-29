@@ -76,33 +76,6 @@ export default class PidsView extends ProfileView {
                 }
                 label={<FormattedMessage id="iterm_rotation" />}
               />
-              {this.props.fcConfig.nfe_racermode && (
-                <FormControlLabel
-                  control={
-                    <Switch
-                      id={this.props.fcConfig.nfe_racermode.id}
-                      checked={
-                        this.props.fcConfig.nfe_racermode.current === "ON"
-                      }
-                      onChange={(event, isInputChecked) => {
-                        this.props.fcConfig.nfe_racermode.current = isInputChecked
-                          ? "ON"
-                          : "OFF";
-                        this.forceUpdate();
-                        FCConnector.setValue(
-                          "nfe_racermode",
-                          this.props.fcConfig.nfe_racermode.current
-                        ).then(() => {
-                          this.props.handleSave().then(() => {
-                            //this.updatePidValues("1");
-                          });
-                        });
-                      }}
-                    />
-                  }
-                  label={<FormattedMessage id="nfe_racermode" />}
-                />
-              )}
               <FormControlLabel
                 control={
                   <Switch
@@ -137,20 +110,6 @@ export default class PidsView extends ProfileView {
                 }
               />
             </div>
-            <GyroSyncDenom
-              notifyDirty={this.props.notifyDirty}
-              item={this.props.fcConfig.gyro_sync_denom}
-            />
-            <PidProcessDenom
-              notifyDirty={this.props.notifyDirty}
-              item={this.props.fcConfig.pid_process_denom}
-            />
-            {this.props.fcConfig.buttered_pids && (
-              <DropdownView
-                notifyDirty={this.props.notifyDirty}
-                item={this.props.fcConfig.buttered_pids}
-              />
-            )}
             <DropdownView
               notifyDirty={this.props.notifyDirty}
               item={this.props.fcConfig.motor_pwm_protocol}
@@ -253,23 +212,31 @@ export default class PidsView extends ProfileView {
                 notifyDirty={this.props.notifyDirty}
               />
               <StatelessInput
-                id="emu_boost"
+                id="emuboost"
                 notifyDirty={this.props.notifyDirty}
               />
               <StatelessInput
-                id="emu_boost_limit"
+                id="emuboost_yaw"
                 notifyDirty={this.props.notifyDirty}
               />
               <StatelessInput
-                id="emu_boost_yaw"
+                id="axis_lock_multiplier"
                 notifyDirty={this.props.notifyDirty}
               />
               <StatelessInput
-                id="emu_boost_limit_yaw"
+                id="axis_lock_hz"
+                notifyDirty={this.props.notifyDirty}
+              />
+              <DropdownView
+                notifyDirty={this.props.notifyDirty}
+                item={this.props.fcConfig.anti_gravity_mode}
+              />
+              <StatelessInput
+                id="anti_gravity_threshold"
                 notifyDirty={this.props.notifyDirty}
               />
               <StatelessInput
-                id="feathered_pids"
+                id="anti_gravity_gain"
                 notifyDirty={this.props.notifyDirty}
               />
             </div>

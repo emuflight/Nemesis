@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Paper from "@material-ui/core/Paper";
-import AuxChannelView from "./AuxChannelView/AuxChannelView";
+import NewAuxModeView from "./AuxChannelView/NewAuxModeView";
 import ConfigListView from "./ConfigListView/ConfigListView";
 import FeaturesView from "./FeaturesView/FeaturesView";
 import PortsView from "./PortsView/PortsView";
@@ -127,6 +127,9 @@ export default class Connected extends Component {
     FCConnector.resumeTelemetry();
   }
   render() {
+    window.addEventListener("beforeunload", function(e) {
+      FCConnector.sendCommand("exit");
+    });
     let contents;
     let mergedProfile = this.props.fcConfig;
     switch (this.state.currentRoute.key) {
@@ -209,7 +212,7 @@ export default class Connected extends Component {
       }
       case "MODES":
         contents = (
-          <AuxChannelView
+          <NewAuxModeView
             fcConfig={mergedProfile}
             auxScale={mergedProfile.rx_scale}
             auxModeList={mergedProfile.aux_channel_modes}

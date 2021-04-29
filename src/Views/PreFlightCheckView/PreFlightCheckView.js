@@ -68,7 +68,7 @@ export default class PreFlightCheckView extends Component {
                   onClick={() => {
                     FCConnector.stopTelemetry();
                     this.setState({ calibrating: true });
-                    FCConnector.sendCommand("msp 205").then(() => {
+                    FCConnector.sendCommand("nemesis_calib_acc").then(() => {
                       this.setState({ calibrating: false });
                       FCConnector.startTelemetry("attitude");
                     });

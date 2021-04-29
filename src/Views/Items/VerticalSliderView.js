@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Slider from "@material-ui/lab/Slider";
+import { Slider } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import { FormattedMessage } from "react-intl";
@@ -39,7 +39,8 @@ export default class VerticalSliderView extends Component {
           min={this.parser(this.props.item.min)}
           max={this.parser(this.props.item.max)}
           step={this.props.item.step}
-          vertical={this.props.item.axis === "y"}
+          //vertical={this.props.item.axis === "y"}
+          orientation="vertical"
           reverse="true"
           onChange={(event, inputVal) => {
             this.setState({ inputVal: this.parser(inputVal) });

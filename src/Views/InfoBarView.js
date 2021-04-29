@@ -103,6 +103,22 @@ export default class InfoBarView extends Component {
               />
             </Typography>
           )}
+          {this.state.telemetry.vbat !== undefined && (
+            <Typography
+              style={{
+                position: "relative",
+                margin: "0 10px",
+                whiteSpace: "nowrap"
+              }}
+            >
+              <FormattedMessage
+                id="info.vbat"
+                values={{
+                  vbat: parseFloat(this.state.telemetry.vbat).toFixed(1)
+                }}
+              />
+            </Typography>
+          )}
           {this.state.telemetry.loop && (
             <Typography>
               ,&nbsp;

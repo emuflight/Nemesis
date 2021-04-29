@@ -29,7 +29,7 @@ export default class CliView extends Component {
       if (openState) {
         FCConnector.pauseTelemetry();
       } else {
-        FCConnector.resumeTelemetry();
+        FCConnector.sendCommand("exit");
       }
     }
   }
@@ -49,34 +49,54 @@ export default class CliView extends Component {
   }
   handleKeyDown = e => {
     if (e.keyCode === 38) {
-      let oldVal = this.prevCommands[Math.min(--this.commandIndex, 0)];
+      // ARROW UP key
+      let oldVal = this.prevCommands[this.commandIndex];
       e.target.value = oldVal || e.target.value;
-    } else if (e.keyCode === 40) {
-      let oldVal = this.prevCommands[
-        Math.min(++this.commandIndex, this.prevCommands.length)
-      ];
-      e.target.value = oldVal || e.target.value;
-    } else if (e.keyCode === 13) {
-      if (e.target.value !== this.prevCommands[this.prevCommands.length]) {
-        this.prevCommands.push(e.target.value);
-        this.commandIndex = this.prevCommands.length;
+      this.setState({ command: e.target.value });
+      if (this.commandIndex > 0) {
+        --this.commandIndex;
       }
-      e.preventDefault();
-      e.stopPropagation();
-      e.target.value = "";
-      this.setState({ disabled: true });
-      if (this.state.command) {
-        let commands = this.state.command.split(/\r|\n/gim).filter(com => com);
-        this.setState({ allowClose: false });
-        FCConnector.sendBulkCommands(
-          commands.filter(line => !line.startsWith("#")),
-          notifyResp => {
-            this.appendCliBuffer(notifyResp);
-          }
-        ).then(() => {
-          this.setState({ disabled: false });
-          this.setState({ allowClose: true });
-        });
+    } else if (e.keyCode === 40) {
+      // ARROW DOWN key
+      if (this.commandIndex < this.prevCommands.length - 1) {
+        ++this.commandIndex;
+      }
+      let oldVal = this.prevCommands[this.commandIndex];
+      e.target.value = oldVal || e.target.value;
+      this.setState({ command: e.target.value });
+    } else if (e.keyCode === 13) {
+      // ENTER key
+      if (e.target.value === "") {
+        e.preventDefault();
+        e.stopPropagation();
+        e.target.value = "";
+        this.setState({ command: "" });
+      } else {
+        if (
+          e.target.value !== this.prevCommands[this.prevCommands.length - 1]
+        ) {
+          this.prevCommands.push(e.target.value);
+        }
+        this.commandIndex = this.prevCommands.length - 1;
+        e.preventDefault();
+        e.stopPropagation();
+        e.target.value = "";
+        this.setState({ disabled: true });
+        if (this.state.command) {
+          let commands = this.state.command
+            .split(/\r|\n/gim)
+            .filter(com => com);
+          this.setState({ allowClose: false });
+          FCConnector.sendBulkCommands(
+            commands.filter(line => !line.startsWith("#")),
+            notifyResp => {
+              this.appendCliBuffer(notifyResp);
+            }
+          ).then(() => {
+            this.setState({ disabled: false });
+            this.setState({ allowClose: true });
+          });
+        }
       }
     }
   };

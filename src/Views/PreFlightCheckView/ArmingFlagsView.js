@@ -47,13 +47,13 @@ export default class ArmingFlagsView extends Component {
     try {
       let { armingFlags, type, debug } = JSON.parse(message.data);
       if (type === "status") {
-        //rotate the model on the Y axis so it's oriented correctly
-
+        let armingFlagsList = [];
+        for (var x = 0; x < armingFlags.length; x++) {
+          armingFlagsList.push({ id: armingFlags[x], label: armingFlags[x] });
+        }
         this.setState({
           debug,
-          armingFlags: this.staticFlags.concat(
-            armingFlagsList.filter(flag => armingFlags & flag.mask)
-          )
+          armingFlags: this.staticFlags.concat(armingFlagsList)
         });
       }
     } catch (ex) {
@@ -121,86 +121,3 @@ export default class ArmingFlagsView extends Component {
     );
   }
 }
-
-const armingFlagsList = [
-  {
-    mask: 1 << 0,
-    label: "NO_GYRO"
-  },
-  {
-    mask: 1 << 1,
-    label: "FAILSAFE"
-  },
-  {
-    mask: 1 << 2,
-    label: "RX_FAILSAFE"
-  },
-  {
-    mask: 1 << 3,
-    label: "BAD_RX_RECOVERY"
-  },
-  {
-    mask: 1 << 4,
-    label: "BOXFAILSAFE"
-  },
-  {
-    mask: 1 << 5,
-    label: "ANTITAZ"
-  },
-  {
-    mask: 1 << 6,
-    label: "THROTTLEUP"
-  },
-  {
-    mask: 1 << 7,
-    label: "SMALLANGLE"
-  },
-  {
-    mask: 1 << 8,
-    label: "BOOT_GRACE_TIME"
-  },
-  {
-    mask: 1 << 9,
-    label: "NOPREARM"
-  },
-  {
-    mask: 1 << 10,
-    label: "LOAD"
-  },
-  {
-    mask: 1 << 11,
-    label: "CALIBRATING"
-  },
-  {
-    mask: 1 << 12,
-    label: "CLI"
-  },
-  {
-    mask: 1 << 13,
-    label: "CMS_MENU"
-  },
-  {
-    mask: 1 << 14,
-    label: "OSD_MENU"
-  },
-  {
-    mask: 1 << 15,
-    label: "BST"
-  },
-  {
-    mask: 1 << 16,
-    label: "MSP"
-  },
-  {
-    mask: 1 << 17,
-    label: "PARALYZE"
-  },
-  {
-    mask: 1 << 18,
-    label: "GPS"
-  },
-  {
-    mask: 1 << 19,
-    label: "ARM_SWITCH"
-  }
-];

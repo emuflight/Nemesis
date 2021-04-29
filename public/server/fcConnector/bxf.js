@@ -1,8 +1,12 @@
 const SerialPort = require("serialport");
 const imufFirmware = require("../firmware/imuf");
+fs = require("fs"); // temp for debugging json output
 const imufCaesar = require("../firmware/imuf/caesar");
 let openConnection;
-
+const log_serial_commands = false; // enable to console.log each command request port, disable for less log output
+const log_config_to_file = false; //enable to console.log the config command response and save it to debug.txt
+const log_accelerometer_attitude = false; // enable to console.log the x,y,z and buffer length of the accelerometer reading
+const log_all_telemetry_requests = false; //enable to console.log every request, for debugging pause/resume telemetry. caution: set telemetry speed to very slow (500ms) to not overload console
 const setupConnection = device => {
   return new Promise((resolve, reject) => {
     const connect = () => {
@@ -14,7 +18,8 @@ const setupConnection = device => {
               console.log("OPEN ERROR: ", openError);
               reject(openError);
             } else {
-              openConnection.write("!\n", cliError => {
+              openConnection.write("#\n", cliError => {
+                // send # and carriage return, attempt to open CLI. If this doesn't initialize it, the getConfig command will send another #\n
                 if (cliError) {
                   console.log("couldn't get into cli mode: ", cliError);
                   reject(cliError);
@@ -27,7 +32,8 @@ const setupConnection = device => {
           });
         } catch (ex) {
           console.log("ALREADY OPEN!!!!!", ex);
-          openConnection.write("!\n", cliError => {
+          openConnection.write("#\n", cliError => {
+            console.log("sent # and carriage - 2");
             if (cliError) {
               console.log("couldn't get into cli mode: ", cliError);
               reject(cliError);
@@ -52,16 +58,31 @@ const setupConnection = device => {
       // openConnection.setEncoding('utf8');
       setTimeout(() => connect(), 300);
     } else {
-      console.log("using open port: ", device.comName);
+      if (log_serial_commands) {
+        console.log("using open port: ", device.comName);
+      }
       resolve(openConnection);
     }
   });
 };
 let retry = 5;
 const getConfig = device => {
-  return sendCommand(device, "config", 800).then(conf => {
+  return sendCommand(device, "#\nconfig", 1500).then(conf => {
+    // send # and carriage return before config command to help initialize the CLI - fix trouble with 1.0.0
     try {
-      //trim off " config\n";
+      if (conf.length == 0) {
+        console.log("CONF LENGTH IS ZERO");
+        sendCommand(device, "\n#\n");
+      }
+      if (log_config_to_file) {
+        fs.writeFile("debug.txt", conf, function(err) {
+          if (err) return console.log(err);
+          console.log("wrote config to file");
+        });
+        console.log(conf); // also console.log the config
+      }
+
+      //trim off " config\n" from incoming json config;
       let config = JSON.parse(conf.slice(conf.indexOf("{"), conf.length - 3));
       retry = 3;
       return sendCommand(device, "mixer").then(mixer => {
@@ -109,9 +130,11 @@ const runQueue = next => {
   currentCommand = next;
   setupConnection(next.device)
     .then(port => {
-      console.log(
-        `sending command: ${next.command} on port ${next.device.comName}`
-      );
+      if (log_serial_commands) {
+        console.log(
+          `sending command: ${next.command} on port ${next.device.comName}`
+        );
+      }
       port.write(`${next.command}\n`, err => {
         if (err) {
           console.log("WRITE ERROR: ", err);
@@ -129,7 +152,7 @@ const runQueue = next => {
               let msg = more.toString(next.encode);
               currentRecBuffer += msg;
             } else {
-              currentRecBuffer = more;
+              currentRecBuffer = cleanRecBuffer(more);
             }
           } else {
             interval && clearInterval(interval);
@@ -312,7 +335,7 @@ const setChannelMap = (device, newmap) => {
   return sendCommand(device, `map ${newmap}`);
 };
 const getModes = device => {
-  // return sendCommand(device, `map`);
+  return sendCommand(device, `aux`);
 };
 const setMode = (device, modeVals) => {
   return sendCommand(device, `aux ${modeVals.split("|").join(" ")}`, 20);
@@ -357,72 +380,116 @@ const storage = (device, command) => {
   }
 };
 
+const cleanRecBuffer = buffer => {
+  //Clear LF (line feed, 0x0a) from MSP response buffers
+  //This is a workaround to fix the \r\n coming back from MSP responses after new CLI initialization for 1.0.0
+  let bufferAsStr = buffer.toString("hex");
+  let bufferCleaned = "";
+  for (var i = 0; i < bufferAsStr.length; i += 2) {
+    var hexByteStr = bufferAsStr.slice(i, i + 2);
+    if (hexByteStr != "0a") {
+      bufferCleaned += hexByteStr;
+    }
+  }
+  return Buffer.from(bufferCleaned, "hex");
+};
+
+const clean_comments = response => {
+  let output = "";
+  lines = response.split("\n");
+  lines.forEach(function(line) {
+    if (line.charAt(0) != "#") {
+      output += line; // + '\n';
+    }
+  });
+  return output;
+};
 const getTelemetry = (device, type) => {
   switch (type) {
     case "status": {
-      return sendCommand(device, `msp 150`, 30, false).then(status => {
-        if (status) {
-          console.log("nemesis_status");
+      if (log_all_telemetry_requests) console.log("nemesis_status");
+      return sendCommand(device, "nemesis_status", 30).then(response => {
+        if (response) {
           try {
-            let data = new DataView(new Uint8Array(status).buffer, 12);
-            let modeFlasCount = data.getUint8(15);
-            let modeflags = [];
-            let offset = 16;
-            for (var i = 0; i < modeFlasCount; i++) {
-              modeflags.push(data.getUint8(offset++));
-            }
+            telem = JSON.parse(
+              clean_comments(
+                response.slice(response.indexOf("{"), response.length - 3)
+              )
+            );
+            let modeFlagsCount = telem.arming_disable_flags_count;
             return {
               type: "status",
-              cpu: data.getUint16(11, 1),
-              modeflags: modeflags,
-              flagCount: data.getUint8(offset++),
-              armingFlags: data.getUint32(offset, 1)
+              cpu: telem.cpu,
+              modeflags: "",
+              flagCount: telem.arming_disable_flags_count,
+              armingFlags: telem.arming_disable_flags,
+              vbat: telem.vbat / 10
             };
           } catch (ex) {
             console.log(ex);
+            console.log(response);
           }
         }
       });
     }
     case "attitude": {
-      return sendCommand(device, `msp 108`, 40, false).then(telem => {
-        if (telem) {
+      if (log_all_telemetry_requests) console.log("nemesis_attitude");
+      return sendCommand(device, "nemesis_attitude", 40).then(response => {
+        if (response) {
           try {
-            let data = new DataView(new Uint8Array(telem).buffer, 12);
+            telem = JSON.parse(
+              clean_comments(
+                response.slice(response.indexOf("{"), response.length - 3)
+              )
+            );
+            if (log_accelerometer_attitude) {
+              console.log(
+                "attitude: ",
+                telem.attitude[0] / 10,
+                telem.attitude[1] / 10,
+                telem.attitude[2]
+              );
+            }
             return {
               attitude: {
-                x: data.getInt16(0, 1) / 10,
-                y: data.getInt16(2, 1) / 10,
-                z: data.getInt16(4, 1)
+                x: telem.attitude[0] / 10,
+                y: telem.attitude[1] / 10,
+                z: telem.attitude[2]
               }
             };
           } catch (ex) {
+            console.log(response);
             console.log(ex);
           }
         }
       });
     }
     case "gyro": {
-      return sendCommand(device, `msp 102`, 50, false).then(telem => {
-        if (telem) {
+      if (log_all_telemetry_requests) console.log("nemesis_gyro");
+      return sendCommand(device, "nemesis_gyro", 50).then(response => {
+        if (response) {
           try {
-            let data = new DataView(new Uint8Array(telem).buffer, 12);
+            telem = JSON.parse(
+              clean_comments(
+                response.slice(response.indexOf("{"), response.length - 3)
+              )
+            );
             return {
               type: "gyro",
               acc: {
-                x: data.getInt16(0, 1) / 512,
-                y: data.getInt16(2, 1) / 512,
-                z: data.getInt16(4, 1) / 512
+                x: telem.acc[0],
+                y: telem.acc[1],
+                z: telem.acc[2]
               },
               gyro: {
-                x: data.getInt16(6, 1) * (4 / 16.4),
-                y: data.getInt16(8, 1) * (4 / 16.4),
-                z: data.getInt16(10, 1) * (4 / 16.4)
+                x: telem.gyro[0],
+                y: telem.gyro[1],
+                z: telem.gyro[2]
               },
               mag: {
-                x: data.getInt16(12, 1) / 1090,
-                y: data.getInt16(14, 1) / 1090,
-                z: data.getInt16(16, 1) / 1090
+                x: telem.mag[0],
+                y: telem.mag[1],
+                z: telem.mag[2]
               }
             };
           } catch (ex) {
@@ -432,38 +499,50 @@ const getTelemetry = (device, type) => {
       });
     }
     case "vbat": {
-      return sendCommand(device, `msp 130`, 50, false).then(vbatData => {
-        let data = new DataView(new Uint8Array(vbatData).buffer, 12);
+      if (log_all_telemetry_requests) console.log("nemesis_vbat");
+      return sendCommand(device, "nemesis_vbat", 50).then(response => {
+        if (response) {
+          telem = JSON.parse(
+            clean_comments(
+              response.slice(response.indexOf("{"), response.length - 3)
+            )
+          );
+        }
         return {
           type: "vbat",
-          cells: data.getUint8(0),
-          cap: data.getUint16(1, 1),
-          volts: data.getUint8(3) / 10.0,
-          mah: data.getUint16(4, 1),
-          amps: data.getUint16(6, 1) / 100
+          cells: telem.cells,
+          cap: telem.cap,
+          volts: telem.volts,
+          mah: telem.mah,
+          amps: telem.amps
         };
       });
     }
     default:
-    case "rx": {
-      return sendCommand(device, `msp 105`, 50, false).then(rcData => {
-        let channels = [];
-        try {
-          let data = new DataView(new Uint8Array(rcData).buffer, 12);
-          let active = (data.byteLength - 4) / 2;
-          for (var i = 0; i < active; i++) {
-            channels[i] = data.getUint16(i * 2, 1);
+    case "rx":
+    case "rxslow": {
+      if (log_all_telemetry_requests) console.log("nemesis_rx");
+      return sendCommand(device, "nemesis_rx", 40).then(response => {
+        if (response) {
+          try {
+            telem = JSON.parse(
+              clean_comments(
+                response.slice(response.indexOf("{"), response.length - 3)
+              )
+            );
+          } catch (ex) {
+            console.log(ex);
+            console.log(response);
           }
-        } catch (ex) {
-          console.log(ex);
+          return {
+            rx: {
+              min: 800,
+              max: 2200,
+              channels: telem.rx, //channels
+              rcCommand: telem.rcCommand
+            }
+          };
         }
-        return {
-          rx: {
-            min: 800,
-            max: 2200,
-            channels
-          }
-        };
       });
     }
   }

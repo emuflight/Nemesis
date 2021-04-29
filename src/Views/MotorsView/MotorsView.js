@@ -4,7 +4,8 @@ import ConfigListView from "../ConfigListView/ConfigListView";
 import Paper from "@material-ui/core/Paper";
 import MotorsSlidersView from "./MotorsSlidersView";
 import { FormattedMessage } from "react-intl";
-
+import StatelessInput from "../Items/StatelessInput";
+import { Typography } from "@material-ui/core";
 export default class MotorsView extends Component {
   constructor(props) {
     super(props);
@@ -48,6 +49,23 @@ export default class MotorsView extends Component {
             <div style={{ flexGrow: 1 }} />
           </div>
           {this.state.showMotorSliders && <MotorsSlidersView />}
+        </Paper>
+        <Paper style={{ marginLeft: 62 }}>
+          <Typography variant="h6">
+            <FormattedMessage id="ORIENTATION" />
+          </Typography>
+          <StatelessInput
+            id="align_board_yaw"
+            notifyDirty={this.props.notifyDirty}
+          />
+          <StatelessInput
+            id="align_board_pitch"
+            notifyDirty={this.props.notifyDirty}
+          />
+          <StatelessInput
+            id="align_board_roll"
+            notifyDirty={this.props.notifyDirty}
+          />
         </Paper>
         <Paper>
           <ConfigListView

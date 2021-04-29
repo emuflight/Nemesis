@@ -3,6 +3,9 @@
     display: grid;
   }
   flex-basis: 100%;
+  height: 90%;
+  width: 100%;
+  overflow-y: auto;
 }
 .config-list-view-sliders {
   .p_roll,

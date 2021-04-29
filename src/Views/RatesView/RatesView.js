@@ -322,7 +322,6 @@ export default class RatesView extends ProfileView {
             />
           )}
         </Paper>
-
         <div style={{ display: "flex" }}>
           <div style={{ display: "flex", flex: 1, flexDirection: "column" }}>
             <Paper>
@@ -441,9 +440,21 @@ export default class RatesView extends ProfileView {
                   item={fields.rate_end_weight}
                 />
               </Paper>
+              <Paper>
+                <Typography variant="h6">
+                  <FormattedMessage id="dual_axis_steering" />
+                </Typography>
+                <StatelessFloat
+                  notifyDirty={this.props.notifyDirty}
+                  item={fields.add_roll_to_yaw}
+                />
+                <StatelessFloat
+                  notifyDirty={this.props.notifyDirty}
+                  item={fields.add_yaw_to_roll}
+                />
+              </Paper>
             </div>
           </div>
-
           <Paper>
             <AreaChart
               xType={"text"}

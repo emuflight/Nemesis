@@ -25,7 +25,7 @@ export default class RXTelemView extends Component {
     try {
       let { rx } = JSON.parse(message.data);
       if (rx) {
-        this.setState({ channels: rx.channels });
+        this.setState({ channels: rx.channels }); //.slice(4)
       }
     } catch (ex) {
       console.warn("unable to parse telemetry", ex);
@@ -33,12 +33,12 @@ export default class RXTelemView extends Component {
   };
   componentDidMount() {
     FCConnector.webSockets.addEventListener("message", this.handleRXData);
-    FCConnector.startTelemetry("rx");
+    //FCConnector.startTelemetry("rx"); //RxStickView will also be active and has already started telemetry
   }
 
   componentWillUnmount() {
     FCConnector.webSockets.removeEventListener("message", this.handleRXData);
-    FCConnector.stopFastTelemetry();
+    //FCConnector.stopFastTelemetry(); //Only one stopFastTelemetry() is needed and it is done by RXStickView
   }
   render() {
     return (
@@ -61,18 +61,20 @@ export default class RXTelemView extends Component {
                   {channel}
                 </Typography>
                 <Typography variant="caption">
-                  <FormattedMessage
-                    id={
-                      i < 4
-                        ? `rx.channel.${this.state.mapping[i]}`
-                        : "rx.channel.aux-label"
-                    }
-                    values={i > 3 && { number: i - 3 }}
-                  />
+                  {i === 0 && <FormattedMessage id={"rx.channel.A"} />}
+                  {i === 1 && <FormattedMessage id={"rx.channel.E"} />}
+                  {i === 2 && <FormattedMessage id={"rx.channel.R"} />}
+                  {i === 3 && <FormattedMessage id={"rx.channel.T"} />}
+                  {i > 3 && (
+                    <FormattedMessage
+                      id={"rx.channel.aux-label"}
+                      values={i > -1 && { number: i }}
+                    />
+                  )}
                 </Typography>
                 <LinearProgress
                   variant="determinate"
-                  style={{ height: 20, margin: 10 }}
+                  style={{ height: 5, margin: 2 }}
                   value={this.normalize(channel)}
                 />
               </div>
