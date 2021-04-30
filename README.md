@@ -1,7 +1,9 @@
 # Nemesis - the HelioRC/Pegasus fork
-Death of Sol :(
+* Death of Sol :( 
+* Nemesis is EmuFlight's future configurator that is stull under develpment.
 
-## Linux, one O.S. to rule them all.
+
+## Linux Serial/USB requirements for both running and development:
 Edit/create `udev` rules: (use vi, nano, or any text editor)
 ```
 sudo nano /etc/udev/rules.d/50-myusb.rules
@@ -36,25 +38,30 @@ If it fails to fully run properly, then extract the contents and run directly:
 ```
 ./Nemesis*.AppImage --appimage-extract
 cd sqaush-fs
-./pegasus
+./nemesis
 ```
 
-### Linux Development - requires nodejs, npm, and obsolete packages.
+#  Development - requires nodejs, npm, and obsolete packages.
 
+## Global `git` Tips for development.
 ```
+git config --global core.autocrlf input
+git config --global core.whitespace cr-at-eol
+git config --global core.filemode false
+```
+
+## Linux, one O.S. to rule them all.
+```
+#install build tools
 #libudev-dev is essential for USB (nodejs' usb)
 sudo apt-get install build-essential git libudev-dev nodejs npm yarn
-npm install -g npm  #in some cases may need sudo -- this command updates npm
 
-#git clone https://github.com/heliorc/pegasus.git
 git clone https://github.com/emuflight/Nemesis.git
 
-#cd pegasus
 cd Nemesis
 
-#purge/reset nodejs packages if you installed updated versions by accident
-git reset HEAD --hard
-rm -rf node_modules/
+#currently npm v6 required
+npm install -g npm@6  #in some cases may need sudo
 
 #set python2
 npm config set python /usr/bin/python2.7
@@ -63,16 +70,12 @@ npm config set python /usr/bin/python2.7
 npm install -g n    #in some cases may need sudo
 sudo n 12           #sets node version 12
 
+#occasionally purge node_modules when versions cause problem.
+rm -rf node_modules/
+
 #install required node modules
 npm install usb@1.6.1 --save
 npm install --save --save-exact --include=dev #installs exact versions, not updated packages
-
-#install peers that are not installed by default
-#npm install electron@~5.0.0  #failed w/ v5
-#[old:] npm install ajv@6.12.2 electron@4.2.12 node-sass@4.14.1 electron-builder@22.7.0 node-hid@0.7.9 electron-updater@4.3.1 usb@1.6.1
-
-#disable annoying desktop shortcut creation for election apps
-touch $HOME/.local/share/appimagekit/no_desktopintegration
 
 #run in dev-mode
 rm -rf ./build/
@@ -90,6 +93,9 @@ rm -rf ./dist/
 npm run build && npm run electron-pack && npm run dist
 ls -h ./dist/
 
+#disable annoying desktop shortcut creation for election apps
+touch $HOME/.local/share/appimagekit/no_desktopintegration
+
 #run it
 chmod +x dist/Nemesis*.AppImage
 ./dist/Nemesis-*.AppImage
@@ -104,7 +110,7 @@ eject      electron-pack     install            preship           start
 ```
 
 
-## MacOS, the bastardized O.S. formerly known as BSD
+## MacOS, the bastardized O.S. formerly known as BSD.
 
 install libusb, npm and yarn using brew
 ```
@@ -124,14 +130,9 @@ npm install -g n
 sudo n 12 # sets node version 12
 ```
 
-install peer dependencies not automatically installed
+install required node modules
 ```
-npm install ajv@6.12.2 electron@4.2.12 node-sass@4.14.1 electron-builder@22.7.0 node-hid@0.7.9 electron-updater@4.3.1 usb@1.6.1
-```
-
-install rest of dependencies
-```
-npm install --save --save-exact  #installs exact versions, not updated packages
+npm install --include=dev
 ```
 
 start development version
@@ -174,12 +175,11 @@ Install Windows build tools. (run from either administrative command prompt, or 
  npm install -g --production windows-build-tools --vs2015
 ```
 
-Install Yarn, Configure python, install peer dependencies, and the installer script (this part can be done from regular command line):
+Install Yarn, Configure python, install node modules (this part can be done from regular command line):
 ```
 npm install yarn
 npm config set python %USERPROFILE%\.windows-build-tools\python27\python.exe
-npm install ajv@6.12.2 electron@4.2.12 node-sass@4.14.1 electron-builder@22.7.0 node-hid@0.7.9 electron-updater@4.3.1 usb@1.6.1
-npm install --save --save-exact
+npm install --include=dev
 ```
 
 start development version
