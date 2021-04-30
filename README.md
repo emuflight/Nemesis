@@ -161,7 +161,7 @@ https://git-scm.com/download/win
 Install Node.js 12 for Windows.
 This particular Node.js version is required. If you have other versions of Node installed, consider using nvm to manage multiple installs
 ```
-https://nodejs.org/dist/latest-v12.x/node-v12.20.0-x64.msi
+https://nodejs.org/dist/latest-v12.x/
 ```
 
 git clone the repository (or your fork):
