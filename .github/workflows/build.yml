@@ -13,32 +13,37 @@ on:
 
 name: Build Nemesis
 jobs:
+
   build:
     timeout-minutes: 40
-    continue-on-error: false
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: true
       max-parallel: 3
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
+        #os: [ubuntu-18.04, macos-10.15, windows-2016]
+    continue-on-error: true
+
     steps:
       - name: git checkout
-        continue-on-error: false
         uses: actions/checkout@master
+        continue-on-error: false
+
       - name: get tag & short-sha
-        continue-on-error: true
         run: |
           echo "REVISION_TAG=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
           echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+        continue-on-error: true
+
       - name: setup node
-        continue-on-error: false
         uses: actions/setup-node@master
         with:
           node-version: '12'
+        continue-on-error: false
+
       # for debugging
       - name: show variables
-        continue-on-error: true
         run: |
           echo "Build: ${{ github.RUN_NUMBER }}"
           echo "Commit: ${{ github.SHA }}"
@@ -47,42 +52,69 @@ jobs:
           echo "Tag: ${{ env.REVISION_TAG }}"
           echo "Actor: ${{ github.ACTOR }}"
           echo "Repo: ${{ github.REPOSITORY }}"
+        continue-on-error: true
 
       - name: Build Linux
-        continue-on-error: true
         if: ${{ startsWith(matrix.os, 'ubuntu') }}
+        env:
+          CI: false
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           rm -rf ./build/
           rm -rf ./dist/
+          npm install -g npm@6
           npm config set python /usr/bin/python2.7
           npm install -g n
           sudo n 12
-          npm install --save --save-exact
-          npm run electron-pack && npm run dist
+          npm install usb@1.6.1 --save
+          npm install --save --save-exact --include=dev
+          echo "############ pack #############"
+          npm run electron-pack
+          echo "############ dist #############"
+          npm run dist --publish=never
+        continue-on-error: false
 
       - name: Build OSX
-        continue-on-error: true
         if: ${{ startsWith(matrix.os, 'macos') }}
+        env:
+          CI: false
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           rm -rf ./build/
           rm -rf ./dist/
           #brew install libusb
+          npm install -g npm@6
           npm config set python /usr/bin/python2.7
           npm install -g n
           sudo n 12
-          npm install --save --save-exact
-          npm run electron-pack && npm run dist
+          npm install usb@1.6.1 --save
+          npm install --save --save-exact --include=dev
+          echo "############ pack #############"
+          npm run electron-pack
+          echo "############ dist #############"
+          npm run dist --publish=never
+        continue-on-error: false
+
 
       - name: Build Windows
-        continue-on-error: true
         if: ${{ startsWith(matrix.os, 'windows') }}
+        env:
+          CI: false
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           rm -Confirm:$false -Recurse ./build -ErrorAction:SilentlyContinue
           rm -Confirm:$false -Recurse ./dist -ErrorAction:SilentlyContinue
           #npm install yarn
+          #npm install -g --production windows-build-tools
+          npm install -g npm@6
           npm config set python %USERPROFILE%\.windows-build-tools\python27\python.exe
-          npm install --save --save-exact
-          npm run electron-pack && npm run dist
+          npm install usb@1.6.1 --save
+          npm install --save --save-exact --include=dev
+          echo "############ pack #############"
+          npm run electron-pack
+          echo "############ dist #############"
+          npm run dist --publish=never
+        continue-on-error: false
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@master
@@ -97,29 +129,34 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/')
     needs: build
     timeout-minutes: 10
-    continue-on-error: true
+    continue-on-error: false
     runs-on: ubuntu-latest
     steps:
+
       # for debugging
       - name: show variables
-        continue-on-error: true
         run: |
           echo "Build: ${{ github.RUN_NUMBER }}"
           echo "Commit: ${{ github.SHA }}"
           echo "Ref: ${{ github.REF}}"
           echo "Actor: ${{ github.ACTOR }}"
           echo "Repo: ${{ github.REPOSITORY }}"
+        continue-on-error: true
+
       - name: download artifacts
-        continue-on-error: false
         uses: actions/download-artifact@master
         with:
           name: EmuConfigurator-${{ github.ACTOR }}-${{ github.RUN_NUMBER }}
+        continue-on-error: false
+
       - name: list artifacts
-        continue-on-error: true
         run: |
           ls -lh ./*.???
-      - name: draft release
         continue-on-error: true
+
+      - name: draft release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         uses: softprops/action-gh-release@master
         if: startsWith(github.ref, 'refs/tags/')
         with:
@@ -134,5 +171,4 @@ jobs:
             ### Ref: ${{ github.REF}}
             ### Actor: ${{ github.ACTOR }}
             ### Repo: ${{ github.REPOSITORY }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true
