@@ -74,7 +74,8 @@ sudo n 12           #sets node version 12
 rm -rf node_modules/
 
 #install required node modules
-npm install --include=dev
+npm install usb@1.6.1 --save
+npm install --save --save-exact --include=dev #installs exact versions, not updated packages
 
 #run in dev-mode
 rm -rf ./build/
