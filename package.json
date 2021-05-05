@@ -111,7 +111,7 @@
   "devDependencies": {
     "concurrently": "3.5.0",
     "electron": "^4.2.12",
-    "electron-builder": "^22.9.1",
+    "electron-builder": "^22.7.0",
     "electron-packager": "12.2.0",
     "electron-react-devtools": "^0.5.3",
     "electron-rebuild": "1.8.2",
