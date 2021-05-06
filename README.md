@@ -75,10 +75,6 @@ sudo n 12           #sets node version 12
 rm -rf node_modules/
 
 #install required node modules
-#old:
-#npm install ajv@6.12.2 electron@4.2.12 node-sass@4.14.1 electron-builder@22.7.0 node-hid@0.7.9 electron-updater@4.3.1 usb@1.6.1
-#npm install --include=dev
-#new:
 npm install usb@1.6.1 --save
 npm install --save --save-exact --include=dev #installs exact versions, not updated packages
 
@@ -137,10 +133,6 @@ sudo n 12 # sets node version 12
 
 install required node modules
 ```
-#old:
-#npm install ajv@6.12.2 electron@4.2.12 node-sass@4.14.1 electron-builder@22.7.0 node-hid@0.7.9 electron-updater@4.3.1 usb@1.6.1
-#npm install --include=dev
-#new:
 npm install usb@1.6.1 --save
 npm install --save --save-exact --include=dev #installs exact versions, not updated packages
 ```
@@ -181,10 +173,8 @@ cd Nemesis
 ```
 
 Install Windows build tools. (run from either administrative command prompt, or powershell with admin rights)
+This command took a long time and never finished for @Andrey and @Risko, ctrl-c after a while? <shrug>
 ```
-#old:
-#npm install -g --production windows-build-tools --vs2015
-#new:
 npm install -g --production windows-build-tools --vs2019
 ```
 
@@ -195,10 +185,6 @@ npm config set python %USERPROFILE%\.windows-build-tools\python27\python.exe
 ```
 Install required node modules
 ```
-#old:
-#npm install ajv@6.12.2 electron@4.2.12 node-sass@4.14.1 electron-builder@22.7.0 node-hid@0.7.9 electron-updater@4.3.1 usb@1.6.1
-#npm install --include=dev
-#new:
 npm install usb@1.6.1 --save
 npm install --save --save-exact --include=dev #installs exact versions, not updated packages
 ```
