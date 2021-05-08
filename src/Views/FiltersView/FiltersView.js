@@ -28,6 +28,7 @@ export default class FiltersView extends Component {
     //hz2 = parseInt(this.props.fcConfig.gyro_notch2_hz.current, 10);
 
     if (this.props.fcConfig.imuf) {
+      /*
       bqData = [
         biquad(
           "lowpass",
@@ -61,7 +62,9 @@ export default class FiltersView extends Component {
         ).plot,
         biquad("notch", hz1, freq, cutoff1).plot
         //biquad("notch", hz2, freq, cutoff2).plot
+        
       ];
+      */
     } else {
       bqData = [
         /*
