@@ -30,36 +30,64 @@ const InputView = class extends Component {
   }
 
   render() {
-    return (
-      <TextField
-        ref={this.props.inputRef}
-        classes={{ root: this.props.item.id }}
-        key={this.props.item.id}
-        disabled={this.state.isDirty}
-        helperText={
-          this.props.intl.messages[`${this.props.id}.helper`] && (
-            <FormattedMessage id={`${this.props.id}.helper`} />
-          )
-        }
-        label={
-          <FormattedMessage
-            style={{ whiteSpace: "nowrap" }}
-            id={this.props.item.id}
-          />
-        }
-        value={this.state.current}
-        onBlur={() => this.updateValue()}
-        onKeyPress={event => {
-          if (event.key === "Enter") {
-            event.target.blur();
+    if (this.props.name_type == "raw") {
+      return (
+        <TextField
+          ref={this.props.inputRef}
+          classes={{ root: this.props.item.id }}
+          key={this.props.item.id}
+          disabled={this.state.isDirty}
+          helperText={
+            this.props.intl.messages[`${this.props.id}.helper`] && (
+              <FormattedMessage id={`${this.props.id}.helper`} />
+            )
           }
-        }}
-        onChange={event => {
-          this.setState({ current: event.target.value });
-        }}
-        type={this.props.item.type || "number"}
-      />
-    );
+          label={<p>{this.props.item.id}</p>}
+          value={this.state.current}
+          onBlur={() => this.updateValue()}
+          onKeyPress={event => {
+            if (event.key === "Enter") {
+              event.target.blur();
+            }
+          }}
+          onChange={event => {
+            this.setState({ current: event.target.value });
+          }}
+          type={this.props.item.type || "number"}
+        />
+      );
+    } else {
+      return (
+        <TextField
+          ref={this.props.inputRef}
+          classes={{ root: this.props.item.id }}
+          key={this.props.item.id}
+          disabled={this.state.isDirty}
+          helperText={
+            this.props.intl.messages[`${this.props.id}.helper`] && (
+              <FormattedMessage id={`${this.props.id}.helper`} />
+            )
+          }
+          label={
+            <FormattedMessage
+              style={{ whiteSpace: "nowrap" }}
+              id={this.props.item.id}
+            />
+          }
+          value={this.state.current}
+          onBlur={() => this.updateValue()}
+          onKeyPress={event => {
+            if (event.key === "Enter") {
+              event.target.blur();
+            }
+          }}
+          onChange={event => {
+            this.setState({ current: event.target.value });
+          }}
+          type={this.props.item.type || "number"}
+        />
+      );
+    }
   }
 };
 

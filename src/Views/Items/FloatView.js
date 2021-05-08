@@ -65,7 +65,10 @@ const FloatView = class extends Component {
         key={this.props.item.id}
       >
         <InputLabel style={{ whiteSpace: "nowrap" }} shrink={true}>
-          <FormattedMessage id={this.props.item.id} />
+          {this.props.name_type == "raw" && <p>{this.props.label}</p>}
+          {this.props.name_type != "raw" && (
+            <FormattedMessage id={this.props.item.id} />
+          )}
         </InputLabel>
         <Input
           id={this.props.item.id}

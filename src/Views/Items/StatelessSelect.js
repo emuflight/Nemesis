@@ -22,6 +22,7 @@ const StatelessSelect = class extends Component {
               value={item.current}
               disabled={!!item.isDirty}
               onUpdate={this.props.onUpdate}
+              name_type={this.props.name_type}
               onChange={event => {
                 let payload = event.target.value;
                 let isDirty = item.current !== payload;

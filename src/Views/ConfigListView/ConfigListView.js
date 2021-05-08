@@ -44,6 +44,7 @@ export default class ConfigListView extends Component {
                   key={item.id}
                   item={item}
                   inputVal={item.current}
+                  name_type={this.props.name_type}
                 />
               );
             })}
@@ -58,6 +59,7 @@ export default class ConfigListView extends Component {
                   notifyDirty={this.props.notifyDirty}
                   key={item.id}
                   id={item.id}
+                  name_type={this.props.name_type}
                 />
               );
             })}
@@ -74,6 +76,7 @@ export default class ConfigListView extends Component {
                   notifyDirty={this.props.notifyDirty}
                   key={item.id}
                   id={item.id}
+                  name_type={this.props.name_type}
                 />
               ) : (
                 <StatelessInput
@@ -81,6 +84,7 @@ export default class ConfigListView extends Component {
                   notifyDirty={this.props.notifyDirty}
                   key={item.id}
                   id={item.id}
+                  name_type={this.props.name_type}
                 />
               );
             })}

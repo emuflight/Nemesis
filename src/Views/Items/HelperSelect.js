@@ -22,7 +22,10 @@ const HelperSelect = class extends Component {
           htmlFor={`${this.props.name}-label-placeholder`}
           style={{ whiteSpace: "nowrap" }}
         >
-          <FormattedMessage id={this.props.label} />
+          {this.props.name_type == "raw" && <p>{this.props.label}</p>}
+          {this.props.name_type != "raw" && (
+            <FormattedMessage id={this.props.label} />
+          )}
         </InputLabel>
         <Select
           value={this.props.value}

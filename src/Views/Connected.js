@@ -305,6 +305,7 @@ export default class Connected extends Component {
         );
         break;
       default:
+        // "Advanced tab"
         contents = (
           <ConfigListView
             fcConfig={mergedProfile}
@@ -313,6 +314,7 @@ export default class Connected extends Component {
               this.notifyDirty(isDirty, item, newValue)
             }
             items={this.getRouteItems(mergedProfile, true)}
+            name_type="raw"
           />
         );
         break;
