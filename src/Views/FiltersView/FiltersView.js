@@ -15,10 +15,12 @@ export default class FiltersView extends Component {
     let bqData;
     let bqColors = ["blue", "white", "green"];
 
+    /*
     let use32K =
       this.props.fcConfig.version.imuf ||
       (this.props.fcConfig.gyro_use_32khz &&
         this.props.fcConfig.gyro_use_32khz.current === "ON");
+    */
     let freq = 8000,
       //(use32K ? 32000 : 8000) /
       //parseInt(this.props.fcConfig.gyro_sync_denom.current, 10),

@@ -1,9 +1,6 @@
 import React, { Component } from "react";
-import List from "@material-ui/core/List";
 import FCConnector from "../../utilities/FCConnector";
-import LinearProgress from "@material-ui/core/LinearProgress";
 import Typography from "@material-ui/core/Typography";
-import { FormattedMessage } from "react-intl";
 
 export default class RXStickView extends Component {
   constructor(props) {

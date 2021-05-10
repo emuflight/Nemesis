@@ -9,8 +9,6 @@ import "./PidView.css";
 import FCConnector from "../../utilities/FCConnector";
 import { Typography } from "@material-ui/core";
 import { FormattedMessage } from "react-intl";
-import PidProcessDenom from "./PidProcessDenom";
-import GyroSyncDenom from "./GyroSyncDenom";
 import StatelessInput from "../Items/StatelessInput";
 //import { FCConfigContext } from "../../App";
 

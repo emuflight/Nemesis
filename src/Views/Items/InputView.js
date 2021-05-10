@@ -30,7 +30,7 @@ const InputView = class extends Component {
   }
 
   render() {
-    if (this.props.name_type == "raw") {
+    if (this.props.name_type === "raw") {
       return (
         <TextField
           ref={this.props.inputRef}
