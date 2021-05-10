@@ -237,6 +237,10 @@ export default class PidsView extends ProfileView {
                 id="anti_gravity_gain"
                 notifyDirty={this.props.notifyDirty}
               />
+              <StatelessInput
+                id="d_measurement_slider"
+                notifyDirty={this.props.notifyDirty}
+              />
             </div>
           </Paper>
         </div>

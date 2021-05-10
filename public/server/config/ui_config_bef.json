@@ -106,7 +106,8 @@
       "axis_lock_hz",
       "anti_gravity_mode",
       "anti_gravity_threshold",
-      "anti_gravity_gain"
+      "anti_gravity_gain",
+      "d_measurement_slider"
     ],
     "RATES": [
       "thr_expo",

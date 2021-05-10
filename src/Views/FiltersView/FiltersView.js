@@ -267,7 +267,7 @@ export default class FiltersView extends Component {
                 <Paper>
                   <DropdownView
                     notifyDirty={this.props.notifyDirty}
-                    item={this.props.fcConfig.dterm_lowpass_hz_type}
+                    item={this.props.fcConfig.dterm_lowpass_type}
                   />
                 </Paper>
                 <div

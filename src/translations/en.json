@@ -223,6 +223,7 @@
   "tpa_rate_d": "TPA Rate D",
   "nfe_racermode": "NFE racer mode",
   "tpa_rate": "Attenuation Rate",
+  "d_measurement_slider": "Feathered PIDs",
   "smart_dterm_smoothing": "Smart Dterm smoothing",
   "smart_dterm_smoothing_pitch": "Pitch",
   "smart_dterm_smoothing_roll": "Roll",
