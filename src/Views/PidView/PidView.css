@@ -1,6 +1,5 @@
 .pid-view {
-  flex-basis: 100%;
-  height: 80%;
+  height: 75%;
   width: 100%;
   overflow-y: auto;
   position: absolute;
