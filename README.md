@@ -163,7 +163,7 @@ https://git-scm.com/download/win
 Install Node.js 12 for Windows.
 This particular Node.js version is required. If you have other versions of Node installed, consider using nvm to manage multiple installs
 ```
-https://nodejs.org/dist/latest-v12.x/
+https://nodejs.org/dist/latest-v12.x/      #please install via .msi, not .zip
 ```
 
 git clone the repository (or your fork):
@@ -172,10 +172,10 @@ git clone https://github.com/emuflight/Nemesis.git
 cd Nemesis
 ```
 
-Install Windows build tools. (run from either administrative command prompt, or powershell with admin rights)
-This command took a long time and never finished for @Andrey and @Risko, ctrl-c after a while? <shrug>
+Install Windows build tools. (run from either *administrative* command prompt, or powershell with *administrative* rights)
+This step may stall at `Successfully installed Python 2.7`, if this is the case, simply Ctrl-C one time and enter "N" for no.
 ```
-npm install -g --production windows-build-tools --vs2019
+npm install --global --production windows-build-tools
 ```
 
 Install Yarn, Configure python, (this part can be done from regular command line):
