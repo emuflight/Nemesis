@@ -85,7 +85,8 @@ export default class AssistantView extends Component {
             top: 50,
             right: 50,
             bottom: 50,
-            left: 50
+            left: 50,
+            background: "#333333"
           }}
         >
           <div style={{ display: "flex", height: 50 }}>
