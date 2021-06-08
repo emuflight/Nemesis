@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { FormattedMessage } from "react-intl";
 import Typography from "@material-ui/core/Typography";
-import "./NewAuxModeView.css";
+import "./AuxModeView.css";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
@@ -18,12 +18,12 @@ import { IconButton } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import Tooltip from "@material-ui/core/Tooltip";
 import FCConnector from "../../utilities/FCConnector";
-import "./NewModeItemView.css";
+import "./ModeItemView.css";
 const use_cli_directly = true; // enable this to write any changes (move slider, channel) directly to the cli. set to false to use a list in parent component state to later be saved to the CLI (not working)
 // this means any changes in this tab will be written to CLI, even if save is not pressed on this tab. They will save the next time save is pressed.
 // this is the functionality of every other page as well
 
-export default class NewModeItemView extends Component {
+export default class ModeItemView extends Component {
   constructor(props) {
     super(props);
     this.state = {

@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import List from "@material-ui/core/List";
-import NewModeItemView from "./NewModeItemView";
+import ModeItemView from "./ModeItemView";
 import Paper from "@material-ui/core/Paper";
 import FCConnector from "../../utilities/FCConnector";
 import Snackbar from "@material-ui/core/Snackbar";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 
-import "./NewAuxModeView.css";
+import "./AuxModeView.css";
 
-export default class NewAuxModeView extends Component {
+export default class AuxModeView extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -39,7 +39,7 @@ export default class NewAuxModeView extends Component {
     try {
       let { rx } = JSON.parse(message.data);
       if (rx) {
-        console.log(rx.channels.slice(4));
+        //console.log(rx.channels.slice(4));
         this.setState({ telemetry: rx.channels.slice(4) });
       }
     } catch (ex) {
@@ -159,7 +159,7 @@ export default class NewAuxModeView extends Component {
           {this.state.modeMappings &&
             this.state.modeMappings.slice(1).map((auxMode, i) => {
               return (
-                <NewModeItemView
+                <ModeItemView
                   key={i}
                   auxMode={auxMode}
                   telemetry={this.state.telemetry}
