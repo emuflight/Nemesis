@@ -276,6 +276,8 @@ const updateIMUF = (device, binName, notify) => {
             sendBytes();
           }
         });
+      } else if (bootlresp.indexOf("FAIL") > -1) {
+        notify("ERROR: IMU-F Bootloader not responding.");
       }
     });
   });
