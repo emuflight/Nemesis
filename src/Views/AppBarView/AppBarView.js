@@ -98,7 +98,7 @@ class AppBarView extends Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit" className={classes.title}>
-              {this.props.title}
+              <FormattedMessage id={this.props.title} />
             </Typography>
             <InfoBarView
               fcConfig={this.props.fcConfig}

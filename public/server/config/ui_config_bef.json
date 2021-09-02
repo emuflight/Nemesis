@@ -1,19 +1,19 @@
 {
   "routes": [
     "PFC",
-    "PID",
-    "MOTORS",
-    "MODES",
-    "RATES",
-    "FILTERS",
-    "BATTERY",
     "PORTS",
+    "BATTERY",
+    "PID",
+    "FILTERS",
     "RX",
+    "RATES",
+    "MODES",
+    "MOTORS",
     "OSD",
-    "GPS",
-    "FEATURES",
     "VTX",
     "BLACKBOX",
+    "GPS",
+    "FEATURES",
     "ADVANCED"
   ],
   "routeFeatures": {
