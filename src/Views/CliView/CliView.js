@@ -106,7 +106,12 @@ export default class CliView extends Component {
         {!this.state.open &&
           !this.state.disabled && (
             <MenuItem
-              style={{ display: "flex", padding: 8 }}
+              style={{
+                display: "flex",
+                padding: 8,
+                fontSize: "13px",
+                lineHeight: "1.5"
+              }}
               onClick={() => {
                 this.toggleCli(true);
               }}

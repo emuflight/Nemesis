@@ -89,12 +89,15 @@ function ResponsiveDrawer(props) {
           {props.routes.map(route => {
             return (
               <MenuItem
-                style={{ padding: 8 }}
+                style={{ paddingLeft: 8, paddingRight: 8 }}
                 id={route.key}
                 key={route.key}
                 onClick={() => props.handleMenuItemClick(route.key)}
               >
-                <Typography variant="subtitle1" style={{ flexGrow: 1 }}>
+                <Typography
+                  variant="subtitle1"
+                  style={{ flexGrow: 1, fontSize: "13px", lineHeight: "1.5" }}
+                >
                   <FormattedMessage id={"route." + route.key} />
                 </Typography>
                 {route.incompeteItems && (
