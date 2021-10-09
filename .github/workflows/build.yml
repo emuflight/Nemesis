@@ -90,7 +90,7 @@ jobs:
         run: |
           rm -rf ./build/
           rm -rf ./dist/
-          #brew install libusb
+          brew install libusb
           npm install -g npm@6
           npm config set python /usr/bin/python2.7
           npm install -g n
