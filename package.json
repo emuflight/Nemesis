@@ -106,7 +106,8 @@
     "electron-pack-win": "electron-builder --dir",
     "electron-pack-lin": "yarn build && build -l",
     "preelectron-pack": "yarn build && yarn build-css",
-    "dist": "electron-builder"
+    "dist": "electron-builder",
+    "postinstall": "electron-builder install-app-deps"
   },
   "devDependencies": {
     "concurrently": "3.5.0",
